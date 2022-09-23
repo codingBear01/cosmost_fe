@@ -1,4 +1,4 @@
-import { MainPage } from './components/ui';
+import { MainPage } from './components';
 
 function App() {
   return (
