@@ -4,7 +4,7 @@ import { COLOR_LIST } from '../../../../style';
 export const Header = styled.header`
   width: 100%;
   padding: 20px 0;
-  background-color: ${COLOR_LIST.dark_blue};
+  background-color: ${COLOR_LIST.darkBlue};
   border: 1px solid black;
 `;
 
@@ -29,17 +29,17 @@ export const LoginBtn = styled.button`
   height: 36px;
   margin-right: 10px;
   padding: 0 12px;
-  border: 1px solid ${COLOR_LIST.basic_blue};
+  border: 1px solid ${COLOR_LIST.blue};
   border-radius: 8px;
-  background-color: ${COLOR_LIST.light_blue};
+  background-color: ${COLOR_LIST.lightBlue};
   line-height: 34px;
   font-weight: 600;
   color: ${COLOR_LIST.white};
   transition: all 0.1s linear;
 
   &: hover {
-    border: 1px solid ${COLOR_LIST.light_blue};
-    background-color: ${COLOR_LIST.basic_blue};
+    border: 1px solid ${COLOR_LIST.lightBlue};
+    background-color: ${COLOR_LIST.blue};
     cursor: pointer;
   }
 `;

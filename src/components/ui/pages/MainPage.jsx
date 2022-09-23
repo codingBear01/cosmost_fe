@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header } from './../ui';
+import { Header } from '..';
 
 function MainPage() {
   return (
