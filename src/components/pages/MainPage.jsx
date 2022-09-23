@@ -1,7 +1,13 @@
 import React from 'react';
+import { Header } from '../common';
 
 function MainPage() {
-  return <div>메인ㅋ</div>;
+  return (
+    <div>
+      <Header />
+      메인ㅋ
+    </div>
+  );
 }
 
 export default MainPage;

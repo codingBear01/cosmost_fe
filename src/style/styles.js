@@ -22,17 +22,36 @@ export const FONT_SIZE_LIST = {
 };
 
 export const BUTTON_SIZE_LIST = {
-  xs: '',
-  s: '',
-  m: '',
-  l: '',
-  xl: '',
+  width: {
+    xs: '',
+    s: '',
+    m: '',
+    l: '120px',
+    xl: '',
+  },
+  height: {
+    xs: '',
+    s: '',
+    m: '',
+    l: '40px',
+    xl: '',
+  },
 };
 
 export const BORDER_RADIUS_LIST = {
   default: '5px',
   l: '10px',
   xl: '20px',
+  halfCircle: '50%',
+  circle: '100%',
+};
+
+export const GAP_LIST = {
+  xs: '5px',
+  s: '10px',
+  m: '15px',
+  l: '20px',
+  xl: '25px',
 };
 
 export const ALIGNMENTS_LIST = {};
