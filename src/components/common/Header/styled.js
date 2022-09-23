@@ -10,7 +10,6 @@ import {
 export const Header = styled.header`
   width: 100%;
   height: 70px;
-  padding: ${gap.l} 0;
   background-color: ${color.darkBlue};
 `;
 

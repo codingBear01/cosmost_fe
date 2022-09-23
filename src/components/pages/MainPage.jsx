@@ -3,11 +3,10 @@ import { Header, MainFirstSection } from '../';
 
 function MainPage() {
   return (
-    <div>
+    <>
       <Header />
       <MainFirstSection />
-      메인ㅋ
-    </div>
+    </>
   );
 }
 

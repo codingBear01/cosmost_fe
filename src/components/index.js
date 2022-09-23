@@ -1,5 +1,5 @@
 /* 여러 페이지에 중복해서 쓰이는 common 폴더 내의 components */
-export { Header, Button } from './common/';
+export { Button, Header, Section } from './common/';
 
 /* pages 폴더 내의 pages */
 export { MainPage } from './pages/';

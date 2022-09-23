@@ -13,8 +13,9 @@ export const StyledButton = styled.button`
   height: ${(props) => props.height};
   border-radius: ${br.default};
   background-color: ${color.lightBlue};
-  color: ${color.white};
+  font-size: ${(props) => props.btnFs};
   font-weight: 600;
+  color: ${color.white};
   transition: all 0.2s ease-in;
 
   &:hover {
@@ -23,9 +24,9 @@ export const StyledButton = styled.button`
   }
 `;
 
-function Button({ width, height, btnTxt }) {
+function Button({ width, height, btnTxt, btnFs }) {
   return (
-    <StyledButton width={width} height={height}>
+    <StyledButton width={width} height={height} btnFs={btnFs}>
       {btnTxt}
     </StyledButton>
   );

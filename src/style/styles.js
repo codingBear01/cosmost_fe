@@ -21,23 +21,6 @@ export const FONT_SIZE_LIST = {
   xl: '20px',
 };
 
-export const BUTTON_SIZE_LIST = {
-  width: {
-    xs: '',
-    s: '',
-    m: '',
-    l: '120px',
-    xl: '',
-  },
-  height: {
-    xs: '',
-    s: '',
-    m: '',
-    l: '40px',
-    xl: '',
-  },
-};
-
 export const BORDER_RADIUS_LIST = {
   default: '5px',
   l: '10px',

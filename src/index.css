@@ -2,7 +2,6 @@
 
 body {
   box-sizing: content-box;
-  width: 1920px;
   margin: 0;
   padding: 0;
   font-family: 'Sen', 'Noto Sans KR', sans-serif;
@@ -21,4 +20,9 @@ button {
 
 li {
   list-style: none;
+}
+
+input {
+  border: 0;
+  padding: 0;
 }

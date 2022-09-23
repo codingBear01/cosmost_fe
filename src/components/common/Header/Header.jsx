@@ -18,9 +18,10 @@ function Header() {
 
         <S.HeaderUtilWrap>
           <Button
-            width={bs.width.l}
-            height={bs.height.l}
+            width={'120px'}
+            height={'40px'}
             btnTxt={'코스 등록하기'}
+            btnFs={'14px'}
           ></Button>
 
           <S.HeaderMenuIcon>
