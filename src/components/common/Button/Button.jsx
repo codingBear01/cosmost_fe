@@ -14,7 +14,8 @@ export const StyledButton = styled.button`
   border-radius: ${br.default};
   background-color: ${color.lightBlue};
   color: ${color.white};
-  transition: all 0.15s ease-in;
+  font-weight: 600;
+  transition: all 0.2s ease-in;
 
   &:hover {
     background-color: ${color.blue};
