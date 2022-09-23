@@ -1,10 +1,11 @@
 import React from 'react';
-import { Header } from '../common';
+import { Header, MainFirstSection } from '../';
 
 function MainPage() {
   return (
     <div>
       <Header />
+      <MainFirstSection />
       메인ㅋ
     </div>
   );
