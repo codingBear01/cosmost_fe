@@ -9,7 +9,7 @@ import {
 } from './../../../style/';
 
 const StyledSection = styled.section`
-  height: 868px;
+  height: 86.8rem;
   background-color: ${(props) => props.backgroundColor};
 `;
 

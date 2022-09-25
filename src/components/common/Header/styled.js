@@ -9,7 +9,7 @@ import {
 
 export const Header = styled.header`
   width: 100%;
-  height: 70px;
+  height: 7rem;
   background-color: ${color.darkBlue};
 `;
 
@@ -22,7 +22,7 @@ export const HeaderContainer = styled.div`
 `;
 
 const StyledHeaderLogo = styled.span`
-  font-size: 40px;
+  font-size: 4rem;
   font-weight: 600;
   color: ${color.white};
   cursor: pointer;
@@ -41,9 +41,9 @@ export const HeaderMenuIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
-  margin-left: 20px;
+  width: 5rem;
+  height: 5rem;
+  margin-left: 2rem;
   border-radius: ${br.circle};
   transition: all 0.2s ease-in;
   cursor: pointer;
@@ -54,8 +54,8 @@ export const HeaderMenuIcon = styled.div`
   }
 
   svg {
-    width: 40px;
-    height: 40px;
+    width: 4rem;
+    height: 4rem;
     color: ${color.white};
   }
 `;

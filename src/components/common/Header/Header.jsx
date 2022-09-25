@@ -17,12 +17,9 @@ function Header() {
         <S.HeaderLogo logoTxt={'cosMost'}></S.HeaderLogo>
 
         <S.HeaderUtilWrap>
-          <Button
-            width={'120px'}
-            height={'40px'}
-            btnTxt={'코스 등록하기'}
-            fontSize={'14px'}
-          ></Button>
+          <Button width={'14rem'} height={'4rem'} fontSize={'1.4rem'}>
+            코스 등록하기
+          </Button>
 
           <S.HeaderMenuIcon>
             <CgMenuGridR />

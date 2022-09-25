@@ -13,27 +13,25 @@ export const COLOR_LIST = {
 };
 
 export const FONT_SIZE_LIST = {
-  xxs: '10px', // 모바일에만
-  xs: '12px',
-  s: '14px',
-  m: '16px',
-  l: '18px',
-  xl: '20px',
+  xxs: '1rem', // 모바일에만
+  xs: '1.2rem',
+  s: '1.4rem',
+  m: '1.6rem',
+  l: '1.8rem',
+  xl: '2rem',
 };
 
 export const BORDER_RADIUS_LIST = {
-  default: '5px',
-  l: '10px',
-  xl: '20px',
+  default: '0.5rem',
+  l: '1rem',
+  xl: '2rem',
   circle: '100%',
 };
 
 export const GAP_LIST = {
-  xs: '5px',
-  s: '10px',
-  m: '15px',
-  l: '20px',
-  xl: '25px',
+  xs: '0.5rem',
+  s: '1rem',
+  m: '1.5rem',
+  l: '2rem',
+  xl: '2.5rem',
 };
-
-export const ALIGNMENTS_LIST = {};

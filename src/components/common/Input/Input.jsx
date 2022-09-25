@@ -12,9 +12,9 @@ export const Input = styled.input`
   padding-left: ${gap.s};
   border-radius: ${br.default};
   font-size: ${({ fontSize }) => fontSize};
-  color: ${color.black}
+  color: ${color.black};
 
-  &:focus {
+  &: hover {
     outline: none;
   }
 `;

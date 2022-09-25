@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import {
   COLOR_LIST as color,
@@ -23,10 +22,10 @@ export const StyledButton = styled.button`
   }
 `;
 
-function Button({ width, height, btnTxt, fontSize }) {
+function Button({ width, height, fontSize, children }) {
   return (
     <StyledButton width={width} height={height} fontSize={fontSize}>
-      {btnTxt}
+      {children}
     </StyledButton>
   );
 }

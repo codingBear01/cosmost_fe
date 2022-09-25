@@ -1,6 +1,4 @@
 import React from 'react';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
 import * as S from './styled';
 import { Button, Input, Section } from '../../';
 import {
@@ -23,24 +21,6 @@ for (let i = 1; i <= 10; i++) {
   });
 }
 
-const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 3,
-    slidesToSlide: 3, // optional, default to 1.
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
-    slidesToSlide: 2, // optional, default to 1.
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-    slidesToSlide: 1, // optional, default to 1.
-  },
-};
-
 function MainFirstSection() {
   return (
     <Section backgroundColor={color.darkBlue}>
@@ -52,16 +32,13 @@ function MainFirstSection() {
           <S.MainSearchArea>
             <S.SearchInput
               type={'text'}
-              width={'420px'}
-              height={'50px'}
+              width={'42rem'}
+              height={'5rem'}
               fontSize={fs.xl}
             ></S.SearchInput>
-            <Button
-              width={'100px'}
-              height={'50px'}
-              btnTxt={'검색'}
-              fontSize={'25px'}
-            ></Button>
+            <Button width={'10rem'} height={'5rem'} fontSize={'2.5rem'}>
+              검색
+            </Button>
           </S.MainSearchArea>
 
           <div>
@@ -90,14 +67,14 @@ function MainFirstSection() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              width: '215px',
-              height: '50px',
-              marginTop: '50px',
-              borderTop: `1px solid ${color.white}`,
-              borderBottom: `1px solid ${color.white}`,
-              fontSize: '16px',
+              width: '21.5rem',
+              height: '5rem',
+              margin: '3rem 0',
+              borderTop: `0.1rem solid ${color.white}`,
+              borderBottom: `0.1rem solid ${color.white}`,
+              fontSize: '1.6rem',
               color: `${color.white}`,
-              gap: '10px',
+              gap: '1rem',
             }}
           >
             <span>👑</span>
@@ -105,7 +82,7 @@ function MainFirstSection() {
             <img
               src="https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg"
               alt="img"
-              style={{ width: '30px', height: '30px', borderRadius: '100%' }}
+              style={{ width: '3rem', height: '3rem', borderRadius: '100%' }}
             />
             <span>강명모</span>
           </div>
@@ -116,12 +93,6 @@ function MainFirstSection() {
           <div></div>
           <div></div>
         </S.SliderWrap>
-
-        <Carousel responsive={responsive}>
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-        </Carousel>
       </S.FirstSectionContainer>
     </Section>
   );

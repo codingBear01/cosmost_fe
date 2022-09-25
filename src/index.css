@@ -1,5 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Sen:wght@400;700;800&display=swap');
 
+html {
+  font-size: 62.5%;
+  transition: all 0.15s ease-in;
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 37.5%;
+  }
+}
+
 body {
   box-sizing: content-box;
   margin: 0;

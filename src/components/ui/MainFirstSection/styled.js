@@ -6,6 +6,7 @@ import {
   BUTTON_SIZE_LIST as bs,
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
+  BREAK_POINTS as media,
 } from './../../../style/';
 
 export const FirstSectionContainer = styled.div`
@@ -13,7 +14,7 @@ export const FirstSectionContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  height: 868px;
+  height: 86.8rem;
 `;
 
 export const FirstSectionContent = styled.div`
@@ -21,12 +22,12 @@ export const FirstSectionContent = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 150px;
+  margin-top: 15rem;
   width: 62.5%;
 `;
 
 const StyledFirstSectionTitle = styled.span`
-  font-size: 50px;
+  font-size: 4.5rem;
   font-weight: 600;
   color: ${color.white};
   text-align: center;
@@ -40,11 +41,15 @@ export const MainSearchArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 50px 0;
+  margin: 5rem 0;
 `;
 
 export const SearchInput = styled(Input)`
-  border: 2px solid red;
+  margin: 1rem;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const SliderWrap = styled.div`
@@ -55,7 +60,7 @@ export const SliderWrap = styled.div`
 
   div {
     margin: 0 ${gap.m};
-    height: 300px;
+    height: 30rem;
     border-radius: ${br.default};
     background-color: ${color.grey};
     color: ${color.white};
