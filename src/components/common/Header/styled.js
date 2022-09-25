@@ -21,41 +21,7 @@ export const HeaderContainer = styled.div`
   height: 100%;
 `;
 
-const StyledHeaderLogo = styled.span`
-  font-size: 4rem;
-  font-weight: 600;
-  color: ${color.white};
-  cursor: pointer;
-`;
-
-export const HeaderLogo = ({ logoTxt }) => (
-  <StyledHeaderLogo>{logoTxt}</StyledHeaderLogo>
-);
-
 export const HeaderUtilWrap = styled.div`
   display: flex;
   align-items: center;
-`;
-
-export const HeaderMenuIcon = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 5rem;
-  height: 5rem;
-  margin-left: 2rem;
-  border-radius: ${br.circle};
-  transition: all 0.2s ease-in;
-  cursor: pointer;
-
-  &:hover {
-    border-radius: ${br.circle};
-    background-color: ${color.blue};
-  }
-
-  svg {
-    width: 4rem;
-    height: 4rem;
-    color: ${color.white};
-  }
 `;

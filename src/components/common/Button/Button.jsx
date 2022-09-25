@@ -14,7 +14,7 @@ export const StyledButton = styled.button`
   font-size: ${({ fontSize }) => fontSize};
   font-weight: 600;
   color: ${color.white};
-  transition: all 0.2s ease-in;
+  transition: all 0.15s ease-in;
   cursor: pointer;
 
   &:hover {
