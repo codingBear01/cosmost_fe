@@ -57,9 +57,9 @@ export const SliderWrap = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   width: 62.5%;
   margin-bottom: ${gap.s};
+  gap: 3rem;
 
   div {
-    margin: 0 ${gap.m};
     height: 30rem;
     border-radius: ${br.default};
     background-color: ${color.grey};

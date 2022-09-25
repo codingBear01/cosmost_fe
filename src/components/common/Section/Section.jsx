@@ -9,13 +9,15 @@ import {
 } from './../../../style/';
 
 const StyledSection = styled.section`
-  height: 86.8rem;
-  background-color: ${(props) => props.backgroundColor};
+  height: ${({ height }) => height};
+  background-color: ${({ backgroundColor }) => backgroundColor};
 `;
 
-function Section({ backgroundColor, children }) {
+function Section({ height, backgroundColor, children }) {
   return (
-    <StyledSection backgroundColor={backgroundColor}>{children}</StyledSection>
+    <StyledSection height={height} backgroundColor={backgroundColor}>
+      {children}
+    </StyledSection>
   );
 }
 

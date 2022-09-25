@@ -23,7 +23,7 @@ for (let i = 1; i <= 10; i++) {
 
 function MainFirstSection() {
   return (
-    <Section backgroundColor={color.darkBlue}>
+    <Section height={'86.8rem'} backgroundColor={color.darkBlue}>
       <S.FirstSectionContainer>
         <S.FirstSectionContent>
           <S.FirstSectionTitle
@@ -69,7 +69,7 @@ function MainFirstSection() {
               justifyContent: 'center',
               width: '21.5rem',
               height: '5rem',
-              margin: '3rem 0',
+              margin: '4.5rem 0 0 0',
               borderTop: `0.1rem solid ${color.white}`,
               borderBottom: `0.1rem solid ${color.white}`,
               fontSize: '1.6rem',
