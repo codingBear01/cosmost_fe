@@ -21,7 +21,7 @@ function Header() {
             width={'120px'}
             height={'40px'}
             btnTxt={'코스 등록하기'}
-            btnFs={'14px'}
+            fontSize={'14px'}
           ></Button>
 
           <S.HeaderMenuIcon>

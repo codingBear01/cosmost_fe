@@ -25,7 +25,6 @@ export const BORDER_RADIUS_LIST = {
   default: '5px',
   l: '10px',
   xl: '20px',
-  halfCircle: '50%',
   circle: '100%',
 };
 

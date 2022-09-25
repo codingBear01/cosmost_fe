@@ -2,7 +2,7 @@ import React from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import * as S from './styled';
-import { Button, Section } from '../../';
+import { Button, Input, Section } from '../../';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -50,12 +50,17 @@ function MainFirstSection() {
             title={'당신의 일상을 공유하세요'}
           ></S.FirstSectionTitle>
           <S.MainSearchArea>
-            <S.MainSearchBar></S.MainSearchBar>
+            <S.SearchInput
+              type={'text'}
+              width={'420px'}
+              height={'50px'}
+              fontSize={fs.xl}
+            ></S.SearchInput>
             <Button
               width={'100px'}
               height={'50px'}
               btnTxt={'검색'}
-              btnFs={'25px'}
+              fontSize={'25px'}
             ></Button>
           </S.MainSearchArea>
 

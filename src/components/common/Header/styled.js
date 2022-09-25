@@ -25,10 +25,7 @@ const StyledHeaderLogo = styled.span`
   font-size: 40px;
   font-weight: 600;
   color: ${color.white};
-
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 
 export const HeaderLogo = ({ logoTxt }) => (
@@ -49,11 +46,11 @@ export const HeaderMenuIcon = styled.div`
   margin-left: 20px;
   border-radius: ${br.circle};
   transition: all 0.2s ease-in;
+  cursor: pointer;
 
   &:hover {
     border-radius: ${br.circle};
     background-color: ${color.blue};
-    cursor: pointer;
   }
 
   svg {

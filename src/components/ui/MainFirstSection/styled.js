@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Input } from '../../';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -42,17 +43,8 @@ export const MainSearchArea = styled.div`
   margin: 50px 0;
 `;
 
-export const MainSearchBar = styled.input.attrs({ types: 'text' })`
-  width: 420px;
-  height: 50px;
-  margin-right: ${gap.xl};
-  padding-left: ${gap.s};
-  border-radius: ${br.default};
-  font-size: ${fs.xl};
-
-  &:focus {
-    outline: none;
-  }
+export const SearchInput = styled(Input)`
+  border: 2px solid red;
 `;
 
 export const SliderWrap = styled.div`

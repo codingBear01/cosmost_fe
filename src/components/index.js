@@ -1,8 +1,8 @@
-/* 여러 페이지에 중복해서 쓰이는 common 폴더 내의 components */
-export { Button, Header, Section } from './common/';
+/* 여러 페이지에 중복해서 쓰이는 components */
+export { Button, Header, Input, Section } from './common/';
 
-/* pages 폴더 내의 pages */
-export { MainPage } from './pages/';
-
-/* 특징적인 요소들을 모아놓은 ui 폴더 내의 components */
+/* 한 군데에서만 쓰이는 요소들 */
 export { MainFirstSection } from './ui/';
+
+/* pages */
+export { MainPage } from './pages/';
