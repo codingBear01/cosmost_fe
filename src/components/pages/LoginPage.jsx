@@ -11,6 +11,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { BiUser } from "react-icons/bi";
 import { RiLockPasswordLine } from "react-icons/ri";
+import { PageRootDiv, PageTitle, HeightCenterDiv } from "../common";
 
 const SnsLoginImageSrc = [
   {
@@ -45,29 +46,10 @@ const LoginOtherSrc = [
   },
 ];
 
-const WidthCenterDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-  background-color: ${COLOR_LIST.darkBlue};
-`;
-
-const ContentDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 const LoginButtonDiv = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: ${GAP_LIST.xl};
-`;
-
-const LoginTitle = styled.h1`
-  color: ${COLOR_LIST.white};
-  font-size: 5rem;
 `;
 
 const LoginForm = styled.form`
@@ -150,9 +132,9 @@ function LoginPage() {
   };
 
   return (
-    <WidthCenterDiv>
-      <ContentDiv>
-        <LoginTitle>cosMost</LoginTitle>
+    <PageRootDiv>
+      <HeightCenterDiv>
+        <PageTitle>cosMost</PageTitle>
         <LoginForm>
           <LoginInputDiv>
             <BiUser style={LoginInputImageStyle} />
@@ -201,8 +183,8 @@ function LoginPage() {
             })}
           </LoginOtherItemDiv>
         </LoginOtherDiv>
-      </ContentDiv>
-    </WidthCenterDiv>
+      </HeightCenterDiv>
+    </PageRootDiv>
   );
 }
 

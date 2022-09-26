@@ -10,7 +10,7 @@ export {
   MoreCourseBtn,
   Section,
   SectionTitle,
-} from './common/';
+} from "./common/";
 
 /* 특정 페이지에서만 쓰이는 요소들 */
 export {
@@ -19,7 +19,12 @@ export {
   MainFourthSection,
   MainSecondSection,
   MainThirdSection,
-} from './ui/';
+} from "./ui/";
 
 /* pages */
-export { CourseRegisterPage, MainPage, LoginPage } from './pages/';
+export {
+  AgreementPage,
+  CourseRegisterPage,
+  MainPage,
+  LoginPage,
+} from "./pages/";

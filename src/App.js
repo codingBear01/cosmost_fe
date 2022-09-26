@@ -1,5 +1,10 @@
-import { CourseRegisterPage, MainPage, LoginPage } from './components';
-import { Routes, Route } from 'react-router-dom';
+import {
+  AgreementPage,
+  CourseRegisterPage,
+  MainPage,
+  LoginPage,
+} from "./components";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -9,8 +14,8 @@ function App() {
       <Route path="/course">
         <Route path="register" element={<CourseRegisterPage />} />
       </Route>
+      <Route path="/register/agreement" element={<AgreementPage />} />
     </Routes>
   );
 }
-
 export default App;
