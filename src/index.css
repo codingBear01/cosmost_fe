@@ -20,6 +20,7 @@ html {
 }
 
 body {
+  position: relative;
   box-sizing: content-box;
   margin: 0;
   padding: 0;
@@ -44,4 +45,11 @@ li {
 input {
   border: 0;
   padding: 0;
+}
+
+#root {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding-bottom: 20rem;
 }
