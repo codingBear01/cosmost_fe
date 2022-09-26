@@ -11,6 +11,7 @@ export const Input = styled.input`
   height: ${({ height }) => height};
   padding-left: ${gap.s};
   border-radius: ${br.default};
+  background-color: ${color.white};
   font-size: ${({ fontSize }) => fontSize};
   color: ${color.black};
 

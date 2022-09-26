@@ -1,6 +1,7 @@
 export { Button } from './Button/';
 export { CourseImg } from './CourseImg/';
 export { CourseTitle } from './CourseTitle/';
+export { Footer } from './Footer/';
 export { HashTag } from './HashTag/';
 export { Header } from './Header/';
 export { Input } from './Input/';

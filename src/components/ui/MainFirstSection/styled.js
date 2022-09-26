@@ -53,8 +53,6 @@ export const SearchInput = styled(Input)`
   }
 `;
 
-export const MainHashTagWrap = styled.div``;
-
 export const MainHashTag = styled.span`
   padding: ${gap.xs};
   border-radius: ${br.default};
@@ -81,5 +79,13 @@ export const SliderWrap = styled.div`
     border-radius: ${br.default};
     background-color: ${color.grey};
     color: ${color.white};
+  }
+
+  ${media.tablet} {
+    width: 90rem;
+  }
+
+  ${media.mobile} {
+    width: 60rem;
   }
 `;

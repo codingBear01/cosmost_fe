@@ -5,6 +5,7 @@ import {
   MainFourthSection,
   MainSecondSection,
   MainThirdSection,
+  Footer,
 } from '../';
 
 function MainPage() {
@@ -15,6 +16,7 @@ function MainPage() {
       <MainSecondSection />
       <MainThirdSection />
       <MainFourthSection />
+      <Footer />
     </>
   );
 }

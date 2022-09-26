@@ -3,6 +3,7 @@ export {
   Button,
   CourseImg,
   CourseTitle,
+  Footer,
   HashTag,
   Header,
   Input,
