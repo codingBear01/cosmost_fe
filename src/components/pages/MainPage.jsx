@@ -5,6 +5,7 @@ import {
   MainFourthSection,
   MainSecondSection,
   MainThirdSection,
+  FloationgIcons,
   Footer,
 } from '../';
 
@@ -16,6 +17,7 @@ function MainPage() {
       <MainSecondSection />
       <MainThirdSection />
       <MainFourthSection />
+      <FloationgIcons />
       <Footer />
     </>
   );

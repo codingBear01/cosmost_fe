@@ -14,6 +14,7 @@ export {
 
 /* 특정 페이지에서만 쓰이는 요소들 */
 export {
+  FloationgIcons,
   MainFirstSection,
   MainFourthSection,
   MainSecondSection,
