@@ -2,6 +2,8 @@
 export {
   Button,
   CourseImg,
+  CourseTitle,
+  HashTag,
   Header,
   Input,
   MoreCourseBtn,

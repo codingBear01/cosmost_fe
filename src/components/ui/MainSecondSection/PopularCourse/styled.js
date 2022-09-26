@@ -26,13 +26,3 @@ export const PopularCourseTitle = styled.span`
   font-weight: 600;
   cursor: pointer;
 `;
-
-export const PopularHashtag = styled.button`
-  margin: 0.25rem;
-  border-radius: ${br.default};
-  background-color: ${color.blue};
-  opacity: 0.5;
-  font-size: ${fs.xs};
-  color: ${color.white};
-  cursor: pointer;
-`;

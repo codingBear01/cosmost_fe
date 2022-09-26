@@ -14,7 +14,6 @@ const StyledSection = styled.section`
   align-items: center;
   height: ${({ height }) => height};
   background-color: ${({ backgroundColor }) => backgroundColor};
-  border: 1px solid black;
 `;
 
 function Section({ height, backgroundColor, children }) {

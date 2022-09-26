@@ -9,14 +9,13 @@ import {
 } from '../../../../style';
 
 export const PopularCourseRow = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-  max-width: 120rem;
-  margin: 3rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  width: 120rem;
   gap: 3rem;
 
   ${media.mobile} {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    flex-wrap: wrap;
+    width: 60rem;
   }
 `;
