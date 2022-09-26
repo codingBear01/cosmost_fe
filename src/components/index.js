@@ -4,7 +4,7 @@ export {
   CourseImg,
   Header,
   Input,
-  MoreContentBtn,
+  MoreCourseBtn,
   Section,
 } from './common/';
 

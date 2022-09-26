@@ -1,14 +1,14 @@
 import React from 'react';
-import { MoreContentBtn } from '../../../';
+import { MoreCourseBtn } from '../../..';
 import * as S from './styled';
 
-function PopularContentTitle() {
+function PopularCourseTitle() {
   return (
     <S.PopularTitleWrap>
       <S.PopularTitle>#요새 가장 인기 많은</S.PopularTitle>
-      <MoreContentBtn></MoreContentBtn>
+      <MoreCourseBtn></MoreCourseBtn>
     </S.PopularTitleWrap>
   );
 }
 
-export default PopularContentTitle;
+export default PopularCourseTitle;

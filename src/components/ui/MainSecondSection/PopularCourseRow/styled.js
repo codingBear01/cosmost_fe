@@ -6,9 +6,9 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
-} from './../../../../style/';
+} from '../../../../style';
 
-export const PopularContentRow = styled.div`
+export const PopularCourseRow = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   max-width: 120rem;

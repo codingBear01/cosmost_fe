@@ -6,13 +6,13 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
-} from './../../../../style/';
+} from '../../../../style';
 
-export const PopularContentWrap = styled.div`
+export const PopularCourseWrap = styled.div`
   width: 27.5rem;
 `;
 
-export const PoplularContentBox = styled.div`
+export const PoplularCourseBox = styled.div`
   display: flex;
   align-items: flex-start;
   flex-direction: column;

@@ -6,7 +6,7 @@ import {
   GAP_LIST as gap,
 } from './../../../style/';
 
-export const StyledMoreContentBtn = styled.button`
+export const StyledMoreCourseBtn = styled.button`
   border: none;
   background: none;
   color: ${color.grey};

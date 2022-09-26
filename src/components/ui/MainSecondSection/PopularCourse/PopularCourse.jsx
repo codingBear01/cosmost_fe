@@ -1,13 +1,12 @@
 import React from 'react';
-import { CourseImg } from '../../../';
+import { CourseImg } from '../../..';
 import * as S from './styled';
 
-function PopularContent() {
+function PopularCourse() {
   return (
-    <S.PopularContentWrap>
-      {/* img component */}
+    <S.PopularCourseWrap>
       <CourseImg width={'100%'} height={'65%'}></CourseImg>
-      <S.PoplularContentBox>
+      <S.PoplularCourseBox>
         <S.PopularCourseTitle>코스 제목</S.PopularCourseTitle>
         <div>
           <S.PopularHashtag>#해시태그</S.PopularHashtag>
@@ -16,9 +15,9 @@ function PopularContent() {
           <S.PopularHashtag>#해시태그</S.PopularHashtag>
           <S.PopularHashtag>#해시태그</S.PopularHashtag>
         </div>
-      </S.PoplularContentBox>
-    </S.PopularContentWrap>
+      </S.PoplularCourseBox>
+    </S.PopularCourseWrap>
   );
 }
 
-export default PopularContent;
+export default PopularCourse;

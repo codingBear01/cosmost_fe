@@ -8,15 +8,15 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
 } from '../../../style';
-import { PopularContentRow } from './PopularContentRow';
-import { PopularContentTitle } from './PopularContentTitle/';
+import { PopularCourseRow } from './PopularCourseRow';
+import { PopularCourseTitle } from './PopularCourseTitle';
 
 function MainSecondSection() {
   return (
     <Section backgroundColor={color.white}>
       <div>
-        <PopularContentTitle></PopularContentTitle>
-        <PopularContentRow></PopularContentRow>
+        <PopularCourseTitle></PopularCourseTitle>
+        <PopularCourseRow></PopularCourseRow>
       </div>
     </Section>
   );
