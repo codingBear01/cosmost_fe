@@ -16,3 +16,4 @@ export { MainFirstSection, MainSecondSection, MainThirdSection } from "./ui/";
 /* pages */
 export { MainPage } from "./pages/";
 export { LoginPage } from "./pages/";
+export { AgreementPage } from "./pages/";
