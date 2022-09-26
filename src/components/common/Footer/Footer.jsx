@@ -7,8 +7,20 @@ function Footer() {
     <S.Footer>
       <BsGithub />
       <S.FooterInfo>
-        <span>https://github.com/CosMost-BE</span>
-        <span>https://github.com/codingBear01/cosMost_FE</span>
+        <a
+          href="https://github.com/CosMost-BE"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Back-end Repo.
+        </a>
+        <a
+          href="https://github.com/codingBear01/cosMost_FE"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Front-end Repo.
+        </a>
         <span>Mady By Team_NiceCream</span>
       </S.FooterInfo>
     </S.Footer>

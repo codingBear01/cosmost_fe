@@ -38,6 +38,14 @@ button {
   border: none;
 }
 
+a,
+a:link,
+a:visited,
+a:active {
+  padding: 0;
+  text-decoration: none;
+}
+
 li {
   list-style: none;
 }
