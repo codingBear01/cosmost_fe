@@ -11,7 +11,6 @@ import {
 export const AddedCourseWrap = styled.div`
   display: flex;
   width: 58rem;
-  // border: 1px solid black;
 
   ${media.mobile} {
     width: 28rem;
@@ -22,12 +21,16 @@ export const AddedCourseWrap = styled.div`
 `;
 
 export const AddedCourseBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
   width: 100%;
   padding: ${gap.m} 0 ${gap.m} ${gap.m};
 `;
 
 export const AddedCourseDesc = styled.p`
-  margin: ${gap.m} 0;
+  margin-bottom: ${gap.m};
   font-size: ${fs.xs};
   color: ${color.grey};
 `;

@@ -1,8 +1,16 @@
 import React from 'react';
+import { TheMostGuCourse } from '../TheMostGuCourse/';
 import * as S from './styled';
 
 function TheMostGuContainer() {
-  return <S.TheMostGuContainer>코스가 가장 많은</S.TheMostGuContainer>;
+  return (
+    <S.TheMostGuContainer>
+      <TheMostGuCourse></TheMostGuCourse>
+      <TheMostGuCourse></TheMostGuCourse>
+      <TheMostGuCourse></TheMostGuCourse>
+      <TheMostGuCourse></TheMostGuCourse>
+    </S.TheMostGuContainer>
+  );
 }
 
 export default TheMostGuContainer;

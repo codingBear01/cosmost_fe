@@ -8,15 +8,20 @@ import {
   BREAK_POINTS as media,
 } from '../../../../style';
 
-export const PopularCourseWrap = styled.div`
+export const TheMostGuCourseWrap = styled.div`
   width: 27.5rem;
 `;
 
-export const PoplularCourseBox = styled.div`
+export const TheMostGuCourseBox = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
-  flex-direction: column;
   height: 35%;
   padding: ${gap.xs};
+`;
+
+export const CourseCount = styled.span`
+  font-size: ${fs.xs};
+  font-weight: 600;
+  color: ${color.grey};
 `;
