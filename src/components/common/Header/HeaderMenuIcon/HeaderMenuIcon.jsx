@@ -8,7 +8,7 @@ import {
 } from './../../../../style/';
 import { CgMenuGridR } from 'react-icons/cg';
 
-const StyledHeaderMenuIcon = styled.div`
+const StyledHeaderMenuIcon = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,6 +16,7 @@ const StyledHeaderMenuIcon = styled.div`
   height: 5rem;
   margin-left: 2rem;
   border-radius: ${br.circle};
+  background: none;
   transition: all 0.15s ease-in;
   cursor: pointer;
 
@@ -31,9 +32,13 @@ const StyledHeaderMenuIcon = styled.div`
   }
 `;
 
-function HeaderMenuIcon() {
+function HeaderMenuIcon({ isMenuOpen, setIsMenuOpen }) {
+  const onMenuOpen = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <StyledHeaderMenuIcon>
+    <StyledHeaderMenuIcon onClick={onMenuOpen}>
       <CgMenuGridR />
     </StyledHeaderMenuIcon>
   );
