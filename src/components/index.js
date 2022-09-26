@@ -12,8 +12,12 @@ export {
 } from './common/';
 
 /* 특정 페이지에서만 쓰이는 요소들 */
-export { MainFirstSection, MainSecondSection, MainThirdSection } from './ui/';
+export {
+  MainFirstSection,
+  MainFourthSection,
+  MainSecondSection,
+  MainThirdSection,
+} from './ui/';
 
 /* pages */
-export { MainPage } from './pages/';
-export { LoginPage } from './pages/';
+export { MainPage, LoginPage } from './pages/';

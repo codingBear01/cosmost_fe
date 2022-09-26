@@ -1,10 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
   Header,
   MainFirstSection,
+  MainFourthSection,
   MainSecondSection,
   MainThirdSection,
-} from "../";
+} from '../';
 
 function MainPage() {
   return (
@@ -13,6 +14,7 @@ function MainPage() {
       <MainFirstSection />
       <MainSecondSection />
       <MainThirdSection />
+      <MainFourthSection />
     </>
   );
 }
