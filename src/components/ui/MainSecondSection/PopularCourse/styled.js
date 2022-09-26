@@ -19,10 +19,3 @@ export const PoplularCourseBox = styled.div`
   height: 35%;
   padding: ${gap.xs};
 `;
-
-export const PopularCourseTitle = styled.span`
-  margin-bottom: ${gap.l};
-  font-size: ${fs.l};
-  font-weight: 600;
-  cursor: pointer;
-`;

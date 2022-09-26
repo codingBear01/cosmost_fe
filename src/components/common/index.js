@@ -6,3 +6,4 @@ export { Header } from './Header/';
 export { Input } from './Input/';
 export { MoreCourseBtn } from './MoreCourseBtn/';
 export { Section } from './Section/';
+export { SectionTitle } from './SectionTitle';

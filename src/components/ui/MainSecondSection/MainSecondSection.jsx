@@ -1,6 +1,6 @@
 import React from 'react';
 import * as S from './styled';
-import { CourseTitle, Section } from '../..';
+import { Section, SectionTitle } from '../..';
 import { PopularCourseContainer } from './PopularCourseContainer';
 import {
   COLOR_LIST as color,
@@ -14,7 +14,7 @@ function MainSecondSection() {
   return (
     <Section backgroundColor={color.white}>
       <div>
-        <CourseTitle># 요새 가장 인기 많은</CourseTitle>
+        <SectionTitle># 요새 가장 인기 많은</SectionTitle>
         <PopularCourseContainer></PopularCourseContainer>
       </div>
     </Section>

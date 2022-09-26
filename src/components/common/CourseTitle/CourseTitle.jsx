@@ -1,13 +1,9 @@
 import React from 'react';
-import { MoreCourseBtn } from '..';
 import * as S from './styled';
 
-function CourseTitle({ children }) {
+function CourseTitle({ fontSize, children }) {
   return (
-    <S.PopularTitleWrap>
-      <S.PopularTitle>{children}</S.PopularTitle>
-      <MoreCourseBtn></MoreCourseBtn>
-    </S.PopularTitleWrap>
+    <S.StyledCourseTitle fontSize={fontSize}>{children}</S.StyledCourseTitle>
   );
 }
 

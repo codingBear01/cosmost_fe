@@ -2,20 +2,13 @@ import styled from 'styled-components';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
-  BUTTON_SIZE_LIST as bs,
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
-  BREAK_POINTS as media,
-} from '../../../style';
+} from './../../../style/';
 
-export const PopularTitleWrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-top: ${gap.l};
-`;
-
-export const PopularTitle = styled.span`
-  font-size: 2.5rem;
+export const StyledCourseTitle = styled.span`
+  margin-bottom: ${gap.l};
+  font-size: ${({ fontSize }) => fontSize};
   font-weight: 600;
+  cursor: pointer;
 `;

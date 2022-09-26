@@ -1,5 +1,5 @@
 import React from 'react';
-import { CourseTitle, Section } from '../..';
+import { Section, SectionTitle } from '../..';
 import { AddedCourseContainer } from './AddedCourseContainer/';
 import {
   COLOR_LIST as color,
@@ -13,7 +13,7 @@ function MainThirdSection() {
   return (
     <Section backgroundColor={color.white}>
       <div>
-        <CourseTitle># 새로 추가된</CourseTitle>
+        <SectionTitle># 새로 추가된</SectionTitle>
         <AddedCourseContainer></AddedCourseContainer>
       </div>
     </Section>

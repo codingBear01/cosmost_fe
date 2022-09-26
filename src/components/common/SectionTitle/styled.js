@@ -6,17 +6,16 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
-} from '../../../../style';
+} from '../../../style';
 
-export const AddedCourseContainer = styled.div`
+export const PopularTitleWrap = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  width: 120rem;
+  justify-content: space-between;
+  align-items: flex-end;
   margin-top: ${gap.l};
-  gap: 3rem;
+`;
 
-  ${media.mobile} {
-    flex-wrap: wrap;
-    width: 60rem;
-  }
+export const PopularTitle = styled.span`
+  font-size: 2.5rem;
+  font-weight: 600;
 `;
