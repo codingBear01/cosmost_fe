@@ -1,10 +1,10 @@
 import React from 'react';
-import { PopularCourse } from '../PopularCourse';
 import * as S from './styled';
+import { PopularCourse } from '../PopularCourse';
 
-function PopularCourseRow() {
+function PopularCourseContainer() {
   return (
-    <S.PopularCourseRow>
+    <S.PopularCourseContainer>
       <PopularCourse></PopularCourse>
       <PopularCourse></PopularCourse>
       <PopularCourse></PopularCourse>
@@ -13,8 +13,8 @@ function PopularCourseRow() {
       <PopularCourse></PopularCourse>
       <PopularCourse></PopularCourse>
       <PopularCourse></PopularCourse>
-    </S.PopularCourseRow>
+    </S.PopularCourseContainer>
   );
 }
 
-export default PopularCourseRow;
+export default PopularCourseContainer;
