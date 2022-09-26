@@ -1,22 +1,23 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import {
   COLOR_LIST,
   BORDER_RADIUS_LIST,
   GAP_LIST,
   FONT_SIZE_LIST,
-} from "../../style/styles";
-import { Button, PageRootDiv, PageTitle, HeightCenterDiv } from "../common";
-import { AiOutlineCheckCircle } from "react-icons/ai";
-import { StyledButton } from "../common/Button/Button";
-import AgreementPageData from "../../store/data/AgreementPageData";
+} from '../../style/styles';
+import { Button, PageRootDiv, PageTitle, HeightCenterDiv } from '../common';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
+import { StyledButton } from '../common/Button/Button';
+import AgreementPageData from '../../store/data/AgreementPageData';
+import { Link } from 'react-router-dom';
 
 const FlexDiv = styled.div`
   width: 100%;
   display: flex;
-  justify-content: ${(props) => props.justifyContent || "normal"};
+  justify-content: ${(props) => props.justifyContent || 'normal'};
   align-items: center;
-  margin: ${(props) => props.margin || "0 0 0 0"};
+  margin: ${(props) => props.margin || '0 0 0 0'};
 `;
 
 const AgreementPageButton = styled(StyledButton)`
@@ -26,9 +27,9 @@ const AgreementPageButton = styled(StyledButton)`
 function AgreementPageItem({ title, content, enable, onClick }) {
   const AiOutlineCheckCircleStyle = ({ color }) => {
     return {
-      color: color || "white",
-      width: "3rem",
-      height: "3rem",
+      color: color || 'white',
+      width: '3rem',
+      height: '3rem',
     };
   };
   const ItemTitle = styled.span`
@@ -73,8 +74,10 @@ function AgreementPage() {
 
   return (
     <PageRootDiv>
-      <HeightCenterDiv justifyContent={"space-around"}>
-        <PageTitle>cosMost</PageTitle>
+      <HeightCenterDiv justifyContent={'space-around'}>
+        <Link to="/">
+          <PageTitle>cosMost</PageTitle>
+        </Link>
         {AgreementPageData.map((item, index) => {
           return (
             <AgreementPageItem
@@ -86,15 +89,15 @@ function AgreementPage() {
             />
           );
         })}
-        <FlexDiv margin={"0 0 2rem 0"} justifyContent={"space-between"}>
+        <FlexDiv margin={'0 0 2rem 0'} justifyContent={'space-between'}>
           <AgreementPageButton
             backgroundColor={COLOR_LIST.grey}
-            width={"24rem"}
-            height={"6rem"}
+            width={'24rem'}
+            height={'6rem'}
           >
             취소
           </AgreementPageButton>
-          <AgreementPageButton width={"24rem"} height={"6rem"}>
+          <AgreementPageButton width={'24rem'} height={'6rem'}>
             확인
           </AgreementPageButton>
         </FlexDiv>
