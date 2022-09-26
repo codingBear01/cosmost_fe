@@ -1,13 +1,12 @@
 import React from 'react';
+import { CourseImg } from '../../../';
 import * as S from './styled';
 
 function PopularContent() {
   return (
     <S.PopularContentWrap>
-      <S.PopularContentImg
-        src="https://t1.daumcdn.net/blogfile/fs11/23_blog_2008_07_13_10_37_48795c5e1d9b4?x-content-disposition=inline&filename=haeyongj_20.jpg"
-        alt="사진"
-      ></S.PopularContentImg>
+      {/* img component */}
+      <CourseImg width={'100%'} height={'65%'}></CourseImg>
       <S.PoplularContentBox>
         <S.PopularCourseTitle>코스 제목</S.PopularCourseTitle>
         <div>

@@ -10,17 +10,7 @@ import {
 
 export const PopularContentWrap = styled.div`
   width: 27.5rem;
-  border: 1px solid black;
 `;
-
-// 따로 분리 해서 오른쪽 하단에 평점 띄우게 ㅇㅅaㅇ
-export const PopularContentImg = styled.img`
-  width: 100%;
-  height: 65%;
-  border-radius: ${br.default};
-`;
-// 따로분리
-export const CourseTotalRate = styled.div``;
 
 export const PoplularContentBox = styled.div`
   display: flex;
@@ -34,6 +24,7 @@ export const PopularCourseTitle = styled.span`
   margin-bottom: ${gap.l};
   font-size: ${fs.l};
   font-weight: 600;
+  cursor: pointer;
 `;
 
 export const PopularHashtag = styled.button`
@@ -41,5 +32,7 @@ export const PopularHashtag = styled.button`
   border-radius: ${br.default};
   background-color: ${color.blue};
   opacity: 0.5;
+  font-size: ${fs.xs};
   color: ${color.white};
+  cursor: pointer;
 `;
