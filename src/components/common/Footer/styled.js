@@ -18,7 +18,7 @@ export const Footer = styled.footer`
   background-color: ${color.darkBlue};
 
   svg {
-    font-size: 10rem;
+    font-size: 7rem;
     color: ${color.white};
   }
 `;
@@ -32,7 +32,7 @@ export const FooterInfo = styled.p`
 
   span {
     margin: ${gap.s} 0 0 5rem;
-    font-size: ${fs.l};
+    font-size: ${fs.m};
     font-weight: 600;
     color: ${color.white};
   }
