@@ -1,5 +1,10 @@
 import React from "react";
-import { Header, MainFirstSection, MainSecondSection } from "../";
+import {
+  Header,
+  MainFirstSection,
+  MainSecondSection,
+  MainThirdSection,
+} from "../";
 
 function MainPage() {
   return (
@@ -7,6 +12,7 @@ function MainPage() {
       <Header />
       <MainFirstSection />
       <MainSecondSection />
+      <MainThirdSection />
     </>
   );
 }

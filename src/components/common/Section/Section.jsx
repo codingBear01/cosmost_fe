@@ -9,6 +9,9 @@ import {
 } from './../../../style/';
 
 const StyledSection = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: ${({ height }) => height};
   background-color: ${({ backgroundColor }) => backgroundColor};
 `;

@@ -14,7 +14,8 @@ export const FirstSectionContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  height: 86.8rem;
+  width: 100%;
+  height: 100%;
 `;
 
 export const FirstSectionContent = styled.div`
@@ -22,8 +23,8 @@ export const FirstSectionContent = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 50rem;
   margin-top: 15rem;
-  width: 62.5%;
 `;
 
 const StyledFirstSectionTitle = styled.span`
@@ -41,7 +42,7 @@ export const MainSearchArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5rem 0;
+  margin: 3rem 0;
 `;
 
 export const SearchInput = styled(Input)`
@@ -52,14 +53,30 @@ export const SearchInput = styled(Input)`
   }
 `;
 
+export const MainHashTagWrap = styled.div``;
+
+export const MainHashTag = styled.span`
+  padding: ${gap.xs};
+  border-radius: ${br.default};
+  font-size: ${fs.xl};
+  color: ${color.white};
+  transition: all 0.15s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${color.blue};
+  }
+`;
+
 export const SliderWrap = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  width: 62.5%;
-  margin-bottom: ${gap.s};
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: ${gap.l};
   gap: 3rem;
 
   div {
+    width: 120rem;
     height: 30rem;
     border-radius: ${br.default};
     background-color: ${color.grey};

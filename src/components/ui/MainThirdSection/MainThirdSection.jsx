@@ -1,7 +1,6 @@
 import React from 'react';
-import * as S from './styled';
 import { CourseTitle, Section } from '../..';
-import { PopularCourseContainer } from './PopularCourseContainer';
+import { AddedCourseContainer } from './AddedCourseContainer/';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -10,15 +9,15 @@ import {
   GAP_LIST as gap,
 } from '../../../style';
 
-function MainSecondSection() {
+function MainThirdSection() {
   return (
     <Section backgroundColor={color.white}>
       <div>
-        <CourseTitle># 요새 가장 인기 많은</CourseTitle>
-        <PopularCourseContainer></PopularCourseContainer>
+        <CourseTitle># 새로 추가된</CourseTitle>
+        <AddedCourseContainer></AddedCourseContainer>
       </div>
     </Section>
   );
 }
 
-export default MainSecondSection;
+export default MainThirdSection;

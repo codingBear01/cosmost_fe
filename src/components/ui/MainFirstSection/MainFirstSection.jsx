@@ -1,6 +1,6 @@
 import React from 'react';
 import * as S from './styled';
-import { Button, Input, Section } from '../../';
+import { Button, HashTag, Input, Section } from '../../';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -42,24 +42,15 @@ function MainFirstSection() {
           </S.MainSearchArea>
 
           <div>
-            <span style={{ color: `${color.white}`, fontSize: `${fs.xl}` }}>
-              #해시태그
-            </span>
-            <span style={{ color: `${color.white}`, fontSize: `${fs.xl}` }}>
-              #해시태그
-            </span>
-            <span style={{ color: `${color.white}`, fontSize: `${fs.xl}` }}>
-              #해시태그
-            </span>
-            <span style={{ color: `${color.white}`, fontSize: `${fs.xl}` }}>
-              #해시태그
-            </span>
-            <span style={{ color: `${color.white}`, fontSize: `${fs.xl}` }}>
-              #해시태그
-            </span>
-            <span style={{ color: `${color.white}`, fontSize: `${fs.xl}` }}>
-              #해시태그
-            </span>
+            <S.MainHashTag>#해시태그해시태그</S.MainHashTag>
+            <S.MainHashTag>#해시태그</S.MainHashTag>
+            <S.MainHashTag>#해시태그</S.MainHashTag>
+            <S.MainHashTag>#해시태그</S.MainHashTag>
+            <S.MainHashTag>#해시태그</S.MainHashTag>
+            <S.MainHashTag>#해시태그</S.MainHashTag>
+            <S.MainHashTag>#해시태그</S.MainHashTag>
+            <S.MainHashTag>#해시태그</S.MainHashTag>
+            <S.MainHashTag>#해시태그</S.MainHashTag>
           </div>
 
           <div
@@ -89,8 +80,6 @@ function MainFirstSection() {
         </S.FirstSectionContent>
 
         <S.SliderWrap>
-          <div></div>
-          <div></div>
           <div></div>
         </S.SliderWrap>
       </S.FirstSectionContainer>
