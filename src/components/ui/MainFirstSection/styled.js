@@ -23,6 +23,7 @@ export const FirstSectionContent = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 50rem;
   margin-top: 15rem;
 `;
 
@@ -41,7 +42,7 @@ export const MainSearchArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5rem 0;
+  margin: 3rem 0;
 `;
 
 export const SearchInput = styled(Input)`
@@ -49,6 +50,21 @@ export const SearchInput = styled(Input)`
 
   &:focus {
     outline: none;
+  }
+`;
+
+export const MainHashTagWrap = styled.div``;
+
+export const MainHashTag = styled.span`
+  padding: ${gap.xs};
+  border-radius: ${br.default};
+  font-size: ${fs.xl};
+  color: ${color.white};
+  transition: all 0.15s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${color.blue};
   }
 `;
 

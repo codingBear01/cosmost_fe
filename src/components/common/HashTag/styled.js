@@ -8,12 +8,16 @@ import {
   BREAK_POINTS as media,
 } from '../../../style';
 
-export const PopularHashtag = styled.button`
+export const StyledHashtag = styled.button`
   margin: 0.25rem;
   border-radius: ${br.default};
-  background-color: ${color.blue};
-  opacity: 0.5;
-  font-size: ${fs.xs};
+  background-color: ${color.lightBlue};
+  font-size: ${({ fontSize }) => fontSize};
   color: ${color.white};
   cursor: pointer;
+  transition: all 0.15s ease-in;
+
+  &:hover {
+    background-color: ${color.blue};
+  }
 `;

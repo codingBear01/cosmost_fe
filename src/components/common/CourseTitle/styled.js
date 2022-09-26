@@ -11,7 +11,7 @@ import {
 export const PopularTitleWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   margin-top: ${gap.l};
 `;
 

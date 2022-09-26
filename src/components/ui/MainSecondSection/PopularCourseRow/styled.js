@@ -12,7 +12,13 @@ export const PopularCourseRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 120rem;
+  margin-top: ${gap.l};
   gap: 3rem;
+
+  ${media.tablet} {
+    flex-wrap: wrap;
+    width: 90rem;
+  }
 
   ${media.mobile} {
     flex-wrap: wrap;

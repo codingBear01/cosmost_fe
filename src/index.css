@@ -5,12 +5,14 @@ html {
   transition: all 0.1s ease;
 }
 
+/* tablet */
 @media (max-width: 1024px) {
   html {
     font-size: 50%;
   }
 }
 
+/* mobile */
 @media (max-width: 768px) {
   html {
     font-size: 37.5%;

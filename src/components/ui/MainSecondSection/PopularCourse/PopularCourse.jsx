@@ -1,5 +1,6 @@
 import React from 'react';
 import { CourseImg, HashTag } from '../../..';
+import { FONT_SIZE_LIST as fs } from '../../../../style';
 import * as S from './styled';
 
 function PopularCourse() {
@@ -9,11 +10,11 @@ function PopularCourse() {
       <S.PoplularCourseBox>
         <S.PopularCourseTitle>코스 제목</S.PopularCourseTitle>
         <div>
-          <HashTag>#해시태그</HashTag>
-          <HashTag>#해시태그 해시태그 해시태그</HashTag>
-          <HashTag>#해시태그</HashTag>
-          <HashTag>#해시태그</HashTag>
-          <HashTag>#해시태그</HashTag>
+          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+          <HashTag fontSize={fs.xs}>#해시태그 해시태그 해시태그</HashTag>
+          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
         </div>
       </S.PoplularCourseBox>
     </S.PopularCourseWrap>

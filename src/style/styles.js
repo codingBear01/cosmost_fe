@@ -37,5 +37,6 @@ export const GAP_LIST = {
 };
 
 export const BREAK_POINTS = {
+  tablet: '@media (max-width: 1024px)',
   mobile: '@media (max-width: 768px)',
 };
