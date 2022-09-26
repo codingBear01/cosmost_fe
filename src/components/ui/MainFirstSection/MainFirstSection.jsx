@@ -90,8 +90,6 @@ function MainFirstSection() {
 
         <S.SliderWrap>
           <div></div>
-          <div></div>
-          <div></div>
         </S.SliderWrap>
       </S.FirstSectionContainer>
     </Section>

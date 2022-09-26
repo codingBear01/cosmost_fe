@@ -9,8 +9,12 @@ import {
 } from './../../../style/';
 
 const StyledSection = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: ${({ height }) => height};
   background-color: ${({ backgroundColor }) => backgroundColor};
+  border: 1px solid black;
 `;
 
 function Section({ height, backgroundColor, children }) {

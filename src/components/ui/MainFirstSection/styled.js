@@ -14,7 +14,8 @@ export const FirstSectionContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  height: 86.8rem;
+  width: 100%;
+  height: 100%;
 `;
 
 export const FirstSectionContent = styled.div`
@@ -23,7 +24,6 @@ export const FirstSectionContent = styled.div`
   align-items: center;
   flex-direction: column;
   margin-top: 15rem;
-  width: 62.5%;
 `;
 
 const StyledFirstSectionTitle = styled.span`
@@ -53,13 +53,14 @@ export const SearchInput = styled(Input)`
 `;
 
 export const SliderWrap = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  width: 62.5%;
-  margin-bottom: ${gap.s};
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: ${gap.l};
   gap: 3rem;
 
   div {
+    width: 120rem;
     height: 30rem;
     border-radius: ${br.default};
     background-color: ${color.grey};

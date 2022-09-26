@@ -8,11 +8,16 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
 } from '../../../style';
+import { PopularContentRow } from './PopularContentRow';
+import { PopularContentTitle } from './PopularContentTitle/';
 
 function MainSecondSection() {
   return (
-    <Section height={'86.8rem'} backgroundColor={color.white}>
-      MainSecondSection
+    <Section backgroundColor={color.white}>
+      <div>
+        <PopularContentTitle></PopularContentTitle>
+        <PopularContentRow></PopularContentRow>
+      </div>
     </Section>
   );
 }

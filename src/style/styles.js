@@ -35,3 +35,7 @@ export const GAP_LIST = {
   l: '2rem',
   xl: '2.5rem',
 };
+
+export const BREAK_POINTS = {
+  mobile: '@media (max-width: 768px)',
+};
