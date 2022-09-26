@@ -20,4 +20,11 @@ export const StyledFloatingIcon = styled.button`
   border: 0.2rem solid ${color.darkBlue};
   font-size: ${fs.l};
   color: ${color.darkBlue};
+  cursor: pointer;
+  transition: all 0.15s ease-in;
+
+  &: hover {
+    background-color: ${color.darkBlue};
+    color: ${color.white};
+  }
 `;

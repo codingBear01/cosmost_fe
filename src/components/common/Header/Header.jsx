@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import * as S from './styled';
 import { Button } from '../';
 import { HeaderLogo } from './HeaderLogo';
@@ -8,12 +9,16 @@ function Header() {
   return (
     <S.Header>
       <S.HeaderContainer>
-        <HeaderLogo>cosMost</HeaderLogo>
+        <Link to="/">
+          <HeaderLogo>cosMost</HeaderLogo>
+        </Link>
 
         <S.HeaderUtilWrap>
-          <Button width={'14rem'} height={'4rem'} fontSize={'1.4rem'}>
-            코스 등록하기
-          </Button>
+          <Link to="/course/register">
+            <Button width={'14rem'} height={'4rem'} fontSize={'1.4rem'}>
+              코스 등록하기
+            </Button>
+          </Link>
 
           <HeaderMenuIcon></HeaderMenuIcon>
         </S.HeaderUtilWrap>
