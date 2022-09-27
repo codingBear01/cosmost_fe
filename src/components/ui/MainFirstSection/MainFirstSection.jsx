@@ -1,14 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as S from './styled';
 import { Button, Section, SmallProfilePic } from '../../';
-import {
-  COLOR_LIST as color,
-  BORDER_RADIUS_LIST as br,
-  BUTTON_SIZE_LIST as bs,
-  FONT_SIZE_LIST as fs,
-  GAP_LIST as gap,
-} from './../../../style/';
+import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from './../../../style/';
 import { USER_RANKING_LIST } from './../../../store/data/RankingData';
 import { useInterval } from './../../hooks/';
 
