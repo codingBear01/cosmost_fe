@@ -11,6 +11,7 @@ function MainFirstSection() {
   const [rankerIndex, setRankerIndex] = useState(1);
   const rankerLength = USER_RANKING_LIST.length;
 
+  // 2초마다 topPosition 및 rankerIndex값에 변화를 줘서 Ranking 보여주기 기능 구현하는 함수
   useInterval(() => {
     if (rankerIndex === rankerLength) {
       setTopPosition(0);
@@ -55,9 +56,6 @@ function MainFirstSection() {
           </div>
 
           <S.MainRankingBox>
-            {/* 일정 시간 지날 때마다 Y좌푯값 or top위치 변경하여 index 1씩 증가하다가 마지막에 다다르면 초기화 
-            좌푯값: top: -55px
-            */}
             {USER_RANKING_LIST &&
               USER_RANKING_LIST.map((ranker, i) => (
                 <li
