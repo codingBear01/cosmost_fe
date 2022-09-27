@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import * as S from './styled';
 import { Button } from '../';
@@ -10,6 +10,7 @@ import { RiPoliceCarLine } from 'react-icons/ri';
 import { BiCategory } from 'react-icons/bi';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { FONT_SIZE_LIST as fs } from '../../../style';
+import { REPORT_CATEGORIES_LIST } from './../../../store/data/';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(false);
@@ -40,6 +41,15 @@ function Header() {
     e.preventDefault();
     alert('신고가 되었읍니다!🚔👮‍♂️');
   };
+
+  // 메뉴바 및 신고 모달창 떴을 때 뒷화면 스크롤 잠금
+  useEffect(() => {
+    if (isMenuBarOpen || isReportModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isMenuBarOpen, isReportModalOpen]);
 
   return (
     <>
@@ -117,9 +127,19 @@ function Header() {
       <S.ReportModal isReportModalOpen={isReportModalOpen}>
         <S.ReportForm>
           <S.ReportFormHeader>
-            <span>신고하기</span>
+            <S.ReportTitle>신고하기</S.ReportTitle>
             <GrClose onClick={onReportModalOpen} />
           </S.ReportFormHeader>
+
+          <S.ReportCategories>
+            {REPORT_CATEGORIES_LIST &&
+              REPORT_CATEGORIES_LIST.map((cat, i) => (
+                <S.ReportOption key={cat.id} value={cat.value}>
+                  {cat.option}
+                </S.ReportOption>
+              ))}
+          </S.ReportCategories>
+
           <S.ReportTitleInput
             placeholder="제목"
             maxLength={50}

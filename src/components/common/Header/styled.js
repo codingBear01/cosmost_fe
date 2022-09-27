@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Button } from '../Button';
 import { Input } from '../Input';
 import {
   COLOR_LIST as color,
@@ -11,6 +10,9 @@ import {
 } from './../../../style/';
 
 export const Header = styled.header`
+  position: fixed;
+  z-index: 1;
+  top: 0;
   width: 100%;
   height: 7rem;
   background-color: ${color.darkBlue};
@@ -143,10 +145,10 @@ export const ReportForm = styled.form`
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-direction: column;
   width: 60rem;
-  height: 70rem;
+  height: 80rem;
   padding: ${gap.xl};
   border-radius: ${br.default};
   background-color: ${color.white};
@@ -158,19 +160,36 @@ export const ReportFormHeader = styled.div`
   justify-content: space-between;
   width: 100%;
 
-  span {
-    margin-left: 2rem;
-    color: ${color.black};
-    font-size: 3rem;
-    font-weight: 600;
-  }
-
   svg {
     align-self: flex-start;
-    margin-right: 2rem;
+    margin-right: ${gap.l};
     font-size: ${fs.xl};
     cursor: pointer;
   }
+`;
+
+export const ReportCategories = styled.select`
+  align-self: start;
+  margin-left: ${gap.l};
+  padding: ${gap.s};
+  border: none;
+  border-bottom: 1px solid ${color.darkBlue};
+  background-color: ${color.white};
+  font-size: ${fs.s};
+  font-weight: 600;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const ReportOption = styled.option``;
+
+export const ReportTitle = styled.span`
+  margin-left: ${gap.l};
+  color: ${color.black};
+  font-size: 3rem;
+  font-weight: 600;
 `;
 
 export const ReportTitleInput = styled(Input)`
