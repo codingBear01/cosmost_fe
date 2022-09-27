@@ -9,6 +9,8 @@ const HeightCenterDiv = styled.div`
   flex-direction: column;
   justify-content: ${(props) => props.justifyContent || "center"};
   align-items: center;
+  height: ${(props) => props.height || "auto"};
+  margin: ${(props) => props.margin || "0 0 0 0"};
 `;
 
 export default HeightCenterDiv;

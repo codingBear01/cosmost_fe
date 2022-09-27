@@ -10,6 +10,7 @@ export {
   MoreCourseBtn,
   Section,
   SectionTitle,
+  FlexDiv,
 } from "./common/";
 
 /* 특정 페이지에서만 쓰이는 요소들 */
@@ -27,4 +28,5 @@ export {
   CourseRegisterPage,
   MainPage,
   LoginPage,
+  SignUpPage,
 } from "./pages/";

@@ -3,6 +3,7 @@ import {
   CourseRegisterPage,
   MainPage,
   LoginPage,
+  SignUpPage,
 } from "./components";
 import { Routes, Route } from "react-router-dom";
 
@@ -14,7 +15,8 @@ function App() {
       <Route path="/course">
         <Route path="register" element={<CourseRegisterPage />} />
       </Route>
-      <Route path="/register/agreement" element={<AgreementPage />} />
+      <Route path="/signup" element={<SignUpPage />}></Route>
+      <Route path="/signup/agreement" element={<AgreementPage />} />
     </Routes>
   );
 }

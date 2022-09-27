@@ -11,3 +11,4 @@ export { SectionTitle } from "./SectionTitle";
 export { PageRootDiv } from "./PageRootDiv/";
 export { PageTitle } from "./PageTitle/";
 export { HeightCenterDiv } from "./HeightCenterDiv/index.js";
+export { FlexDiv } from "./FlexDiv";
