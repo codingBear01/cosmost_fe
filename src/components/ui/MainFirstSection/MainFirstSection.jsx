@@ -17,7 +17,7 @@ function MainFirstSection() {
       setTopPosition(0);
       setRankerIndex(1);
     } else {
-      setTopPosition((prev) => prev - 55);
+      setTopPosition((prev) => prev - 5.5);
       setRankerIndex((prev) => prev + 1);
     }
   }, 2000);
@@ -61,7 +61,7 @@ function MainFirstSection() {
                 <li
                   key={ranker.id}
                   style={{
-                    top: topPosition,
+                    top: `${topPosition}rem`,
                   }}
                 >
                   {ranker.isTop && <span>👑</span>}
