@@ -2,7 +2,7 @@
 
 html {
   font-size: 62.5%;
-  transition: all 0.1s ease;
+  transition: 0.15s ease-in;
 }
 
 /* tablet */
@@ -29,6 +29,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #001970;
+  padding-top: 7rem;
+  padding-bottom: 20rem;
+}
+
 p {
   margin: 0;
 }
@@ -47,6 +56,12 @@ a:visited,
 a:active {
   padding: 0;
   text-decoration: none;
+  color: #0a0a0a;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }
 
 li {
@@ -58,9 +73,11 @@ input {
   padding: 0;
 }
 
-#root {
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
-  padding-bottom: 20rem;
+textarea {
+  font-family: inherit;
+  resize: none;
+}
+
+textarea:focus {
+  outline: none;
 }

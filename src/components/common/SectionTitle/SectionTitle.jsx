@@ -1,12 +1,15 @@
 import React from 'react';
-import { MoreCourseBtn } from '..';
+import { Link } from 'react-router-dom';
 import * as S from './styled';
+import { MoreCourseBtn } from '..';
 
 function SectionTitle({ children }) {
   return (
     <S.PopularTitleWrap>
       <S.PopularTitle>{children}</S.PopularTitle>
-      <MoreCourseBtn></MoreCourseBtn>
+      <Link to="/course/detail">
+        <MoreCourseBtn></MoreCourseBtn>
+      </Link>
     </S.PopularTitleWrap>
   );
 }

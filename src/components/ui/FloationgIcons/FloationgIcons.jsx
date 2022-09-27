@@ -1,20 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from './styled';
 import { FaChevronUp } from 'react-icons/fa';
-import { AiTwotoneEdit } from 'react-icons/ai';
-import { FloatingIcon } from './FloatingIcon/';
 
 function FloationgIcons() {
+  const [showBtn, setShowBtn] = useState(false);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    const handleShowTopBtn = () => {
+      window.scrollY > 400 ? setShowBtn(true) : setShowBtn(false);
+    };
+    window.addEventListener('scroll', handleShowTopBtn);
+    return () => {
+      window.removeEventListener('scroll', handleShowTopBtn);
+    };
+  }, []);
+
   return (
-    <S.FloatingIconsWrap>
-      <FloatingIcon>
-        <FaChevronUp />
-      </FloatingIcon>
-      <FloatingIcon>
-        <AiTwotoneEdit />
-      </FloatingIcon>
-      <FloatingIcon>🚨</FloatingIcon>
-    </S.FloatingIconsWrap>
+    <>
+      {showBtn && (
+        <S.FloatingIcon onClick={scrollToTop}>
+          <FaChevronUp />
+        </S.FloatingIcon>
+      )}
+    </>
   );
 }
 

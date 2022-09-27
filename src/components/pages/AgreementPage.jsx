@@ -14,10 +14,10 @@ import {
   HeightCenterDiv,
 } from "../common";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-import { StyledButton } from "../common/Button/Button";
-import AgreementPageData from "../../store/data/AgreementPageData";
 import { Link } from "react-router-dom";
 import { Footer } from "../";
+import { StyledButton } from "../common/Button/styled";
+import { AgreementPageData } from "../../store/";
 
 const AgreementPageButton = styled(StyledButton)`
   background-color: ${(props) => props.backgroundColor || StyledButton.color};

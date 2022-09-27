@@ -11,6 +11,7 @@ export {
   Section,
   SectionTitle,
   FlexDiv,
+  SmallProfilePic,
 } from "./common/";
 
 /* 특정 페이지에서만 쓰이는 요소들 */
@@ -25,8 +26,11 @@ export {
 /* pages */
 export {
   AgreementPage,
+  CouresDetailPage,
   CourseRegisterPage,
-  MainPage,
   LoginPage,
   SignUpPage,
+  MainPage,
+  SearchResultPage,
+  UserPage,
 } from "./pages/";

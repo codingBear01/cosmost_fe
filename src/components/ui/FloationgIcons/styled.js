@@ -8,12 +8,34 @@ import {
   BREAK_POINTS as media,
 } from './../../../style/';
 
-export const FloatingIconsWrap = styled.div`
-  position: absolute;
-  right: 5.5%;
-  bottom: 8%;
+export const FloatingIcon = styled.div`
+  position: fixed;
+  right: 10rem;
+  bottom: 10rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  width: 5rem;
+  height: 5rem;
+  margin: ${gap.xs} 0;
+  border-radius: ${br.circle};
+  background: none;
+  border: 0.2rem solid ${color.darkBlue};
+  font-size: ${fs.l};
+  color: ${color.darkBlue};
+  cursor: pointer;
+  transition: all 0.15s ease-in;
+
+  &: hover {
+    background-color: ${color.darkBlue};
+    color: ${color.white};
+  }
+
+  ${media.tablet} {
+    right: 5rem;
+  }
+
+  ${media.mobile} {
+    right: 4rem;
+  }
 `;
