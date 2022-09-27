@@ -2,7 +2,7 @@
 
 html {
   font-size: 62.5%;
-  transition: all 0.1s ease;
+  transition: 0.15s ease-in;
 }
 
 /* tablet */
@@ -27,6 +27,13 @@ body {
   font-family: 'Sen', 'Noto Sans KR', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding-bottom: 20rem;
 }
 
 p {
@@ -64,9 +71,11 @@ input {
   padding: 0;
 }
 
-#root {
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
-  padding-bottom: 20rem;
+textarea {
+  font-family: inherit;
+  resize: none;
+}
+
+textarea:focus {
+  outline: none;
 }

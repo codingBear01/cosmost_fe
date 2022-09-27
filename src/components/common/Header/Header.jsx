@@ -9,17 +9,36 @@ import { IoMdLogIn, IoMdLogOut } from 'react-icons/io';
 import { RiPoliceCarLine } from 'react-icons/ri';
 import { BiCategory } from 'react-icons/bi';
 import { AiOutlineUserAdd } from 'react-icons/ai';
+import { FONT_SIZE_LIST as fs } from '../../../style';
 
 function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
-
-  const onMenuOpen = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const [isLogin, setIsLogin] = useState(false);
+  const [isMenuBarOpen, setIsMenuBarOpen] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [reportContent, setReportContent] = useState('');
 
   const onClickLogin = () => {
     setIsLogin(!isLogin);
+  };
+
+  const onMenuBarOpen = () => {
+    setIsMenuBarOpen(!isMenuBarOpen);
+    setIsReportModalOpen(false);
+  };
+
+  const onReportModalOpen = () => {
+    setIsReportModalOpen(!isReportModalOpen);
+    setIsMenuBarOpen(false);
+  };
+
+  const handleReportContentChange = (e) => {
+    const val = e.target.value;
+    setReportContent(val);
+  };
+
+  const onReportSubmit = (e) => {
+    e.preventDefault();
+    alert('신고가 되었읍니다!🚔👮‍♂️');
   };
 
   return (
@@ -37,61 +56,100 @@ function Header() {
               </Button>
             </Link>
 
-            <HeaderMenuIcon onMenuOpen={onMenuOpen}></HeaderMenuIcon>
+            <HeaderMenuIcon onMenuBarOpen={onMenuBarOpen}></HeaderMenuIcon>
           </S.HeaderUtilWrap>
         </S.HeaderContainer>
       </S.Header>
 
-      <S.MenuModal isMenuOpen={isMenuOpen}>
-        <S.MenuModalList isMenuOpen={isMenuOpen}>
-          <GrClose onClick={onMenuOpen} />
-
-          {!isLogin && (
-            <>
-              <S.MenuModalListItem onClick={onClickLogin}>
-                <IoMdLogIn />
-                <span>로그인</span>
-              </S.MenuModalListItem>
-              <S.MenuModalListItem>
+      <S.MenuBarBackGround isMenuBarOpen={isMenuBarOpen}></S.MenuBarBackGround>
+      <S.MenuBarList isMenuBarOpen={isMenuBarOpen}>
+        <GrClose onClick={onMenuBarOpen} />
+        {!isLogin && (
+          <>
+            <S.MenuBarListItem onClick={onClickLogin}>
+              {/* <Link to="/login"> */}
+              <IoMdLogIn />
+              <span>로그인</span>
+              {/* </Link> */}
+            </S.MenuBarListItem>
+            <S.MenuBarListItem>
+              <Link to="/register/agreement">
                 <AiOutlineUserAdd />
                 <span>회원가입</span>
-              </S.MenuModalListItem>
-            </>
-          )}
-          {isLogin && (
-            <>
-              <S.MenuModalListItem>
-                <Link to="/user/my">
-                  <img
-                    src="https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg"
-                    alt="img"
-                    style={{
-                      width: '3rem',
-                      height: '3rem',
-                      borderRadius: '100%',
-                    }}
-                  />
-                  <span>닉네임</span>
-                </Link>
-              </S.MenuModalListItem>
-              <S.MenuModalListItem>
-                <IoMdLogOut />
-                <span onClick={onClickLogin}>로그아웃</span>
-              </S.MenuModalListItem>
-              <S.MenuModalListItem>
-                <RiPoliceCarLine />
-                <span>신고하기</span>
-              </S.MenuModalListItem>
-            </>
-          )}
-          <S.MenuModalListItem>
-            <span>
-              <BiCategory />
-            </span>
-            <span>카테고리</span>
-          </S.MenuModalListItem>
-        </S.MenuModalList>
-      </S.MenuModal>
+              </Link>
+            </S.MenuBarListItem>
+          </>
+        )}
+        {isLogin && (
+          <>
+            <S.MenuBarListItem>
+              <Link to="/user">
+                <img
+                  src="https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg"
+                  alt="img"
+                  style={{
+                    width: '3rem',
+                    height: '3rem',
+                    borderRadius: '100%',
+                  }}
+                />
+                <span>닉네임</span>
+              </Link>
+            </S.MenuBarListItem>
+            <S.MenuBarListItem>
+              <IoMdLogOut />
+              <span onClick={onClickLogin}>로그아웃</span>
+            </S.MenuBarListItem>
+            <S.MenuBarListItem onClick={onReportModalOpen}>
+              <RiPoliceCarLine />
+              <span>신고하기</span>
+            </S.MenuBarListItem>
+          </>
+        )}
+        <S.MenuBarListItem>
+          <span>
+            <BiCategory />
+          </span>
+          <span>카테고리</span>
+        </S.MenuBarListItem>
+      </S.MenuBarList>
+
+      <S.ReportModal isReportModalOpen={isReportModalOpen}>
+        <S.ReportForm>
+          <S.ReportFormHeader>
+            <span>신고하기</span>
+            <GrClose onClick={onReportModalOpen} />
+          </S.ReportFormHeader>
+          <S.ReportTitleInput
+            placeholder="제목"
+            maxLength={50}
+            width={'50rem'}
+            height={'5rem'}
+            fontSize={fs.l}
+          />
+          <S.ReportContent
+            placeholder="신고 내용"
+            maxLength={500}
+            onChange={handleReportContentChange}
+          ></S.ReportContent>
+          <S.ReportBtnWrap>
+            <S.ReportBtn
+              type="button"
+              action={'cancel'}
+              onClick={onReportModalOpen}
+            >
+              취소
+            </S.ReportBtn>
+            <S.ReportBtn
+              type="submit"
+              action={'report'}
+              onClick={onReportSubmit}
+            >
+              신고
+            </S.ReportBtn>
+          </S.ReportBtnWrap>
+        </S.ReportForm>
+      </S.ReportModal>
     </>
   );
 }

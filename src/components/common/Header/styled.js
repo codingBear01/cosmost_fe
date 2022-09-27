@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Button } from '../Button';
+import { Input } from '../Input';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -27,13 +29,13 @@ export const HeaderUtilWrap = styled.div`
   align-items: center;
 `;
 
-export const MenuModal = styled.div`
-  visibility: ${(props) => (props.isMenuOpen ? 'visible' : 'hidden')};
+export const MenuBarBackGround = styled.div`
+  visibility: ${(props) => (props.isMenuBarOpen ? 'visible' : 'hidden')};
   position: fixed;
   z-index: 1;
   top: 0;
   right: 0;
-  right: ${(props) => (props.isMenuOpen ? '0' : '-100%')};
+  right: ${(props) => (props.isMenuBarOpen ? '0' : '-100%')};
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
@@ -41,20 +43,20 @@ export const MenuModal = styled.div`
 
   ${media.mobile} {
     right: 0;
-    top: ${(props) => (props.isMenuOpen ? '-2%' : '-110%')};
+    top: ${(props) => (props.isMenuBarOpen ? '-2%' : '-110%')};
     width: 100%;
     heigth: 100%;
   }
 `;
 
-export const MenuModalList = styled.ul`
-  visibility: ${(props) => (props.isMenuOpen ? 'visible' : 'hidden')};
+export const MenuBarList = styled.ul`
+  visibility: ${(props) => (props.isMenuBarOpen ? 'visible' : 'hidden')};
   position: fixed;
   z-index: 999;
   top: -20px;
-  right: ${(props) => (props.isMenuOpen ? '0' : '-100%')};
+  right: ${(props) => (props.isMenuBarOpen ? '0' : '-100%')};
   display: flex;
-  justify-content: flex-start;
+  justify-content: felx-start;
   align-items: center;
   flex-direction: column;
   width: 40rem;
@@ -70,7 +72,7 @@ export const MenuModalList = styled.ul`
   transition: 400ms;
 
   > svg:first-child {
-    align-self: end;
+    align-self: flex-end;
     margin-right: 4rem;
     font-size: 2.5rem;
     cursor: pointer;
@@ -78,13 +80,14 @@ export const MenuModalList = styled.ul`
 
   ${media.mobile} {
     right: 0;
-    top: ${(props) => (props.isMenuOpen ? '-2%' : '-110%')};
+    top: ${(props) => (props.isMenuBarOpen ? '-2%' : '-110%')};
     width: 100%;
-    height: 25%;
+    height: 25rem;
+    padding-top: 4rem;
   }
 `;
 
-export const MenuModalListItem = styled.li`
+export const MenuBarListItem = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -93,9 +96,10 @@ export const MenuModalListItem = styled.li`
   padding: ${gap.s} ${gap.xl};
   border-radius: ${br.default};
   cursor: pointer;
-  transition: 150ms;
+  transition: 0.2s;
 
   &:hover {
+    background-color: ${color.lightGrey};
     box-shadow: inset 0 0 2px 1px ${color.grey};
   }
 
@@ -118,5 +122,95 @@ export const MenuModalListItem = styled.li`
   ${media.mobile} {
     width: 20%;
     margin: 0.5rem 0;
+  }
+`;
+
+export const ReportModal = styled.div`
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  display: ${(props) => (props.isReportModalOpen ? 'flex' : 'none')};
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: ${color.white};
+`;
+
+export const ReportForm = styled.form`
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 60rem;
+  height: 70rem;
+  padding: ${gap.xl};
+  border-radius: ${br.default};
+  background-color: ${color.white};
+`;
+
+export const ReportFormHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  span {
+    margin-left: 2rem;
+    color: ${color.black};
+    font-size: 3rem;
+    font-weight: 600;
+  }
+
+  svg {
+    align-self: flex-start;
+    margin-right: 2rem;
+    font-size: ${fs.xl};
+    cursor: pointer;
+  }
+`;
+
+export const ReportTitleInput = styled(Input)`
+  border-radius: 0;
+  border-bottom: 1px solid ${color.darkBlue};
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const ReportContent = styled.textarea`
+  width: 48rem;
+  height: 40rem;
+  padding: ${gap.m};
+  border: 1px solid ${color.darkBlue};
+  border-radius: ${br.default};
+  font-size: ${fs.m};
+`;
+
+export const ReportBtnWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 25rem;
+`;
+
+export const ReportBtn = styled.button`
+  width: 9rem;
+  height: 4rem;
+  background-color: ${(props) =>
+    props.action === 'cancel' ? color.lightGrey : color.lightBlue};
+  border-radius: ${br.default};
+  font-size: ${fs.m};
+  font-weight: 600;
+  color: ${(props) => (props.action === 'cancel' ? color.black : color.white)};
+  transition: all 0.15s ease-in;
+
+  &:hover {
+    background-color: ${(props) =>
+      props.action === 'cancel' ? color.grey : color.blue};
   }
 `;

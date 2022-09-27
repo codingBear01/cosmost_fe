@@ -8,7 +8,6 @@ import {
   UserPage,
 } from './components';
 import { Routes, Route } from 'react-router-dom';
-import { GoToTop } from './store';
 
 function App() {
   return (

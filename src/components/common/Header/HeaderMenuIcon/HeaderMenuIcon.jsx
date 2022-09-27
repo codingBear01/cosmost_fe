@@ -32,9 +32,9 @@ const StyledHeaderMenuIcon = styled.button`
   }
 `;
 
-function HeaderMenuIcon({ onMenuOpen }) {
+function HeaderMenuIcon({ onMenuBarOpen }) {
   return (
-    <StyledHeaderMenuIcon onClick={onMenuOpen}>
+    <StyledHeaderMenuIcon onClick={onMenuBarOpen}>
       <CgMenuGridR />
     </StyledHeaderMenuIcon>
   );
