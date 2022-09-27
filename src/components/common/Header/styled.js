@@ -51,15 +51,19 @@ export const MenuBarBackGround = styled.div`
   }
 `;
 
+export const MenuBar = styled.div``;
+
 export const MenuBarList = styled.ul`
+  display: flex;
+  justify-content: felx-start;
+  align-items: center;
+  flex-direction: column;
   visibility: ${(props) => (props.isMenuBarOpen ? 'visible' : 'hidden')};
   position: fixed;
   z-index: 999;
   top: -20px;
   right: ${(props) => (props.isMenuBarOpen ? '0' : '-100%')};
   display: flex;
-  justify-content: felx-start;
-  align-items: center;
   flex-direction: column;
   width: 40rem;
   height: 100vh;
@@ -73,10 +77,9 @@ export const MenuBarList = styled.ul`
   color: ${color.darkBlue};
   transition: 400ms;
 
-  > svg:first-child {
-    align-self: flex-end;
-    margin-right: 4rem;
-    font-size: 2.5rem;
+  svg {
+    align-self: end;
+    margin-right: ${gap.xl};
     cursor: pointer;
   }
 
@@ -84,7 +87,7 @@ export const MenuBarList = styled.ul`
     right: 0;
     top: ${(props) => (props.isMenuBarOpen ? '-2%' : '-110%')};
     width: 100%;
-    height: 25rem;
+    height: 30rem;
     padding-top: 4rem;
   }
 `;
@@ -182,8 +185,6 @@ export const ReportCategories = styled.select`
     outline: none;
   }
 `;
-
-export const ReportOption = styled.option``;
 
 export const ReportTitle = styled.span`
   margin-left: ${gap.l};

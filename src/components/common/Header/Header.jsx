@@ -72,6 +72,7 @@ function Header() {
       </S.Header>
 
       <S.MenuBarBackGround isMenuBarOpen={isMenuBarOpen}></S.MenuBarBackGround>
+
       <S.MenuBarList isMenuBarOpen={isMenuBarOpen}>
         <GrClose onClick={onMenuBarOpen} />
         {!isLogin && (
@@ -134,9 +135,9 @@ function Header() {
           <S.ReportCategories>
             {REPORT_CATEGORIES_LIST &&
               REPORT_CATEGORIES_LIST.map((cat, i) => (
-                <S.ReportOption key={cat.id} value={cat.value}>
+                <option key={cat.id} value={cat.value}>
                   {cat.option}
-                </S.ReportOption>
+                </option>
               ))}
           </S.ReportCategories>
 

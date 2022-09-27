@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Input } from '../../';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -7,7 +8,6 @@ import {
   GAP_LIST as gap,
   BREAK_POINTS as media,
 } from './../../../style/';
-import { Input } from '../../';
 
 export const FirstSectionContainer = styled.div`
   display: flex;
