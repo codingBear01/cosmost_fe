@@ -24,7 +24,11 @@ function MainFirstSection() {
   }, 2000);
 
   return (
-    <Section height={'86.8rem'} backgroundColor={color.darkBlue}>
+    <Section
+      height={'86.8rem'}
+      backgroundColor={color.darkBlue}
+      paddingTop={'7rem'}
+    >
       <S.FirstSectionContainer>
         <S.FirstSectionContent>
           <S.FirstSectionTitle
