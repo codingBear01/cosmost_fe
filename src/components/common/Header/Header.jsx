@@ -35,7 +35,7 @@ function Header() {
         </S.HeaderUtilWrap>
       </S.HeaderContainer>
 
-      <S.MenuModal isMenuOpen={isMenuOpen}>
+      {/* <S.MenuModal isMenuOpen={isMenuOpen}>
         <ul>
           <li>
             {!isLogin && (
@@ -54,7 +54,7 @@ function Header() {
           </li>
           <li>카테고리</li>
         </ul>
-      </S.MenuModal>
+      </S.MenuModal> */}
     </S.Header>
   );
 }
