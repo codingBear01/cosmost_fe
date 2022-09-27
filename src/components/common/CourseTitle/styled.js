@@ -7,7 +7,7 @@ import {
 } from './../../../style/';
 
 export const StyledCourseTitle = styled.span`
-  margin-bottom: ${gap.l};
+  margin-bottom: ${gap.m};
   font-size: ${({ fontSize }) => fontSize};
   font-weight: 600;
   cursor: pointer;

@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import * as S from './styled';
-import { Button, HashTag, Input, Section } from '../../';
+import { Button, Section } from '../../';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -36,9 +37,11 @@ function MainFirstSection() {
               height={'5rem'}
               fontSize={fs.xl}
             ></S.SearchInput>
-            <Button width={'10rem'} height={'5rem'} fontSize={'2.5rem'}>
-              검색
-            </Button>
+            <Link to="/course/result">
+              <Button width={'10rem'} height={'5rem'} fontSize={'2.5rem'}>
+                검색
+              </Button>
+            </Link>
           </S.MainSearchArea>
 
           <div>

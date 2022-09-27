@@ -26,7 +26,7 @@ export const AddedCourseBox = styled.div`
   align-items: flex-start;
   flex-direction: column;
   width: 100%;
-  padding: ${gap.m} 0 ${gap.m} ${gap.m};
+  padding: 0 0 ${gap.m} ${gap.m};
 `;
 
 export const AddedCourseDesc = styled.p`

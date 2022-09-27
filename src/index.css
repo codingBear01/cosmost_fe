@@ -47,6 +47,7 @@ a:visited,
 a:active {
   padding: 0;
   text-decoration: none;
+  color: #0a0a0a;
 }
 
 li {

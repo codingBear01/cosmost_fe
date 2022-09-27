@@ -9,7 +9,7 @@ import {
 import { Button, PageRootDiv, PageTitle, HeightCenterDiv } from '../common';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { StyledButton } from '../common/Button/Button';
-import AgreementPageData from '../../store/data/AgreementPageData';
+import { AgreementPageData } from '../../store/';
 import { Link } from 'react-router-dom';
 
 const FlexDiv = styled.div`

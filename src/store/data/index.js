@@ -1,0 +1,1 @@
+export { AgreementPageData } from './AgreementPageData';

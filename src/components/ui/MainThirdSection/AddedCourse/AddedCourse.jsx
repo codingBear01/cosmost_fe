@@ -1,6 +1,7 @@
 import React from 'react';
-import { CourseImg, CourseTitle, HashTag } from '../../..';
+import { Link } from 'react-router-dom';
 import * as S from './styled';
+import { CourseImg, CourseTitle, HashTag } from '../../..';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -11,27 +12,29 @@ import {
 
 function AddedCourse() {
   return (
-    <S.AddedCourseWrap>
-      <CourseImg width={'28rem'} height={'100%'}></CourseImg>
-      <S.AddedCourseBox>
-        <CourseTitle fontSize={fs.l}>코스 제목</CourseTitle>
-        <S.AddedCourseDesc>
-          코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//코스 설명이당!!ㅇㅅㅇ//
-          코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스
-          설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//
-          코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스
-          설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//
-          코스 설명이당!!ㅇㅅㅇ//
-        </S.AddedCourseDesc>
-        <div>
-          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-        </div>
-      </S.AddedCourseBox>
-    </S.AddedCourseWrap>
+    <Link to="/course/detail">
+      <S.AddedCourseWrap>
+        <CourseImg width={'28rem'} height={'100%'}></CourseImg>
+        <S.AddedCourseBox>
+          <CourseTitle fontSize={fs.l}>코스 제목</CourseTitle>
+          <S.AddedCourseDesc>
+            코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//코스
+            설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//
+            코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스
+            설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//
+            코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스
+            설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//
+          </S.AddedCourseDesc>
+          <div>
+            <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+            <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+            <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+            <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+            <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+          </div>
+        </S.AddedCourseBox>
+      </S.AddedCourseWrap>
+    </Link>
   );
 }
 
