@@ -14,7 +14,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { PageRootDiv, PageTitle, HeightCenterDiv } from "../common";
 import { Footer } from "../";
 
-const rootElementHeight = document.getElementById("root").clientHeight;
+// const rootElementHeight = document.getElementById("root").clientHeight;
 
 const SnsLoginImageSrc = [
   {
@@ -133,9 +133,8 @@ function LoginPage() {
       [e.target.name]: e.target.value,
     });
   };
-  console.log(rootElementHeight);
   return (
-    <PageRootDiv height={rootElementHeight + "px"}>
+    <PageRootDiv>
       <HeightCenterDiv>
         <div style={{ margin: "18rem 0 18rem 0" }}>
           <Link to="/" style={{ textAlign: "center" }}>

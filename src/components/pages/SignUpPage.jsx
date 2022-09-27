@@ -150,7 +150,6 @@ function SignUpPage() {
           </div>
         </SingUpForm>
       </HeightCenterDiv>
-      <Footer />
     </PageRootDiv>
   );
 }

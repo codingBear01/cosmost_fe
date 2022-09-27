@@ -101,7 +101,6 @@ function AgreementPage() {
           </AgreementPageButton>
         </FlexDiv>
       </HeightCenterDiv>
-      <Footer />
     </PageRootDiv>
   );
 }
