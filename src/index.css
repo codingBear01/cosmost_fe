@@ -50,6 +50,11 @@ a:active {
   color: #0a0a0a;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 li {
   list-style: none;
 }

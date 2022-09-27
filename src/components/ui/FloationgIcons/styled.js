@@ -32,7 +32,7 @@ export const FloatingIcon = styled.div`
   }
 
   ${media.tablet} {
-    right: 8rem;
+    right: 5rem;
   }
 
   ${media.mobile} {

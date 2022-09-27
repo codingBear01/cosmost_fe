@@ -28,20 +28,35 @@ export const HeaderUtilWrap = styled.div`
 `;
 
 export const MenuModal = styled.div`
-  overflow: hidden;
-  position: relative;
-  transform: ${(props) =>
-    props.isMenuOpen ? 'translateX(375%)' : 'translateX(550%)'};
-  height: 100%;
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 1;
+  right: ${(props) => (props.isMenuOpen ? '0' : '-100%')};
+  align-items: center;
+  justify-content: flex-end;
   width: 40rem;
-  transition: all 800ms cubic-bezier(0.8, 0, 0.33, 1);
-  border-radius: ${(props) =>
-    props.isMenuOpen ? '0% 0% 0% 0%' : '0% 0% 100% 50%'};
-  background: ${(props) =>
-    props.isMenuOpen ? 'rgba(255, 255, 255, 0.6)' : 'none'};
+  margin-top: ${gap.l};
+  background-color: ${color.white};
+  border-radius: ${br.default};
+  font-size: ${fs.l};
+  font-weight: 600;
+  color: ${color.darkBlue};
+  transition: 850ms;
+  border: 1px solid white;
 
-  ${media.tablet} {
-    transform: ${(props) =>
-      props.isMenuOpen ? 'translateX(150rem)' : 'translateX(190rem)'};
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 40rem;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      width: 60%;
+      margin: ${gap.m};
+    }
   }
 `;

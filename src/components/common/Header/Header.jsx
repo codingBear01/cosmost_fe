@@ -6,11 +6,10 @@ import { HeaderLogo } from './HeaderLogo';
 import { HeaderMenuIcon } from './HeaderMenuIcon';
 
 function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
 
   const onClickLogin = () => {
-    console.log('clicked');
     setIsLogin(!isLogin);
   };
 
@@ -35,26 +34,41 @@ function Header() {
         </S.HeaderUtilWrap>
       </S.HeaderContainer>
 
-      {/* <S.MenuModal isMenuOpen={isMenuOpen}>
+      <S.MenuModal isMenuOpen={isMenuOpen}>
         <ul>
-          <li>
-            {!isLogin && (
-              <>
-                <span onClick={onClickLogin}>로그인</span>
+          {!isLogin && (
+            <>
+              <li onClick={onClickLogin}>
+                <span>로그인</span>
                 <span>회원가입</span>
-              </>
-            )}
-            {isLogin && (
-              <>
-                <span>프사 & 닉네임</span>
-                <span>마이페이지</span>
+              </li>
+            </>
+          )}
+          {isLogin && (
+            <>
+              <li>
+                <img
+                  src="https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg"
+                  alt="img"
+                  style={{
+                    width: '3rem',
+                    height: '3rem',
+                    borderRadius: '100%',
+                  }}
+                />
+                <span>닉네임</span>
+
+                <span>아이콘</span>
                 <span onClick={onClickLogin}>로그아웃</span>
-              </>
-            )}
-          </li>
+              </li>
+              <li>
+                <span>신고하기</span>
+              </li>
+            </>
+          )}
           <li>카테고리</li>
         </ul>
-      </S.MenuModal> */}
+      </S.MenuModal>
     </S.Header>
   );
 }
