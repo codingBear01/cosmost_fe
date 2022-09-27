@@ -6,14 +6,15 @@ import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from './../../../style/';
 import { USER_RANKING_LIST } from './../../../store/data/';
 import { useInterval } from './../../hooks/';
 
+const RANKER_LENGTH = USER_RANKING_LIST.length;
+
 function MainFirstSection() {
   const [topPosition, setTopPosition] = useState(0);
   const [rankerIndex, setRankerIndex] = useState(1);
-  const rankerLength = USER_RANKING_LIST.length;
 
   // 2초마다 topPosition 및 rankerIndex값에 변화를 줘서 Ranking 보여주기 기능 구현하는 함수
   useInterval(() => {
-    if (rankerIndex === rankerLength) {
+    if (rankerIndex === RANKER_LENGTH) {
       setTopPosition(0);
       setRankerIndex(1);
     } else {
