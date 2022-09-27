@@ -4,6 +4,7 @@ import * as S from './styled';
 import { Button, SmallProfilePic } from '../';
 import { HeaderLogo } from './HeaderLogo';
 import { HeaderMenuIcon } from './HeaderMenuIcon';
+import { HeaderSearchIcon } from './HeaderSearchIcon';
 import { GrClose } from 'react-icons/gr';
 import { IoMdLogIn, IoMdLogOut } from 'react-icons/io';
 import { RiPoliceCarLine } from 'react-icons/ri';
@@ -60,6 +61,8 @@ function Header() {
           </Link>
 
           <S.HeaderUtilWrap>
+            <HeaderSearchIcon></HeaderSearchIcon>
+
             <Link to="/course/register">
               <Button width={'14rem'} height={'4rem'} fontSize={'1.4rem'}>
                 코스 등록하기

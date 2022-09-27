@@ -230,29 +230,3 @@ export const ReportBtn = styled.button`
       action === 'cancel' ? color.grey : color.blue};
   }
 `;
-
-export const HeaderSearchModal = styled.div`
-  visibility: ${({ isSearchModalOpen }) =>
-    isSearchModalOpen ? 'visible' : 'hidden'};
-  position: fixed;
-  z-index: 2;
-  top: ${({ isSearchModalOpen }) => (isSearchModalOpen ? '0;' : '-100%')};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  height: 30%;
-  background-color: ${color.lightGrey};
-  transition: 0.15s;
-
-  svg {
-    color: ${color.white};
-  }
-`;
-
-export const SearchModalInput = styled(Input)`
-  &:focus {
-    outline: none;
-  }
-`;
