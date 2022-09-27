@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BsFillCircleFill } from "react-icons/bs";
 import {
@@ -42,6 +42,9 @@ const SingUpForm = styled.form`
 `;
 
 function SignUpPage() {
+  const [inputState, setInputState] = useState({
+    nickname: "",
+  });
   return (
     <PageRootDiv>
       <HeightCenterDiv>
@@ -106,7 +109,11 @@ function SignUpPage() {
               width={"10rem"}
               height={"5rem"}
             ></SignUpInput>
-            <div>월</div>
+            <SignUpInput
+              placeholder="월"
+              width={"10rem"}
+              height={"5rem"}
+            ></SignUpInput>
             <SignUpInput
               placeholder="일"
               width={"10rem"}
