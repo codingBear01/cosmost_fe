@@ -7,11 +7,9 @@ import {
 } from './../../../style/';
 
 export const Footer = styled.footer`
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  bottom: 0px;
   width: 100%;
   height: 20rem;
   margin-top: 5rem;

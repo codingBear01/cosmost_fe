@@ -51,19 +51,15 @@ export const MenuBarBackGround = styled.div`
   }
 `;
 
-export const MenuBar = styled.div``;
-
 export const MenuBarList = styled.ul`
+  visibility: ${({ isMenuBarOpen }) => (isMenuBarOpen ? 'visible' : 'hidden')};
+  position: fixed;
+  z-index: 1;
+  top: -20px;
+  right: ${({ isMenuBarOpen }) => (isMenuBarOpen ? '0' : '-100%')};
   display: flex;
   justify-content: felx-start;
   align-items: center;
-  flex-direction: column;
-  visibility: ${(props) => (props.isMenuBarOpen ? 'visible' : 'hidden')};
-  position: fixed;
-  z-index: 999;
-  top: -20px;
-  right: ${(props) => (props.isMenuBarOpen ? '0' : '-100%')};
-  display: flex;
   flex-direction: column;
   width: 40rem;
   height: 100vh;
@@ -85,7 +81,7 @@ export const MenuBarList = styled.ul`
 
   ${media.mobile} {
     right: 0;
-    top: ${(props) => (props.isMenuBarOpen ? '-2%' : '-110%')};
+    top: ${({ isMenuBarOpen }) => (isMenuBarOpen ? '-2%' : '-110%')};
     width: 100%;
     height: 30rem;
     padding-top: 4rem;
@@ -134,7 +130,7 @@ export const ReportModal = styled.div`
   position: fixed;
   top: 0;
   z-index: 1;
-  display: ${(props) => (props.isReportModalOpen ? 'flex' : 'none')};
+  display: ${({ isReportModalOpen }) => (isReportModalOpen ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -221,16 +217,16 @@ export const ReportBtnWrap = styled.div`
 export const ReportBtn = styled.button`
   width: 9rem;
   height: 4rem;
-  background-color: ${(props) =>
-    props.action === 'cancel' ? color.lightGrey : color.lightBlue};
+  background-color: ${({ action }) =>
+    action === 'cancel' ? color.lightGrey : color.lightBlue};
   border-radius: ${br.default};
   font-size: ${fs.m};
   font-weight: 600;
-  color: ${(props) => (props.action === 'cancel' ? color.black : color.white)};
+  color: ${({ action }) => (action === 'cancel' ? color.black : color.white)};
   transition: all 0.15s ease-in;
 
   &:hover {
-    background-color: ${(props) =>
-      props.action === 'cancel' ? color.grey : color.blue};
+    background-color: ${({ action }) =>
+      action === 'cancel' ? color.grey : color.blue};
   }
 `;

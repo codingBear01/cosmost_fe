@@ -12,5 +12,6 @@ export const StyledSection = styled.section`
   justify-content: center;
   align-items: center;
   height: ${({ height }) => height};
+  padding-top: ${({ paddingTop }) => paddingTop};
   background-color: ${({ backgroundColor }) => backgroundColor};
 `;

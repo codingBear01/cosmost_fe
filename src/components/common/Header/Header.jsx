@@ -4,13 +4,14 @@ import * as S from './styled';
 import { Button, SmallProfilePic } from '../';
 import { HeaderLogo } from './HeaderLogo';
 import { HeaderMenuIcon } from './HeaderMenuIcon';
+import { HeaderSearchIcon } from './HeaderSearchIcon';
 import { GrClose } from 'react-icons/gr';
 import { IoMdLogIn, IoMdLogOut } from 'react-icons/io';
 import { RiPoliceCarLine } from 'react-icons/ri';
 import { BiCategory } from 'react-icons/bi';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { FONT_SIZE_LIST as fs } from '../../../style';
-import { REPORT_CATEGORIES_LIST } from './../../../store/data/';
+import { REPORT_CATEGORIES_LIST } from '../../../data';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(false);
@@ -60,6 +61,8 @@ function Header() {
           </Link>
 
           <S.HeaderUtilWrap>
+            <HeaderSearchIcon></HeaderSearchIcon>
+
             <Link to="/course/register">
               <Button width={'14rem'} height={'4rem'} fontSize={'1.4rem'}>
                 코스 등록하기

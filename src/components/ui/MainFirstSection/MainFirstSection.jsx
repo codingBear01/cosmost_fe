@@ -3,26 +3,32 @@ import { Link } from 'react-router-dom';
 import * as S from './styled';
 import { Button, Section, SmallProfilePic } from '../../';
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from './../../../style/';
-import { USER_RANKING_LIST } from './../../../store/data/RankingData';
+import { USER_RANKING_LIST } from '../../../data';
 import { useInterval } from './../../hooks/';
+
+const RANKER_LENGTH = USER_RANKING_LIST.length;
 
 function MainFirstSection() {
   const [topPosition, setTopPosition] = useState(0);
   const [rankerIndex, setRankerIndex] = useState(1);
-  const rankerLength = USER_RANKING_LIST.length;
 
+  // 2초마다 topPosition 및 rankerIndex값에 변화를 줘서 Ranking 보여주기 기능 구현하는 함수
   useInterval(() => {
-    if (rankerIndex === rankerLength) {
+    if (rankerIndex === RANKER_LENGTH) {
       setTopPosition(0);
       setRankerIndex(1);
     } else {
-      setTopPosition((prev) => prev - 55);
+      setTopPosition((prev) => prev - 5.5);
       setRankerIndex((prev) => prev + 1);
     }
   }, 2000);
 
   return (
-    <Section height={'86.8rem'} backgroundColor={color.darkBlue}>
+    <Section
+      height={'86.8rem'}
+      backgroundColor={color.darkBlue}
+      paddingTop={'7rem'}
+    >
       <S.FirstSectionContainer>
         <S.FirstSectionContent>
           <S.FirstSectionTitle
@@ -55,15 +61,12 @@ function MainFirstSection() {
           </div>
 
           <S.MainRankingBox>
-            {/* 일정 시간 지날 때마다 Y좌푯값 or top위치 변경하여 index 1씩 증가하다가 마지막에 다다르면 초기화 
-            좌푯값: top: -55px
-            */}
             {USER_RANKING_LIST &&
               USER_RANKING_LIST.map((ranker, i) => (
                 <li
                   key={ranker.id}
                   style={{
-                    top: topPosition,
+                    top: `${topPosition}rem`,
                   }}
                 >
                   {ranker.isTop && <span>👑</span>}
