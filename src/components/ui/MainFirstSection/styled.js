@@ -88,7 +88,7 @@ export const MainRankingBox = styled.ul`
     align-items: center;
     justify-content: space-between;
     width: 60%;
-    transition: 0.15s ease-in;
+    transition: 0.2s;
   }
 `;
 
