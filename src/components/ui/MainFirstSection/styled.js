@@ -80,15 +80,15 @@ export const MainRankingBox = styled.ul`
   font-size: 1.6rem;
   color: ${color.white};
   gap: 2.5rem;
-  // overflow: hidden;
+  overflow: hidden;
 
   li {
     position: relative;
-    top: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 60%;
+    transition: 0.15s ease-in;
   }
 `;
 
@@ -103,7 +103,7 @@ export const SliderWrap = styled.div`
     width: 120rem;
     height: 30rem;
     border-radius: ${br.default};
-    // background-color: ${color.grey};
+    background-color: ${color.grey};
     color: ${color.white};
   }
 

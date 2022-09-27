@@ -10,9 +10,22 @@ import {
   GAP_LIST as gap,
 } from './../../../style/';
 import { USER_RANKING_LIST } from './../../../store/data/RankingData';
+import { useInterval } from './../../hooks/';
 
 function MainFirstSection() {
   const [topPosition, setTopPosition] = useState(0);
+  const [rankerIndex, setRankerIndex] = useState(1);
+  const rankerLength = USER_RANKING_LIST.length;
+
+  useInterval(() => {
+    if (rankerIndex === rankerLength) {
+      setTopPosition(0);
+      setRankerIndex(1);
+    } else {
+      setTopPosition((prev) => prev - 55);
+      setRankerIndex((prev) => prev + 1);
+    }
+  }, 2000);
 
   return (
     <Section height={'86.8rem'} backgroundColor={color.darkBlue}>
@@ -56,7 +69,7 @@ function MainFirstSection() {
                 <li
                   key={ranker.id}
                   style={{
-                    top: 0 - topPosition,
+                    top: topPosition,
                   }}
                 >
                   {ranker.isTop && <span>👑</span>}
