@@ -66,6 +66,32 @@ export const MainHashTag = styled.span`
   }
 `;
 
+export const MainRankingBox = styled.ul`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 21.5rem;
+  height: 5rem;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 0.1rem solid ${color.white};
+  border-bottom: 0.1rem solid ${color.white};
+  font-size: 1.6rem;
+  color: ${color.white};
+  gap: 2.5rem;
+  // overflow: hidden;
+
+  li {
+    position: relative;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 60%;
+  }
+`;
+
 export const SliderWrap = styled.div`
   display: flex;
   justify-content: center;
@@ -77,7 +103,7 @@ export const SliderWrap = styled.div`
     width: 120rem;
     height: 30rem;
     border-radius: ${br.default};
-    background-color: ${color.grey};
+    // background-color: ${color.grey};
     color: ${color.white};
   }
 

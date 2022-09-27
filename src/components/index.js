@@ -10,6 +10,7 @@ export {
   MoreCourseBtn,
   Section,
   SectionTitle,
+  SmallProfilePic,
 } from './common/';
 
 /* 특정 페이지에서만 쓰이는 요소들 */

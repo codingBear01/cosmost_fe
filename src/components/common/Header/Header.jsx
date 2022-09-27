@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import * as S from './styled';
-import { Button } from '../';
+import { Button, SmallProfilePic } from '../';
 import { HeaderLogo } from './HeaderLogo';
 import { HeaderMenuIcon } from './HeaderMenuIcon';
 import { GrClose } from 'react-icons/gr';
@@ -95,14 +95,11 @@ function Header() {
           <>
             <S.MenuBarListItem>
               <Link to="/user">
-                <img
-                  src="https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg"
-                  alt="img"
-                  style={{
-                    width: '3rem',
-                    height: '3rem',
-                    borderRadius: '100%',
-                  }}
+                <SmallProfilePic
+                  src={
+                    'https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg'
+                  }
+                  alt={'img'}
                 />
                 <span>닉네임</span>
               </Link>

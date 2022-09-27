@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import * as S from './styled';
-import { Button, Section } from '../../';
+import { Button, Section, SmallProfilePic } from '../../';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -9,20 +9,11 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
 } from './../../../style/';
-
-const RANKING_LIST = [];
-
-for (let i = 1; i <= 10; i++) {
-  RANKING_LIST.push({
-    id: i,
-    rank: i,
-    imgUrl:
-      'https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg',
-    nickname: '강명모',
-  });
-}
+import { USER_RANKING_LIST } from './../../../store/data/RankingData';
 
 function MainFirstSection() {
+  const [topPosition, setTopPosition] = useState(0);
+
   return (
     <Section height={'86.8rem'} backgroundColor={color.darkBlue}>
       <S.FirstSectionContainer>
@@ -56,30 +47,26 @@ function MainFirstSection() {
             <S.MainHashTag>#해시태그</S.MainHashTag>
           </div>
 
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '21.5rem',
-              height: '5rem',
-              margin: '4.5rem 0 0 0',
-              borderTop: `0.1rem solid ${color.white}`,
-              borderBottom: `0.1rem solid ${color.white}`,
-              fontSize: '1.6rem',
-              color: `${color.white}`,
-              gap: '1rem',
-            }}
-          >
-            <span>👑</span>
-            <span>1</span>
-            <img
-              src="https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg"
-              alt="img"
-              style={{ width: '3rem', height: '3rem', borderRadius: '100%' }}
-            />
-            <span>강명모</span>
-          </div>
+          <S.MainRankingBox>
+            {/* 일정 시간 지날 때마다 Y좌푯값 or top위치 변경하여 index 1씩 증가하다가 마지막에 다다르면 초기화 
+            좌푯값: top: -55px
+            */}
+            {USER_RANKING_LIST &&
+              USER_RANKING_LIST.map((ranker, i) => (
+                <li
+                  key={ranker.id}
+                  style={{
+                    top: 0 - topPosition,
+                  }}
+                >
+                  {ranker.isTop && <span>👑</span>}
+                  {!ranker.isTop && <span style={{ width: '1.8rem' }}></span>}
+                  <span>{ranker.rank}</span>
+                  <SmallProfilePic src={ranker.imgUrl} alt={ranker.nickname} />
+                  <span>{ranker.nickname}</span>
+                </li>
+              ))}
+          </S.MainRankingBox>
         </S.FirstSectionContent>
 
         <S.SliderWrap>
