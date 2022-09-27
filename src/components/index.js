@@ -29,4 +29,5 @@ export {
   LoginPage,
   MainPage,
   SearchResultPage,
+  UserPage,
 } from './pages/';
