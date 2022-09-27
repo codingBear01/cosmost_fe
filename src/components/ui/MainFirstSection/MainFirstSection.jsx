@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import * as S from './styled';
 import { Button, Section, SmallProfilePic } from '../../';
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from './../../../style/';
-import { USER_RANKING_LIST } from './../../../store/data/';
+import { USER_RANKING_LIST } from '../../../data';
 import { useInterval } from './../../hooks/';
 
 const RANKER_LENGTH = USER_RANKING_LIST.length;

@@ -11,7 +11,7 @@ import { RiPoliceCarLine } from 'react-icons/ri';
 import { BiCategory } from 'react-icons/bi';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { FONT_SIZE_LIST as fs } from '../../../style';
-import { REPORT_CATEGORIES_LIST } from './../../../store/data/';
+import { REPORT_CATEGORIES_LIST } from '../../../data';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(false);
