@@ -27,6 +27,17 @@ export const HeaderContainer = styled.div`
   height: 100%;
 `;
 
+export const HeaderSearchWrap = styled.div`
+  width: 100rem;
+  margin: 0 ${gap.xl};
+  ${media.tablet} {
+    width: 50rem;
+  }
+  ${media.mobile} {
+    width: 30rem;
+  }
+`;
+
 export const HeaderUtilWrap = styled.div`
   display: flex;
   align-items: center;

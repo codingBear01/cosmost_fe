@@ -15,8 +15,7 @@ export const StyledSearchInput = styled(Input)`
     !isSearchBarOpen || (pathName === '/' && scrollY < 307)
       ? 'hidden'
       : 'visible'};
-  position: relative;
-  right: -8rem;
+  // right: -8rem;
   scale: ${({ isSearchBarOpen, scrollY, pathName }) =>
     !isSearchBarOpen || (pathName === '/' && scrollY < 307) ? '0' : '1'};
   transition: all 0.15s ease-in;
@@ -24,6 +23,11 @@ export const StyledSearchInput = styled(Input)`
   &:focus {
     outline: none;
   }
+
+  // ${media.tablet} {
+  //   right: -2.5rem;
+  //   width: 40rem;
+  // }
 
   // ${media.mobile} {
   //   right: -2.5rem;

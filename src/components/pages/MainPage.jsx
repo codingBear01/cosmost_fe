@@ -27,16 +27,16 @@ function MainPage() {
   };
   useEffect(() => {
     // 메인 페이지에서 scrollY가 307보다 작다면 헤더 서치바 close
-    // if (pathName === '/' || scrollY < 307) {
-    //   setIsSearchBarOpen(false);
-    // }
+    if (pathName === '/' && scrollY < 307) {
+      setIsSearchBarOpen(false);
+    }
     const watch = () => {
       window.addEventListener('scroll', handleScrollY);
     };
     watch();
     return () => window.removeEventListener('scroll', handleScrollY);
   }, []);
-  console.log(window.scrollY);
+
   return (
     <>
       <Header pathName={pathName} scrollY={scrollY} />

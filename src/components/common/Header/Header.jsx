@@ -66,9 +66,10 @@ function Header({ pathName, scrollY }) {
     }
   }, [isMenuBarOpen, isReportModalOpen]);
 
-  console.log(scrollY);
-  console.log(pathName);
-  console.log(isSearchBarOpen);
+  useEffect(() => {
+    if (pathName !== '/') setIsSearchBarOpen(false);
+  }, []);
+
   return (
     <>
       <S.Header>
@@ -77,15 +78,17 @@ function Header({ pathName, scrollY }) {
             <HeaderLogo>cosMost</HeaderLogo>
           </Link>
 
-          <HeaderSearchInput
-            type={'text'}
-            width={'50%'}
-            height={'3.8rem'}
-            fontSize={fs.s}
-            isSearchBarOpen={isSearchBarOpen}
-            scrollY={scrollY}
-            pathName={pathName}
-          />
+          <S.HeaderSearchWrap>
+            <HeaderSearchInput
+              type={'text'}
+              width={'100%'}
+              height={'3.8rem'}
+              fontSize={fs.s}
+              isSearchBarOpen={isSearchBarOpen}
+              pathName={pathName}
+              scrollY={scrollY}
+            />
+          </S.HeaderSearchWrap>
 
           <S.HeaderUtilWrap>
             <HeaderSearchIcon
