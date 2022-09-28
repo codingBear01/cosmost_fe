@@ -66,6 +66,9 @@ function Header({ pathName, scrollY }) {
     }
   }, [isMenuBarOpen, isReportModalOpen]);
 
+  console.log(scrollY);
+  console.log(pathName);
+  console.log(isSearchBarOpen);
   return (
     <>
       <S.Header>
@@ -76,10 +79,12 @@ function Header({ pathName, scrollY }) {
 
           <HeaderSearchInput
             type={'text'}
-            width={'120rem'}
+            width={'50%'}
             height={'3.8rem'}
             fontSize={fs.s}
             isSearchBarOpen={isSearchBarOpen}
+            scrollY={scrollY}
+            pathName={pathName}
           />
 
           <S.HeaderUtilWrap>

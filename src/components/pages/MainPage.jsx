@@ -23,20 +23,20 @@ function MainPage() {
 
   /* scroll event가 일어날 때마다 scrollY값을 state scrollY에 set하는 함수들 */
   const handleScrollY = () => {
-    // 메인 페이지에서 scrollY가 307보다 작다면 헤더 서치바 close
-    if (pathName === '/' && window.scrollY < 307) {
-      setIsSearchBarOpen(false);
-    }
     setScrollY(window.scrollY);
   };
   useEffect(() => {
+    // 메인 페이지에서 scrollY가 307보다 작다면 헤더 서치바 close
+    // if (pathName === '/' || scrollY < 307) {
+    //   setIsSearchBarOpen(false);
+    // }
     const watch = () => {
       window.addEventListener('scroll', handleScrollY);
     };
     watch();
     return () => window.removeEventListener('scroll', handleScrollY);
   }, []);
-
+  console.log(window.scrollY);
   return (
     <>
       <Header pathName={pathName} scrollY={scrollY} />
