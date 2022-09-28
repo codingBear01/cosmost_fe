@@ -1,3 +1,4 @@
+/* components */
 import * as S from './styled';
 
 const HeaderLogo = ({ children }) => (

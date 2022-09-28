@@ -1,4 +1,4 @@
-import React from 'react';
+/* components */
 import * as S from './styled';
 
 function HeaderSearchInput({ width, height, fontSize, isSearchBarOpen }) {

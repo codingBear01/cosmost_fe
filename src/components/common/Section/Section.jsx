@@ -1,3 +1,4 @@
+/* components */
 import * as S from './styled';
 
 // 각 페이지에서 활용하는 section

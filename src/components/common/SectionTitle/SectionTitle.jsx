@@ -1,5 +1,6 @@
-import React from 'react';
+/* hooks */
 import { Link } from 'react-router-dom';
+/* components */
 import * as S from './styled';
 import { MoreCourseBtn } from '..';
 

@@ -1,5 +1,8 @@
+/* hooks */
 import React, { useState, useEffect } from 'react';
+/* components */
 import * as S from './styled';
+/* react-icons */
 import { FaChevronUp } from 'react-icons/fa';
 
 function ToTopBtn() {
@@ -14,14 +17,14 @@ function ToTopBtn() {
   };
   // scrollY 값이 400보다 클 경우에만 ToTopBtn 표시
   useEffect(() => {
-    const handleShowTopBtn = () => {
+    const handleShowToTopBtn = () => {
       window.scrollY > 400
         ? setIsShownToTopBtn(true)
         : setIsShownToTopBtn(false);
     };
-    window.addEventListener('scroll', handleShowTopBtn);
+    window.addEventListener('scroll', handleShowToTopBtn);
     return () => {
-      window.removeEventListener('scroll', handleShowTopBtn);
+      window.removeEventListener('scroll', handleShowToTopBtn);
     };
   }, []);
 

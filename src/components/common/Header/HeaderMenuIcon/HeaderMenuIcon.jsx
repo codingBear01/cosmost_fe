@@ -1,4 +1,6 @@
+/* components */
 import * as S from './styled';
+/* react-icons */
 import { CgMenuGridR } from 'react-icons/cg';
 
 function HeaderMenuIcon({ handleMenuBarOpen }) {

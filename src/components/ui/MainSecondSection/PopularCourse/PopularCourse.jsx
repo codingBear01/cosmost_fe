@@ -1,8 +1,10 @@
-import React from 'react';
+/* hooks */
 import { Link } from 'react-router-dom';
-import { CourseImg, CourseTitle, HashTag } from '../../..';
-import { FONT_SIZE_LIST as fs } from '../../../../style';
+/* components */
 import * as S from './styled';
+import { CourseImg, CourseTitle, HashTag } from '../../..';
+/* static data */
+import { FONT_SIZE_LIST as fs } from '../../../../style';
 
 function PopularCourse() {
   return (

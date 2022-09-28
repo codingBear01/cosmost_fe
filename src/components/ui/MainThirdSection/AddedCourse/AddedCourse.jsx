@@ -1,7 +1,9 @@
-import React from 'react';
+/* hooks */
 import { Link } from 'react-router-dom';
+/* components */
 import * as S from './styled';
 import { CourseImg, CourseTitle, HashTag } from '../../..';
+/* static data */
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,

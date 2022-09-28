@@ -1,4 +1,4 @@
-import React from 'react';
+/* components */
 import * as S from './styled';
 
 // 30 * 30 사이즈의 작은 프로필 이미지

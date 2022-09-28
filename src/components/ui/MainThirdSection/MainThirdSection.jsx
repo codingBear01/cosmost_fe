@@ -1,6 +1,7 @@
-import React from 'react';
+/* components */
 import { Section, SectionTitle } from '../..';
 import { AddedCourseContainer } from './AddedCourseContainer/';
+/* static data */
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
