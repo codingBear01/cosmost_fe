@@ -6,20 +6,14 @@ import {
   GAP_LIST,
   FONT_SIZE_LIST,
 } from '../../style/';
-import {
-  FlexDiv,
-  Button,
-  PageRootDiv,
-  PageTitle,
-  HeightCenterDiv,
-} from '../common';
+import { FlexDiv, PageRootDiv, PageTitle, HeightCenterDiv } from '../common';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
-import { Footer } from '../';
 import { StyledButton } from '../common/Button/styled';
 import { AgreementPageData } from '../../data/';
 
 const AgreementPageButton = styled(StyledButton)`
+  margin: 0 1rem;
   background-color: ${(props) => props.backgroundColor || StyledButton.color};
 `;
 
@@ -124,41 +118,39 @@ function AgreementPage(props) {
   };
 
   return (
-    <PageRootDiv>
-      <HeightCenterDiv justifyContent={'space-around'} height="100vh">
-        <Link to="/">
-          <PageTitle>cosMost</PageTitle>
-        </Link>
-        {AgreementPageData.map((item, index) => {
-          return (
-            <AgreementPageItem
-              key={index}
-              title={item.title}
-              content={item.content}
-              enable={checkState[item.state]}
-              onClick={(e) => onClickCheck(e, item.state)}
-            />
-          );
-        })}
-        <FlexDiv margin={'0 0 2rem 0'} justifyContent={'space-between'}>
-          <AgreementPageButton
-            backgroundColor={COLOR_LIST.grey}
-            width={'24rem'}
-            height={'6rem'}
-            onClick={onClickCancleButton}
-          >
-            취소
-          </AgreementPageButton>
-          <AgreementPageButton
-            width={'24rem'}
-            height={'6rem'}
-            onClick={onClickAgreeButton}
-          >
-            확인
-          </AgreementPageButton>
-        </FlexDiv>
-      </HeightCenterDiv>
-    </PageRootDiv>
+    <HeightCenterDiv justifyContent={'space-around'}>
+      <Link to="/">
+        <PageTitle>cosMost</PageTitle>
+      </Link>
+      {AgreementPageData.map((item, index) => {
+        return (
+          <AgreementPageItem
+            key={index}
+            title={item.title}
+            content={item.content}
+            enable={checkState[item.state]}
+            onClick={(e) => onClickCheck(e, item.state)}
+          />
+        );
+      })}
+      <FlexDiv margin={'0 0 2rem 0'} justifyContent={'center'}>
+        <AgreementPageButton
+          backgroundColor={COLOR_LIST.grey}
+          width={'24rem'}
+          height={'6rem'}
+          onClick={onClickCancleButton}
+        >
+          취소
+        </AgreementPageButton>
+        <AgreementPageButton
+          width={'24rem'}
+          height={'6rem'}
+          onClick={onClickAgreeButton}
+        >
+          확인
+        </AgreementPageButton>
+      </FlexDiv>
+    </HeightCenterDiv>
   );
 }
 

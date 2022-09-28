@@ -7,8 +7,8 @@ import {
   MainPage,
   SearchResultPage,
   UserPage,
-} from "./components";
-import { Routes, Route } from "react-router-dom";
+} from './components';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         <Route path="result" element={<SearchResultPage />} />
         <Route path="detail" element={<CouresDetailPage />} />
       </Route>
-      <Route path="/signup" element={<SignUpPage />}></Route>
+      <Route path="/signup" element={<SignUpPage />} />
       <Route path="/signup/agreement" element={<AgreementPage />} />
       <Route path="/user" element={<UserPage />} />
     </Routes>
