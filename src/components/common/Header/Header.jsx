@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import * as S from './styled';
-import { Button, SmallProfilePic } from '../';
-import { HeaderLogo } from './HeaderLogo';
-import { HeaderMenuIcon } from './HeaderMenuIcon';
-import { HeaderSearchIcon } from './HeaderSearchIcon';
-import { GrClose } from 'react-icons/gr';
-import { IoMdLogIn, IoMdLogOut } from 'react-icons/io';
-import { RiPoliceCarLine } from 'react-icons/ri';
-import { BiCategory } from 'react-icons/bi';
-import { AiOutlineUserAdd } from 'react-icons/ai';
-import { FONT_SIZE_LIST as fs } from '../../../style';
-import { REPORT_CATEGORIES_LIST } from '../../../data';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import * as S from "./styled";
+import { Button, SmallProfilePic } from "../";
+import { HeaderLogo } from "./HeaderLogo";
+import { HeaderMenuIcon } from "./HeaderMenuIcon";
+import { HeaderSearchIcon } from "./HeaderSearchIcon";
+import { GrClose } from "react-icons/gr";
+import { IoMdLogIn, IoMdLogOut } from "react-icons/io";
+import { RiPoliceCarLine } from "react-icons/ri";
+import { BiCategory } from "react-icons/bi";
+import { AiOutlineUserAdd } from "react-icons/ai";
+import { FONT_SIZE_LIST as fs } from "../../../style";
+import { REPORT_CATEGORIES_LIST } from "../../../data";
 
 function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [isMenuBarOpen, setIsMenuBarOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
-  const [reportContent, setReportContent] = useState('');
+  const [reportContent, setReportContent] = useState("");
 
   const onClickLogin = () => {
     setIsLogin(!isLogin);
@@ -40,15 +40,15 @@ function Header() {
 
   const onReportSubmit = (e) => {
     e.preventDefault();
-    alert('신고가 되었읍니다!🚔👮‍♂️');
+    alert("신고가 되었읍니다!🚔👮‍♂️");
   };
 
   // 메뉴바 및 신고 모달창 떴을 때 뒷화면 스크롤 잠금
   useEffect(() => {
     if (isMenuBarOpen || isReportModalOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
   }, [isMenuBarOpen, isReportModalOpen]);
 
@@ -64,7 +64,7 @@ function Header() {
             <HeaderSearchIcon></HeaderSearchIcon>
 
             <Link to="/course/register">
-              <Button width={'14rem'} height={'4rem'} fontSize={'1.4rem'}>
+              <Button width={"14rem"} height={"4rem"} fontSize={"1.4rem"}>
                 코스 등록하기
               </Button>
             </Link>
@@ -87,7 +87,7 @@ function Header() {
               {/* </Link> */}
             </S.MenuBarListItem>
             <S.MenuBarListItem>
-              <Link to="/register/agreement">
+              <Link to="/signup/agreement">
                 <AiOutlineUserAdd />
                 <span>회원가입</span>
               </Link>
@@ -100,9 +100,9 @@ function Header() {
               <Link to="/user">
                 <SmallProfilePic
                   src={
-                    'https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg'
+                    "https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg"
                   }
-                  alt={'img'}
+                  alt={"img"}
                 />
                 <span>닉네임</span>
               </Link>
@@ -144,8 +144,8 @@ function Header() {
           <S.ReportTitleInput
             placeholder="제목"
             maxLength={50}
-            width={'50rem'}
-            height={'5rem'}
+            width={"50rem"}
+            height={"5rem"}
             fontSize={fs.l}
           />
           <S.ReportContent
@@ -156,14 +156,14 @@ function Header() {
           <S.ReportBtnWrap>
             <S.ReportBtn
               type="button"
-              action={'cancel'}
+              action={"cancel"}
               onClick={onReportModalOpen}
             >
               취소
             </S.ReportBtn>
             <S.ReportBtn
               type="submit"
-              action={'report'}
+              action={"report"}
               onClick={onReportSubmit}
             >
               신고
