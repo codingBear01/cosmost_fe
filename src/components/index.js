@@ -10,6 +10,7 @@ export {
   MoreCourseBtn,
   Section,
   SectionTitle,
+  FlexDiv,
   SmallProfilePic,
   ToTopBtn,
 } from './common/';
@@ -28,6 +29,7 @@ export {
   CouresDetailPage,
   CourseRegisterPage,
   LoginPage,
+  SignUpPage,
   MainPage,
   SearchResultPage,
   UserPage,

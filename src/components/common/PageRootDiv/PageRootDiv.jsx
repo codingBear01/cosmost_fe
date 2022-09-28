@@ -7,7 +7,7 @@ const PageRootDiv = styled.div`
   display: flex;
   justify-content: center;
   background-color: ${COLOR_LIST.darkBlue};
-  height: 100vh;
+  height: ${(porps) => porps.height || "auto"};
 `;
 
 export default PageRootDiv;

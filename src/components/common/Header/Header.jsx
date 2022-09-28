@@ -115,7 +115,7 @@ function Header({ pathName, scrollY }) {
               {/* </Link> */}
             </S.MenuBarListItem>
             <S.MenuBarListItem>
-              <Link to="/register/agreement">
+              <Link to="/signup/agreement">
                 <AiOutlineUserAdd />
                 <span>회원가입</span>
               </Link>
