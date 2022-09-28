@@ -8,6 +8,7 @@ import {
   BREAK_POINTS as media,
 } from './../../../../style/';
 
+// 메인 페이지에서 scrollY가 307보다 작다면 icon 표시 안 함
 export const StyledHeaderSearchIcon = styled.button`
   visibility: ${({ pathName, scrollY }) =>
     pathName === '/' && scrollY < 307 ? 'hidden' : 'visible'};

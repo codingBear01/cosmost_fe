@@ -1,6 +1,9 @@
 /* hooks */
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { searchBarOpenAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Button, SmallProfilePic } from '../';
@@ -20,39 +23,41 @@ import { AiOutlineUserAdd } from 'react-icons/ai';
 import { FONT_SIZE_LIST as fs } from '../../../style';
 import { REPORT_CATEGORIES_LIST } from '../../../data';
 
-function Header() {
+function Header({ pathName, scrollY }) {
+  // 로그인/로그아웃 레이아웃을 보기 위한 임시 state
   const [isLogin, setIsLogin] = useState(false);
+
+  /* 메뉴바, 신고 모달창, 헤더 서치바 open 관련 sates */
   const [isMenuBarOpen, setIsMenuBarOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
-  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
+  const [isSearchBarOpen, setIsSearchBarOpen] =
+    useRecoilState(searchBarOpenAtom);
 
-  const pathName = useLocation().pathname;
-
+  // 로그인/로그아웃 레이아웃을 보기 위한 임시 함수
   const handleClickLogin = () => {
     setIsLogin(!isLogin);
   };
 
+  /* 메뉴바, 신고 모달창, 헤더 서치바 open 조작 함수 */
   const handleMenuBarOpen = () => {
     setIsMenuBarOpen(!isMenuBarOpen);
     setIsReportModalOpen(false);
   };
-
   const handleReportModalOpen = () => {
     setIsReportModalOpen(!isReportModalOpen);
     setIsMenuBarOpen(false);
   };
-
   const handleSearchBarOpen = () => {
     setIsSearchBarOpen(!isSearchBarOpen);
   };
 
+  /* 신고 submit 함수*/
   const handleReportSubmit = (e) => {
     e.preventDefault();
     alert('신고가 되었읍니다!🚔👮‍♂️');
   };
 
-  // 메뉴바 및 신고 모달창 떴을 때 뒷화면 스크롤 잠금
+  /* 메뉴바 및 신고 모달창 떴을 때 뒷화면 스크롤 잠금 */
   useEffect(() => {
     if (isMenuBarOpen || isReportModalOpen) {
       document.body.style.overflow = 'hidden';
@@ -60,21 +65,6 @@ function Header() {
       document.body.style.overflow = 'unset';
     }
   }, [isMenuBarOpen, isReportModalOpen]);
-
-  const handleScrollY = () => {
-    if (pathName === '/' && window.scrollY < 307) {
-      setIsSearchBarOpen(false);
-    }
-    setScrollY(window.scrollY);
-  };
-
-  useEffect(() => {
-    const watch = () => {
-      window.addEventListener('scroll', handleScrollY);
-    };
-    watch();
-    return () => window.removeEventListener('scroll', handleScrollY);
-  }, []);
 
   return (
     <>
@@ -90,7 +80,6 @@ function Header() {
             height={'3.8rem'}
             fontSize={fs.s}
             isSearchBarOpen={isSearchBarOpen}
-            scrollY={scrollY}
           />
 
           <S.HeaderUtilWrap>

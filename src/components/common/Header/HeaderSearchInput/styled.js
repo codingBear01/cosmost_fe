@@ -10,11 +10,11 @@ import {
 } from './../../../../style/';
 
 export const StyledSearchInput = styled(Input)`
-  visibility: ${({ isSearchBarOpen, scrollY }) =>
+  visibility: ${({ isSearchBarOpen }) =>
     isSearchBarOpen ? 'visible' : 'hidden'};
   position: relative;
   right: -8rem;
-  scale: ${({ isSearchBarOpen, scrollY }) => (isSearchBarOpen ? '1' : '0')};
+  scale: ${({ isSearchBarOpen }) => (isSearchBarOpen ? '1' : '0')};
   transition: all 0.15s ease-in;
 
   &:focus {

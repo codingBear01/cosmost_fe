@@ -1,6 +1,7 @@
 import React from 'react';
 import * as S from './styled';
 
+/* 메인 페이지, 검색 결과 페이지 등에 쓰이는 코스의 이미지 */
 function CourseImg({ width, height, sectionName }) {
   return (
     <S.CourseImgWrap>
