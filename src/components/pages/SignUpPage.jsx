@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { BsFillCircleFill } from 'react-icons/bs';
 import {
-  COLOR_LIST,
-  BORDER_RADIUS_LIST,
-  GAP_LIST,
-  FONT_SIZE_LIST,
+  COLOR_LIST as color,
+  BORDER_RADIUS_LIST as br,
+  GAP_LIST as gap,
+  FONT_SIZE_LIST as fs,
 } from '../../style/styles';
 import { Link } from 'react-router-dom';
 import {
@@ -18,19 +18,19 @@ import {
 import { Button } from '../';
 
 const SignUpInput = styled(Input)`
-  background-color: ${COLOR_LIST.white};
-  border: 1px solid ${COLOR_LIST.grey};
-  color : ${COLOR_LIST.black};
+  background-color: ${color.white};
+  border: 1px solid ${color.grey};
+  color : ${color.black};
   &::placeholder {
     font-size : 1rem;
-    color: ${COLOR_LIST.grey}};
+    color: ${color.grey}};
   }
 `;
 
 const ProfileImage = styled(BsFillCircleFill)`
   width: 7rem;
   height: 7rem;
-  color: ${COLOR_LIST.grey};
+  color: ${color.grey};
   margin-right: 2rem;
 `;
 
@@ -79,12 +79,22 @@ function SignUpPage() {
                 width={'9.5rem'}
                 height={'5rem'}
               ></SignUpInput>
-              <Button width={'13rem'} height={'5rem'} fontSize={'1.7rem'}>
+              <Button
+                width={'13rem'}
+                height={'5rem'}
+                fontSize={'1.7rem'}
+                bgColor={color.lightBlue}
+              >
                 중복확인
               </Button>
             </FlexDiv>
             <div>
-              <Button width={'25rem'} height={'5rem'} fontSize={'1.7rem'}>
+              <Button
+                width={'25rem'}
+                height={'5rem'}
+                fontSize={'1.7rem'}
+                bgColor={color.lightBlue}
+              >
                 프로필 이미지 업로드
               </Button>
             </div>
@@ -97,7 +107,12 @@ function SignUpPage() {
             width={'19rem'}
             height={'5rem'}
           ></SignUpInput>
-          <Button width={'13rem'} height={'5rem'} fontSize={'1.7rem'}>
+          <Button
+            width={'13rem'}
+            height={'5rem'}
+            fontSize={'1.7rem'}
+            bgColor={color.lightBlue}
+          >
             중복확인
           </Button>
         </FlexDiv>
@@ -152,7 +167,12 @@ function SignUpPage() {
             width={'19rem'}
             height={'5rem'}
           />
-          <Button width={'13rem'} height={'5rem'} fontSize={'1.7rem'}>
+          <Button
+            width={'13rem'}
+            height={'5rem'}
+            fontSize={'1.7rem'}
+            bgColor={color.lightBlue}
+          >
             검색
           </Button>
         </FlexDiv>
@@ -171,7 +191,12 @@ function SignUpPage() {
             width={'19rem'}
             height={'5rem'}
           ></SignUpInput>
-          <Button width={'13rem'} height={'5rem'} fontSize={'1.7rem'}>
+          <Button
+            width={'13rem'}
+            height={'5rem'}
+            fontSize={'1.7rem'}
+            bgColor={color.lightBlue}
+          >
             인증번호 받기
           </Button>
         </FlexDiv>
@@ -183,7 +208,12 @@ function SignUpPage() {
           ></SignUpInput>
         </div>
         <div>
-          <Button width={'34rem'} height={'5rem'} fontSize={'1.7rem'}>
+          <Button
+            width={'34rem'}
+            height={'5rem'}
+            fontSize={'1.7rem'}
+            bgColor={color.lightBlue}
+          >
             가입하기
           </Button>
         </div>

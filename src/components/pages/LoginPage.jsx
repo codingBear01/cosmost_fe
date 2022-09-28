@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Input, PageTitle, HeightCenterDiv } from '../';
 import {
-  COLOR_LIST,
-  BORDER_RADIUS_LIST,
-  GAP_LIST,
-  FONT_SIZE_LIST,
+  COLOR_LIST as color,
+  BORDER_RADIUS_LIST as br,
+  GAP_LIST as gap,
+  FONT_SIZE_LIST as fs,
 } from '../../style/styles';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -47,15 +47,15 @@ const LoginOtherSrc = [
 const LoginButtonDiv = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: ${GAP_LIST.xl};
+  margin-bottom: ${gap.xl};
 `;
 
 const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  border: 1px solid ${COLOR_LIST.white};
-  border-radius: ${BORDER_RADIUS_LIST.default};
+  border: 1px solid ${color.white};
+  border-radius: ${br.default};
   width: 35rem;
   height: 20rem;
 `;
@@ -81,12 +81,12 @@ const LoginInputDiv = styled.div`
 `;
 
 const LoginInput = styled(Input)`
-  background-color: ${COLOR_LIST.darkBlue};
-  border: 1px solid ${COLOR_LIST.white};
-  color : ${COLOR_LIST.white};
+  background-color: ${color.darkBlue};
+  border: 1px solid ${color.white};
+  color : ${color.white};
   &::placeholder {
     font-size : 1rem;
-    color: ${COLOR_LIST.white}};
+    color: ${color.white}};
   }
 
   
@@ -97,7 +97,7 @@ const LoginInput = styled(Input)`
 const SnsLoginImage = styled.img`
   width: 4rem;
   height: 4rem;
-  border-radius: ${BORDER_RADIUS_LIST.circle};
+  border-radius: ${br.circle};
 `;
 
 const LoginOtherItemLink = styled(Link)`
@@ -157,7 +157,12 @@ function LoginPage() {
             />
           </LoginInputDiv>
           <LoginButtonDiv>
-            <Button width={'25rem'} height={'5rem'} fontSize={FONT_SIZE_LIST.l}>
+            <Button
+              width={'25rem'}
+              height={'5rem'}
+              fontSize={fs.l}
+              bgColor={color.lightBlue}
+            >
               로그인
             </Button>
           </LoginButtonDiv>

@@ -64,7 +64,12 @@ function MainFirstSection() {
               fontSize={fs.xl}
             ></S.SearchInput>
             <Link to="/course/result">
-              <Button width={'10rem'} height={'5rem'} fontSize={'2.5rem'}>
+              <Button
+                width={'10rem'}
+                height={'5rem'}
+                fontSize={'2.5rem'}
+                bgColor={color.lightBlue}
+              >
                 검색
               </Button>
             </Link>

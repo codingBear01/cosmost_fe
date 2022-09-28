@@ -10,7 +10,7 @@ export const StyledButton = styled.button`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   border-radius: ${br.default};
-  background-color: ${color.lightBlue};
+  background-color: ${({ bgColor }) => bgColor};
   font-size: ${({ fontSize }) => fontSize};
   font-weight: 600;
   color: ${color.white};

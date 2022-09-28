@@ -20,7 +20,7 @@ import { RiPoliceCarLine } from 'react-icons/ri';
 import { BiCategory } from 'react-icons/bi';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 /* static data */
-import { FONT_SIZE_LIST as fs } from '../../../style';
+import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
 import { REPORT_CATEGORIES_LIST } from '../../../data';
 
 function Header({ pathName, scrollY }) {
@@ -98,7 +98,12 @@ function Header({ pathName, scrollY }) {
             ></HeaderSearchIcon>
 
             <Link to="/course/register">
-              <Button width={'14rem'} height={'4rem'} fontSize={'1.4rem'}>
+              <Button
+                width={'14rem'}
+                height={'4rem'}
+                fontSize={'1.4rem'}
+                bgColor={color.lightBlue}
+              >
                 코스 등록하기
               </Button>
             </Link>

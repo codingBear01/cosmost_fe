@@ -14,7 +14,8 @@ import { AgreementPageData } from '../../data/';
 
 const AgreementPageButton = styled(StyledButton)`
   margin: 0 1rem;
-  background-color: ${(props) => props.backgroundColor || StyledButton.color};
+  background-color: ${({ backgroundColor }) =>
+    backgroundColor || StyledButton.color};
 `;
 
 const ItemTitle = styled.span`
@@ -143,6 +144,7 @@ function AgreementPage(props) {
           취소
         </AgreementPageButton>
         <AgreementPageButton
+          backgroundColor={COLOR_LIST.lightBlue}
           width={'24rem'}
           height={'6rem'}
           onClick={onClickAgreeButton}
