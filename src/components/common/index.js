@@ -12,3 +12,4 @@ export { PageTitle } from './PageTitle/';
 export { Section } from './Section/';
 export { SectionTitle } from './SectionTitle';
 export { SmallProfilePic } from './SmallProfilePic';
+export { ToTopBtn } from './ToTopBtn';

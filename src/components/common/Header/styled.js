@@ -9,6 +9,7 @@ import {
   BREAK_POINTS as media,
 } from './../../../style/';
 
+// 헤더가 7rem만큼 크기 잡아 먹으므로 각 section마다 padding-top 7rem씩 줘야 레이아웃 안 깨짐
 export const Header = styled.header`
   position: fixed;
   z-index: 1;

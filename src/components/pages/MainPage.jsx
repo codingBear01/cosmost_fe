@@ -11,7 +11,7 @@ import {
   MainFourthSection,
   MainSecondSection,
   MainThirdSection,
-  FloationgIcons,
+  ToTopBtn,
   Footer,
 } from '../';
 
@@ -44,7 +44,7 @@ function MainPage() {
       <MainSecondSection />
       <MainThirdSection />
       <MainFourthSection />
-      <FloationgIcons />
+      <ToTopBtn />
       <Footer />
     </>
   );

@@ -9,6 +9,7 @@ import {
   BREAK_POINTS as media,
 } from './../../../../style/';
 
+// isSearchBarOpen이 true라면 Header에 input 표시
 export const StyledSearchInput = styled(Input)`
   visibility: ${({ isSearchBarOpen }) =>
     isSearchBarOpen ? 'visible' : 'hidden'};

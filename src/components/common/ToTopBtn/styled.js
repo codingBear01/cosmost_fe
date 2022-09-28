@@ -6,13 +6,13 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
-} from './../../../style/';
+} from '../../../style';
 
 export const FloatingIcon = styled.div`
   position: fixed;
   right: 10rem;
   bottom: 10rem;
-  display: flex;
+  display: ${({ isShownToTopBtn }) => (isShownToTopBtn ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
   width: 5rem;
