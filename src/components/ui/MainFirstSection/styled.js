@@ -129,6 +129,7 @@ export const StyledSlider = styled(Slider)`
   }
 
   // 슬라이더 img 상위 div들
+  // react-slick에서 img 간 margin 주려면 list에 음수, track에 양수 각각 줘야 함
   .slick-list {
     margin: 0 -2rem;
     ${media.mobile} {
@@ -147,7 +148,7 @@ export const StyledSlider = styled(Slider)`
     width: 60rem !important;
     height: 35rem;
     border-radius: ${br.default};
-
+    // 모바일에서 하나의 컨텐츠를 꽉 차게 보여주기 위해 width 100% 줌
     ${media.mobile} {
       width: 100% !important;
     }
