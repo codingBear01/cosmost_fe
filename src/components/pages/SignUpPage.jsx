@@ -81,11 +81,16 @@ function SignUpPage() {
                   width={"9.5rem"}
                   height={"5rem"}
                 ></SignUpInput>
+
                 <Button width={"13rem"} height={"5rem"} fontSize={"1.7rem"}>
                   중복확인
                 </Button>
               </FlexDiv>
               <div>
+                <SignUpInput
+                  type="file"
+                  style={{ display: "none" }}
+                ></SignUpInput>
                 <Button width={"25rem"} height={"5rem"} fontSize={"1.7rem"}>
                   프로필 이미지 업로드
                 </Button>
@@ -94,6 +99,7 @@ function SignUpPage() {
           </FlexDiv>
           <FlexDiv justifyContent={"space-between"}>
             <SignUpInput
+              onChange={onChangeInput}
               name="id"
               placeholder="아이디"
               width={"19rem"}
@@ -105,6 +111,7 @@ function SignUpPage() {
           </FlexDiv>
           <div>
             <SignUpInput
+              onChange={onChangeInput}
               name="password"
               placeholder="비밀번호"
               width={"33rem"}
@@ -113,6 +120,7 @@ function SignUpPage() {
           </div>
           <div>
             <SignUpInput
+              onChange={onChangeInput}
               name="passwordConfirm"
               placeholder="비밀번호 재확인"
               width={"33rem"}
@@ -121,6 +129,7 @@ function SignUpPage() {
           </div>
           <div>
             <SignUpInput
+              onChange={onChangeInput}
               name="name"
               placeholder="이름"
               width={"33rem"}
@@ -129,6 +138,7 @@ function SignUpPage() {
           </div>
           <FlexDiv justifyContent={"space-between"}>
             <SignUpInput
+              onChange={onChangeInput}
               name="year"
               placeholder="년"
               width={"10rem"}
@@ -141,6 +151,7 @@ function SignUpPage() {
               height={"5rem"}
             ></SignUpInput>
             <SignUpInput
+              onChange={onChangeInput}
               name="day"
               placeholder="일"
               width={"10rem"}
@@ -168,6 +179,7 @@ function SignUpPage() {
           </div>
           <FlexDiv justifyContent={"space-between"}>
             <SignUpInput
+              onChange={onChangeInput}
               name="email"
               placeholder="이메일"
               width={"19rem"}
@@ -179,6 +191,7 @@ function SignUpPage() {
           </FlexDiv>
           <div>
             <SignUpInput
+              onChange={onChangeInput}
               placeholder="인증번호 입력 "
               width={"33rem"}
               height={"5rem"}

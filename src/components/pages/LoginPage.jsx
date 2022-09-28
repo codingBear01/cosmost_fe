@@ -136,7 +136,13 @@ function LoginPage() {
   return (
     <PageRootDiv>
       <HeightCenterDiv>
-        <div style={{ margin: "18rem 0 18rem 0" }}>
+        <div
+          style={{
+            width: "66.9rem",
+            height: "55.6rem",
+            margin: "18rem 0 18rem 0",
+          }}
+        >
           <Link to="/" style={{ textAlign: "center" }}>
             <PageTitle>cosMost</PageTitle>
           </Link>
