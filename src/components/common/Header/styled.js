@@ -12,7 +12,7 @@ import {
 // 헤더가 7rem만큼 크기 잡아 먹으므로 각 section마다 padding-top 7rem씩 줘야 레이아웃 안 깨짐
 export const Header = styled.header`
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   width: 100%;
   height: 7rem;
@@ -35,7 +35,7 @@ export const HeaderUtilWrap = styled.div`
 export const MenuBarBackGround = styled.div`
   visibility: ${(props) => (props.isMenuBarOpen ? 'visible' : 'hidden')};
   position: fixed;
-  z-index: 1;
+  z-index: 3;
   top: 0;
   right: 0;
   right: ${(props) => (props.isMenuBarOpen ? '0' : '-100%')};
@@ -55,7 +55,7 @@ export const MenuBarBackGround = styled.div`
 export const MenuBarList = styled.ul`
   visibility: ${({ isMenuBarOpen }) => (isMenuBarOpen ? 'visible' : 'hidden')};
   position: fixed;
-  z-index: 1;
+  z-index: 3;
   top: -20px;
   right: ${({ isMenuBarOpen }) => (isMenuBarOpen ? '0' : '-100%')};
   display: flex;
@@ -154,7 +154,7 @@ export const MenuBarListItem = styled.li`
 export const ReportModal = styled.div`
   position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 3;
   display: ${({ isReportModalOpen }) => (isReportModalOpen ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;

@@ -29,7 +29,7 @@ export const FirstSectionContent = styled.div`
   align-items: center;
   flex-direction: column;
   width: 50rem;
-  margin-top: 6rem;
+  margin-top: 4rem;
 `;
 
 const StyledFirstSectionTitle = styled.span`
@@ -47,7 +47,7 @@ export const MainSearchArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 3rem 0;
+  margin: 2rem 0;
 `;
 
 export const SearchInput = styled(Input)`
@@ -78,7 +78,7 @@ export const MainRankingBox = styled.ul`
   flex-direction: column;
   width: 21.5rem;
   height: 5rem;
-  margin-top: 4rem;
+  margin-top: 3.5rem;
   padding-top: 2rem;
   border-top: 0.1rem solid ${color.white};
   border-bottom: 0.1rem solid ${color.white};
@@ -101,25 +101,33 @@ export const SliderWrap = styled.div`
   display: block;
   width: 120rem;
   margin-bottom: 5rem;
-
+  ${media.tablet} {
+    width: 95rem;
+  }
   ${media.mobile} {
-    width: 100%;
+    width: 90%;
     hight: 30rem;
   }
 `;
 
 export const StyledSlider = styled(Slider)`
-  height: 35rem;
+  height: 40rem;
 
   // 슬라이더 버튼
   .slick-prev {
-    top: 16rem;
+    top: 19rem;
     left: -0.05rem;
     z-index: 1;
   }
   .slick-next {
-    top: 16rem;
-    right: 1.6rem;
+    top: 19rem;
+    right: 1rem;
+    ${media.tablet} {
+      right: 4rem;
+    }
+    ${media.mobile} {
+      right: 1.6rem;
+    }
   }
   .slick-prev,
   .slick-next {
@@ -132,12 +140,18 @@ export const StyledSlider = styled(Slider)`
   // react-slick에서 img 간 margin 주려면 list에 음수, track에 양수 각각 줘야 함
   .slick-list {
     margin: 0 -2rem;
+    ${media.tablet} {
+      margin: 0 -1rem;
+    }
     ${media.mobile} {
       margin: 0;
     }
   }
   .slick-track {
     margin: 0 2rem;
+    ${media.tablet} {
+      margin: 0 1rem;
+    }
     ${media.mobile} {
       margin: 0;
     }
@@ -146,8 +160,11 @@ export const StyledSlider = styled(Slider)`
   //슬라이더 img
   .slick-slide img {
     width: 60rem !important;
-    height: 35rem;
+    height: 40rem;
     border-radius: ${br.default};
+    ${media.tablet} {
+      width: 45rem !important;
+    }
     // 모바일에서 하나의 컨텐츠를 꽉 차게 보여주기 위해 width 100% 줌
     ${media.mobile} {
       width: 100% !important;
