@@ -23,7 +23,11 @@ export const StyledSearchInput = styled(Input)`
   }
 
   ${media.mobile} {
-    right: -3.5rem;
+    right: -2.5rem;
     width: 30rem;
+  }
+
+  @media (max-width: 400px) {
+    width: 20rem;
   }
 `;

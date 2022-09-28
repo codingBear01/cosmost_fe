@@ -119,7 +119,7 @@ export const StyledSlider = styled(Slider)`
   }
   .slick-next {
     top: 16rem;
-    right: 0.8rem;
+    right: 1.6rem;
   }
   .slick-prev,
   .slick-next {
@@ -131,9 +131,15 @@ export const StyledSlider = styled(Slider)`
   // 슬라이더 img 상위 div들
   .slick-list {
     margin: 0 -2rem;
+    ${media.mobile} {
+      margin: 0;
+    }
   }
   .slick-track {
     margin: 0 2rem;
+    ${media.mobile} {
+      margin: 0;
+    }
   }
 
   //슬라이더 img
