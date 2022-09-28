@@ -1,3 +1,4 @@
+/* components */
 import * as S from './styled';
 
 function Button({ width, height, fontSize, children }) {

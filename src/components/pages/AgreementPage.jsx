@@ -1,25 +1,19 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import {
   COLOR_LIST,
   BORDER_RADIUS_LIST,
   GAP_LIST,
   FONT_SIZE_LIST,
-} from "../../style/styles";
-import {
-  FlexDiv,
-  Button,
-  PageRootDiv,
-  PageTitle,
-  HeightCenterDiv,
-} from "../common";
-import { AiOutlineCheckCircle } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
-import { Footer } from "../";
-import { StyledButton } from "../common/Button/styled";
-import { AgreementPageData } from "../../store/";
+} from '../../style/';
+import { FlexDiv, PageRootDiv, PageTitle, HeightCenterDiv } from '../common';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
+import { Link, useNavigate } from 'react-router-dom';
+import { StyledButton } from '../common/Button/styled';
+import { AgreementPageData } from '../../data/';
 
 const AgreementPageButton = styled(StyledButton)`
+  margin: 0 1rem;
   background-color: ${(props) => props.backgroundColor || StyledButton.color};
 `;
 
@@ -37,9 +31,9 @@ const ItemTextarea = styled.textarea`
 function AgreementPageItem({ title, content, enable, onClick }) {
   const AiOutlineCheckCircleStyle = ({ color }) => {
     return {
-      color: color || "white",
-      width: "3rem",
-      height: "3rem",
+      color: color || 'white',
+      width: '3rem',
+      height: '3rem',
     };
   };
   return (
@@ -86,7 +80,7 @@ function AgreementPage(props) {
   /*각 체크박스 클릭시 체크박의 state를 관리해주는 Click 이벤트 핸들러
   모든 동의 체크를 하면 나머지 체크박스가 전부 체크되며 모든 동의 체크 해제를 하면 나머지 체크박스가 전부 체크해제된다.*/
   const onClickCheck = (e, state) => {
-    if (state === "allCheck") {
+    if (state === 'allCheck') {
       if (checkState[state]) {
         setCheckState({
           allCheck: false,
@@ -111,7 +105,7 @@ function AgreementPage(props) {
 
   // 취소 버튼 클릭 이벤트 핸들러
   const onClickCancleButton = (e) => {
-    navigate("/");
+    navigate('/');
   };
 
   // 확인 버튼 클릭 이벤트 핸들러
@@ -119,46 +113,44 @@ function AgreementPage(props) {
     const agreementCheck = Object.values(checkState).every(
       (element) => element
     );
-    if (agreementCheck) navigate("/signup");
-    else alert("모든 동의를 체크해주세요.");
+    if (agreementCheck) navigate('/signup');
+    else alert('모든 동의를 체크해주세요.');
   };
 
   return (
-    <PageRootDiv>
-      <HeightCenterDiv justifyContent={"space-around"} height="100vh">
-        <Link to="/">
-          <PageTitle>cosMost</PageTitle>
-        </Link>
-        {AgreementPageData.map((item, index) => {
-          return (
-            <AgreementPageItem
-              key={index}
-              title={item.title}
-              content={item.content}
-              enable={checkState[item.state]}
-              onClick={(e) => onClickCheck(e, item.state)}
-            />
-          );
-        })}
-        <FlexDiv margin={"0 0 2rem 0"} justifyContent={"space-between"}>
-          <AgreementPageButton
-            backgroundColor={COLOR_LIST.grey}
-            width={"24rem"}
-            height={"6rem"}
-            onClick={onClickCancleButton}
-          >
-            취소
-          </AgreementPageButton>
-          <AgreementPageButton
-            width={"24rem"}
-            height={"6rem"}
-            onClick={onClickAgreeButton}
-          >
-            확인
-          </AgreementPageButton>
-        </FlexDiv>
-      </HeightCenterDiv>
-    </PageRootDiv>
+    <HeightCenterDiv justifyContent={'space-around'}>
+      <Link to="/">
+        <PageTitle>cosMost</PageTitle>
+      </Link>
+      {AgreementPageData.map((item, index) => {
+        return (
+          <AgreementPageItem
+            key={index}
+            title={item.title}
+            content={item.content}
+            enable={checkState[item.state]}
+            onClick={(e) => onClickCheck(e, item.state)}
+          />
+        );
+      })}
+      <FlexDiv margin={'0 0 2rem 0'} justifyContent={'center'}>
+        <AgreementPageButton
+          backgroundColor={COLOR_LIST.grey}
+          width={'24rem'}
+          height={'6rem'}
+          onClick={onClickCancleButton}
+        >
+          취소
+        </AgreementPageButton>
+        <AgreementPageButton
+          width={'24rem'}
+          height={'6rem'}
+          onClick={onClickAgreeButton}
+        >
+          확인
+        </AgreementPageButton>
+      </FlexDiv>
+    </HeightCenterDiv>
   );
 }
 

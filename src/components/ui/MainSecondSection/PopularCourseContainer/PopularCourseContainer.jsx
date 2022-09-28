@@ -1,4 +1,4 @@
-import React from 'react';
+/* components */
 import * as S from './styled';
 import { PopularCourse } from '../PopularCourse';
 

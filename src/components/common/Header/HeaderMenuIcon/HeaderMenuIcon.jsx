@@ -1,9 +1,11 @@
+/* components */
 import * as S from './styled';
+/* react-icons */
 import { CgMenuGridR } from 'react-icons/cg';
 
-function HeaderMenuIcon({ onMenuBarOpen }) {
+function HeaderMenuIcon({ handleMenuBarOpen }) {
   return (
-    <S.StyledHeaderMenuIcon onClick={onMenuBarOpen}>
+    <S.StyledHeaderMenuIcon onClick={handleMenuBarOpen}>
       <CgMenuGridR />
     </S.StyledHeaderMenuIcon>
   );

@@ -1,16 +1,18 @@
-import React from "react";
-import styled from "styled-components";
-import { COLOR_LIST } from "../../../style";
+import React from 'react';
+import styled from 'styled-components';
+import { COLOR_LIST } from '../../../style';
 
 // 세로 중앙 정렬이 지정된 DIV 컴포넌트.
 const HeightCenterDiv = styled.div`
   display: flex;
-  width: ${(props) => props.width || "auto"};
-  flex-direction: column;
-  justify-content: ${(props) => props.justifyContent || "center"};
+  justify-content: ${({ justifyContent }) => justifyContent || 'center'};
   align-items: center;
-  height: ${(props) => props.height || "auto"};
-  margin: ${(props) => props.margin || "0 0 0 0"};
+  flex-direction: column;
+  width: ${({ width }) => width || 'auto'};
+  height: 100vh;
+  margin: ${({ margin }) => margin || '0 0 0 0'};
+  padding: 2.5rem;
+  background-color: ${COLOR_LIST.darkBlue};
 `;
 
 export default HeightCenterDiv;

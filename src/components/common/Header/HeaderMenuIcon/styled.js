@@ -5,6 +5,7 @@ import {
   BUTTON_SIZE_LIST as bs,
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
+  BREAK_POINTS as media,
 } from './../../../../style/';
 
 export const StyledHeaderMenuIcon = styled.button`
@@ -22,6 +23,10 @@ export const StyledHeaderMenuIcon = styled.button`
   &:hover {
     border-radius: ${br.circle};
     background-color: ${color.blue};
+  }
+
+  ${media.mobile} {
+    margin-left: ${gap.s};
   }
 
   svg {

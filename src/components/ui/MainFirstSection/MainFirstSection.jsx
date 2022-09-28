@@ -1,14 +1,18 @@
+/* hooks */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useInterval } from './../../hooks/';
+/* components */
 import * as S from './styled';
 import { Button, Section, SmallProfilePic } from '../../';
+/* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from './../../../style/';
 import { USER_RANKING_LIST } from '../../../data';
-import { useInterval } from './../../hooks/';
-
+/* CONSTANTS */
 const RANKER_LENGTH = USER_RANKING_LIST.length;
 
 function MainFirstSection() {
+  /* Ranking 기능 구현을 위한 ranker의 Top position 및 index */
   const [topPosition, setTopPosition] = useState(0);
   const [rankerIndex, setRankerIndex] = useState(1);
 

@@ -1,7 +1,10 @@
+/* hooks */
 import React from 'react';
 import { Link } from 'react-router-dom';
+/* components */
 import * as S from './styled';
 import { CourseImg, CourseTitle } from '../../..';
+/* static data */
 import { FONT_SIZE_LIST as fs } from '../../../../style';
 
 function TheMostGuCourse() {
