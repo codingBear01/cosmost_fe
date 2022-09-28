@@ -1,9 +1,13 @@
 import * as S from './styled';
 import { BiSearchAlt } from 'react-icons/bi';
 
-function HeaderSearchIcon({ onSearchModalOpen }) {
+function HeaderSearchIcon({ handleSearchBarOpen, pathName, scrollY }) {
   return (
-    <S.StyledHeaderSearchIcon onClick={onSearchModalOpen}>
+    <S.StyledHeaderSearchIcon
+      onClick={handleSearchBarOpen}
+      pathName={pathName}
+      scrollY={scrollY}
+    >
       <BiSearchAlt />
     </S.StyledHeaderSearchIcon>
   );

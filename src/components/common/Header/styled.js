@@ -76,53 +76,77 @@ export const MenuBarList = styled.ul`
   svg {
     align-self: end;
     margin-right: ${gap.xl};
+    padding: 1rem;
+    border-radius: ${br.circle};
     cursor: pointer;
+    transition: 0.2s;
+
+    &: hover {
+      background-color: ${color.lightGrey};
+      border-radius: ${br.circle};
+    }
   }
 
   ${media.mobile} {
     right: 0;
     top: ${({ isMenuBarOpen }) => (isMenuBarOpen ? '-2%' : '-110%')};
     width: 100%;
-    height: 30rem;
+    height: 35rem;
     padding-top: 4rem;
   }
 `;
 
 export const MenuBarListItem = styled.li`
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 40%;
-  margin: 1rem 0;
-  padding: ${gap.s} ${gap.xl};
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.5rem 25%;
   border-radius: ${br.default};
   cursor: pointer;
   transition: 0.2s;
 
   &:hover {
     background-color: ${color.lightGrey};
-    box-shadow: inset 0 0 2px 1px ${color.grey};
+  }
+
+  ${media.mobile} {
+    width: 100%;
+    padding-left: 40%;
   }
 
   a {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 100%;
-    color: ${color.darkBlue};
+    margin: 1rem 0;
+    border-radius: ${br.default};
+
+    span {
+      color: ${color.darkBlue};
+    }
+
+    ${media.mobile} {
+      padding-left: 0;
+    }
+  }
+
+  img {
+    margin: 1rem ${gap.xl} 0 0;
+    padding-left: 1rem;
   }
 
   svg {
     font-size: 3rem;
+    color: ${color.darkBlue};
   }
 
   span:nth-child(2) {
     margin-left: ${gap.l};
-  }
-
-  ${media.mobile} {
-    width: 20%;
-    margin: 0.5rem 0;
   }
 `;
 

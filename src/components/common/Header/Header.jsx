@@ -1,15 +1,22 @@
+/* hooks */
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+/* components */
 import * as S from './styled';
 import { Button, SmallProfilePic } from '../';
-import { HeaderLogo } from './HeaderLogo';
-import { HeaderMenuIcon } from './HeaderMenuIcon';
-import { HeaderSearchIcon } from './HeaderSearchIcon';
+import {
+  HeaderLogo,
+  HeaderMenuIcon,
+  HeaderSearchIcon,
+  HeaderSearchInput,
+} from './';
+/* react-icons */
 import { GrClose } from 'react-icons/gr';
 import { IoMdLogIn, IoMdLogOut } from 'react-icons/io';
 import { RiPoliceCarLine } from 'react-icons/ri';
 import { BiCategory } from 'react-icons/bi';
 import { AiOutlineUserAdd } from 'react-icons/ai';
+/* static data */
 import { FONT_SIZE_LIST as fs } from '../../../style';
 import { REPORT_CATEGORIES_LIST } from '../../../data';
 
@@ -17,28 +24,30 @@ function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [isMenuBarOpen, setIsMenuBarOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
-  const [reportContent, setReportContent] = useState('');
+  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
-  const onClickLogin = () => {
+  const pathName = useLocation().pathname;
+
+  const handleClickLogin = () => {
     setIsLogin(!isLogin);
   };
 
-  const onMenuBarOpen = () => {
+  const handleMenuBarOpen = () => {
     setIsMenuBarOpen(!isMenuBarOpen);
     setIsReportModalOpen(false);
   };
 
-  const onReportModalOpen = () => {
+  const handleReportModalOpen = () => {
     setIsReportModalOpen(!isReportModalOpen);
     setIsMenuBarOpen(false);
   };
 
-  const handleReportContentChange = (e) => {
-    const val = e.target.value;
-    setReportContent(val);
+  const handleSearchBarOpen = () => {
+    setIsSearchBarOpen(!isSearchBarOpen);
   };
 
-  const onReportSubmit = (e) => {
+  const handleReportSubmit = (e) => {
     e.preventDefault();
     alert('신고가 되었읍니다!🚔👮‍♂️');
   };
@@ -52,6 +61,21 @@ function Header() {
     }
   }, [isMenuBarOpen, isReportModalOpen]);
 
+  const handleScrollY = () => {
+    if (pathName === '/' && window.scrollY < 307) {
+      setIsSearchBarOpen(false);
+    }
+    setScrollY(window.scrollY);
+  };
+
+  useEffect(() => {
+    const watch = () => {
+      window.addEventListener('scroll', handleScrollY);
+    };
+    watch();
+    return () => window.removeEventListener('scroll', handleScrollY);
+  }, []);
+
   return (
     <>
       <S.Header>
@@ -60,8 +84,21 @@ function Header() {
             <HeaderLogo>cosMost</HeaderLogo>
           </Link>
 
+          <HeaderSearchInput
+            type={'text'}
+            width={'120rem'}
+            height={'3.8rem'}
+            fontSize={fs.s}
+            isSearchBarOpen={isSearchBarOpen}
+            scrollY={scrollY}
+          />
+
           <S.HeaderUtilWrap>
-            <HeaderSearchIcon></HeaderSearchIcon>
+            <HeaderSearchIcon
+              handleSearchBarOpen={handleSearchBarOpen}
+              pathName={pathName}
+              scrollY={scrollY}
+            ></HeaderSearchIcon>
 
             <Link to="/course/register">
               <Button width={'14rem'} height={'4rem'} fontSize={'1.4rem'}>
@@ -69,7 +106,9 @@ function Header() {
               </Button>
             </Link>
 
-            <HeaderMenuIcon onMenuBarOpen={onMenuBarOpen}></HeaderMenuIcon>
+            <HeaderMenuIcon
+              handleMenuBarOpen={handleMenuBarOpen}
+            ></HeaderMenuIcon>
           </S.HeaderUtilWrap>
         </S.HeaderContainer>
       </S.Header>
@@ -77,10 +116,10 @@ function Header() {
       <S.MenuBarBackGround isMenuBarOpen={isMenuBarOpen}></S.MenuBarBackGround>
 
       <S.MenuBarList isMenuBarOpen={isMenuBarOpen}>
-        <GrClose onClick={onMenuBarOpen} />
+        <GrClose onClick={handleMenuBarOpen} />
         {!isLogin && (
           <>
-            <S.MenuBarListItem onClick={onClickLogin}>
+            <S.MenuBarListItem onClick={handleClickLogin}>
               {/* <Link to="/login"> */}
               <IoMdLogIn />
               <span>로그인</span>
@@ -109,18 +148,16 @@ function Header() {
             </S.MenuBarListItem>
             <S.MenuBarListItem>
               <IoMdLogOut />
-              <span onClick={onClickLogin}>로그아웃</span>
+              <span onClick={handleClickLogin}>로그아웃</span>
             </S.MenuBarListItem>
-            <S.MenuBarListItem onClick={onReportModalOpen}>
+            <S.MenuBarListItem onClick={handleReportModalOpen}>
               <RiPoliceCarLine />
               <span>신고하기</span>
             </S.MenuBarListItem>
           </>
         )}
         <S.MenuBarListItem>
-          <span>
-            <BiCategory />
-          </span>
+          <BiCategory />
           <span>카테고리</span>
         </S.MenuBarListItem>
       </S.MenuBarList>
@@ -129,7 +166,7 @@ function Header() {
         <S.ReportForm>
           <S.ReportFormHeader>
             <S.ReportTitle>신고하기</S.ReportTitle>
-            <GrClose onClick={onReportModalOpen} />
+            <GrClose onClick={handleReportModalOpen} />
           </S.ReportFormHeader>
 
           <S.ReportCategories>
@@ -142,6 +179,7 @@ function Header() {
           </S.ReportCategories>
 
           <S.ReportTitleInput
+            type={'text'}
             placeholder="제목"
             maxLength={50}
             width={'50rem'}
@@ -151,20 +189,19 @@ function Header() {
           <S.ReportContent
             placeholder="신고 내용"
             maxLength={500}
-            onChange={handleReportContentChange}
           ></S.ReportContent>
           <S.ReportBtnWrap>
             <S.ReportBtn
               type="button"
               action={'cancel'}
-              onClick={onReportModalOpen}
+              onClick={handleReportModalOpen}
             >
               취소
             </S.ReportBtn>
             <S.ReportBtn
               type="submit"
               action={'report'}
-              onClick={onReportSubmit}
+              onClick={handleReportSubmit}
             >
               신고
             </S.ReportBtn>
