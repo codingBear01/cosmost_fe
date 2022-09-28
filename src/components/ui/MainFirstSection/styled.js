@@ -58,6 +58,11 @@ export const SearchInput = styled(Input)`
   }
 `;
 
+export const MainHashTagWrap = styled.div`
+  width: 100rem;
+  text-align: center;
+`;
+
 export const MainHashTag = styled.span`
   padding: ${gap.xs};
   border-radius: ${br.default};

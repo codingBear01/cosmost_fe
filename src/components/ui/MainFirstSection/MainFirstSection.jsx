@@ -7,7 +7,11 @@ import * as S from './styled';
 import { Button, Section, SmallProfilePic } from '../../';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from './../../../style/';
-import { USER_RANKING_LIST, SLIDER_IMAGE_LIST } from '../../../data';
+import {
+  USER_RANKING_LIST,
+  SLIDER_IMAGE_LIST,
+  HASH_TAG_LIST,
+} from '../../../data';
 
 /* CONSTANTS */
 const RANKER_LENGTH = USER_RANKING_LIST.length;
@@ -75,17 +79,12 @@ function MainFirstSection() {
             </Link>
           </S.MainSearchArea>
 
-          <div>
-            <S.MainHashTag>#해시태그해시태그</S.MainHashTag>
-            <S.MainHashTag>#해시태그</S.MainHashTag>
-            <S.MainHashTag>#해시태그</S.MainHashTag>
-            <S.MainHashTag>#해시태그</S.MainHashTag>
-            <S.MainHashTag>#해시태그</S.MainHashTag>
-            <S.MainHashTag>#해시태그</S.MainHashTag>
-            <S.MainHashTag>#해시태그</S.MainHashTag>
-            <S.MainHashTag>#해시태그</S.MainHashTag>
-            <S.MainHashTag>#해시태그</S.MainHashTag>
-          </div>
+          <S.MainHashTagWrap>
+            {HASH_TAG_LIST &&
+              HASH_TAG_LIST.map((tag, i) => (
+                <S.MainHashTag key={tag.id}>#{tag.text}</S.MainHashTag>
+              ))}
+          </S.MainHashTagWrap>
 
           <S.MainRankingBox>
             {USER_RANKING_LIST &&
