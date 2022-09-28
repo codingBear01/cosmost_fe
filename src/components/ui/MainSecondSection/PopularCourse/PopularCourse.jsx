@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import * as S from './styled';
 import { CourseImg, CourseTitle, HashTag } from '../../..';
 /* static data */
-import { FONT_SIZE_LIST as fs } from '../../../../style';
+import { FONT_SIZE_LIST as fs, COLOR_LIST as color } from '../../../../style';
 
 function PopularCourse() {
   return (
-    <Link to="/course/detail">
+    <Link to="/course/detail" style={{ color: `${color.black}` }}>
       <S.PopularCourseWrap>
         <CourseImg width={'100%'} height={'65%'}></CourseImg>
         <S.PoplularCourseBox>

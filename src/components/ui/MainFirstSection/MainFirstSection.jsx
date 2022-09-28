@@ -7,9 +7,26 @@ import * as S from './styled';
 import { Button, Section, SmallProfilePic } from '../../';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from './../../../style/';
-import { USER_RANKING_LIST } from '../../../data';
+import { USER_RANKING_LIST, SLIDER_IMAGE_LIST } from '../../../data';
+
 /* CONSTANTS */
 const RANKER_LENGTH = USER_RANKING_LIST.length;
+const sliderSettings = {
+  dots: true,
+  infinite: true,
+  slidesToShow: 2,
+  slidesToScroll: 2,
+  speed: 500,
+  responsive: [
+    {
+      breakpoint: 501,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};
 
 function MainFirstSection() {
   /* Ranking 기능 구현을 위한 ranker의 Top position 및 index */
@@ -84,7 +101,12 @@ function MainFirstSection() {
         </S.FirstSectionContent>
 
         <S.SliderWrap>
-          <div></div>
+          <S.StyledSlider {...sliderSettings}>
+            {SLIDER_IMAGE_LIST &&
+              SLIDER_IMAGE_LIST.map((img, i) => (
+                <img key={img.id} src={img.imgUrl} alt={img.alt} />
+              ))}
+          </S.StyledSlider>
         </S.SliderWrap>
       </S.FirstSectionContainer>
     </Section>

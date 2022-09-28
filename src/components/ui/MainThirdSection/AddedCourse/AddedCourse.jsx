@@ -14,7 +14,7 @@ import {
 
 function AddedCourse() {
   return (
-    <Link to="/course/detail">
+    <Link to="/course/detail" style={{ color: `${color.black}` }}>
       <S.AddedCourseWrap>
         <CourseImg width={'28rem'} height={'100%'}></CourseImg>
         <S.AddedCourseBox>

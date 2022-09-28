@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 import * as S from './styled';
 import { CourseImg, CourseTitle } from '../../..';
 /* static data */
-import { FONT_SIZE_LIST as fs } from '../../../../style';
+import { FONT_SIZE_LIST as fs, COLOR_LIST as color } from '../../../../style';
 
 function TheMostGuCourse() {
   return (
-    <Link to="/course/detail">
+    <Link to="/course/detail" style={{ color: `${color.black}` }}>
       <S.TheMostGuCourseWrap>
         <CourseImg
           width={'100%'}

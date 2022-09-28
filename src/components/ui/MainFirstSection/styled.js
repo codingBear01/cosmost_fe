@@ -1,5 +1,11 @@
+/* libraries */
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Slider from 'react-slick';
 import styled from 'styled-components';
+/* components */
 import { Input } from '../../';
+/* static data */
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -23,7 +29,7 @@ export const FirstSectionContent = styled.div`
   align-items: center;
   flex-direction: column;
   width: 50rem;
-  margin-top: 15rem;
+  margin-top: 6rem;
 `;
 
 const StyledFirstSectionTitle = styled.span`
@@ -92,25 +98,64 @@ export const MainRankingBox = styled.ul`
 `;
 
 export const SliderWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: ${gap.l};
-  gap: 3rem;
-
-  div {
-    width: 120rem;
-    height: 30rem;
-    border-radius: ${br.default};
-    background-color: ${color.grey};
-    color: ${color.white};
-  }
-
-  ${media.tablet} {
-    width: 90rem;
-  }
+  display: block;
+  width: 120rem;
+  margin-bottom: 5rem;
 
   ${media.mobile} {
-    width: 60rem;
+    width: 100%;
+    hight: 30rem;
+  }
+`;
+
+export const StyledSlider = styled(Slider)`
+  height: 35rem;
+
+  // 슬라이더 버튼
+  .slick-prev {
+    top: 16rem;
+    left: -0.05rem;
+    z-index: 1;
+  }
+  .slick-next {
+    top: 16rem;
+    right: 0.8rem;
+  }
+  .slick-prev,
+  .slick-next {
+    &:before {
+      font-size: 5rem;
+    }
+  }
+
+  // 슬라이더 img 상위 div들
+  .slick-list {
+    margin: 0 -2rem;
+  }
+  .slick-track {
+    margin: 0 2rem;
+  }
+
+  //슬라이더 img
+  .slick-slide img {
+    width: 60rem !important;
+    height: 35rem;
+    border-radius: ${br.default};
+
+    ${media.mobile} {
+      width: 100% !important;
+    }
+  }
+
+  // 슬라이더 dots
+  .slick-dots {
+    bottom: -4rem;
+  }
+  .slick-dots li button {
+    width: 2rem;
+    height: 2rem;
+  }
+  .slick-dots li.slick-active button:before {
+    color: ${color.white};
   }
 `;
