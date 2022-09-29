@@ -75,7 +75,8 @@ function MainFirstSection() {
           ></S.FirstSectionTitle>
           <S.MainSearchArea>
             <S.SearchInput
-              type={'text'}
+              type="text"
+              placeholder="키워드를 입력하세요."
               width={'42rem'}
               height={'5rem'}
               fontSize={fs.xl}

@@ -21,8 +21,8 @@ import { BiCategory } from 'react-icons/bi';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
-import { REPORT_CATEGORIES_LIST } from '../../../data';
-
+import { REPORT_CATEGORIES_LIST, CATEGORY_LIST } from '../../../data';
+console.log(CATEGORY_LIST);
 function Header({ pathName, scrollY }) {
   // 로그인/로그아웃 레이아웃을 보기 위한 임시 state
   const [isLogin, setIsLogin] = useState(false);
@@ -160,7 +160,20 @@ function Header({ pathName, scrollY }) {
         )}
         <S.MenuBarListItem>
           <BiCategory />
-          <span>카테고리</span>
+          <S.MenuBarCategoriesWrap>
+            카테고리
+            {CATEGORY_LIST &&
+              CATEGORY_LIST.map((category, i) => (
+                <S.MenuBarCategory key={category.id}>
+                  {category.categoryName}
+                  {category.categories.map((cat, i) => (
+                    <S.MenuBarCategoryItem key={cat.id}>
+                      {cat.content}
+                    </S.MenuBarCategoryItem>
+                  ))}
+                </S.MenuBarCategory>
+              ))}
+          </S.MenuBarCategoriesWrap>
         </S.MenuBarListItem>
       </S.MenuBarList>
 

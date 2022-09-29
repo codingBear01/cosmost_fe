@@ -25,4 +25,8 @@ export const CourseCount = styled.span`
   font-size: ${fs.xs};
   font-weight: 600;
   color: ${color.grey};
+  text-align: center;
+  ${media.mobile} {
+    width: 6rem;
+  }
 `;

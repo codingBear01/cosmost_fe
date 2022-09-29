@@ -162,6 +162,12 @@ export const MenuBarListItem = styled.li`
   }
 `;
 
+export const MenuBarCategoriesWrap = styled.ul``;
+
+export const MenuBarCategory = styled.li``;
+
+export const MenuBarCategoryItem = styled.li``;
+
 export const ReportModal = styled.div`
   position: fixed;
   top: 0;
@@ -187,6 +193,11 @@ export const ReportForm = styled.form`
   padding: ${gap.xl};
   border-radius: ${br.default};
   background-color: ${color.white};
+
+  ${media.mobile} {
+    position: relative;
+    top: -15%;
+  }
 `;
 
 export const ReportFormHeader = styled.div`

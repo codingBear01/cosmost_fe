@@ -23,7 +23,7 @@ export const StyledSearchInput = styled(Input)`
     outline: none;
   }
 
-  &::placeholder {
-    text-align: center;
-  }
+  // &::placeholder {
+  //   text-align: center;
+  // }
 `;
