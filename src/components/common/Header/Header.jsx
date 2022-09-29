@@ -59,6 +59,7 @@ function Header({ pathName, scrollY }) {
     }
   }, [isMenuBarOpen, isReportModalOpen]);
 
+  // 메인 페이지 이외에 접속할 경우 서치바 닫는 함수
   useEffect(() => {
     if (pathName !== '/') setIsSearchBarOpen(false);
   }, []);

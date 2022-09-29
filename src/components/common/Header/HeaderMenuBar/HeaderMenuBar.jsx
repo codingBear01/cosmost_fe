@@ -19,7 +19,6 @@ function HeaderMenuBar({
   isMenuBarOpen,
   isLogin,
 }) {
-  console.log(MENUBAR_MENU_LIST);
   return (
     <S.MenuBar isMenuBarOpen={isMenuBarOpen}>
       <S.MenuBarCloseBtn onClick={handleMenuBarOpen}>
