@@ -1,5 +1,5 @@
 export { AgreementPageData } from './AgreementPageData';
-export { CATEGORY_LIST } from './CategoriesData';
+export { MENUBAR_MENU_LIST } from './MenuBarData';
 export { HASH_TAG_LIST } from './MainHashTags';
 export { USER_RANKING_LIST } from './RankingData';
 export { REPORT_CATEGORIES_LIST } from './ReportCategoriesData';

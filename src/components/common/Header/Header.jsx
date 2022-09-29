@@ -6,23 +6,23 @@ import { useRecoilState } from 'recoil';
 import { searchBarOpenAtom } from '../../../store';
 /* components */
 import * as S from './styled';
-import { Button, SmallProfilePic } from '../';
+import { Button } from '../';
 import {
   HeaderLogo,
+  HeaderMenuBar,
+  HeaderMenuBarBg,
   HeaderMenuIcon,
   HeaderSearchIcon,
   HeaderSearchInput,
 } from './';
 /* react-icons */
 import { GrClose } from 'react-icons/gr';
-import { IoMdLogIn, IoMdLogOut } from 'react-icons/io';
-import { RiPoliceCarLine } from 'react-icons/ri';
-import { BiCategory } from 'react-icons/bi';
-import { AiOutlineUserAdd } from 'react-icons/ai';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
-import { REPORT_CATEGORIES_LIST, CATEGORY_LIST } from '../../../data';
-console.log(CATEGORY_LIST);
+import { REPORT_CATEGORIES_LIST, MENUBAR_MENU_LIST } from '../../../data';
+
+console.log(MENUBAR_MENU_LIST);
+
 function Header({ pathName, scrollY }) {
   // 로그인/로그아웃 레이아웃을 보기 위한 임시 state
   const [isLogin, setIsLogin] = useState(false);
@@ -34,7 +34,7 @@ function Header({ pathName, scrollY }) {
     useRecoilState(searchBarOpenAtom);
 
   // 로그인/로그아웃 레이아웃을 보기 위한 임시 함수
-  const handleClickLogin = () => {
+  const handleLogin = () => {
     setIsLogin(!isLogin);
   };
 
@@ -115,67 +115,15 @@ function Header({ pathName, scrollY }) {
         </S.HeaderContainer>
       </S.Header>
 
-      <S.MenuBarBackGround isMenuBarOpen={isMenuBarOpen}></S.MenuBarBackGround>
+      <HeaderMenuBar
+        handleReportModalOpen={handleReportModalOpen}
+        handleMenuBarOpen={handleMenuBarOpen}
+        handleLogin={handleLogin}
+        isMenuBarOpen={isMenuBarOpen}
+        isLogin={isLogin}
+      ></HeaderMenuBar>
 
-      <S.MenuBarList isMenuBarOpen={isMenuBarOpen}>
-        <GrClose onClick={handleMenuBarOpen} />
-        {!isLogin && (
-          <>
-            <S.MenuBarListItem onClick={handleClickLogin}>
-              {/* <Link to="/login"> */}
-              <IoMdLogIn />
-              <span>로그인</span>
-              {/* </Link> */}
-            </S.MenuBarListItem>
-            <S.MenuBarListItem>
-              <Link to="/signup/agreement">
-                <AiOutlineUserAdd />
-                <span>회원가입</span>
-              </Link>
-            </S.MenuBarListItem>
-          </>
-        )}
-        {isLogin && (
-          <>
-            <S.MenuBarListItem>
-              <Link to="/user">
-                <SmallProfilePic
-                  src={
-                    'https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg'
-                  }
-                  alt={'img'}
-                />
-                <span>닉네임</span>
-              </Link>
-            </S.MenuBarListItem>
-            <S.MenuBarListItem>
-              <IoMdLogOut />
-              <span onClick={handleClickLogin}>로그아웃</span>
-            </S.MenuBarListItem>
-            <S.MenuBarListItem onClick={handleReportModalOpen}>
-              <RiPoliceCarLine />
-              <span>신고하기</span>
-            </S.MenuBarListItem>
-          </>
-        )}
-        <S.MenuBarListItem>
-          <BiCategory />
-          <S.MenuBarCategoriesWrap>
-            카테고리
-            {CATEGORY_LIST &&
-              CATEGORY_LIST.map((category, i) => (
-                <S.MenuBarCategory key={category.id}>
-                  {category.categoryName}
-                  {category.categories.map((cat, i) => (
-                    <S.MenuBarCategoryItem key={cat.id}>
-                      {cat.content}
-                    </S.MenuBarCategoryItem>
-                  ))}
-                </S.MenuBarCategory>
-              ))}
-          </S.MenuBarCategoriesWrap>
-        </S.MenuBarListItem>
-      </S.MenuBarList>
+      <HeaderMenuBarBg isMenuBarOpen={isMenuBarOpen}></HeaderMenuBarBg>
 
       <S.ReportModal isReportModalOpen={isReportModalOpen}>
         <S.ReportForm>
