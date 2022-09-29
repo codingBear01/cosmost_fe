@@ -1,11 +1,7 @@
 /* libraries */
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import Slider from 'react-slick';
 import styled from 'styled-components';
 /* components */
 import { Input } from '../../';
-import { StyledCourseImg } from './../../common/CourseImg/styled';
 /* static data */
 import {
   COLOR_LIST as color,
@@ -63,6 +59,10 @@ export const MainHashTagWrap = styled.div`
   width: 100rem;
   text-align: center;
 
+  ${media.tablet} {
+    width: 75rem;
+  }
+
   ${media.mobile} {
     width: 55rem;
   }
@@ -79,6 +79,10 @@ export const MainHashTag = styled.span`
   &:hover {
     background-color: ${color.blue};
   }
+
+  ${media.tablet} {
+    font-size: ${fs.m};
+  }
 `;
 
 export const MainRankingBox = styled.ul`
@@ -88,7 +92,7 @@ export const MainRankingBox = styled.ul`
   flex-direction: column;
   width: 21.5rem;
   height: 5rem;
-  margin-top: 3.5rem;
+  margin: 3.5rem 0;
   padding-top: 2rem;
   border-top: 0.1rem solid ${color.white};
   border-bottom: 0.1rem solid ${color.white};
@@ -104,127 +108,5 @@ export const MainRankingBox = styled.ul`
     justify-content: space-between;
     width: 60%;
     transition: 0.2s;
-  }
-`;
-
-export const SliderWrap = styled.div`
-  display: block;
-  width: 120rem;
-  margin-bottom: 5rem;
-  @media (max-width: 1300px) {
-    width: 100rem;
-  }
-  ${media.tablet} {
-    width: 95rem;
-  }
-  ${media.mobile} {
-    width: 90%;
-  }
-`;
-
-export const StyledSlider = styled(Slider)`
-  height: 40rem;
-  ${media.mobile} {
-    height: 35rem;
-  }
-
-  // 슬라이더 버튼
-  .slick-prev {
-    top: 18rem;
-    left: -1.3rem;
-    z-index: 1;
-    ${media.mobile} {
-      left: -1rem;
-    }
-  }
-  .slick-next {
-    top: 18rem;
-    right: 1.5rem;
-    ${media.tablet} {
-      right: -1rem;
-    }
-    ${media.mobile} {
-      right: 0.5rem;
-    }
-  }
-  .slick-prev,
-  .slick-next {
-    &:before {
-      font-size: 5rem;
-    }
-  }
-
-  // 슬라이더 img 상위 div들
-  // react-slick에서 img 간 margin 주려면 list에 음수, track에 양수 각각 줘야 함
-  .slick-list {
-    ${media.tablet} {
-      margin: 0 -1rem;
-    }
-    ${media.mobile} {
-      margin: 0;
-    }
-  }
-  .slick-track {
-    ${media.tablet} {
-      margin: 0 1rem;
-    }
-    ${media.mobile} {
-      margin: 0;
-    }
-  }
-
-  // 슬라이더 dots
-  .slick-dots {
-    bottom: -4rem;
-  }
-  .slick-dots li button {
-    width: 2rem;
-    height: 2rem;
-  }
-  .slick-dots li.slick-active button:before {
-    color: ${color.white};
-  }
-`;
-
-export const SliderItemWrap = styled.div`
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-
-export const SliderItemImg = styled.img`
-  width: 38rem !important;
-  height: 24rem;
-  border-radius: ${br.default} ${br.default} 0 0;
-  @media (max-width: 1300px) {
-    width: 32rem !important;
-  }
-  ${media.tablet} {
-    width: 30rem !important;
-  }
-  ${media.mobile} {
-    width: 90% !important;
-    height: 20rem;
-  }
-`;
-
-export const SliderItemInfo = styled.div`
-  box-sizing: border-box;
-  width: 38rem;
-  height: 16rem;
-  padding: ${gap.l};
-  background-color: ${color.white};
-  border-radius: ${br.default};
-  border-radius: 0 0 ${br.default} ${br.default};
-  @media (max-width: 1300px) {
-    width: 32rem;
-  }
-  ${media.tablet} {
-    width: 30rem;
-  }
-  ${media.mobile} {
-    width: 90%;
-    height: 15rem;
   }
 `;

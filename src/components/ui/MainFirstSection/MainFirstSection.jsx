@@ -4,47 +4,14 @@ import { Link } from 'react-router-dom';
 import { useInterval } from './../../hooks/';
 /* components */
 import * as S from './styled';
-import { Button, CourseTitle, Section, SmallProfilePic } from '../../';
+import { MainSlider } from './';
+import { Button, Section, SmallProfilePic } from '../../';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from './../../../style/';
-import {
-  USER_RANKING_LIST,
-  SLIDER_IMAGE_LIST,
-  HASH_TAG_LIST,
-} from '../../../data';
+import { USER_RANKING_LIST, HASH_TAG_LIST } from '../../../data';
 
 /* CONSTANTS */
 const RANKER_LENGTH = USER_RANKING_LIST.length;
-const sliderSettings = {
-  dots: true,
-  infinite: true,
-  slidesToShow: 3,
-  slidesToScroll: 3,
-  speed: 500,
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-      },
-    },
-    {
-      breakpoint: 768,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-      },
-    },
-    {
-      breakpoint: 501,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-      },
-    },
-  ],
-};
 
 function MainFirstSection() {
   /* Ranking 기능 구현을 위한 ranker의 Top position 및 index */
@@ -117,28 +84,9 @@ function MainFirstSection() {
                 </li>
               ))}
           </S.MainRankingBox>
-        </S.FirstSectionContent>
 
-        <S.SliderWrap>
-          <S.StyledSlider {...sliderSettings}>
-            {SLIDER_IMAGE_LIST &&
-              SLIDER_IMAGE_LIST.map((img, i) => (
-                <S.SliderItemWrap key={img.id}>
-                  <S.SliderItemImg src={img.imgUrl} alt={img.alt} />
-                  <S.SliderItemInfo>
-                    <CourseTitle fontSize={fs.xl}>코스 제목</CourseTitle>
-                    <div>
-                      <span>@지역구</span>
-                      <span>@테마별</span>
-                    </div>
-                    <div>
-                      1번 장소 👉 2번 장소 👉 3번 장소 👉 4번 장소 👉 5번 장소
-                    </div>
-                  </S.SliderItemInfo>
-                </S.SliderItemWrap>
-              ))}
-          </S.StyledSlider>
-        </S.SliderWrap>
+          <MainSlider></MainSlider>
+        </S.FirstSectionContent>
       </S.FirstSectionContainer>
     </Section>
   );
