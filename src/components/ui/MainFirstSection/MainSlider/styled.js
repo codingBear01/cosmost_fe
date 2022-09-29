@@ -113,7 +113,7 @@ export const SliderItemImg = styled.img`
     width: 30rem !important;
   }
   @media (max-width: 1200px) {
-    width: 25rem !important;
+    width: 28rem !important;
   }
   ${media.tablet} {
     width: 40rem !important;
@@ -139,7 +139,7 @@ export const SliderItemInfo = styled.div`
     width: 30rem;
   }
   @media (max-width: 1200px) {
-    width: 25rem;
+    width: 28rem;
   }
   ${media.tablet} {
     width: 40rem;

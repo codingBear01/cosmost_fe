@@ -12,7 +12,7 @@ export const StyledHeaderMenuBarBg = styled.div`
   visibility: ${({ isMenuBarOpen }) => (isMenuBarOpen ? 'visible' : 'hidden')};
   position: fixed;
   z-index: 2;
-  top: ${({ isMenuBarOpen }) => (isMenuBarOpen ? '0' : '-100%')};
+  top: ${({ isMenuBarOpen }) => (isMenuBarOpen ? '0' : '-110%')};
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
