@@ -14,12 +14,11 @@ import {
   HeaderMenuIcon,
   HeaderSearchIcon,
   HeaderSearchInput,
+  ReportModal,
 } from './';
-/* react-icons */
-import { GrClose } from 'react-icons/gr';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
-import { REPORT_CATEGORIES_LIST, MENUBAR_MENU_LIST } from '../../../data';
+import { MENUBAR_MENU_LIST } from '../../../data';
 
 console.log(MENUBAR_MENU_LIST);
 
@@ -49,12 +48,6 @@ function Header({ pathName, scrollY }) {
   };
   const handleSearchBarOpen = () => {
     setIsSearchBarOpen(!isSearchBarOpen);
-  };
-
-  /* 신고 submit 함수*/
-  const handleReportSubmit = (e) => {
-    e.preventDefault();
-    alert('신고가 되었읍니다!🚔👮‍♂️');
   };
 
   /* 메뉴바 및 신고 모달창 떴을 때 뒷화면 스크롤 잠금 */
@@ -125,52 +118,10 @@ function Header({ pathName, scrollY }) {
 
       <HeaderMenuBarBg isMenuBarOpen={isMenuBarOpen}></HeaderMenuBarBg>
 
-      <S.ReportModal isReportModalOpen={isReportModalOpen}>
-        <S.ReportForm>
-          <S.ReportFormHeader>
-            <S.ReportTitle>신고하기</S.ReportTitle>
-            <GrClose onClick={handleReportModalOpen} />
-          </S.ReportFormHeader>
-
-          <S.ReportCategories>
-            {REPORT_CATEGORIES_LIST &&
-              REPORT_CATEGORIES_LIST.map((cat, i) => (
-                <option key={cat.id} value={cat.value}>
-                  {cat.option}
-                </option>
-              ))}
-          </S.ReportCategories>
-
-          <S.ReportTitleInput
-            type={'text'}
-            placeholder="제목"
-            maxLength={50}
-            width={'50rem'}
-            height={'5rem'}
-            fontSize={fs.l}
-          />
-          <S.ReportContent
-            placeholder="신고 내용"
-            maxLength={500}
-          ></S.ReportContent>
-          <S.ReportBtnWrap>
-            <S.ReportBtn
-              type="button"
-              action={'cancel'}
-              onClick={handleReportModalOpen}
-            >
-              취소
-            </S.ReportBtn>
-            <S.ReportBtn
-              type="submit"
-              action={'report'}
-              onClick={handleReportSubmit}
-            >
-              신고
-            </S.ReportBtn>
-          </S.ReportBtnWrap>
-        </S.ReportForm>
-      </S.ReportModal>
+      <ReportModal
+        handleReportModalOpen={handleReportModalOpen}
+        isReportModalOpen={isReportModalOpen}
+      ></ReportModal>
     </>
   );
 }

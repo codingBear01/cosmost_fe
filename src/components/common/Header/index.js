@@ -8,3 +8,4 @@ export { HeaderMenuBarBg } from './HeaderMenuBarBg/';
 export { HeaderMenuIcon } from './HeaderMenuIcon/';
 export { HeaderSearchIcon } from './HeaderSearchIcon/';
 export { HeaderSearchInput } from './HeaderSearchInput/';
+export { ReportModal } from './ReportModal/';

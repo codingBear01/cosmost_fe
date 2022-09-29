@@ -12,7 +12,6 @@ export const Footer = styled.footer`
   align-items: center;
   width: 100%;
   height: 20rem;
-  margin-top: 5rem;
   background-color: ${color.darkBlue};
 
   svg {
