@@ -17,7 +17,8 @@ import {
 
 function MainPage() {
   /* HeaderIcon 및 HeaderSearchBar 표시 여부 조작을 위한 serachBarOpen recoilState와 scrollY, pathName */
-  const [, setIsSearchBarOpen] = useRecoilState(searchBarOpenAtom);
+  const [isSearchBarOpen, setIsSearchBarOpen] =
+    useRecoilState(searchBarOpenAtom);
   const [scrollY, setScrollY] = useState(0);
   const pathName = useLocation().pathname;
 
@@ -36,6 +37,9 @@ function MainPage() {
     watch();
     return () => window.removeEventListener('scroll', handleScrollY);
   }, []);
+
+  console.log('scrollY', scrollY);
+  console.log('isSearchBarOpen', isSearchBarOpen);
 
   return (
     <>
