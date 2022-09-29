@@ -11,13 +11,11 @@ function TheMostGuCourse() {
   return (
     <Link to="/course/detail" style={{ color: `${color.black}` }}>
       <S.TheMostGuCourseWrap>
-        <CourseImg
-          width={'100%'}
-          height={'65%'}
-          sectionName={'지역구'}
-        ></CourseImg>
+        <CourseImg width={'100%'} height={'65%'}></CourseImg>
         <S.TheMostGuCourseBox>
-          <CourseTitle fontSize={fs.l}>지역구</CourseTitle>
+          <CourseTitle fontSize={fs.l} sectionName={'지역구'}>
+            지역구
+          </CourseTitle>
           <S.CourseCount>000건</S.CourseCount>
         </S.TheMostGuCourseBox>
       </S.TheMostGuCourseWrap>

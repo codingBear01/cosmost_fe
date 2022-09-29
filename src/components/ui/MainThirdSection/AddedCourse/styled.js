@@ -20,7 +20,7 @@ export const AddedCourseWrap = styled.div`
   }
 `;
 
-export const AddedCourseBox = styled.div`
+export const AddedCourseInfo = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;

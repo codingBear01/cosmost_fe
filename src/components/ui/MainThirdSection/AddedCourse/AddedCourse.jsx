@@ -17,7 +17,7 @@ function AddedCourse() {
     <Link to="/course/detail" style={{ color: `${color.black}` }}>
       <S.AddedCourseWrap>
         <CourseImg width={'28rem'} height={'100%'}></CourseImg>
-        <S.AddedCourseBox>
+        <S.AddedCourseInfo>
           <CourseTitle fontSize={fs.l}>코스 제목</CourseTitle>
           <S.AddedCourseDesc>
             코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//코스
@@ -34,7 +34,7 @@ function AddedCourse() {
             <HashTag fontSize={fs.xs}>#해시태그</HashTag>
             <HashTag fontSize={fs.xs}>#해시태그</HashTag>
           </div>
-        </S.AddedCourseBox>
+        </S.AddedCourseInfo>
       </S.AddedCourseWrap>
     </Link>
   );

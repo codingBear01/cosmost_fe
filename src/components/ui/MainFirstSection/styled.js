@@ -5,6 +5,7 @@ import Slider from 'react-slick';
 import styled from 'styled-components';
 /* components */
 import { Input } from '../../';
+import { StyledCourseImg } from './../../common/CourseImg/styled';
 /* static data */
 import {
   COLOR_LIST as color,
@@ -61,6 +62,10 @@ export const SearchInput = styled(Input)`
 export const MainHashTagWrap = styled.div`
   width: 100rem;
   text-align: center;
+
+  ${media.mobile} {
+    width: 55rem;
+  }
 `;
 
 export const MainHashTag = styled.span`
@@ -106,32 +111,40 @@ export const SliderWrap = styled.div`
   display: block;
   width: 120rem;
   margin-bottom: 5rem;
+  @media (max-width: 1300px) {
+    width: 100rem;
+  }
   ${media.tablet} {
     width: 95rem;
   }
   ${media.mobile} {
     width: 90%;
-    hight: 30rem;
   }
 `;
 
 export const StyledSlider = styled(Slider)`
   height: 40rem;
+  ${media.mobile} {
+    height: 35rem;
+  }
 
   // 슬라이더 버튼
   .slick-prev {
-    top: 19rem;
-    left: -0.05rem;
+    top: 18rem;
+    left: -1.3rem;
     z-index: 1;
+    ${media.mobile} {
+      left: -1rem;
+    }
   }
   .slick-next {
-    top: 19rem;
-    right: 1rem;
+    top: 18rem;
+    right: 1.5rem;
     ${media.tablet} {
-      right: 4rem;
+      right: -1rem;
     }
     ${media.mobile} {
-      right: 1.6rem;
+      right: 0.5rem;
     }
   }
   .slick-prev,
@@ -144,7 +157,6 @@ export const StyledSlider = styled(Slider)`
   // 슬라이더 img 상위 div들
   // react-slick에서 img 간 margin 주려면 list에 음수, track에 양수 각각 줘야 함
   .slick-list {
-    margin: 0 -2rem;
     ${media.tablet} {
       margin: 0 -1rem;
     }
@@ -153,26 +165,11 @@ export const StyledSlider = styled(Slider)`
     }
   }
   .slick-track {
-    margin: 0 2rem;
     ${media.tablet} {
       margin: 0 1rem;
     }
     ${media.mobile} {
       margin: 0;
-    }
-  }
-
-  //슬라이더 img
-  .slick-slide img {
-    width: 60rem !important;
-    height: 40rem;
-    border-radius: ${br.default};
-    ${media.tablet} {
-      width: 45rem !important;
-    }
-    // 모바일에서 하나의 컨텐츠를 꽉 차게 보여주기 위해 width 100% 줌
-    ${media.mobile} {
-      width: 100% !important;
     }
   }
 
@@ -186,5 +183,48 @@ export const StyledSlider = styled(Slider)`
   }
   .slick-dots li.slick-active button:before {
     color: ${color.white};
+  }
+`;
+
+export const SliderItemWrap = styled.div`
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const SliderItemImg = styled.img`
+  width: 38rem !important;
+  height: 24rem;
+  border-radius: ${br.default} ${br.default} 0 0;
+  @media (max-width: 1300px) {
+    width: 32rem !important;
+  }
+  ${media.tablet} {
+    width: 30rem !important;
+  }
+  ${media.mobile} {
+    width: 90% !important;
+    height: 20rem;
+  }
+`;
+
+export const SliderItemInfo = styled.div`
+  box-sizing: border-box;
+  width: 38rem;
+  height: 16rem;
+  padding: ${gap.l};
+  background-color: ${color.white};
+  border-radius: ${br.default};
+  border-radius: 0 0 ${br.default} ${br.default};
+  @media (max-width: 1300px) {
+    width: 32rem;
+  }
+  ${media.tablet} {
+    width: 30rem;
+  }
+  ${media.mobile} {
+    width: 90%;
+    height: 15rem;
   }
 `;
