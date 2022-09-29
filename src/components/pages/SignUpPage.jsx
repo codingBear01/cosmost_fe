@@ -1,6 +1,9 @@
 import React, { useState, useRef } from "react";
+import DaumPostcode from "react-daum-postcode";
+
 import styled from "styled-components";
-import { BsFillCircleFill } from "react-icons/bs";
+import { BsFillCircleFill, BsCaretDownSquareFill } from "react-icons/bs";
+import { AiFillCloseSquare } from "react-icons/ai";
 import {
   COLOR_LIST,
   BORDER_RADIUS_LIST,
@@ -18,7 +21,6 @@ import {
 import { Button } from "../";
 
 const profileImageDefaultPath = "/assets/images/ProfileDefaultImage.png";
-
 const SignUpInput = styled(Input)`
   background-color: ${COLOR_LIST.white};
   border: 1px solid ${COLOR_LIST.grey};
@@ -27,6 +29,28 @@ const SignUpInput = styled(Input)`
     font-size : 1rem;
     color: ${COLOR_LIST.grey}};
   }
+`;
+
+const Select = styled.select`
+  width: ${({ width }) => width || "auto"};
+  height: ${({ height }) => height || "auto"};
+  appearance: none ;
+  border-radius: 0.5rem;
+  background-color: #f5f5f5;
+  font-size : 1rem;
+  color: ${COLOR_LIST.grey}};
+  text-indent : 1rem;
+`;
+
+const Selectimg = styled(BsCaretDownSquareFill)`
+  width: 2rem;
+  height: 2rem;
+  color: #666ad1;
+  background-color: white;
+  border-radius: 0.4rem;
+  position: absolute;
+  top: ${({ top }) => top || "auto"};
+  left: ${({ left }) => left || "auto"};
 `;
 
 const ProfileImage = styled.img`
@@ -42,8 +66,25 @@ const SingUpForm = styled.form`
   }
 `;
 
+const AddressApi = styled(DaumPostcode)`
+  width: 50% !important;
+`;
+
+const AddressApiClose = styled(AiFillCloseSquare)`
+  width: 5rem;
+  height: 5rem;
+  float: right;
+  color: ${COLOR_LIST.white};
+  cursor: pointer;
+`;
+
+// onComplete={() => console.log("A")} // 값을 선택할 경우 실행되는 이벤트
+// autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
+// defaultQuery="판교역로 235" // 팝업을 열때 기본적으로 입력되는 검색어
+
 function SignUpPage() {
   const profileInputRef = useRef();
+  const [addressApiEnable, setAddressApiEnable] = useState(false);
   const [inputState, setInputState] = useState({
     nickname: "",
     id: "",
@@ -55,8 +96,10 @@ function SignUpPage() {
     month: "",
     day: "",
     address: "",
+    addressDetail: "",
     maritalStatus: "",
     email: "",
+    certificationNumber: "",
   });
 
   /*사용자가 input에 텍스트를 입력할 때 호출할 핸들러
@@ -86,9 +129,29 @@ function SignUpPage() {
     fileReader.readAsDataURL(selectImageFile);
   };
 
+  /*주소 검색 버튼을 클릭한 경우 호출할 핸들러 
+    모달창 state를 전달한다.*/
+  const onClickAddressButton = (e) => {
+    e.preventDefault();
+    setAddressApiEnable(!addressApiEnable);
+  };
+
+  /*API 모달창에서 닫기를 클릭한 경우 호출할 핸들러 
+    모달창 state를 전달한다.*/
+  const onClickModalClose = (e) => {
+    setAddressApiEnable(!addressApiEnable);
+  };
+
+  /*API 모달창에서 주소를 클릭한 경우 호출할 핸들러 
+    주소 정보 및 모달창 state를 전달한다.*/
+  const onCompleteAddressModal = (data, e) => {
+    setInputState({ ...inputState, address: data.address });
+    setAddressApiEnable(!addressApiEnable);
+  };
+
   return (
     <HeightCenterDiv height={"auto"}>
-      <HeightCenterDiv height={"auto"}>
+      <HeightCenterDiv width={"37.7rem"} height={"auto"}>
         <PageTitle>CosMost</PageTitle>
         <SingUpForm>
           <FlexDiv justifyContent={"space-between"}>
@@ -100,8 +163,9 @@ function SignUpPage() {
                 <SignUpInput
                   onChange={onChangeInput}
                   name="nickname"
+                  value={inputState.nickname}
                   placeholder="닉네임"
-                  width={"9.5rem"}
+                  width={"10rem"}
                   height={"4rem"}
                 ></SignUpInput>
                 <Button width={"13rem"} height={"4rem"} fontSize={"1.7rem"}>
@@ -130,8 +194,9 @@ function SignUpPage() {
             <SignUpInput
               onChange={onChangeInput}
               name="id"
+              value={inputState.id}
               placeholder="아이디"
-              width={"19rem"}
+              width={"21rem"}
               height={"4rem"}
             ></SignUpInput>
             <Button width={"13rem"} height={"4rem"} fontSize={"1.7rem"}>
@@ -142,8 +207,9 @@ function SignUpPage() {
             <SignUpInput
               onChange={onChangeInput}
               name="password"
+              value={inputState.password}
               placeholder="비밀번호"
-              width={"33rem"}
+              width={"35rem"}
               height={"4rem"}
             ></SignUpInput>
           </div>
@@ -151,8 +217,9 @@ function SignUpPage() {
             <SignUpInput
               onChange={onChangeInput}
               name="passwordConfirm"
+              value={inputState.passwordConfirm}
               placeholder="비밀번호 재확인"
-              width={"33rem"}
+              width={"35rem"}
               height={"4rem"}
             ></SignUpInput>
           </div>
@@ -160,8 +227,9 @@ function SignUpPage() {
             <SignUpInput
               onChange={onChangeInput}
               name="name"
+              value={inputState.name}
               placeholder="이름"
-              width={"33rem"}
+              width={"35rem"}
               height={"4rem"}
             ></SignUpInput>
           </div>
@@ -169,19 +237,41 @@ function SignUpPage() {
             <SignUpInput
               onChange={onChangeInput}
               name="year"
+              value={inputState.year}
               placeholder="년"
               width={"10rem"}
               height={"4rem"}
             ></SignUpInput>
-            <SignUpInput
-              name="month"
-              placeholder="월"
-              width={"10rem"}
-              height={"4rem"}
-            ></SignUpInput>
+            <label style={{ position: "relative" }}>
+              <Select
+                name="month"
+                value={inputState.month}
+                width="10rem"
+                height="4.3rem"
+                required
+                onChange={onChangeInput}
+              >
+                <option value="">월</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+              </Select>
+              <Selectimg top="1.1rem" left="7.2rem" />
+            </label>
+
             <SignUpInput
               onChange={onChangeInput}
               name="day"
+              value={inputState.day}
               placeholder="일"
               width={"10rem"}
               height={"4rem"}
@@ -189,29 +279,55 @@ function SignUpPage() {
           </FlexDiv>
           <FlexDiv justifyContent={"space-between"}>
             <SignUpInput
+              disabled
               name="address"
+              value={inputState.address}
               placeholder="주소"
-              width={"19rem"}
+              width={"21rem"}
               height={"4rem"}
             />
-            <Button width={"13rem"} height={"4rem"} fontSize={"1.7rem"}>
+            <Button
+              width={"13rem"}
+              height={"4rem"}
+              fontSize={"1.7rem"}
+              onClick={onClickAddressButton}
+            >
               검색
             </Button>
           </FlexDiv>
-          <div>
+          {inputState.address && (
             <SignUpInput
-              name="maritalStatus"
-              placeholder="결혼 여부"
-              width={"33rem"}
+              onChange={onChangeInput}
+              name="addressDetail"
+              value={inputState.addressDetail}
+              placeholder="상세 주소"
+              width={"35rem"}
               height={"4rem"}
-            ></SignUpInput>
-          </div>
+            />
+          )}
+          <label style={{ display: "block", position: "relative" }}>
+            <Select
+              name="maritalStatus"
+              value={inputState.maritalStatus}
+              width={"36rem"}
+              height={"4rem"}
+              required
+              onChange={onChangeInput}
+            >
+              <option value="">결혼여부</option>
+              <option>미혼</option>
+              <option>기혼</option>
+            </Select>
+            <Selectimg top="1.1rem" left="32rem" />
+          </label>
+
           <FlexDiv justifyContent={"space-between"}>
             <SignUpInput
               onChange={onChangeInput}
               name="email"
+              value={inputState.email}
               placeholder="이메일"
-              width={"19rem"}
+              width={"21rem"}
               height={"4rem"}
             ></SignUpInput>
             <Button width={"13rem"} height={"4rem"} fontSize={"1.7rem"}>
@@ -221,18 +337,41 @@ function SignUpPage() {
           <div>
             <SignUpInput
               onChange={onChangeInput}
+              name="certificationNumber"
+              value={inputState.certificationNumber}
               placeholder="인증번호 입력 "
-              width={"33rem"}
+              width={"35rem"}
               height={"4rem"}
             ></SignUpInput>
           </div>
           <div>
-            <Button width={"34rem"} height={"4rem"} fontSize={"1.7rem"}>
+            <Button width={"36rem"} height={"4rem"} fontSize={"1.7rem"}>
               가입하기
             </Button>
           </div>
         </SingUpForm>
       </HeightCenterDiv>
+      {addressApiEnable && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
+            top: "0",
+            left: "0",
+            position: "absolute",
+            backgroundColor: "RGBA(0,0,0,0.7)",
+          }}
+        >
+          <div style={{ width: "50%" }}>
+            <AddressApiClose onClick={onClickModalClose} />
+          </div>
+          <AddressApi onComplete={onCompleteAddressModal} />
+        </div>
+      )}
     </HeightCenterDiv>
   );
 }
