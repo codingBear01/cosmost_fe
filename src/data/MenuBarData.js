@@ -1,18 +1,19 @@
 import * as AiIcons from 'react-icons/ai';
 import * as RiIcons from 'react-icons/ri';
+import * as FiIcons from 'react-icons/fi';
 import * as BiIcons from 'react-icons/bi';
 
 export const MENUBAR_MENU_LIST = [
   {
     id: 1,
-    leftEl: <AiIcons.AiOutlineLogin />,
+    icon: <AiIcons.AiOutlineLogin />,
     title: '로그인',
     isLogin: false,
     isHandleLog: true,
   },
   {
     id: 2,
-    leftEl: <AiIcons.AiOutlineUserAdd />,
+    icon: <AiIcons.AiOutlineUserAdd />,
     title: '회원가입',
     isLogin: false,
     path: '/signup/agreement',
@@ -20,51 +21,42 @@ export const MENUBAR_MENU_LIST = [
   {
     id: 3,
     title: '닉네임',
+    imgUrl:
+      'https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg',
     isMyPage: true,
     isLogin: true,
     path: '/user',
   },
   {
     id: 4,
-    leftEl: <AiIcons.AiOutlineLogout />,
+    icon: <AiIcons.AiOutlineLogout />,
     title: '로그아웃',
     isLogin: true,
     isHandleLog: true,
   },
   {
     id: 5,
-    leftEl: <RiIcons.RiPoliceCarLine />,
+    icon: <RiIcons.RiPoliceCarLine />,
     title: '신고하기',
     isLogin: true,
-  },
-  {
-    id: 6,
-    leftEl: <BiIcons.BiCategory />,
-    title: '카테고리',
-    subNav: [],
+    isReport: true,
   },
 ];
 
 export const CATEGORY_LIST = [
   {
     id: 1,
+    icon: <FiIcons.FiMap />,
     categoryName: '지역별',
-    categories: [],
+    subCategories: [],
   },
   {
     id: 2,
+    icon: <BiIcons.BiBrush />,
     categoryName: '테마별',
-    categories: [],
+    subCategories: [],
   },
 ];
-
-for (let i = 0; i < MENUBAR_MENU_LIST.length; i++) {
-  if (MENUBAR_MENU_LIST[i].title === '카테고리') {
-    for (let j = 0; j < CATEGORY_LIST.length; j++) {
-      MENUBAR_MENU_LIST[i].subNav.push(CATEGORY_LIST[j]);
-    }
-  }
-}
 
 const guArr = [
   '중구',
@@ -99,14 +91,14 @@ const themeArr = [
 ];
 
 for (let i in guArr) {
-  CATEGORY_LIST[0].categories.push({
+  CATEGORY_LIST[0].subCategories.push({
     id: +i + 1,
     title: guArr[i],
   });
 }
 
 for (let i in themeArr) {
-  CATEGORY_LIST[1].categories.push({
+  CATEGORY_LIST[1].subCategories.push({
     id: +i + 1,
     title: themeArr[i],
   });

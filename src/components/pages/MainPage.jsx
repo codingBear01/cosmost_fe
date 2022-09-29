@@ -38,10 +38,6 @@ function MainPage() {
     return () => window.removeEventListener('scroll', handleScrollY);
   }, []);
 
-  console.log('pathName', pathName);
-  console.log('scrollY', scrollY);
-  console.log('isSearchBarOpen', isSearchBarOpen);
-
   return (
     <>
       <Header pathName={pathName} scrollY={scrollY} />

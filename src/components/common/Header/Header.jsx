@@ -18,9 +18,6 @@ import {
 } from './';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
-import { MENUBAR_MENU_LIST } from '../../../data';
-
-console.log(MENUBAR_MENU_LIST);
 
 function Header({ pathName, scrollY }) {
   // 로그인/로그아웃 레이아웃을 보기 위한 임시 state
@@ -51,13 +48,13 @@ function Header({ pathName, scrollY }) {
   };
 
   /* 메뉴바 및 신고 모달창 떴을 때 뒷화면 스크롤 잠금 */
-  useEffect(() => {
-    if (isMenuBarOpen || isReportModalOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [isMenuBarOpen, isReportModalOpen]);
+  // useEffect(() => {
+  //   if (isMenuBarOpen || isReportModalOpen) {
+  //     document.body.style.overflow = 'hidden';
+  //   } else {
+  //     document.body.style.overflow = 'unset';
+  //   }
+  // }, [isMenuBarOpen, isReportModalOpen]);
 
   // 메인 페이지 이외에 접속할 경우 서치바 닫는 함수
   useEffect(() => {

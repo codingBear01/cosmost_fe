@@ -52,12 +52,11 @@ export const MenuBarList = styled.ul`
 
 export const MenuBarListItem = styled.li`
   padding: 1rem 10rem;
+  padding-left: ${({ cat }) => (cat ? '12rem' : '')};
   transition: 500ms;
-
   &:hover {
     background-color: ${color.lightGrey};
   }
-
   svg {
     font-size: 3rem;
   }
