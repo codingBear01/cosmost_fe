@@ -12,6 +12,13 @@ export const AddedCourseWrap = styled.div`
   display: flex;
   width: 58rem;
 
+  ${media.tablet} {
+    width: 28rem;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
   ${media.mobile} {
     width: 28rem;
     justify-content: center;

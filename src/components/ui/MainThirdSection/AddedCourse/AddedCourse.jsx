@@ -14,29 +14,27 @@ import {
 
 function AddedCourse() {
   return (
-    <Link to="/course/detail" style={{ color: `${color.black}` }}>
-      <S.AddedCourseWrap>
-        <CourseImg width={'28rem'} height={'100%'}></CourseImg>
-        <S.AddedCourseInfo>
-          <CourseTitle fontSize={fs.l}>코스 제목</CourseTitle>
-          <S.AddedCourseDesc>
-            코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//코스
-            설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//
-            코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스
-            설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//
-            코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스
-            설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//
-          </S.AddedCourseDesc>
-          <div>
-            <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-            <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-            <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-            <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-            <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-          </div>
-        </S.AddedCourseInfo>
-      </S.AddedCourseWrap>
-    </Link>
+    <S.AddedCourseWrap>
+      <CourseImg width={'28rem'} height={'100%'}></CourseImg>
+      <S.AddedCourseInfo>
+        <CourseTitle fontSize={fs.l}>코스 제목</CourseTitle>
+        <S.AddedCourseDesc>
+          코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//코스 설명이당!!ㅇㅅㅇ//
+          코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스
+          설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//
+          코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스
+          설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//
+          코스 설명이당!!ㅇㅅㅇ//
+        </S.AddedCourseDesc>
+        <div>
+          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+        </div>
+      </S.AddedCourseInfo>
+    </S.AddedCourseWrap>
   );
 }
 

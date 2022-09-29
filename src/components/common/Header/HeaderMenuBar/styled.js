@@ -19,7 +19,7 @@ export const MenuBar = styled.nav`
   justify-content: flex-start;
   flex-direction: column;
   width: 40rem;
-  height: 100vh;
+  height: 100%;
   border-radius: ${br.default} 0 0 ${br.default};
   background-color: ${color.white};
   transition: 500ms;
@@ -52,7 +52,7 @@ export const MenuBarList = styled.ul`
 
 export const MenuBarListItem = styled.li`
   padding: 1rem 10rem;
-  padding-left: ${({ cat }) => (cat ? '12rem' : '')};
+  padding-left: ${({ cat, subCat }) => (cat ? '15rem' : subCat ? '18rem' : '')};
   transition: 500ms;
   &:hover {
     background-color: ${color.lightGrey};
@@ -73,4 +73,6 @@ export const MenuBarItemLink = styled(Link)`
 
 export const MenuBarItemTitle = styled.span`
   margin-left: 3rem;
+  font-size: ${({ cat, subCat }) =>
+    cat ? `${fs.m}` : subCat ? `${fs.s}` : ''};
 `;

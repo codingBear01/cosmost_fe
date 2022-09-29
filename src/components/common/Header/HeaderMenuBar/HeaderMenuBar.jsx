@@ -21,17 +21,27 @@ function HeaderMenuBar({
   const [isSubCategoryOpen, setIsSubCategoryOpen] = useState(false);
   const [isGuCategoryOpen, setIsGuCategoryOpen] = useState(false);
   const [isThemeCategoryOpen, setIsThemeCategoryOpen] = useState(false);
-
   const [subCategoryIdx, setSubCategoryIdx] = useState(null);
 
   const handleCategoryOpen = () => {
     setIsCategoryOpen(!isCategoryOpen);
   };
 
-  const handleSubCategoryOpen = (idx) => {
+  const handleSubCategoryOpen = (idx, cat) => {
     setSubCategoryIdx(idx);
     setIsSubCategoryOpen(!isSubCategoryOpen);
+    if (cat === '지역별') {
+      setIsGuCategoryOpen(!isGuCategoryOpen);
+      setIsThemeCategoryOpen(false);
+    } else {
+      setIsThemeCategoryOpen(!isThemeCategoryOpen);
+      setIsGuCategoryOpen(false);
+    }
   };
+  console.log('idx', subCategoryIdx);
+  console.log('isGu', isGuCategoryOpen);
+  console.log('isTheme', isThemeCategoryOpen);
+  console.log('isSub', isSubCategoryOpen);
 
   return (
     <S.MenuBar isMenuBarOpen={isMenuBarOpen}>
@@ -79,30 +89,45 @@ function HeaderMenuBar({
               <S.MenuBarListItem
                 key={category.id}
                 cat={true}
-                onClick={() => handleSubCategoryOpen(i)}
+                onClick={() => handleSubCategoryOpen(i, category.categoryName)}
               >
                 <S.MenuBarItemLink>
                   {category.icon}
-                  <S.MenuBarItemTitle>
+                  <S.MenuBarItemTitle cat={true}>
                     {category.categoryName}
                   </S.MenuBarItemTitle>
-                  {i === subCategoryIdx ? (
+                  {(i === subCategoryIdx && isGuCategoryOpen) ||
+                  (i === subCategoryIdx && isThemeCategoryOpen) ? (
                     <GoIcons.GoTriangleUp />
                   ) : (
                     <GoIcons.GoTriangleDown />
                   )}
                 </S.MenuBarItemLink>
               </S.MenuBarListItem>
+              {(i === subCategoryIdx && isGuCategoryOpen) ||
+              (i === subCategoryIdx && isThemeCategoryOpen) ? (
+                CATEGORY_LIST[i].subCategories.map((subCat) => (
+                  <S.MenuBarListItem key={subCat.id} subCat={true}>
+                    <S.MenuBarItemLink>
+                      <S.MenuBarItemTitle subCat={true}>
+                        {subCat.title}
+                      </S.MenuBarItemTitle>
+                    </S.MenuBarItemLink>
+                  </S.MenuBarListItem>
+                ))
+              ) : (
+                <></>
+              )}
             </>
           ))}
-        {isSubCategoryOpen &&
+        {/* {isSubCategoryOpen &&
           CATEGORY_LIST[subCategoryIdx].subCategories.map((subCat) => (
             <S.MenuBarListItem key={subCat.id}>
               <S.MenuBarItemLink>
                 <S.MenuBarItemTitle>{subCat.title}</S.MenuBarItemTitle>
               </S.MenuBarItemLink>
             </S.MenuBarListItem>
-          ))}
+          ))} */}
         {/* {isGuCategoryOpen &&
           CATEGORY_LIST[0].subCategories.map((subCat) => (
             <S.MenuBarListItem key={subCat.id}>

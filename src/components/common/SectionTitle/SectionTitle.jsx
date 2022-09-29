@@ -9,7 +9,7 @@ function SectionTitle({ children }) {
   return (
     <S.PopularTitleWrap>
       <S.PopularTitle>{children}</S.PopularTitle>
-      <Link to="/course/detail">
+      <Link to="/course/result">
         <MoreCourseBtn></MoreCourseBtn>
       </Link>
     </S.PopularTitleWrap>

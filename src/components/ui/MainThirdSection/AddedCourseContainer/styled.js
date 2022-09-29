@@ -15,6 +15,11 @@ export const AddedCourseContainer = styled.div`
   margin-top: ${gap.l};
   gap: 3rem;
 
+  ${media.tablet} {
+    flex-wrap: wrap;
+    width: 90rem;
+  }
+
   ${media.mobile} {
     flex-wrap: wrap;
     width: 60rem;
