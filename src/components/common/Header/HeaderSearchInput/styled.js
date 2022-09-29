@@ -15,7 +15,6 @@ export const StyledSearchInput = styled(Input)`
     !isSearchBarOpen || (pathName === '/' && scrollY < 307)
       ? 'hidden'
       : 'visible'};
-  // right: -8rem;
   scale: ${({ isSearchBarOpen, scrollY, pathName }) =>
     !isSearchBarOpen || (pathName === '/' && scrollY < 307) ? '0' : '1'};
   transition: all 0.15s ease-in;
@@ -24,17 +23,7 @@ export const StyledSearchInput = styled(Input)`
     outline: none;
   }
 
-  // ${media.tablet} {
-  //   right: -2.5rem;
-  //   width: 40rem;
-  // }
-
-  // ${media.mobile} {
-  //   right: -2.5rem;
-  //   width: 30rem;
-  // }
-
-  // @media (max-width: 400px) {
-  //   width: 20rem;
-  // }
+  &::placeholder {
+    text-align: center;
+  }
 `;

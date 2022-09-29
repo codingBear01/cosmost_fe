@@ -11,6 +11,8 @@ function HeaderSearchInput({
 }) {
   return (
     <S.StyledSearchInput
+      type="text"
+      placeholder="키워드를 입력하세요."
       width={width}
       height={height}
       fontSize={fontSize}
