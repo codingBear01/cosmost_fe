@@ -5,7 +5,11 @@ import * as S from './styled';
 function CourseTitle({ fontSize, children, rate, sectionName }) {
   return (
     <S.CourseTitleWrap>
-      <S.StyledCourseTitle fontSize={fontSize}>{children}</S.StyledCourseTitle>
+      <S.StyledCourseTitle fontSize={fontSize}>
+        {children.length > 14
+          ? `${children.substring(0, 13)}...`
+          : `${children}`}
+      </S.StyledCourseTitle>
       {sectionName !== '지역구' && (
         <S.CourseTotalRate height={fontSize}>⭐{rate}</S.CourseTotalRate>
       )}

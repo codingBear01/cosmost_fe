@@ -46,9 +46,7 @@ function MainSlider() {
               <S.SliderItemImg src={item.imgUrl} alt={item.title} />
               <S.SliderItemInfo>
                 <CourseTitle fontSize={fs.xl} rate={item.rate}>
-                  {item.title.length > 15
-                    ? `${item.title.substring(0, 16)}...`
-                    : `${item.title}`}
+                  {item.title}
                 </CourseTitle>
                 <div>
                   {item.categories.map((cat, i) => (

@@ -16,7 +16,6 @@ export const StyledHashtag = styled.button`
   color: ${color.white};
   cursor: pointer;
   transition: all 0.15s ease-in;
-
   &:hover {
     background-color: ${color.blue};
   }
