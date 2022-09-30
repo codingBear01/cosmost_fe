@@ -38,10 +38,6 @@ function HeaderMenuBar({
       setIsGuCategoryOpen(false);
     }
   };
-  console.log('idx', subCategoryIdx);
-  console.log('isGu', isGuCategoryOpen);
-  console.log('isTheme', isThemeCategoryOpen);
-  console.log('isSub', isSubCategoryOpen);
 
   return (
     <S.MenuBar isMenuBarOpen={isMenuBarOpen}>
@@ -54,26 +50,24 @@ function HeaderMenuBar({
           MENUBAR_MENU_LIST.map((menu, i) => (
             <>
               {isLogin === menu.isLogin && (
-                <S.MenuBarListItem
+                <S.MenuBarItemLink
+                  to={menu.path}
                   key={menu.id}
                   onClick={menu.isReport && handleReportModalOpen}
                 >
-                  <S.MenuBarItemLink
-                    to={menu.path}
-                    onClick={menu.isHandleLog && handleLogin}
-                  >
+                  <S.MenuBarListItem onClick={menu.isHandleLog && handleLogin}>
                     {menu.icon}
                     {isLogin === menu.isMyPage && (
                       <SmallProfilePic src={menu.imgUrl} alt={menu.title} />
                     )}
                     <S.MenuBarItemTitle>{menu.title}</S.MenuBarItemTitle>
-                  </S.MenuBarItemLink>
-                </S.MenuBarListItem>
+                  </S.MenuBarListItem>
+                </S.MenuBarItemLink>
               )}
             </>
           ))}
-        <S.MenuBarListItem onClick={handleCategoryOpen}>
-          <S.MenuBarItemLink>
+        <S.MenuBarItemLink onClick={handleCategoryOpen}>
+          <S.MenuBarListItem>
             <BiIcons.BiCategory />
             <S.MenuBarItemTitle>카테고리</S.MenuBarItemTitle>
             {isCategoryOpen ? (
@@ -81,8 +75,9 @@ function HeaderMenuBar({
             ) : (
               <GoIcons.GoTriangleDown />
             )}
-          </S.MenuBarItemLink>
-        </S.MenuBarListItem>
+          </S.MenuBarListItem>
+        </S.MenuBarItemLink>
+
         {isCategoryOpen &&
           CATEGORY_LIST.map((category, i) => (
             <>
@@ -104,46 +99,23 @@ function HeaderMenuBar({
                   )}
                 </S.MenuBarItemLink>
               </S.MenuBarListItem>
+
               {(i === subCategoryIdx && isGuCategoryOpen) ||
               (i === subCategoryIdx && isThemeCategoryOpen) ? (
                 CATEGORY_LIST[i].subCategories.map((subCat) => (
-                  <S.MenuBarListItem key={subCat.id} subCat={true}>
-                    <S.MenuBarItemLink>
+                  <S.MenuBarItemLink key={subCat.id} subCat={true}>
+                    <S.MenuBarListItem>
                       <S.MenuBarItemTitle subCat={true}>
                         {subCat.title}
                       </S.MenuBarItemTitle>
-                    </S.MenuBarItemLink>
-                  </S.MenuBarListItem>
+                    </S.MenuBarListItem>
+                  </S.MenuBarItemLink>
                 ))
               ) : (
                 <></>
               )}
             </>
           ))}
-        {/* {isSubCategoryOpen &&
-          CATEGORY_LIST[subCategoryIdx].subCategories.map((subCat) => (
-            <S.MenuBarListItem key={subCat.id}>
-              <S.MenuBarItemLink>
-                <S.MenuBarItemTitle>{subCat.title}</S.MenuBarItemTitle>
-              </S.MenuBarItemLink>
-            </S.MenuBarListItem>
-          ))} */}
-        {/* {isGuCategoryOpen &&
-          CATEGORY_LIST[0].subCategories.map((subCat) => (
-            <S.MenuBarListItem key={subCat.id}>
-              <S.MenuBarItemLink>
-                <S.MenuBarItemTitle>{subCat.title}</S.MenuBarItemTitle>
-              </S.MenuBarItemLink>
-            </S.MenuBarListItem>
-          ))}
-        {isThemeCategoryOpen &&
-          CATEGORY_LIST[1].subCategories.map((subCat) => (
-            <S.MenuBarListItem key={subCat.id}>
-              <S.MenuBarItemLink>
-                <S.MenuBarItemTitle>{subCat.title}</S.MenuBarItemTitle>
-              </S.MenuBarItemLink>
-            </S.MenuBarListItem>
-          ))} */}
       </S.MenuBarList>
     </S.MenuBar>
   );

@@ -21,7 +21,7 @@ export const MenuBar = styled.nav`
   width: 40rem;
   height: 100%;
   border-radius: ${br.default} 0 0 ${br.default};
-  background-color: ${color.white};
+  background-color: ${color.darkBlue};
   transition: 500ms;
 `;
 
@@ -34,13 +34,11 @@ export const MenuBarCloseBtn = styled.button`
   margin: 1rem;
   padding: 0;
   border-radius: ${br.circle};
-  color: ${color.black};
+  color: ${color.white};
   transition: 500ms;
-
   &:hover {
-    background-color: ${color.lightGrey};
+    background-color: ${color.blue};
   }
-
   svg {
     font-size: 7rem;
   }
@@ -50,25 +48,25 @@ export const MenuBarList = styled.ul`
   width: 100%;
 `;
 
-export const MenuBarListItem = styled.li`
+export const MenuBarItemLink = styled(Link)`
   padding: 1rem 10rem;
   padding-left: ${({ cat, subCat }) => (cat ? '15rem' : subCat ? '18rem' : '')};
   transition: 500ms;
   &:hover {
-    background-color: ${color.lightGrey};
+    background-color: ${color.blue};
   }
-  svg {
-    font-size: 3rem;
-  }
+  font-size: ${fs.xl};
+  font-weight: 600;
+  color: ${color.white};
 `;
 
-export const MenuBarItemLink = styled(Link)`
+export const MenuBarListItem = styled.li`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  font-size: ${fs.xl};
-  font-weight: 600;
-  color: ${color.black};
+  svg {
+    font-size: 3rem;
+  }
 `;
 
 export const MenuBarItemTitle = styled.span`
