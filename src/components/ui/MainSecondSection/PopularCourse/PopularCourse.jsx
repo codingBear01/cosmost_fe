@@ -2,7 +2,13 @@
 import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
-import { CourseImg, CourseTitle, EachCourseWrap, HashTag } from '../../..';
+import {
+  CourseImg,
+  CourseTitle,
+  EachCourseBox,
+  EachCourseWrap,
+  HashTag,
+} from '../../..';
 /* static data */
 import { FONT_SIZE_LIST as fs, COLOR_LIST as color } from '../../../../style';
 
@@ -15,7 +21,7 @@ function PopularCourse({ item }) {
         width={'27.5rem'}
         height={'20rem'}
       ></CourseImg>
-      <S.PoplularCourseBox>
+      <EachCourseBox>
         <CourseTitle rate={item.rate} fontSize={fs.l}>
           {item.title}
         </CourseTitle>
@@ -26,7 +32,7 @@ function PopularCourse({ item }) {
             </HashTag>
           ))}
         </div>
-      </S.PoplularCourseBox>
+      </EachCourseBox>
     </EachCourseWrap>
   );
 }

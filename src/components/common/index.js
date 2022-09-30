@@ -2,6 +2,7 @@ export { Button } from './Button/';
 export { CourseContainer } from './CourseContainer/';
 export { CourseImg } from './CourseImg/';
 export { CourseTitle } from './CourseTitle/';
+export { EachCourseBox } from './EachCourseBox/';
 export { EachCourseWrap } from './EachCourseWrap/';
 export { FlexDiv } from './FlexDiv';
 export { Footer } from './Footer/';

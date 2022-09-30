@@ -4,6 +4,7 @@ export {
   CourseContainer,
   CourseImg,
   CourseTitle,
+  EachCourseBox,
   EachCourseWrap,
   FlexDiv,
   Footer,

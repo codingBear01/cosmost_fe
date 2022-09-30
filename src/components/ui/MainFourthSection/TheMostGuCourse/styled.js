@@ -8,14 +8,6 @@ import {
   BREAK_POINTS as media,
 } from '../../../../style';
 
-export const TheMostGuCourseBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  height: 35%;
-  padding: ${gap.xs};
-`;
-
 export const CourseCount = styled.div`
   display: flex;
   align-items: center;

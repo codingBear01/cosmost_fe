@@ -7,12 +7,3 @@ import {
   GAP_LIST as gap,
   BREAK_POINTS as media,
 } from '../../../../style';
-
-export const PoplularCourseBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-  height: 35%;
-  padding: ${gap.xs};
-`;

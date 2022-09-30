@@ -2,7 +2,12 @@
 import React, { useState, useEffect } from 'react';
 /* components */
 import * as S from './styled';
-import { CourseImg, CourseTitle, EachCourseWrap } from '../../..';
+import {
+  CourseImg,
+  CourseTitle,
+  EachCourseBox,
+  EachCourseWrap,
+} from '../../..';
 /* static data */
 import { FONT_SIZE_LIST as fs, COLOR_LIST as color } from '../../../../style';
 
@@ -30,7 +35,7 @@ function TheMostGuCourse({ item }) {
         width={'27.5rem'}
         height={'20rem'}
       ></CourseImg>
-      <S.TheMostGuCourseBox>
+      <EachCourseBox most="true">
         <CourseTitle fontSize={fs.l} sectionName={'지역구'}>
           {item.title}
         </CourseTitle>
@@ -39,7 +44,7 @@ function TheMostGuCourse({ item }) {
           {/* <span>{item.count}</span> */}
           <span>{courseCnt}건</span>
         </S.CourseCount>
-      </S.TheMostGuCourseBox>
+      </EachCourseBox>
     </EachCourseWrap>
   );
 }
