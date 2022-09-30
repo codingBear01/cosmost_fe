@@ -11,7 +11,7 @@ export const StyledCourseContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 120rem;
-  margin-top: ${gap.l};
+  margin-top: ${({ mt }) => mt};
   gap: 3rem;
 
   ${media.tablet} {

@@ -35,7 +35,7 @@ function TheMostGuCourse({ item }) {
         width={'27.5rem'}
         height={'20rem'}
       ></CourseImg>
-      <EachCourseBox most="true">
+      <EachCourseBox>
         <CourseTitle fontSize={fs.l} sectionName={'지역구'}>
           {item.title}
         </CourseTitle>
