@@ -12,7 +12,6 @@ export const StyledHashtag = styled.span`
   margin: 0.25rem;
   padding: 0.25rem;
   border-radius: ${br.default};
-  // background-color: ${color.lightBlue};
   font-size: ${({ fontSize }) => fontSize};
   color: ${color.lightBlue};
   cursor: pointer;
