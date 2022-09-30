@@ -53,7 +53,7 @@ function MainSlider() {
                     <span key={cat.id}>@{cat.categoryName} </span>
                   ))}
                 </div>
-                <div>
+                <S.CoursesWrap>
                   {item.courses.map((course, i) => (
                     <div key={course.id}>
                       <span>{course.courseName}</span>
@@ -64,7 +64,7 @@ function MainSlider() {
                       )}
                     </div>
                   ))}
-                </div>
+                </S.CoursesWrap>
               </S.SliderItemInfo>
             </S.SliderItemWrap>
           ))}
