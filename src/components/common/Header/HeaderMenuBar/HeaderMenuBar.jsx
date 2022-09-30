@@ -88,22 +88,22 @@ function HeaderMenuBar({
           CATEGORY_LIST.map((category, i) => (
             <div key={category.id}>
               <S.MenuBarItemLink
-                cat={true}
+                cat="true"
                 onClick={() => handleSubCategoryOpen(i, category.categoryName)}
               >
                 <S.MenuBarListItem>
                   {category.icon}
-                  <S.MenuBarItemTitle cat={true}>
+                  <S.MenuBarItemTitle cat="true">
                     {category.categoryName}
                   </S.MenuBarItemTitle>
                   {/* 오픈 여부 삼각형 아이콘 */}
                   {(i === subCategoryIdx && isGuCategoryOpen) ||
                   (i === subCategoryIdx && isThemeCategoryOpen) ? (
-                    <S.CategoryIsOpendIcon cat={true}>
+                    <S.CategoryIsOpendIcon cat="true">
                       <GoIcons.GoTriangleUp />
                     </S.CategoryIsOpendIcon>
                   ) : (
-                    <S.CategoryIsOpendIcon cat={true}>
+                    <S.CategoryIsOpendIcon cat="true">
                       <GoIcons.GoTriangleDown />
                     </S.CategoryIsOpendIcon>
                   )}
@@ -113,11 +113,11 @@ function HeaderMenuBar({
               {/* 지역별, 테마별 서브 카테고리 */}
               {(i === subCategoryIdx && isGuCategoryOpen) ||
               (i === subCategoryIdx && isThemeCategoryOpen) ? (
-                <S.SubCategoriesWrap>
+                <S.SubCategoriesWrap isGuCategoryOpen={isGuCategoryOpen}>
                   {CATEGORY_LIST[i].subCategories.map((subCat) => (
-                    <S.MenuBarItemLink key={subCat.id} subCat={true}>
-                      <S.MenuBarListItem>
-                        <S.MenuBarItemTitle subCat={true}>
+                    <S.MenuBarItemLink key={subCat.id} subcat="true">
+                      <S.MenuBarListItem subcat="true">
+                        <S.MenuBarItemTitle subcat="true">
                           {subCat.title}
                         </S.MenuBarItemTitle>
                       </S.MenuBarListItem>

@@ -52,11 +52,8 @@ export const MenuBarItemLink = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  // height: ${({ subCat }) => (subCat ? '10rem' : '100%')};
-  padding: ${({ subCat }) => (subCat ? '0.5rem 0' : '1rem 10rem')};
-  // padding-left: ${({ cat, subCat }) =>
-    cat ? '15rem' : subCat ? '18rem' : ''};
-  padding-left: ${({ cat, subCat }) => (cat ? '15rem' : '')};
+  padding: ${({ subcat }) => (subcat ? '1rem 1rem' : '1rem 10rem')};
+  padding-left: ${({ cat }) => (cat ? '15rem' : '')};
   font-size: ${fs.l};
   font-weight: 600;
   color: ${color.white};
@@ -77,11 +74,10 @@ export const MenuBarListItem = styled.li`
 
 export const SubCategoriesWrap = styled.ul`
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
-  // width: 5rem;
-  height: 18rem;
+  width: ${({ isGuCategoryOpen }) => (isGuCategoryOpen ? '16rem' : '')};
+  height: ${({ isGuCategoryOpen }) => (isGuCategoryOpen ? '30rem' : '')};
+  padding-left: 14rem;
 `;
 
 export const CategoryIsOpendIcon = styled.button`
@@ -93,7 +89,7 @@ export const CategoryIsOpendIcon = styled.button`
 `;
 
 export const MenuBarItemTitle = styled.span`
-  margin-left: 3rem;
-  font-size: ${({ cat, subCat }) =>
-    cat ? `${fs.m}` : subCat ? `${fs.s}` : ''};
+  margin-left: ${({ subcat }) => (subcat ? '0' : '3rem')};
+  font-size: ${({ cat, subcat }) =>
+    cat ? `${fs.m}` : subcat ? `${fs.s}` : ''};
 `;
