@@ -84,29 +84,3 @@ export const MainHashTag = styled.span`
     font-size: ${fs.m};
   }
 `;
-
-export const MainRankingBox = styled.ul`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
-  width: 21.5rem;
-  height: 5rem;
-  margin: 3.5rem 0;
-  padding-top: 2rem;
-  border-top: 0.1rem solid ${color.white};
-  border-bottom: 0.1rem solid ${color.white};
-  font-size: 1.6rem;
-  color: ${color.white};
-  gap: 2.5rem;
-  overflow: hidden;
-
-  li {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 60%;
-    transition: 0.2s;
-  }
-`;
