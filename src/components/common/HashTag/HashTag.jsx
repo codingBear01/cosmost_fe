@@ -1,5 +1,4 @@
 /* components */
-import { Link } from 'react-router-dom';
 import * as S from './styled';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,7 +10,7 @@ function HashTag({ fontSize, children }) {
   };
   return (
     <S.StyledHashtag fontSize={fontSize} onClick={redirectToResultPage}>
-      {children}
+      {children.length > 5 ? `#${children.substring(0, 5)}...` : `#${children}`}
     </S.StyledHashtag>
   );
 }
