@@ -3,11 +3,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
-import { MainRankerBox, MainSlider } from './';
+import { MainHashTags, MainRankerBox, MainSlider } from './';
 import { Button, Section } from '../../';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from './../../../style/';
-import { HASH_TAG_LIST } from '../../../data';
 
 function MainFirstSection() {
   return (
@@ -42,12 +41,7 @@ function MainFirstSection() {
             </Link>
           </S.MainSearchArea>
           {/* 해시태그들 */}
-          <S.MainHashTagWrap>
-            {HASH_TAG_LIST &&
-              HASH_TAG_LIST.map((tag, i) => (
-                <S.MainHashTag key={tag.id}>#{tag.text}</S.MainHashTag>
-              ))}
-          </S.MainHashTagWrap>
+          <MainHashTags></MainHashTags>
           {/* 랭커 박스 */}
           <MainRankerBox></MainRankerBox>
           {/* 메인 슬라이더 */}
