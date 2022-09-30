@@ -1,5 +1,13 @@
 /* hooks */
+
 import React, { useState } from "react";
+/* recoil */
+import { useRecoilState } from "recoil";
+import {
+  categoryOpenAtom,
+  guCategoryOpenAtom,
+  themeCategoryOpenAtom,
+} from "../../../../store";
 /* components */
 import * as S from "./styled";
 import { SmallProfilePic } from "../../../";
@@ -17,9 +25,12 @@ function HeaderMenuBar({
   isMenuBarOpen,
   isLogin,
 }) {
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [isGuCategoryOpen, setIsGuCategoryOpen] = useState(false);
-  const [isThemeCategoryOpen, setIsThemeCategoryOpen] = useState(false);
+  const [isCategoryOpen, setIsCategoryOpen] = useRecoilState(categoryOpenAtom);
+  const [isGuCategoryOpen, setIsGuCategoryOpen] =
+    useRecoilState(guCategoryOpenAtom);
+  const [isThemeCategoryOpen, setIsThemeCategoryOpen] = useRecoilState(
+    themeCategoryOpenAtom
+  );
   const [subCategoryIdx, setSubCategoryIdx] = useState(null);
 
   const handleCategoryOpen = () => {
@@ -86,25 +97,24 @@ function HeaderMenuBar({
         {/* 카테고리 하위 지역별, 테마별 */}
         {isCategoryOpen &&
           CATEGORY_LIST.map((category, i) => (
-            <>
+            <div key={category.id}>
               <S.MenuBarItemLink
-                key={category.id}
-                cat={true}
+                cat="true"
                 onClick={() => handleSubCategoryOpen(i, category.categoryName)}
               >
                 <S.MenuBarListItem>
                   {category.icon}
-                  <S.MenuBarItemTitle cat={true}>
+                  <S.MenuBarItemTitle cat="true">
                     {category.categoryName}
                   </S.MenuBarItemTitle>
                   {/* 오픈 여부 삼각형 아이콘 */}
                   {(i === subCategoryIdx && isGuCategoryOpen) ||
                   (i === subCategoryIdx && isThemeCategoryOpen) ? (
-                    <S.CategoryIsOpendIcon cat={true}>
+                    <S.CategoryIsOpendIcon cat="true">
                       <GoIcons.GoTriangleUp />
                     </S.CategoryIsOpendIcon>
                   ) : (
-                    <S.CategoryIsOpendIcon cat={true}>
+                    <S.CategoryIsOpendIcon cat="true">
                       <GoIcons.GoTriangleDown />
                     </S.CategoryIsOpendIcon>
                   )}
@@ -114,19 +124,21 @@ function HeaderMenuBar({
               {/* 지역별, 테마별 서브 카테고리 */}
               {(i === subCategoryIdx && isGuCategoryOpen) ||
               (i === subCategoryIdx && isThemeCategoryOpen) ? (
-                CATEGORY_LIST[i].subCategories.map((subCat) => (
-                  <S.MenuBarItemLink key={subCat.id} subCat={true}>
-                    <S.MenuBarListItem>
-                      <S.MenuBarItemTitle subCat={true}>
-                        {subCat.title}
-                      </S.MenuBarItemTitle>
-                    </S.MenuBarListItem>
-                  </S.MenuBarItemLink>
-                ))
+                <S.SubCategoriesWrap isGuCategoryOpen={isGuCategoryOpen}>
+                  {CATEGORY_LIST[i].subCategories.map((subCat) => (
+                    <S.MenuBarItemLink key={subCat.id} subcat="true">
+                      <S.MenuBarListItem subcat="true">
+                        <S.MenuBarItemTitle subcat="true">
+                          {subCat.title}
+                        </S.MenuBarItemTitle>
+                      </S.MenuBarListItem>
+                    </S.MenuBarItemLink>
+                  ))}
+                </S.SubCategoriesWrap>
               ) : (
                 <></>
               )}
-            </>
+            </div>
           ))}
       </S.MenuBarList>
     </S.MenuBar>

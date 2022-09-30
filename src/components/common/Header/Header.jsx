@@ -3,7 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { searchBarOpenAtom } from '../../../store';
+import {
+  searchBarOpenAtom,
+  categoryOpenAtom,
+  guCategoryOpenAtom,
+  themeCategoryOpenAtom,
+} from '../../../store';
 /* components */
 import * as S from './styled';
 import { Button } from '../';
@@ -28,6 +33,12 @@ function Header({ pathName, scrollY }) {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [isSearchBarOpen, setIsSearchBarOpen] =
     useRecoilState(searchBarOpenAtom);
+  const [isCategoryOpen, setIsCategoryOpen] = useRecoilState(categoryOpenAtom);
+  const [isGuCategoryOpen, setIsGuCategoryOpen] =
+    useRecoilState(guCategoryOpenAtom);
+  const [isThemeCategoryOpen, setIsThemeCategoryOpen] = useRecoilState(
+    themeCategoryOpenAtom
+  );
 
   // 로그인/로그아웃 레이아웃을 보기 위한 임시 함수
   const handleLogin = () => {
@@ -35,9 +46,13 @@ function Header({ pathName, scrollY }) {
   };
 
   /* 메뉴바, 신고 모달창, 헤더 서치바 open 조작 함수 */
+  // 메뉴 아이콘 클릭시 카테고리 관련 OpenStates false 처리
   const handleMenuBarOpen = () => {
     setIsMenuBarOpen(!isMenuBarOpen);
     setIsReportModalOpen(false);
+    setIsCategoryOpen(false);
+    setIsGuCategoryOpen(false);
+    setIsThemeCategoryOpen(false);
   };
   const handleReportModalOpen = () => {
     setIsReportModalOpen(!isReportModalOpen);

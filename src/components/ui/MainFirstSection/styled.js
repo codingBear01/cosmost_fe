@@ -54,33 +54,3 @@ export const SearchInput = styled(Input)`
     outline: none;
   }
 `;
-
-export const MainHashTagWrap = styled.div`
-  width: 100rem;
-  text-align: center;
-
-  ${media.tablet} {
-    width: 75rem;
-  }
-
-  ${media.mobile} {
-    width: 55rem;
-  }
-`;
-
-export const MainHashTag = styled.span`
-  padding: ${gap.xs};
-  border-radius: ${br.default};
-  font-size: ${fs.xl};
-  color: ${color.white};
-  transition: all 0.15s ease-in;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${color.blue};
-  }
-
-  ${media.tablet} {
-    font-size: ${fs.m};
-  }
-`;

@@ -2,4 +2,10 @@
 export { default as GoToTop } from './GoToTop';
 
 /* recoil states */
-export { searchBarOpenAtom, scrollYAtom } from './recoilStates';
+export {
+  searchBarOpenAtom,
+  scrollYAtom,
+  categoryOpenAtom,
+  guCategoryOpenAtom,
+  themeCategoryOpenAtom,
+} from './recoilStates';

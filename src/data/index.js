@@ -1,4 +1,5 @@
 export { AgreementPageData } from "./AgreementPageData";
+export { FOURTH_SECTION_DATA_LIST } from "./FourthSectionData";
 export { MENUBAR_MENU_LIST, CATEGORY_LIST } from "./MenuBarData";
 export { HASH_TAG_LIST } from "./MainHashTags";
 export { MAIN_SLIDER_DATA_LIST } from "./MainSliderData";
@@ -7,3 +8,4 @@ export { REPORT_CATEGORIES_LIST } from "./ReportCategoriesData";
 export { SECOND_SECTION_DATA_LIST } from "./SecondSectionData";
 export { SLIDER_IMAGE_LIST } from "./SliderImageData";
 export { SEARCH_RESULT_PAGE_DATA_LIST } from "./SearchResultPageData";
+export { THIRD_SECTION_DATA_LIST } from "./ThirdSectionData";
