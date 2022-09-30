@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 /* components */
 import * as S from './styled';
-import { CourseImg, CourseTitle } from '../../..';
+import { CourseImg, CourseTitle, EachCourseWrap } from '../../..';
 /* static data */
 import { FONT_SIZE_LIST as fs, COLOR_LIST as color } from '../../../../style';
 
@@ -23,7 +23,7 @@ function TheMostGuCourse({ item }) {
   }, []);
 
   return (
-    <S.TheMostGuCourseWrap>
+    <EachCourseWrap>
       <CourseImg
         src={item.imgUrl}
         alt={item.title}
@@ -40,7 +40,7 @@ function TheMostGuCourse({ item }) {
           <span>{courseCnt}건</span>
         </S.CourseCount>
       </S.TheMostGuCourseBox>
-    </S.TheMostGuCourseWrap>
+    </EachCourseWrap>
   );
 }
 

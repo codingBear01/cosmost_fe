@@ -8,14 +8,6 @@ import {
   BREAK_POINTS as media,
 } from '../../../../style';
 
-export const PopularCourseWrap = styled.div`
-  width: 27.5rem;
-
-  @media (max-width: 1250px) {
-    width: 26.5rem;
-  }
-`;
-
 export const PoplularCourseBox = styled.div`
   display: flex;
   justify-content: center;

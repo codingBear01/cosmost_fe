@@ -2,13 +2,13 @@
 import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
-import { CourseImg, CourseTitle, HashTag } from '../../..';
+import { CourseImg, CourseTitle, EachCourseWrap, HashTag } from '../../..';
 /* static data */
 import { FONT_SIZE_LIST as fs, COLOR_LIST as color } from '../../../../style';
 
 function PopularCourse({ item }) {
   return (
-    <S.PopularCourseWrap>
+    <EachCourseWrap>
       <CourseImg
         src={item.imgUrl}
         alt={item.title}
@@ -27,7 +27,7 @@ function PopularCourse({ item }) {
           ))}
         </div>
       </S.PoplularCourseBox>
-    </S.PopularCourseWrap>
+    </EachCourseWrap>
   );
 }
 
