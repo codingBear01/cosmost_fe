@@ -5,9 +5,9 @@ import {
   LoginPage,
   MainPage,
   SearchResultPage,
-} from './components';
-import { Routes, Route } from 'react-router-dom';
-import { GoToTop } from './store';
+} from "./components";
+import { Routes, Route } from "react-router-dom";
+import { GoToTop } from "./store";
 
 function App() {
   return (
