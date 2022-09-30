@@ -12,6 +12,10 @@ export const AddedCourseWrap = styled.div`
   display: flex;
   width: 58rem;
 
+  @media (max-width: 1250px) {
+    width: 56rem;
+  }
+
   ${media.tablet} {
     width: 28rem;
     justify-content: center;

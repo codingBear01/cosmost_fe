@@ -1,5 +1,3 @@
-/* hooks */
-import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
 import { CourseImg, CourseTitle, HashTag } from '../../..';
@@ -12,26 +10,28 @@ import {
   GAP_LIST as gap,
 } from '../../../../style';
 
-function AddedCourse() {
+function AddedCourse({ item }) {
   return (
     <S.AddedCourseWrap>
-      <CourseImg width={'28rem'} height={'100%'}></CourseImg>
+      <CourseImg
+        src={item.imgUrl}
+        alt={item.title}
+        width={'27.5rem'}
+        height={'20rem'}
+      ></CourseImg>
       <S.AddedCourseInfo>
-        <CourseTitle fontSize={fs.l}>코스 제목</CourseTitle>
+        <CourseTitle rate={item.rate} fontSize={fs.l}>
+          {item.title}
+        </CourseTitle>
         <S.AddedCourseDesc>
-          코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//코스 설명이당!!ㅇㅅㅇ//
-          코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스
-          설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//
-          코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스
-          설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ// 코스 설명이당!!ㅇㅅㅇ//
-          코스 설명이당!!ㅇㅅㅇ//
+          {item.desc.length > 200
+            ? `${item.desc.substring(0, 200)}...`
+            : `${item.desc}`}
         </S.AddedCourseDesc>
         <div>
-          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
-          <HashTag fontSize={fs.xs}>#해시태그</HashTag>
+          {item.hashTags.map((tag, i) => (
+            <HashTag fontSize={fs.xs}>{tag.hashTagName}</HashTag>
+          ))}
         </div>
       </S.AddedCourseInfo>
     </S.AddedCourseWrap>

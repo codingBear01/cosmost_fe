@@ -13,6 +13,10 @@ export const PopularTitleWrap = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   margin-top: ${gap.l};
+
+  @media (max-width: 1250px) {
+    width: 98%;
+  }
 `;
 
 export const PopularTitle = styled.span`
