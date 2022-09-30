@@ -21,7 +21,7 @@ export const MenuBar = styled.nav`
   width: 40rem;
   height: 100%;
   border-radius: ${br.default} 0 0 ${br.default};
-  background-color: ${color.white};
+  background-color: ${color.darkBlue};
   transition: 500ms;
 `;
 
@@ -34,13 +34,11 @@ export const MenuBarCloseBtn = styled.button`
   margin: 1rem;
   padding: 0;
   border-radius: ${br.circle};
-  color: ${color.black};
+  color: ${color.white};
   transition: 500ms;
-
   &:hover {
-    background-color: ${color.lightGrey};
+    background-color: ${color.blue};
   }
-
   svg {
     font-size: 7rem;
   }
@@ -50,25 +48,36 @@ export const MenuBarList = styled.ul`
   width: 100%;
 `;
 
-export const MenuBarListItem = styled.li`
-  padding: 1rem 10rem;
-  padding-left: ${({ cat, subCat }) => (cat ? '15rem' : subCat ? '18rem' : '')};
-  transition: 500ms;
-  &:hover {
-    background-color: ${color.lightGrey};
-  }
-  svg {
-    font-size: 3rem;
-  }
-`;
-
 export const MenuBarItemLink = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  font-size: ${fs.xl};
+  padding: ${({ subCat }) => (subCat ? '0.5rem 0' : '1rem 10rem')};
+  padding-left: ${({ cat, subCat }) => (cat ? '15rem' : subCat ? '18rem' : '')};
+  font-size: ${fs.l};
   font-weight: 600;
-  color: ${color.black};
+  color: ${color.white};
+  &:hover {
+    background-color: ${color.blue};
+  }
+`;
+
+export const MenuBarListItem = styled.li`
+  display: flex;
+  align-items: center;
+  transition: 500ms;
+  cursor: pointer;
+  svg {
+    font-size: 2rem;
+  }
+`;
+
+export const CategoryIsOpendIcon = styled.button`
+  margin-left: ${({ cat }) => (cat ? '1rem' : '2rem')};
+  svg {
+    font-size: ${fs.xl};
+    color: ${color.white};
+  }
 `;
 
 export const MenuBarItemTitle = styled.span`
