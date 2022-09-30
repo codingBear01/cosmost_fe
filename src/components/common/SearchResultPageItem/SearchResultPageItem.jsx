@@ -11,6 +11,7 @@ function SearchResultPageItem({ item }) {
         margin: "0 0 3rem 0",
         border: `1px solid ${COLOR_LIST.lightBlue}`,
         borderRadius: BORDER_RADIUS_LIST.default,
+        backgroundColor: COLOR_LIST.white,
       }}
     >
       <div style={{ borderBottom: `1px solid ${COLOR_LIST.lightBlue}` }}>
