@@ -1,29 +1,28 @@
-import React from "react";
-import { FlexDiv, CourseImg, CourseTitle, HashTag } from "../../common";
-import { COLOR_LIST, BORDER_RADIUS_LIST } from "../../../style";
+import React from 'react';
+import { FlexDiv, CourseImg, CourseTitle, HashTag } from '../../common';
+import { COLOR_LIST, BORDER_RADIUS_LIST } from '../../../style';
 
 function SearchResultPageItem({ item }) {
-  console.log(item);
   return (
     <div
       style={{
-        width: "25rem",
-        margin: "0 0 3rem 0",
+        width: '25rem',
+        margin: '0 0 3rem 0',
         border: `1px solid ${COLOR_LIST.lightBlue}`,
         borderRadius: BORDER_RADIUS_LIST.default,
         backgroundColor: COLOR_LIST.white,
       }}
     >
       <div style={{ borderBottom: `1px solid ${COLOR_LIST.lightBlue}` }}>
-        <CourseImg src={item.imgUrl} width={"100%"} height={"19rem"} />
+        <CourseImg src={item.imgUrl} width={'100%'} height={'19rem'} />
       </div>
       <div>
         <CourseTitle
-          fontSize={"2rem"}
+          fontSize={'2rem'}
           rate={item.rate}
           overflow="hidden"
-          textOverflow={"ellipsis"}
-          whiteSpace={"nowrap"}
+          textOverflow={'ellipsis'}
+          whiteSpace={'nowrap'}
         >
           {item.title}
         </CourseTitle>
@@ -35,7 +34,7 @@ function SearchResultPageItem({ item }) {
             display="block"
           >
             {item.categories.map((categoriesItem, index) => {
-              return <div key={index}>{"@" + categoriesItem.categoryName}</div>;
+              return <div key={index}>{'@' + categoriesItem.categoryName}</div>;
             })}
           </FlexDiv>
           <div>
@@ -51,7 +50,7 @@ function SearchResultPageItem({ item }) {
         <FlexDiv fontWeight="bold">
           {item.courses.map((courseItem, index, courses) => {
             if (index === courses.length - 1) return courseItem.courseName;
-            else return courseItem.courseName + " -> ";
+            else return courseItem.courseName + ' -> ';
           })}
         </FlexDiv>
       </div>

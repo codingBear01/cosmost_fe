@@ -1,11 +1,11 @@
-import React from "react";
-import { SEARCH_RESULT_PAGE_DATA_LIST } from "../../data";
-import { Header, FlexDiv, SearchResultPageItem } from "../common";
-import { COLOR_LIST } from "../../style";
+import React from 'react';
+import { SEARCH_RESULT_PAGE_DATA_LIST } from '../../data';
+import { Header, FlexDiv, SearchResultPageItem } from '../common';
+import { COLOR_LIST as color } from '../../style';
 
 function SearchResultPage() {
   return (
-    <div style={{ backgroundColor: "#E6E6E6" }}>
+    <div style={{ backgroundColor: `${color.white}` }}>
       <Header></Header>
       <FlexDiv margin="7rem 0 0 0" justifyContent="center">
         <FlexDiv
