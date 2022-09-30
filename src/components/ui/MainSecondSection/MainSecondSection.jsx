@@ -1,7 +1,7 @@
-import React from 'react';
-import * as S from './styled';
+/* components */
 import { Section, SectionTitle } from '../..';
 import { PopularCourseContainer } from './PopularCourseContainer';
+/* static data */
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,

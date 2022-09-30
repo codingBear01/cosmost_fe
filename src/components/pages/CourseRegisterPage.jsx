@@ -3,7 +3,7 @@ import { Header } from '../common';
 
 function CourseRegisterPage() {
   return (
-    <div>
+    <div style={{ backgroundColor: 'black', height: '1000vh' }}>
       <Header></Header>
       여기는 코스 등록 페이지이무니닷
     </div>

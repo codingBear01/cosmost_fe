@@ -2,7 +2,7 @@ export const COLOR_LIST = {
   black: '#0a0a0a',
   white: '#f5f5f5',
   grey: '#7b7b7b',
-  lightGrey: '#eee',
+  lightGrey: '#dcdcdc',
   darkBlue: '#001970',
   blue: '#303f9f',
   lightBlue: '#666ad1',

@@ -1,13 +1,15 @@
+/* libraries */
 import styled from 'styled-components';
+/* components */
+import { Input } from '../../';
+/* static data */
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
-  BUTTON_SIZE_LIST as bs,
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
 } from './../../../style/';
-import { Input } from '../../';
 
 export const FirstSectionContainer = styled.div`
   display: flex;
@@ -24,7 +26,7 @@ export const FirstSectionContent = styled.div`
   align-items: center;
   flex-direction: column;
   width: 50rem;
-  margin-top: 15rem;
+  margin-top: 4rem;
 `;
 
 const StyledFirstSectionTitle = styled.span`
@@ -42,7 +44,7 @@ export const MainSearchArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 3rem 0;
+  margin: 2rem 0;
 `;
 
 export const SearchInput = styled(Input)`
@@ -50,6 +52,19 @@ export const SearchInput = styled(Input)`
 
   &:focus {
     outline: none;
+  }
+`;
+
+export const MainHashTagWrap = styled.div`
+  width: 100rem;
+  text-align: center;
+
+  ${media.tablet} {
+    width: 75rem;
+  }
+
+  ${media.mobile} {
+    width: 55rem;
   }
 `;
 
@@ -64,28 +79,34 @@ export const MainHashTag = styled.span`
   &:hover {
     background-color: ${color.blue};
   }
-`;
-
-export const SliderWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: ${gap.l};
-  gap: 3rem;
-
-  div {
-    width: 120rem;
-    height: 30rem;
-    border-radius: ${br.default};
-    background-color: ${color.grey};
-    color: ${color.white};
-  }
 
   ${media.tablet} {
-    width: 90rem;
+    font-size: ${fs.m};
   }
+`;
 
-  ${media.mobile} {
-    width: 60rem;
+export const MainRankingBox = styled.ul`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 21.5rem;
+  height: 5rem;
+  margin: 3.5rem 0;
+  padding-top: 2rem;
+  border-top: 0.1rem solid ${color.white};
+  border-bottom: 0.1rem solid ${color.white};
+  font-size: 1.6rem;
+  color: ${color.white};
+  gap: 2.5rem;
+  overflow: hidden;
+
+  li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 60%;
+    transition: 0.2s;
   }
 `;

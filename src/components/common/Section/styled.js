@@ -5,15 +5,13 @@ import {
   BUTTON_SIZE_LIST as bs,
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
-  BREAK_POINTS as media,
 } from './../../../style/';
 
-export const FloatingIconsWrap = styled.div`
-  position: absolute;
-  right: 5.5%;
-  bottom: 8%;
+export const StyledSection = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  height: ${({ height }) => height};
+  padding-top: ${({ paddingTop }) => paddingTop};
+  background-color: ${({ backgroundColor }) => backgroundColor};
 `;

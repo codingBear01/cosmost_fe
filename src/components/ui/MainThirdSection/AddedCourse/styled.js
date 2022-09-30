@@ -12,6 +12,13 @@ export const AddedCourseWrap = styled.div`
   display: flex;
   width: 58rem;
 
+  ${media.tablet} {
+    width: 28rem;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
   ${media.mobile} {
     width: 28rem;
     justify-content: center;
@@ -20,7 +27,7 @@ export const AddedCourseWrap = styled.div`
   }
 `;
 
-export const AddedCourseBox = styled.div`
+export const AddedCourseInfo = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;

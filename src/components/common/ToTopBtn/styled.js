@@ -6,10 +6,13 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
-} from '../../../../style';
+} from '../../../style';
 
-export const StyledFloatingIcon = styled.button`
-  display: flex;
+export const FloatingIcon = styled.div`
+  position: fixed;
+  right: 10rem;
+  bottom: 10rem;
+  display: ${({ isShownToTopBtn }) => (isShownToTopBtn ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
   width: 5rem;
@@ -26,5 +29,13 @@ export const StyledFloatingIcon = styled.button`
   &: hover {
     background-color: ${color.darkBlue};
     color: ${color.white};
+  }
+
+  ${media.tablet} {
+    right: 5rem;
+  }
+
+  ${media.mobile} {
+    right: 4rem;
   }
 `;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Input } from '../Input';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -8,7 +9,11 @@ import {
   BREAK_POINTS as media,
 } from './../../../style/';
 
+// 헤더가 7rem만큼 크기 잡아 먹으므로 각 section마다 padding-top 7rem씩 줘야 레이아웃 안 깨짐
 export const Header = styled.header`
+  position: fixed;
+  z-index: 2;
+  top: 0;
   width: 100%;
   height: 7rem;
   background-color: ${color.darkBlue};
@@ -22,26 +27,18 @@ export const HeaderContainer = styled.div`
   height: 100%;
 `;
 
+export const HeaderSearchWrap = styled.div`
+  width: 100rem;
+  margin: 0 ${gap.xl};
+  ${media.tablet} {
+    width: 50rem;
+  }
+  ${media.mobile} {
+    width: 30rem;
+  }
+`;
+
 export const HeaderUtilWrap = styled.div`
   display: flex;
   align-items: center;
-`;
-
-export const MenuModal = styled.div`
-  overflow: hidden;
-  position: relative;
-  transform: ${(props) =>
-    props.isMenuOpen ? 'translateX(375%)' : 'translateX(550%)'};
-  height: 100%;
-  width: 40rem;
-  transition: all 800ms cubic-bezier(0.8, 0, 0.33, 1);
-  border-radius: ${(props) =>
-    props.isMenuOpen ? '0% 0% 0% 0%' : '0% 0% 100% 50%'};
-  background: ${(props) =>
-    props.isMenuOpen ? 'rgba(255, 255, 255, 0.6)' : 'none'};
-
-  ${media.tablet} {
-    transform: ${(props) =>
-      props.isMenuOpen ? 'translateX(150rem)' : 'translateX(190rem)'};
-  }
 `;

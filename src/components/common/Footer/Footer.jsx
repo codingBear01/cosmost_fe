@@ -1,5 +1,6 @@
-import React from 'react';
+/* components */
 import * as S from './styled';
+/* react-icons */
 import { BsGithub } from 'react-icons/bs';
 
 function Footer() {
