@@ -9,11 +9,14 @@ import {
 } from "../../../style";
 
 const FlexDiv = styled.div`
-  width: 100%;
+  width: ${(props) => props.width || "100%"};
   display: flex;
   justify-content: ${(props) => props.justifyContent || "normal"};
-  align-items: center;
+  align-items: ${(props) => props.alignItems || "center"};
   margin: ${(props) => props.margin || "0 0 0 0"};
+  flex-wrap: ${(props) => props.flexWrap || "nowrap"};
+  font-size: ${(props) => props.fontSize || "1.5rem"};
+  font-weight: ${(props) => props.fontWeight || "normal"};
 `;
 
 export default FlexDiv;
