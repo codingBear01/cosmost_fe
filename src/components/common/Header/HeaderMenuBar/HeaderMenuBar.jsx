@@ -1,5 +1,12 @@
 /* hooks */
 import React, { useState } from 'react';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import {
+  categoryOpenAtom,
+  guCategoryOpenAtom,
+  themeCategoryOpenAtom,
+} from '../../../../store';
 /* components */
 import * as S from './styled';
 import { SmallProfilePic } from '../../../';
@@ -17,9 +24,12 @@ function HeaderMenuBar({
   isMenuBarOpen,
   isLogin,
 }) {
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [isGuCategoryOpen, setIsGuCategoryOpen] = useState(false);
-  const [isThemeCategoryOpen, setIsThemeCategoryOpen] = useState(false);
+  const [isCategoryOpen, setIsCategoryOpen] = useRecoilState(categoryOpenAtom);
+  const [isGuCategoryOpen, setIsGuCategoryOpen] =
+    useRecoilState(guCategoryOpenAtom);
+  const [isThemeCategoryOpen, setIsThemeCategoryOpen] = useRecoilState(
+    themeCategoryOpenAtom
+  );
   const [subCategoryIdx, setSubCategoryIdx] = useState(null);
 
   const handleCategoryOpen = () => {
