@@ -38,10 +38,6 @@ function HeaderMenuBar({
       setIsGuCategoryOpen(false);
     }
   };
-  console.log('idx', subCategoryIdx);
-  console.log('isGu', isGuCategoryOpen);
-  console.log('isTheme', isThemeCategoryOpen);
-  console.log('isSub', isSubCategoryOpen);
 
   return (
     <S.MenuBar isMenuBarOpen={isMenuBarOpen}>
@@ -55,13 +51,11 @@ function HeaderMenuBar({
             <>
               {isLogin === menu.isLogin && (
                 <S.MenuBarItemLink
-                  key={menu.id}
                   to={menu.path}
-                  onClick={menu.isHandleLog && handleLogin}
+                  key={menu.id}
+                  onClick={menu.isReport && handleReportModalOpen}
                 >
-                  <S.MenuBarListItem
-                    onClick={menu.isReport && handleReportModalOpen}
-                  >
+                  <S.MenuBarListItem onClick={menu.isHandleLog && handleLogin}>
                     {menu.icon}
                     {isLogin === menu.isMyPage && (
                       <SmallProfilePic src={menu.imgUrl} alt={menu.title} />
@@ -130,30 +124,6 @@ function HeaderMenuBar({
               )}
             </>
           ))}
-        {/* {isSubCategoryOpen &&
-          CATEGORY_LIST[subCategoryIdx].subCategories.map((subCat) => (
-            <S.MenuBarListItem key={subCat.id}>
-              <S.MenuBarItemLink>
-                <S.MenuBarItemTitle>{subCat.title}</S.MenuBarItemTitle>
-              </S.MenuBarItemLink>
-            </S.MenuBarListItem>
-          ))} */}
-        {/* {isGuCategoryOpen &&
-          CATEGORY_LIST[0].subCategories.map((subCat) => (
-            <S.MenuBarListItem key={subCat.id}>
-              <S.MenuBarItemLink>
-                <S.MenuBarItemTitle>{subCat.title}</S.MenuBarItemTitle>
-              </S.MenuBarItemLink>
-            </S.MenuBarListItem>
-          ))}
-        {isThemeCategoryOpen &&
-          CATEGORY_LIST[1].subCategories.map((subCat) => (
-            <S.MenuBarListItem key={subCat.id}>
-              <S.MenuBarItemLink>
-                <S.MenuBarItemTitle>{subCat.title}</S.MenuBarItemTitle>
-              </S.MenuBarItemLink>
-            </S.MenuBarListItem>
-          ))} */}
       </S.MenuBarList>
     </S.MenuBar>
   );
