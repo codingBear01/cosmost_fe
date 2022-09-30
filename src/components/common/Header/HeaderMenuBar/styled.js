@@ -76,7 +76,7 @@ export const SubCategoriesWrap = styled.ul`
   display: flex;
   flex-wrap: wrap;
   width: ${({ isGuCategoryOpen }) => (isGuCategoryOpen ? '16rem' : '')};
-  height: ${({ isGuCategoryOpen }) => (isGuCategoryOpen ? '30rem' : '')};
+  height: ${({ isGuCategoryOpen }) => (isGuCategoryOpen ? '40rem' : '')};
   padding-left: 14rem;
 `;
 

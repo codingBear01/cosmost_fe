@@ -1,26 +1,26 @@
-import React, { useState, useRef } from "react";
-import DaumPostcode from "react-daum-postcode";
+import React, { useState, useRef } from 'react';
+import DaumPostcode from 'react-daum-postcode';
 
-import styled from "styled-components";
-import { BsFillCircleFill, BsCaretDownSquareFill } from "react-icons/bs";
-import { AiFillCloseSquare } from "react-icons/ai";
+import styled from 'styled-components';
+import { BsFillCircleFill, BsCaretDownSquareFill } from 'react-icons/bs';
+import { AiFillCloseSquare } from 'react-icons/ai';
 import {
   COLOR_LIST,
   BORDER_RADIUS_LIST,
   GAP_LIST,
   FONT_SIZE_LIST,
-} from "../../style/styles";
-import { Link } from "react-router-dom";
+} from '../../style/styles';
+import { Link } from 'react-router-dom';
 import {
   FlexDiv,
   Input,
   PageRootDiv,
   HeightCenterDiv,
   PageTitle,
-} from "../common";
-import { Button } from "../";
+} from '../common';
+import { Button } from '../';
 
-const profileImageDefaultPath = "/assets/images/ProfileDefaultImage.png";
+const profileImageDefaultPath = '/assets/images/ProfileDefaultImage.png';
 const SignUpInput = styled(Input)`
   background-color: ${COLOR_LIST.white};
   border: 1px solid ${COLOR_LIST.grey};
@@ -32,8 +32,8 @@ const SignUpInput = styled(Input)`
 `;
 
 const Select = styled.select`
-  width: ${({ width }) => width || "auto"};
-  height: ${({ height }) => height || "auto"};
+  width: ${({ width }) => width || 'auto'};
+  height: ${({ height }) => height || 'auto'};
   appearance: none ;
   border-radius: 0.5rem;
   background-color: #f5f5f5;
@@ -49,8 +49,8 @@ const Selectimg = styled(BsCaretDownSquareFill)`
   background-color: white;
   border-radius: 0.4rem;
   position: absolute;
-  top: ${({ top }) => top || "auto"};
-  left: ${({ left }) => left || "auto"};
+  top: ${({ top }) => top || 'auto'};
+  left: ${({ left }) => left || 'auto'};
 `;
 
 const ProfileImage = styled.img`
@@ -86,20 +86,20 @@ function SignUpPage() {
   const profileInputRef = useRef();
   const [addressApiEnable, setAddressApiEnable] = useState(false);
   const [inputState, setInputState] = useState({
-    nickname: "",
-    id: "",
+    nickname: '',
+    id: '',
     profileImage: profileImageDefaultPath,
-    password: "",
-    passwordConfirm: "",
-    name: "",
-    year: "",
-    month: "",
-    day: "",
-    address: "",
-    addressDetail: "",
-    maritalStatus: "",
-    email: "",
-    certificationNumber: "",
+    password: '',
+    passwordConfirm: '',
+    name: '',
+    year: '',
+    month: '',
+    day: '',
+    address: '',
+    addressDetail: '',
+    maritalStatus: '',
+    email: '',
+    certificationNumber: '',
   });
 
   /*사용자가 input에 텍스트를 입력할 때 호출할 핸들러
@@ -145,30 +145,31 @@ function SignUpPage() {
   /*API 모달창에서 주소를 클릭한 경우 호출할 핸들러 
     주소 정보 및 모달창 state를 전달한다.*/
   const onCompleteAddressModal = (data, e) => {
+    console.log(data);
     setInputState({ ...inputState, address: data.address });
     setAddressApiEnable(!addressApiEnable);
   };
 
   return (
-    <HeightCenterDiv height={"auto"}>
-      <HeightCenterDiv width={"37.7rem"} height={"auto"}>
+    <HeightCenterDiv height={'auto'}>
+      <HeightCenterDiv width={'37.7rem'} height={'auto'}>
         <PageTitle>CosMost</PageTitle>
         <SingUpForm>
-          <FlexDiv justifyContent={"space-between"}>
+          <FlexDiv justifyContent={'space-between'}>
             <div>
               <ProfileImage src={inputState.profileImage} />
             </div>
             <div>
-              <FlexDiv justifyContent={"space-between"} margin={"0 0 2rem 0"}>
+              <FlexDiv justifyContent={'space-between'} margin={'0 0 2rem 0'}>
                 <SignUpInput
                   onChange={onChangeInput}
                   name="nickname"
                   value={inputState.nickname}
                   placeholder="닉네임"
-                  width={"10rem"}
-                  height={"4rem"}
+                  width={'10rem'}
+                  height={'4rem'}
                 ></SignUpInput>
-                <Button width={"13rem"} height={"4rem"} fontSize={"1.7rem"}>
+                <Button width={'13rem'} height={'4rem'} fontSize={'1.7rem'}>
                   중복확인
                 </Button>
               </FlexDiv>
@@ -177,12 +178,12 @@ function SignUpPage() {
                   ref={profileInputRef}
                   onChange={onChangeProfileImage}
                   type="file"
-                  style={{ display: "none" }}
+                  style={{ display: 'none' }}
                 />
                 <Button
-                  width={"25rem"}
-                  height={"4rem"}
-                  fontSize={"1.7rem"}
+                  width={'25rem'}
+                  height={'4rem'}
+                  fontSize={'1.7rem'}
                   onClick={onClickProfileButton}
                 >
                   프로필 이미지 업로드
@@ -190,16 +191,16 @@ function SignUpPage() {
               </div>
             </div>
           </FlexDiv>
-          <FlexDiv justifyContent={"space-between"}>
+          <FlexDiv justifyContent={'space-between'}>
             <SignUpInput
               onChange={onChangeInput}
               name="id"
               value={inputState.id}
               placeholder="아이디"
-              width={"21rem"}
-              height={"4rem"}
+              width={'21rem'}
+              height={'4rem'}
             ></SignUpInput>
-            <Button width={"13rem"} height={"4rem"} fontSize={"1.7rem"}>
+            <Button width={'13rem'} height={'4rem'} fontSize={'1.7rem'}>
               중복확인
             </Button>
           </FlexDiv>
@@ -209,8 +210,8 @@ function SignUpPage() {
               name="password"
               value={inputState.password}
               placeholder="비밀번호"
-              width={"35rem"}
-              height={"4rem"}
+              width={'35rem'}
+              height={'4rem'}
             ></SignUpInput>
           </div>
           <div>
@@ -219,8 +220,8 @@ function SignUpPage() {
               name="passwordConfirm"
               value={inputState.passwordConfirm}
               placeholder="비밀번호 재확인"
-              width={"35rem"}
-              height={"4rem"}
+              width={'35rem'}
+              height={'4rem'}
             ></SignUpInput>
           </div>
           <div>
@@ -229,20 +230,20 @@ function SignUpPage() {
               name="name"
               value={inputState.name}
               placeholder="이름"
-              width={"35rem"}
-              height={"4rem"}
+              width={'35rem'}
+              height={'4rem'}
             ></SignUpInput>
           </div>
-          <FlexDiv justifyContent={"space-between"}>
+          <FlexDiv justifyContent={'space-between'}>
             <SignUpInput
               onChange={onChangeInput}
               name="year"
               value={inputState.year}
               placeholder="년"
-              width={"10rem"}
-              height={"4rem"}
+              width={'10rem'}
+              height={'4rem'}
             ></SignUpInput>
-            <label style={{ position: "relative" }}>
+            <label style={{ position: 'relative' }}>
               <Select
                 name="month"
                 value={inputState.month}
@@ -273,23 +274,23 @@ function SignUpPage() {
               name="day"
               value={inputState.day}
               placeholder="일"
-              width={"10rem"}
-              height={"4rem"}
+              width={'10rem'}
+              height={'4rem'}
             ></SignUpInput>
           </FlexDiv>
-          <FlexDiv justifyContent={"space-between"}>
+          <FlexDiv justifyContent={'space-between'}>
             <SignUpInput
               disabled
               name="address"
               value={inputState.address}
               placeholder="주소"
-              width={"21rem"}
-              height={"4rem"}
+              width={'21rem'}
+              height={'4rem'}
             />
             <Button
-              width={"13rem"}
-              height={"4rem"}
-              fontSize={"1.7rem"}
+              width={'13rem'}
+              height={'4rem'}
+              fontSize={'1.7rem'}
               onClick={onClickAddressButton}
             >
               검색
@@ -301,16 +302,16 @@ function SignUpPage() {
               name="addressDetail"
               value={inputState.addressDetail}
               placeholder="상세 주소"
-              width={"35rem"}
-              height={"4rem"}
+              width={'35rem'}
+              height={'4rem'}
             />
           )}
-          <label style={{ display: "block", position: "relative" }}>
+          <label style={{ display: 'block', position: 'relative' }}>
             <Select
               name="maritalStatus"
               value={inputState.maritalStatus}
-              width={"36rem"}
-              height={"4rem"}
+              width={'36rem'}
+              height={'4rem'}
               required
               onChange={onChangeInput}
             >
@@ -321,16 +322,16 @@ function SignUpPage() {
             <Selectimg top="1.1rem" left="32rem" />
           </label>
 
-          <FlexDiv justifyContent={"space-between"}>
+          <FlexDiv justifyContent={'space-between'}>
             <SignUpInput
               onChange={onChangeInput}
               name="email"
               value={inputState.email}
               placeholder="이메일"
-              width={"21rem"}
-              height={"4rem"}
+              width={'21rem'}
+              height={'4rem'}
             ></SignUpInput>
-            <Button width={"13rem"} height={"4rem"} fontSize={"1.7rem"}>
+            <Button width={'13rem'} height={'4rem'} fontSize={'1.7rem'}>
               인증번호 받기
             </Button>
           </FlexDiv>
@@ -340,12 +341,12 @@ function SignUpPage() {
               name="certificationNumber"
               value={inputState.certificationNumber}
               placeholder="인증번호 입력 "
-              width={"35rem"}
-              height={"4rem"}
+              width={'35rem'}
+              height={'4rem'}
             ></SignUpInput>
           </div>
           <div>
-            <Button width={"36rem"} height={"4rem"} fontSize={"1.7rem"}>
+            <Button width={'36rem'} height={'4rem'} fontSize={'1.7rem'}>
               가입하기
             </Button>
           </div>
@@ -354,19 +355,19 @@ function SignUpPage() {
       {addressApiEnable && (
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            height: "100%",
-            top: "0",
-            left: "0",
-            position: "absolute",
-            backgroundColor: "RGBA(0,0,0,0.7)",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+            top: '0',
+            left: '0',
+            position: 'absolute',
+            backgroundColor: 'RGBA(0,0,0,0.7)',
           }}
         >
-          <div style={{ width: "50%" }}>
+          <div style={{ width: '50%' }}>
             <AddressApiClose onClick={onClickModalClose} />
           </div>
           <AddressApi onComplete={onCompleteAddressModal} />
