@@ -11,6 +11,6 @@ export const StyledEachCourseBox = styled.div`
   justify-content: center;
   align-items: flex-start;
   flex-direction: ${({ column }) => column};
-  height: 35%;
-  padding: ${gap.xs};
+  height: ${({ height }) => (height ? height : '35%')};
+  padding: ${({ padding }) => (padding ? padding : `${gap.xs}`)};
 `;

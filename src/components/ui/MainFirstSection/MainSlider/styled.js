@@ -155,7 +155,3 @@ export const SliderItemInfo = styled.div`
     width: 45rem;
   }
 `;
-
-export const CoursesWrap = styled.div`
-  display: flex;
-`;

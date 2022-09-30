@@ -7,21 +7,11 @@ import {
   BREAK_POINTS as media,
 } from './../../../style/';
 
-export const StyledCourseContainer = styled.div`
+export const StyledCoursesWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 120rem;
-  margin-top: ${({ mt }) => mt};
-  padding-top: ${({ pt }) => pt};
-  gap: 3rem;
-
-  ${media.tablet} {
-    flex-wrap: wrap;
-    width: 90rem;
-  }
-
+  margin-top: ${gap.s};
   ${media.mobile} {
-    flex-wrap: wrap;
-    width: 60rem;
+    margin-top: 0;
   }
 `;

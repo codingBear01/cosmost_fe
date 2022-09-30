@@ -8,7 +8,9 @@ import {
 
 export const StyledEachCourseWrap = styled.div`
   width: 27.5rem;
-
+  height: ${({ height }) => height};
+  border-radius: ${br.default};
+  box-shadow: ${({ box_shadow }) => box_shadow};
   @media (max-width: 1250px) {
     width: 26.5rem;
   }

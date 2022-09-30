@@ -36,7 +36,13 @@ function TheMostGuCourse({ item }) {
         height={'20rem'}
       ></CourseImg>
       <EachCourseBox>
-        <CourseTitle fontSize={fs.l} sectionName={'지역구'}>
+        <CourseTitle
+          fontSize={fs.l}
+          sectionName={'지역구'}
+          overflow="hidden"
+          textOverflow={'ellipsis'}
+          whiteSpace={'nowrap'}
+        >
           {item.title}
         </CourseTitle>
         <S.CourseCount>

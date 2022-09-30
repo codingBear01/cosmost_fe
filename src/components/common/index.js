@@ -1,6 +1,8 @@
 export { Button } from './Button/';
+export { CategoriesWrap } from './CategoriesWrap/';
 export { CourseContainer } from './CourseContainer/';
 export { CourseImg } from './CourseImg/';
+export { CoursesWrap } from './CoursesWrap/';
 export { CourseTitle } from './CourseTitle/';
 export { EachCourseBox } from './EachCourseBox/';
 export { EachCourseWrap } from './EachCourseWrap/';

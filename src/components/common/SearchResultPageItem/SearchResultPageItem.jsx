@@ -1,60 +1,63 @@
 import React from 'react';
-import { FlexDiv, CourseImg, CourseTitle, HashTag } from '../../common';
-import { COLOR_LIST, BORDER_RADIUS_LIST } from '../../../style';
+/* components */
+import * as S from './styled';
+import {
+  CategoriesWrap,
+  CourseImg,
+  CoursesWrap,
+  CourseTitle,
+  EachCourseWrap,
+  EachCourseBox,
+  HashTag,
+} from '../../common';
+/* static data */
+import {
+  COLOR_LIST as color,
+  FONT_SIZE_LIST as fs,
+  BORDER_RADIUS_LIST as br,
+} from '../../../style';
 
 function SearchResultPageItem({ item }) {
   return (
-    <div
-      style={{
-        width: '25rem',
-        margin: '0 0 3rem 0',
-        border: `1px solid ${COLOR_LIST.lightBlue}`,
-        borderRadius: BORDER_RADIUS_LIST.default,
-        backgroundColor: COLOR_LIST.white,
-      }}
-    >
-      <div style={{ borderBottom: `1px solid ${COLOR_LIST.lightBlue}` }}>
-        <CourseImg src={item.imgUrl} width={'100%'} height={'19rem'} />
-      </div>
-      <div>
+    <EachCourseWrap height={'42rem'} box_shadow={`0 0 2px 1px ${color.grey}`}>
+      {/* 코스 이미지 */}
+      <CourseImg
+        src={item.imgUrl}
+        alt={item.title}
+        width={'27.5rem'}
+        height={'20rem'}
+        border_radius={`${br.default} ${br.default} 0 0`}
+      ></CourseImg>
+      {/* 코스 정보 박스 */}
+      <EachCourseBox column={'column'} height={'50%'} padding={'0 1rem'}>
+        {/* 코스 제목 */}
         <CourseTitle
-          fontSize={'2rem'}
           rate={item.rate}
+          fontSize={fs.l}
           overflow="hidden"
           textOverflow={'ellipsis'}
           whiteSpace={'nowrap'}
         >
           {item.title}
         </CourseTitle>
-        <FlexDiv justify-content="space-beetween" alignItems="normal">
-          <FlexDiv
-            fontSize="1.5rem"
-            alignItems="normal"
-            fontWeight="bold"
-            display="block"
-          >
-            {item.categories.map((categoriesItem, index) => {
-              return <div key={index}>{'@' + categoriesItem.categoryName}</div>;
-            })}
-          </FlexDiv>
-          <div>
-            <div>{item.date}</div>
-            <div>{item.user}</div>
-          </div>
-        </FlexDiv>
+        {/* 카테고리 */}
+        <CategoriesWrap
+          display={'flex'}
+          fd={'column'}
+          categories={item.categories}
+        ></CategoriesWrap>
+        {/* 해시태그 */}
         <div>
-          {item.hashTags.map((item, index) => {
-            return <HashTag key={index}>{item.hashTagName}</HashTag>;
-          })}
+          {item.hashTags.map((tag, i) => (
+            <HashTag key={tag.id} fontSize={fs.xs}>
+              {tag.hashTagName}
+            </HashTag>
+          ))}
         </div>
-        <FlexDiv fontWeight="bold">
-          {item.courses.map((courseItem, index, courses) => {
-            if (index === courses.length - 1) return courseItem.courseName;
-            else return courseItem.courseName + ' -> ';
-          })}
-        </FlexDiv>
-      </div>
-    </div>
+        {/* 코스 순서 정보 */}
+        <CoursesWrap courses={item.courses}></CoursesWrap>
+      </EachCourseBox>
+    </EachCourseWrap>
   );
 }
 

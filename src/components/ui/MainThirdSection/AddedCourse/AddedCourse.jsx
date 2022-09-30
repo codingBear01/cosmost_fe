@@ -20,7 +20,13 @@ function AddedCourse({ item }) {
         height={'20rem'}
       ></CourseImg>
       <S.AddedCourseInfo>
-        <CourseTitle rate={item.rate} fontSize={fs.l}>
+        <CourseTitle
+          rate={item.rate}
+          fontSize={fs.l}
+          overflow="hidden"
+          textOverflow={'ellipsis'}
+          whiteSpace={'nowrap'}
+        >
           {item.title}
         </CourseTitle>
         <S.AddedCourseDesc>

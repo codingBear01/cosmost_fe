@@ -1,9 +1,11 @@
 import React from 'react';
 import * as S from './styled';
 
-function EachCourseBox({ column, children }) {
+function EachCourseBox({ column, height, padding, children }) {
   return (
-    <S.StyledEachCourseBox column={column}>{children}</S.StyledEachCourseBox>
+    <S.StyledEachCourseBox column={column} height={height} padding={padding}>
+      {children}
+    </S.StyledEachCourseBox>
   );
 }
 

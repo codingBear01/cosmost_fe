@@ -22,7 +22,13 @@ function PopularCourse({ item }) {
         height={'20rem'}
       ></CourseImg>
       <EachCourseBox column={'column'}>
-        <CourseTitle rate={item.rate} fontSize={fs.l}>
+        <CourseTitle
+          rate={item.rate}
+          fontSize={fs.l}
+          overflow="hidden"
+          textOverflow={'ellipsis'}
+          whiteSpace={'nowrap'}
+        >
           {item.title}
         </CourseTitle>
         <div>

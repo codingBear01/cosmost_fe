@@ -1,8 +1,10 @@
 /* 여러 페이지에 중복해서 쓰이는 components */
 export {
   Button,
+  CategoriesWrap,
   CourseContainer,
   CourseImg,
+  CoursesWrap,
   CourseTitle,
   EachCourseBox,
   EachCourseWrap,
