@@ -1,63 +1,60 @@
-import React, { useState } from 'react';
-import { Button, Input, PageTitle, HeightCenterDiv } from '../';
+import React, { useState } from "react";
+import { Button, Input, PageTitle, HeightCenterDiv } from "../";
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
-  GAP_LIST as gap,
-  FONT_SIZE_LIST as fs,
-} from '../../style/styles';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { BiUser } from 'react-icons/bi';
-import { RiLockPasswordLine } from 'react-icons/ri';
+  GAP_LIST,
+  FONT_SIZE_LIST,
+} from "../../style/styles";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { BiUser } from "react-icons/bi";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 const SnsLoginImageSrc = [
   {
-    name: 'Naver',
-    imgPath: '/assets/images/Naver.png',
-    linkPath: '/',
+    name: "Naver",
+    imgPath: "/assets/images/Naver.png",
+    linkPath: "/",
   },
   {
-    name: 'KaKaoTalk',
-    imgPath: '/assets/images/KakaoTalk.png',
-    linkPath: '/',
+    name: "KaKaoTalk",
+    imgPath: "/assets/images/KakaoTalk.png",
+    linkPath: "/",
   },
   {
-    name: 'Google',
-    imgPath: '/assets/images/Google.png',
-    linkPath: '/',
+    name: "Google",
+    imgPath: "/assets/images/Google.png",
+    linkPath: "/",
   },
 ];
 
 const LoginOtherSrc = [
   {
-    name: '비밀번호 찾기',
-    linkPath: '/',
+    name: "비밀번호 찾기",
+    linkPath: "/",
   },
   {
-    name: '아이디 찾기',
-    linkPath: '/',
+    name: "아이디 찾기",
+    linkPath: "/",
   },
   {
-    name: '회원가입',
-    linkPath: '/',
+    name: "회원가입",
+    linkPath: "/",
   },
 ];
 
 const LoginButtonDiv = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: ${gap.xl};
+  align-items: center;
+  height: ${(props) => props.height || "auto"};
 `;
 
 const LoginForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
   border: 1px solid ${color.white};
   border-radius: ${br.default};
-  width: 35rem;
-  height: 20rem;
+  height: 80%;
 `;
 
 const LoginOtherDiv = styled.div`
@@ -74,9 +71,11 @@ const LoginOtherItemDiv = styled.div`
   width: 100%;
 `;
 const LoginInputDiv = styled.div`
+  height: ${(props) => props.height || "auto"};
   display: flex;
   position: relative;
   align-items: center;
+  justify-content: end;
   flex-direction: column;
 `;
 
@@ -85,13 +84,12 @@ const LoginInput = styled(Input)`
   border: 1px solid ${color.white};
   color : ${color.white};
   &::placeholder {
-    font-size : 1rem;
+    font-size : 1.5rem;
     color: ${color.white}};
   }
-
-  
-  
-  text-indent: 2rem;
+  text-indent: 2.5rem;
+  width : 80%;
+  height : 30%;
 `;
 
 const SnsLoginImage = styled.img`
@@ -101,25 +99,25 @@ const SnsLoginImage = styled.img`
 `;
 
 const LoginOtherItemLink = styled(Link)`
-  color: white;
+  color: ${color.white};
   text-decoration: none;
   font-size: 1.3rem;
   margin-right: 2rem;
 `;
 
 const LoginInputImageStyle = {
-  position: 'absolute',
-  top: '1rem',
-  left: '2.7rem',
-  color: 'white',
-  width: '2rem',
-  height: '2rem',
+  position: "absolute",
+  top: "10.5rem",
+  left: "7rem",
+  color: "white",
+  width: "2rem",
+  height: "2rem",
 };
 
 function LoginPage() {
   const [inputValue, setInputValue] = useState({
-    id: '',
-    password: '',
+    id: "",
+    password: "",
   });
 
   const onInputChange = (e) => {
@@ -130,64 +128,63 @@ function LoginPage() {
   };
   return (
     <HeightCenterDiv>
-      <div style={{ margin: '18rem 0 18rem 0' }}>
-        <Link to="/" style={{ textAlign: 'center' }}>
-          <PageTitle>cosMost</PageTitle>
+      <div style={{ width: "66.9rem", height: "55.6rem" }}>
+        <Link to="/" style={{ textAlign: "center" }}>
+          <PageTitle height={"20%"}>cosMost</PageTitle>
         </Link>
         <LoginForm>
-          <LoginInputDiv>
+          <LoginInputDiv height={"50%"}>
             <BiUser style={LoginInputImageStyle} />
             <LoginInput
-              width={'30rem'}
-              height={'4rem'}
+              width={"58.8rem"}
+              height={"16.6rem"}
               placeholder="아이디"
-              name={'id'}
+              name={"id"}
               onChange={onInputChange}
             ></LoginInput>
             <RiLockPasswordLine
-              style={{ ...LoginInputImageStyle, top: '5rem' }}
+              style={{ ...LoginInputImageStyle, top: "17.5rem" }}
             />
             <LoginInput
-              type={'password'}
-              width={'30rem'}
-              height={'4rem'}
+              type={"password"}
+              width={"58.8rem"}
+              height={"16.6rem"}
               placeholder="비밀번호"
-              name={'password'}
+              name={"password"}
               onChange={onInputChange}
             />
           </LoginInputDiv>
-          <LoginButtonDiv>
+          <LoginButtonDiv height={"50%"}>
             <Button
-              width={'25rem'}
-              height={'5rem'}
-              fontSize={fs.l}
-              bgColor={color.lightBlue}
+              width={"46.4rem"}
+              height={"9.2rem"}
+              fontSize={FONT_SIZE_LIST.l}
             >
               로그인
             </Button>
           </LoginButtonDiv>
         </LoginForm>
-        <LoginOtherDiv>
-          <LoginOtherItemDiv>
-            {SnsLoginImageSrc.map((item, index) => {
-              return (
-                <Link key={index} to={item.linkPath}>
-                  <SnsLoginImage src={item.imgPath}></SnsLoginImage>
-                </Link>
-              );
-            })}
-          </LoginOtherItemDiv>
-          <LoginOtherItemDiv>
-            {LoginOtherSrc.map((item, index) => {
-              return (
-                <LoginOtherItemLink key={index} to={item.linkPath}>
-                  {item.name}
-                </LoginOtherItemLink>
-              );
-            })}
-          </LoginOtherItemDiv>
-        </LoginOtherDiv>
       </div>
+      <LoginOtherDiv>
+        <LoginOtherItemDiv>
+          {SnsLoginImageSrc.map((item, index) => {
+            return (
+              <Link key={index} to={item.linkPath}>
+                <SnsLoginImage src={item.imgPath}></SnsLoginImage>
+              </Link>
+            );
+          })}
+        </LoginOtherItemDiv>
+        <LoginOtherItemDiv>
+          {LoginOtherSrc.map((item, index) => {
+            return (
+              <LoginOtherItemLink key={index} to={item.linkPath}>
+                {item.name}
+              </LoginOtherItemLink>
+            );
+          })}
+        </LoginOtherItemDiv>
+      </LoginOtherDiv>
     </HeightCenterDiv>
   );
 }
