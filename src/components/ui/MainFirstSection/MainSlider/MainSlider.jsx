@@ -3,7 +3,7 @@ import * as S from './styled';
 import { CourseTitle } from '../../../';
 /* static data */
 import { FONT_SIZE_LIST as fs } from '../../../../style';
-import { SLIDER_IMAGE_LIST } from '../../../../data';
+import { MAIN_SLIDER_DATA_LIST, SLIDER_IMAGE_LIST } from '../../../../data';
 
 const sliderSettings = {
   dots: true,
@@ -40,18 +40,32 @@ function MainSlider() {
   return (
     <S.SliderWrap>
       <S.StyledSlider {...sliderSettings}>
-        {SLIDER_IMAGE_LIST &&
-          SLIDER_IMAGE_LIST.map((img, i) => (
-            <S.SliderItemWrap key={img.id}>
-              <S.SliderItemImg src={img.imgUrl} alt={img.alt} />
+        {MAIN_SLIDER_DATA_LIST &&
+          MAIN_SLIDER_DATA_LIST.map((item, i) => (
+            <S.SliderItemWrap key={item.id}>
+              <S.SliderItemImg src={item.imgUrl} alt={item.title} />
               <S.SliderItemInfo>
-                <CourseTitle fontSize={fs.xl}>코스 제목</CourseTitle>
+                <CourseTitle fontSize={fs.xl} rate={item.rate}>
+                  {item.title.length > 15
+                    ? `${item.title.substring(0, 16)}...`
+                    : `${item.title}`}
+                </CourseTitle>
                 <div>
-                  <span>@지역구</span>
-                  <span>@테마별</span>
+                  {item.categories.map((cat, i) => (
+                    <span key={cat.id}>@{cat.categoryName} </span>
+                  ))}
                 </div>
                 <div>
-                  1번 장소 👉 2번 장소 👉 3번 장소 👉 4번 장소 👉 5번 장소
+                  {item.courses.map((course, i) => (
+                    <>
+                      <span key={course.id}>{course.courseName}</span>
+                      {item.courses.length === i + 1 ? (
+                        <span></span>
+                      ) : (
+                        <span>👉</span>
+                      )}
+                    </>
+                  ))}
                 </div>
               </S.SliderItemInfo>
             </S.SliderItemWrap>

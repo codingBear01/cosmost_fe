@@ -88,6 +88,9 @@ export const StyledSlider = styled(Slider)`
   // 슬라이더 dots
   .slick-dots {
     bottom: -4rem;
+    ${media.mobile} {
+      bottom: -6rem;
+    }
   }
   .slick-dots li button {
     width: 2rem;
