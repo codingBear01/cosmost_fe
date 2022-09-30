@@ -1,14 +1,14 @@
 /* hooks */
-import React, { useState } from 'react';
+import React, { useState } from "react";
 /* components */
-import * as S from './styled';
-import { SmallProfilePic } from '../../../';
+import * as S from "./styled";
+import { SmallProfilePic } from "../../../";
 /* static data */
-import { MENUBAR_MENU_LIST, CATEGORY_LIST } from '../../../../data';
+import { MENUBAR_MENU_LIST, CATEGORY_LIST } from "../../../../data";
 /* icons */
-import * as BiIcons from 'react-icons/bi';
-import * as GoIcons from 'react-icons/go';
-import * as IoIcons from 'react-icons/io';
+import * as BiIcons from "react-icons/bi";
+import * as GoIcons from "react-icons/go";
+import * as IoIcons from "react-icons/io";
 
 function HeaderMenuBar({
   handleLogin,
@@ -28,7 +28,7 @@ function HeaderMenuBar({
 
   const handleSubCategoryOpen = (idx, cat) => {
     setSubCategoryIdx(idx);
-    if (cat === '지역별') {
+    if (cat === "지역별") {
       setIsGuCategoryOpen(!isGuCategoryOpen);
       setIsThemeCategoryOpen(false);
     } else {
@@ -47,11 +47,10 @@ function HeaderMenuBar({
         {/* 메뉴 리스트 */}
         {MENUBAR_MENU_LIST &&
           MENUBAR_MENU_LIST.map((menu, i) => (
-            <>
+            <div key={menu.id}>
               {isLogin === menu.isLogin && (
                 <S.MenuBarItemLink
                   to={menu.path}
-                  key={menu.id}
                   onClick={menu.isReport && handleReportModalOpen}
                 >
                   <S.MenuBarListItem onClick={menu.isHandleLog && handleLogin}>
@@ -63,7 +62,7 @@ function HeaderMenuBar({
                   </S.MenuBarListItem>
                 </S.MenuBarItemLink>
               )}
-            </>
+            </div>
           ))}
 
         {/* 카테고리 */}
