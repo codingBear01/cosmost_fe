@@ -55,14 +55,14 @@ function MainSlider() {
                 </div>
                 <div>
                   {item.courses.map((course, i) => (
-                    <>
-                      <span key={course.id}>{course.courseName}</span>
+                    <div key={course.id}>
+                      <span>{course.courseName}</span>
                       {item.courses.length === i + 1 ? (
                         <span></span>
                       ) : (
                         <span>👉</span>
                       )}
-                    </>
+                    </div>
                   ))}
                 </div>
               </S.SliderItemInfo>

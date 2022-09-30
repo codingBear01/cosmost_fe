@@ -52,8 +52,11 @@ export const MenuBarItemLink = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  // height: ${({ subCat }) => (subCat ? '10rem' : '100%')};
   padding: ${({ subCat }) => (subCat ? '0.5rem 0' : '1rem 10rem')};
-  padding-left: ${({ cat, subCat }) => (cat ? '15rem' : subCat ? '18rem' : '')};
+  // padding-left: ${({ cat, subCat }) =>
+    cat ? '15rem' : subCat ? '18rem' : ''};
+  padding-left: ${({ cat, subCat }) => (cat ? '15rem' : '')};
   font-size: ${fs.l};
   font-weight: 600;
   color: ${color.white};
@@ -70,6 +73,15 @@ export const MenuBarListItem = styled.li`
   svg {
     font-size: 2rem;
   }
+`;
+
+export const SubCategoriesWrap = styled.ul`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  // width: 5rem;
+  height: 18rem;
 `;
 
 export const CategoryIsOpendIcon = styled.button`

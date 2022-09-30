@@ -47,11 +47,10 @@ function HeaderMenuBar({
         {/* 메뉴 리스트 */}
         {MENUBAR_MENU_LIST &&
           MENUBAR_MENU_LIST.map((menu, i) => (
-            <>
+            <div key={menu.id}>
               {isLogin === menu.isLogin && (
                 <S.MenuBarItemLink
                   to={menu.path}
-                  key={menu.id}
                   onClick={menu.isReport && handleReportModalOpen}
                 >
                   <S.MenuBarListItem onClick={menu.isHandleLog && handleLogin}>
@@ -63,7 +62,7 @@ function HeaderMenuBar({
                   </S.MenuBarListItem>
                 </S.MenuBarItemLink>
               )}
-            </>
+            </div>
           ))}
 
         {/* 카테고리 */}
@@ -87,9 +86,8 @@ function HeaderMenuBar({
         {/* 카테고리 하위 지역별, 테마별 */}
         {isCategoryOpen &&
           CATEGORY_LIST.map((category, i) => (
-            <>
+            <div key={category.id}>
               <S.MenuBarItemLink
-                key={category.id}
                 cat={true}
                 onClick={() => handleSubCategoryOpen(i, category.categoryName)}
               >
@@ -115,19 +113,21 @@ function HeaderMenuBar({
               {/* 지역별, 테마별 서브 카테고리 */}
               {(i === subCategoryIdx && isGuCategoryOpen) ||
               (i === subCategoryIdx && isThemeCategoryOpen) ? (
-                CATEGORY_LIST[i].subCategories.map((subCat) => (
-                  <S.MenuBarItemLink key={subCat.id} subCat={true}>
-                    <S.MenuBarListItem>
-                      <S.MenuBarItemTitle subCat={true}>
-                        {subCat.title}
-                      </S.MenuBarItemTitle>
-                    </S.MenuBarListItem>
-                  </S.MenuBarItemLink>
-                ))
+                <S.SubCategoriesWrap>
+                  {CATEGORY_LIST[i].subCategories.map((subCat) => (
+                    <S.MenuBarItemLink key={subCat.id} subCat={true}>
+                      <S.MenuBarListItem>
+                        <S.MenuBarItemTitle subCat={true}>
+                          {subCat.title}
+                        </S.MenuBarItemTitle>
+                      </S.MenuBarListItem>
+                    </S.MenuBarItemLink>
+                  ))}
+                </S.SubCategoriesWrap>
               ) : (
                 <></>
               )}
-            </>
+            </div>
           ))}
       </S.MenuBarList>
     </S.MenuBar>

@@ -30,7 +30,9 @@ function AddedCourse({ item }) {
         </S.AddedCourseDesc>
         <div>
           {item.hashTags.map((tag, i) => (
-            <HashTag fontSize={fs.xs}>{tag.hashTagName}</HashTag>
+            <HashTag key={tag.id} fontSize={fs.xs}>
+              {tag.hashTagName}
+            </HashTag>
           ))}
         </div>
       </S.AddedCourseInfo>

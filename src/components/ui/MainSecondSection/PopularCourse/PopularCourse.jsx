@@ -21,7 +21,9 @@ function PopularCourse({ item }) {
         </CourseTitle>
         <div>
           {item.hashTags.map((tag, i) => (
-            <HashTag fontSize={fs.xs}>{tag.hashTagName}</HashTag>
+            <HashTag key={tag.id} fontSize={fs.xs}>
+              {tag.hashTagName}
+            </HashTag>
           ))}
         </div>
       </S.PoplularCourseBox>
