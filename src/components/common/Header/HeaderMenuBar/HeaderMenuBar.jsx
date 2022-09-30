@@ -54,66 +54,76 @@ function HeaderMenuBar({
           MENUBAR_MENU_LIST.map((menu, i) => (
             <>
               {isLogin === menu.isLogin && (
-                <S.MenuBarListItem
+                <S.MenuBarItemLink
                   key={menu.id}
-                  onClick={menu.isReport && handleReportModalOpen}
+                  to={menu.path}
+                  onClick={menu.isHandleLog && handleLogin}
                 >
-                  <S.MenuBarItemLink
-                    to={menu.path}
-                    onClick={menu.isHandleLog && handleLogin}
+                  <S.MenuBarListItem
+                    onClick={menu.isReport && handleReportModalOpen}
                   >
                     {menu.icon}
                     {isLogin === menu.isMyPage && (
                       <SmallProfilePic src={menu.imgUrl} alt={menu.title} />
                     )}
                     <S.MenuBarItemTitle>{menu.title}</S.MenuBarItemTitle>
-                  </S.MenuBarItemLink>
-                </S.MenuBarListItem>
+                  </S.MenuBarListItem>
+                </S.MenuBarItemLink>
               )}
             </>
           ))}
-        <S.MenuBarListItem onClick={handleCategoryOpen}>
-          <S.MenuBarItemLink>
+        <S.MenuBarItemLink onClick={handleCategoryOpen}>
+          <S.MenuBarListItem>
             <BiIcons.BiCategory />
             <S.MenuBarItemTitle>카테고리</S.MenuBarItemTitle>
             {isCategoryOpen ? (
-              <GoIcons.GoTriangleUp />
+              <S.CategoryIsOpendIcon>
+                <GoIcons.GoTriangleUp />
+              </S.CategoryIsOpendIcon>
             ) : (
-              <GoIcons.GoTriangleDown />
+              <S.CategoryIsOpendIcon>
+                <GoIcons.GoTriangleDown />
+              </S.CategoryIsOpendIcon>
             )}
-          </S.MenuBarItemLink>
-        </S.MenuBarListItem>
+          </S.MenuBarListItem>
+        </S.MenuBarItemLink>
+
         {isCategoryOpen &&
           CATEGORY_LIST.map((category, i) => (
             <>
-              <S.MenuBarListItem
+              <S.MenuBarItemLink
                 key={category.id}
                 cat={true}
                 onClick={() => handleSubCategoryOpen(i, category.categoryName)}
               >
-                <S.MenuBarItemLink>
+                <S.MenuBarListItem>
                   {category.icon}
                   <S.MenuBarItemTitle cat={true}>
                     {category.categoryName}
                   </S.MenuBarItemTitle>
                   {(i === subCategoryIdx && isGuCategoryOpen) ||
                   (i === subCategoryIdx && isThemeCategoryOpen) ? (
-                    <GoIcons.GoTriangleUp />
+                    <S.CategoryIsOpendIcon cat={true}>
+                      <GoIcons.GoTriangleUp />
+                    </S.CategoryIsOpendIcon>
                   ) : (
-                    <GoIcons.GoTriangleDown />
+                    <S.CategoryIsOpendIcon cat={true}>
+                      <GoIcons.GoTriangleDown />
+                    </S.CategoryIsOpendIcon>
                   )}
-                </S.MenuBarItemLink>
-              </S.MenuBarListItem>
+                </S.MenuBarListItem>
+              </S.MenuBarItemLink>
+
               {(i === subCategoryIdx && isGuCategoryOpen) ||
               (i === subCategoryIdx && isThemeCategoryOpen) ? (
                 CATEGORY_LIST[i].subCategories.map((subCat) => (
-                  <S.MenuBarListItem key={subCat.id} subCat={true}>
-                    <S.MenuBarItemLink>
+                  <S.MenuBarItemLink key={subCat.id} subCat={true}>
+                    <S.MenuBarListItem>
                       <S.MenuBarItemTitle subCat={true}>
                         {subCat.title}
                       </S.MenuBarItemTitle>
-                    </S.MenuBarItemLink>
-                  </S.MenuBarListItem>
+                    </S.MenuBarListItem>
+                  </S.MenuBarItemLink>
                 ))
               ) : (
                 <></>

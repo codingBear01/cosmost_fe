@@ -51,7 +51,6 @@ a,
 a:link,
 a:visited,
 a:active {
-  padding: 0;
   text-decoration: none;
 }
 
