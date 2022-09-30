@@ -8,15 +8,17 @@ import {
   BREAK_POINTS as media,
 } from '../../../style';
 
-export const StyledHashtag = styled.button`
+export const StyledHashtag = styled.span`
   margin: 0.25rem;
+  padding: 0.25rem;
   border-radius: ${br.default};
-  background-color: ${color.lightBlue};
+  // background-color: ${color.lightBlue};
   font-size: ${({ fontSize }) => fontSize};
-  color: ${color.white};
+  color: ${color.lightBlue};
   cursor: pointer;
   transition: all 0.15s ease-in;
   &:hover {
     background-color: ${color.blue};
+    color: ${color.white};
   }
 `;

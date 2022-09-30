@@ -57,6 +57,7 @@ export const MenuBarItemLink = styled(Link)`
   font-size: ${fs.l};
   font-weight: 600;
   color: ${color.white};
+  transition: 500ms;
   &:hover {
     background-color: ${color.blue};
   }
@@ -65,7 +66,6 @@ export const MenuBarItemLink = styled(Link)`
 export const MenuBarListItem = styled.li`
   display: flex;
   align-items: center;
-  transition: 500ms;
   cursor: pointer;
   svg {
     font-size: 2rem;
