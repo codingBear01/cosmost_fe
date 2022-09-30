@@ -18,7 +18,6 @@ function HeaderMenuBar({
   isLogin,
 }) {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [isSubCategoryOpen, setIsSubCategoryOpen] = useState(false);
   const [isGuCategoryOpen, setIsGuCategoryOpen] = useState(false);
   const [isThemeCategoryOpen, setIsThemeCategoryOpen] = useState(false);
   const [subCategoryIdx, setSubCategoryIdx] = useState(null);
@@ -29,7 +28,6 @@ function HeaderMenuBar({
 
   const handleSubCategoryOpen = (idx, cat) => {
     setSubCategoryIdx(idx);
-    setIsSubCategoryOpen(!isSubCategoryOpen);
     if (cat === '지역별') {
       setIsGuCategoryOpen(!isGuCategoryOpen);
       setIsThemeCategoryOpen(false);
@@ -46,6 +44,7 @@ function HeaderMenuBar({
       </S.MenuBarCloseBtn>
 
       <S.MenuBarList>
+        {/* 메뉴 리스트 */}
         {MENUBAR_MENU_LIST &&
           MENUBAR_MENU_LIST.map((menu, i) => (
             <>
@@ -66,10 +65,13 @@ function HeaderMenuBar({
               )}
             </>
           ))}
+
+        {/* 카테고리 */}
         <S.MenuBarItemLink onClick={handleCategoryOpen}>
           <S.MenuBarListItem>
             <BiIcons.BiCategory />
             <S.MenuBarItemTitle>카테고리</S.MenuBarItemTitle>
+            {/* 오픈 여부 삼각형 아이콘 */}
             {isCategoryOpen ? (
               <S.CategoryIsOpendIcon>
                 <GoIcons.GoTriangleUp />
@@ -82,6 +84,7 @@ function HeaderMenuBar({
           </S.MenuBarListItem>
         </S.MenuBarItemLink>
 
+        {/* 카테고리 하위 지역별, 테마별 */}
         {isCategoryOpen &&
           CATEGORY_LIST.map((category, i) => (
             <>
@@ -95,6 +98,7 @@ function HeaderMenuBar({
                   <S.MenuBarItemTitle cat={true}>
                     {category.categoryName}
                   </S.MenuBarItemTitle>
+                  {/* 오픈 여부 삼각형 아이콘 */}
                   {(i === subCategoryIdx && isGuCategoryOpen) ||
                   (i === subCategoryIdx && isThemeCategoryOpen) ? (
                     <S.CategoryIsOpendIcon cat={true}>
@@ -108,6 +112,7 @@ function HeaderMenuBar({
                 </S.MenuBarListItem>
               </S.MenuBarItemLink>
 
+              {/* 지역별, 테마별 서브 카테고리 */}
               {(i === subCategoryIdx && isGuCategoryOpen) ||
               (i === subCategoryIdx && isThemeCategoryOpen) ? (
                 CATEGORY_LIST[i].subCategories.map((subCat) => (

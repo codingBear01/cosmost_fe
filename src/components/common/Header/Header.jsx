@@ -48,13 +48,13 @@ function Header({ pathName, scrollY }) {
   };
 
   /* 메뉴바 및 신고 모달창 떴을 때 뒷화면 스크롤 잠금 */
-  // useEffect(() => {
-  //   if (isMenuBarOpen || isReportModalOpen) {
-  //     document.body.style.overflow = 'hidden';
-  //   } else {
-  //     document.body.style.overflow = 'unset';
-  //   }
-  // }, [isMenuBarOpen, isReportModalOpen]);
+  useEffect(() => {
+    if (isMenuBarOpen || isReportModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isMenuBarOpen, isReportModalOpen]);
 
   // 메인 페이지 이외에 접속할 경우 서치바 닫는 함수
   useEffect(() => {
