@@ -12,6 +12,6 @@ export const StyledCategoriesWrap = styled.div`
   flex-direction: ${({ fd }) => fd};
   margin-bottom: ${gap.s};
   ${media.mobile} {
-    margin-bottom: 0;
+    margin-bottom: ${gap.xs};
   }
 `;

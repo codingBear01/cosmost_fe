@@ -12,6 +12,6 @@ export const StyledCoursesWrap = styled.div`
   flex-wrap: wrap;
   margin-top: ${gap.s};
   ${media.mobile} {
-    margin-top: 0;
+    margin-top: ${gap.xs};
   }
 `;

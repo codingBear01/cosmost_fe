@@ -29,7 +29,7 @@ function SearchResultPageItem({ item }) {
         border_radius={`${br.default} ${br.default} 0 0`}
       ></CourseImg>
       {/* 코스 정보 박스 */}
-      <EachCourseBox column={'column'} height={'50%'} padding={'0 1rem'}>
+      <EachCourseBox column={'column'} height={'50%'} padding={'1rem'}>
         {/* 코스 제목 */}
         <CourseTitle
           rate={item.rate}
