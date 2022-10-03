@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Sen:wght@400;700;800&display=swap');
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   font-size: 62.5%;
   transition: 0.15s ease-in;
@@ -40,6 +44,7 @@ p {
 }
 
 button {
+  padding: 0;
   border: none;
   background: none;
   outline: none;

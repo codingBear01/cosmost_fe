@@ -13,7 +13,7 @@ export const COLOR_LIST = {
 };
 
 export const FONT_SIZE_LIST = {
-  xxs: '1rem', // 모바일에만
+  xxs: '1rem',
   xs: '1.2rem',
   s: '1.4rem',
   m: '1.6rem',

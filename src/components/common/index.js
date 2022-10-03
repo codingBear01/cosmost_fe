@@ -11,7 +11,6 @@ export { Footer } from './Footer/';
 export { HashTag } from './HashTag/';
 export { Header } from './Header/';
 export { HeightCenterDiv } from './HeightCenterDiv/index.js';
-export { Input } from './Input/';
 export { MoreCourseBtn } from './MoreCourseBtn/';
 export { PageTitle } from './PageTitle/';
 export { Section } from './Section/';

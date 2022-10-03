@@ -1,4 +1,6 @@
+/* libraries */
 import styled from 'styled-components';
+/* static data */
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -6,4 +8,10 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
-} from './../../../style/';
+} from './../../../../style/';
+
+export const StyledHeaderIcon = styled.button`
+  height: 3rem;
+  font-size: 3rem;
+  color: ${color.white};
+`;

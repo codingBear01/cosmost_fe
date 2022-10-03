@@ -6,4 +6,4 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
-} from './../../../style/';
+} from './../../../../style/';

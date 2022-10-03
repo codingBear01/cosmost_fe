@@ -1,7 +1,7 @@
 /* libraries */
 import styled from 'styled-components';
 /* components */
-import { Input } from '../../';
+import { Input } from '../../common/Input';
 /* static data */
 import {
   COLOR_LIST as color,
