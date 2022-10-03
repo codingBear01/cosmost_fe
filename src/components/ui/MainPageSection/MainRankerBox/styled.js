@@ -17,13 +17,13 @@ export const RankergBox = styled.ul`
   flex-direction: column;
   width: 21.5rem;
   height: 5rem;
-  margin: 3.5rem 0;
+  margin: 5rem 0;
   padding-top: 1rem;
-  border-top: 0.1rem solid ${color.black};
-  border-bottom: 0.1rem solid ${color.black};
+  border-top: 0.1rem solid ${color.white};
+  border-bottom: 0.1rem solid ${color.white};
   font-size: 1.6rem;
   font-weight: 600;
-  color: ${color.black};
+  color: ${color.white};
   gap: 2.5rem;
   overflow: hidden;
 `;

@@ -17,13 +17,12 @@ export const MainPageContainer = styled.div`
   flex-direction: column;
   width: 76.8rem;
   height: 100%;
-  background-color: ${color.white};
+  background-color: ${color.black};
 `;
 
 export const MainPageContent = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: ${({ jc }) => jc};
+  align-items: flex-end;
   width: 100%;
   height: ${({ h }) => h};
   margin: ${({ mr }) => mr};
@@ -38,10 +37,11 @@ export const MainPageContent = styled.div`
 export const MainPageTextWrap = styled.div`
   display: flex;
   align-items: flex-start;
-  justify-content: flex-end;
+  justify-content: center;
   flex-direction: column;
   width: 50%;
   height: 100%;
+  padding-left: ${gap.xl};
 `;
 
 export const MainPageText = styled.span`

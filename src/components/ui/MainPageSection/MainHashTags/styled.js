@@ -11,7 +11,8 @@ import {
 } from '../../../../style';
 
 export const MainHashTagWrap = styled.div`
-  width: 50%;
+  width: 70%;
+  margin: 5rem;
 `;
 
 export const MainHashTag = styled.span`
