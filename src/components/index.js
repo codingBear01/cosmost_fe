@@ -22,7 +22,7 @@ export {
 } from './common/';
 
 /* 특정 페이지에서만 쓰이는 요소들 */
-export { MainFirstSection } from './ui/';
+export { MainPageSection } from './ui/';
 
 /* pages */
-export { MainPage } from './pages/';
+export { CourseRegisterPage, MainPage } from './pages/';

@@ -1,1 +1,1 @@
-export { MainFirstSection } from './MainFirstSection/';
+export { MainPageSection } from './MainPageSection';

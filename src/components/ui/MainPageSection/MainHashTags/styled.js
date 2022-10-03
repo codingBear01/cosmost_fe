@@ -11,28 +11,21 @@ import {
 } from '../../../../style';
 
 export const MainHashTagWrap = styled.div`
-  width: 100rem;
-  text-align: center;
-
-  ${media.tablet} {
-    width: 75rem;
-  }
-
-  ${media.mobile} {
-    width: 55rem;
-  }
+  width: 50%;
 `;
 
 export const MainHashTag = styled.span`
+  word-break: break-all;
+  margin-right: ${gap.m};
   padding: ${gap.xs};
   border-radius: ${br.default};
-  font-size: ${fs.xl};
+  font-size: ${fs.l};
   color: ${color.white};
   transition: all 0.15s ease-in;
   cursor: pointer;
 
   &:hover {
-    background-color: ${color.blue};
+    background-color: ${color.lightBlue};
   }
 
   ${media.tablet} {

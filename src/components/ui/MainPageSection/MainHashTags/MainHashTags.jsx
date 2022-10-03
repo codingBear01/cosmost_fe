@@ -2,6 +2,7 @@ import React from 'react';
 /* components */
 import * as S from './styled';
 /* static data */
+import { FONT_SIZE_LIST as fs } from '../../../../style';
 import { HASH_TAG_LIST } from '../../../../data';
 
 function MainHashTags() {

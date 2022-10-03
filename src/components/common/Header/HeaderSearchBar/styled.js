@@ -15,7 +15,7 @@ import {
 export const HeaderSearchBar = styled.div`
   position: fixed;
   z-index: 1;
-  // right: ${({ isSearchBarOpen }) => (isSearchBarOpen ? '28%' : '-100%')};
+  left: 0;
   visibility: ${({ isSearchBarOpen }) =>
     isSearchBarOpen ? 'visible' : 'hidden'};
   display: flex;

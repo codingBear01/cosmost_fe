@@ -1,6 +1,6 @@
 /* components */
 import * as S from './styled';
-import { CategoriesWrap, CourseTitle, CoursesWrap } from '../../../';
+import { CategoriesWrap, CourseTitle, CoursesWrap } from '../../..';
 /* static data */
 import { FONT_SIZE_LIST as fs } from '../../../../style';
 import { MAIN_SLIDER_DATA_LIST, SLIDER_IMAGE_LIST } from '../../../../data';

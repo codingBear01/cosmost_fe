@@ -1,5 +1,5 @@
 /* components */
-import { Header, Footer, MainPage } from './components';
+import { Header, Footer, CourseRegisterPage, MainPage } from './components';
 /* router */
 import { Routes, Route } from 'react-router-dom';
 /* hooks */
@@ -11,6 +11,9 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/course">
+          <Route path="register" element={<CourseRegisterPage />} />
+        </Route>
       </Routes>
       <Footer />
     </>

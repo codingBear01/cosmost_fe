@@ -1,8 +1,10 @@
 /* hooks */
 import React from 'react';
+/* components */
+import { MainPageSection } from '../';
 
 function MainPage() {
-  return <h1>메인이닷</h1>;
+  return <MainPageSection />;
 }
 
 export default MainPage;

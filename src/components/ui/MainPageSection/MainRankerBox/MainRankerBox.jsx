@@ -1,9 +1,9 @@
 /* hooks */
 import React, { useState } from 'react';
-import { useInterval } from './../../../hooks';
+import { useInterval } from '../../../hooks';
 /* components */
 import * as S from './styled';
-import { SmallProfilePic } from '../../../';
+import { SmallProfilePic } from '../../..';
 /* static data */
 import { USER_RANKING_LIST } from '../../../../data';
 

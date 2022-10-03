@@ -5,13 +5,17 @@ import {
   BUTTON_SIZE_LIST as bs,
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
+  BREAK_POINTS as media,
 } from './../../../style/';
 
 export const StyledSection = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: ${({ height }) => height};
-  padding-top: ${({ paddingTop }) => paddingTop};
+  height: 100%;
   background-color: ${({ backgroundColor }) => backgroundColor};
+
+  ${media.mobile} {
+    height: 100vh;
+  }
 `;

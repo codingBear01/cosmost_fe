@@ -25,18 +25,13 @@ html {
 
 body {
   position: relative;
-  box-sizing: content-box;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
   font-family: 'Sen', 'Noto Sans KR', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#root {
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
 }
 
 p {

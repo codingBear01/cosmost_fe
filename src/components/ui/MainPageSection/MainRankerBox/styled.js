@@ -18,11 +18,12 @@ export const RankergBox = styled.ul`
   width: 21.5rem;
   height: 5rem;
   margin: 3.5rem 0;
-  padding-top: 2rem;
-  border-top: 0.1rem solid ${color.white};
-  border-bottom: 0.1rem solid ${color.white};
+  padding-top: 1rem;
+  border-top: 0.1rem solid ${color.black};
+  border-bottom: 0.1rem solid ${color.black};
   font-size: 1.6rem;
-  color: ${color.white};
+  font-weight: 600;
+  color: ${color.black};
   gap: 2.5rem;
   overflow: hidden;
 `;
