@@ -16,7 +16,7 @@ export const LoginFindWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  width: 15rem;
+  width: 150px;
   margin: ${gap.m} 0;
 `;
 
@@ -38,9 +38,9 @@ export const LoginBtns = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30rem;
-  height: 4rem;
-  margin-bottom: 1rem;
+  width: 340px;
+  height: 40px;
+  margin-bottom: 10px;
   border-radius: ${br.default};
   background-color: ${({ bg_color }) => bg_color};
   color: ${({ col }) => col};
@@ -53,10 +53,10 @@ export const LoginBtns = styled.button`
   }
 
   svg {
-    font-size: 2rem;
+    font-size: 20px;
   }
 
   span {
-    margin-left: 1rem;
+    margin-left: 10px;
   }
 `;

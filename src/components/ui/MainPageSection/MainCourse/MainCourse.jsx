@@ -6,7 +6,7 @@ import * as FaIcons from 'react-icons/fa';
 
 function MainCourse({ item }) {
   return (
-    <S.StyledMainCourse a_self={item.align_self}>
+    <S.StyledMainCourse a_self={item.a_self}>
       <S.CourseTextWrap>
         <S.CourseTitle>{item.title}</S.CourseTitle>
         <S.CoureseLink>

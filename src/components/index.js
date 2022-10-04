@@ -30,6 +30,8 @@ export {
 /* 특정 페이지에서만 쓰이는 요소들 */
 export {
   EmailValidForm,
+  LocationDetailForm,
+  LocationInfoForm,
   LoginForm,
   MainPageSection,
   UtilPageContainer,
@@ -39,6 +41,8 @@ export {
 export {
   CourseRegisterPage,
   EmailValidPage,
+  LocationDetailPage,
+  LocationInfoPage,
   LoginPage,
   MainPage,
 } from './pages/';

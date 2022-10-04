@@ -11,6 +11,7 @@ import {
 export const StyledUtilForm = styled.form`
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   justify-content: ${({ j_content }) => j_content};
   flex-direction: column;
   height: 100%;

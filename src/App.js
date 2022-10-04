@@ -4,16 +4,16 @@ import {
   Footer,
   CourseRegisterPage,
   EmailValidPage,
+  LocationDetailPage,
+  LocationInfoPage,
   LoginPage,
   MainPage,
-  UtilPage,
   UtilPageContainer,
 } from './components';
 /* router */
 import { Routes, Route, Outlet } from 'react-router-dom';
 /* hooks */
 import { GoToTop } from './store';
-import {} from '.';
 
 const WithHeaderAndFooter = () => {
   return (
@@ -49,6 +49,8 @@ function App() {
         <Route path="/util" element={<WithoutHeaderAndFooter />}>
           <Route exact path="login" element={<LoginPage />} />
           <Route path="email-valid" element={<EmailValidPage />} />
+          <Route path="location-info" element={<LocationInfoPage />} />
+          <Route path="location-detail" element={<LocationDetailPage />} />
         </Route>
       </Routes>
     </>

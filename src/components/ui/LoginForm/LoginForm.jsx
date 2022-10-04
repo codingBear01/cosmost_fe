@@ -21,9 +21,9 @@ function LoginForm() {
         <Input
           type="text"
           placeholder="아이디"
-          w={'26.5rem'}
-          h={'4rem'}
-          mr={'0 0 0 1rem'}
+          w={'305px'}
+          h={'40px'}
+          mr={'0 0 0 10px'}
         />
       </UtilInputWrap>
       <UtilInputWrap>
@@ -33,17 +33,17 @@ function LoginForm() {
         <Input
           type="text"
           placeholder="비밀번호"
-          w={'26.5rem'}
-          h={'4rem'}
-          mr={'0 0 0 1rem'}
+          w={'305px'}
+          h={'40px'}
+          mr={'0 0 0 10px'}
         />
       </UtilInputWrap>
       {/* 로그인 버튼 */}
       <Link to="/util/email-valid">
         <Button
           type="button"
-          w={'30rem'}
-          h={'4rem'}
+          w={'340px'}
+          h={'40px'}
           bg_color={color.darkBlue}
           col={color.white}
           ho_color={color.navy}

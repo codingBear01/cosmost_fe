@@ -5,10 +5,10 @@ import * as S from './styled';
 /* icons */
 import * as FiIcons from 'react-icons/fi';
 
-function NextBtn() {
+function NextBtn({ to }) {
   return (
     <>
-      <S.StyledNextBtn>
+      <S.StyledNextBtn to={to}>
         <span>다음으로</span>
         <FiIcons.FiChevronsRight />
       </S.StyledNextBtn>

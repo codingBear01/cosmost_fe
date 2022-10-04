@@ -15,7 +15,7 @@ export const StyledNextBtn = styled(Link)`
   display: flex;
   align-items: center;
   align-self: end;
-  font-size: ${fs.m};
+  font-size: 16px;
   color: ${color.lightGrey};
   transition: 0.15s ease-in;
 
