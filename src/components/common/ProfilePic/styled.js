@@ -1,4 +1,7 @@
+/* libraries */
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+/* static data */
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -8,9 +11,8 @@ import {
   BREAK_POINTS as media,
 } from '../../../style';
 
-export const StyledUtilInputWrap = styled.div`
-  display: flex;
-  align-items: center;
-  align-self: ${({ a_self }) => a_self};
-  margin-bottom: ${({ mb }) => (mb ? mb : `${gap.xl}`)};
+export const StyledProfilePic = styled.img`
+  width: ${({ w }) => w};
+  height: ${({ h }) => h};
+  border-radius: ${br.default};
 `;

@@ -19,7 +19,7 @@ export const StyledInput = styled.input`
   color: ${color.white};
 
   &::placeholder {
-    color: ${color.lightGrey};
+    color: ${color.grey};
   }
 
   &:focus {

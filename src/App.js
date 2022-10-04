@@ -8,6 +8,7 @@ import {
   LocationInfoPage,
   LoginPage,
   MainPage,
+  UserInfoPage,
   UtilPageContainer,
 } from './components';
 /* router */
@@ -51,6 +52,7 @@ function App() {
           <Route path="email-valid" element={<EmailValidPage />} />
           <Route path="location-info" element={<LocationInfoPage />} />
           <Route path="location-detail" element={<LocationDetailPage />} />
+          <Route path="user-info" element={<UserInfoPage />} />
         </Route>
       </Routes>
     </>

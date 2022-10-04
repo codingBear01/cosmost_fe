@@ -16,6 +16,7 @@ export { Input } from './Input/';
 export { MoreCourseBtn } from './MoreCourseBtn/';
 export { NextBtn } from './NextBtn/';
 export { PageTitle } from './PageTitle/';
+export { ProfilePic } from './ProfilePic/';
 export { Section } from './Section/';
 export { SectionTitle } from './SectionTitle';
 export { SmallProfilePic } from './SmallProfilePic';

@@ -18,6 +18,7 @@ export {
   MoreCourseBtn,
   NextBtn,
   PageTitle,
+  ProfilePic,
   Section,
   SectionTitle,
   SmallProfilePic,
@@ -34,6 +35,7 @@ export {
   LocationInfoForm,
   LoginForm,
   MainPageSection,
+  UserInfoForm,
   UtilPageContainer,
 } from './ui/';
 
@@ -45,4 +47,5 @@ export {
   LocationInfoPage,
   LoginPage,
   MainPage,
+  UserInfoPage,
 } from './pages/';
