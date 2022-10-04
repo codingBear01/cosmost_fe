@@ -23,7 +23,7 @@ export const MainText = styled.span`
   font-size: ${({ fs }) => fs};
   font-weight: 600;
   color: ${({ col }) => col};
-  transition: 0.15s;
+  transition: all 0.15s ease-in;
 
   &:hover {
     color: ${({ hover_col }) => hover_col};

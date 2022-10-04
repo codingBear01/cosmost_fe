@@ -1,7 +1,7 @@
 import React from 'react';
 /* components */
 import * as S from './styled';
-import { HeaderIcon } from '../';
+import { Icon, Input } from '../../../';
 /* icons */
 import * as BsIcons from 'react-icons/bs';
 import * as AiIcons from 'react-icons/ai';
@@ -11,19 +11,19 @@ import { FONT_SIZE_LIST as fs } from '../../../../style';
 function HeaderSearchBar({ onClick, isSearchBarOpen }) {
   return (
     <S.HeaderSearchBar isSearchBarOpen={isSearchBarOpen}>
-      <HeaderIcon>
+      <Icon>
         <BsIcons.BsSearch />
-      </HeaderIcon>
-      <S.StyledSearchInput
+      </Icon>
+      <Input
         type="text"
         placeholder="키워드를 입력하세요."
-        width={'60rem'}
-        height={'2.5rem'}
-        fontSize={fs.xs}
+        w={'60rem'}
+        h={'2.5rem'}
+        mr={'0 2rem'}
       />
-      <HeaderIcon onClick={onClick}>
+      <Icon onClick={onClick}>
         <AiIcons.AiOutlineClose />
-      </HeaderIcon>
+      </Icon>
     </S.HeaderSearchBar>
   );
 }

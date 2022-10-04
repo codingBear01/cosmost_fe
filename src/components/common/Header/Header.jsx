@@ -6,7 +6,8 @@ import { useRecoilState } from 'recoil';
 import { isLoginAtom } from '../../../store';
 /* components */
 import * as S from './styled';
-import { HeaderIcon, HeaderLogo, HeaderSearchBar, HeaderUtilBtn } from './';
+import { HeaderLogo, HeaderSearchBar, HeaderUtilBtn } from './';
+import { Icon } from '../../';
 /* icons */
 import * as BsIcons from 'react-icons/bs';
 /* static data */
@@ -29,9 +30,9 @@ function Header() {
           </Link>
 
           <S.HeaderUtilWrap>
-            <HeaderIcon onClick={onSearchBarOpen}>
+            <Icon onClick={onSearchBarOpen}>
               <BsIcons.BsSearch />
-            </HeaderIcon>
+            </Icon>
             <HeaderUtilBtn isLogin={isLogin} />
           </S.HeaderUtilWrap>
         </S.HeaderContainer>

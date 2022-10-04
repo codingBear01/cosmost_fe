@@ -33,7 +33,7 @@ export const CourseRegisterBtn = styled(Link)`
   font-size: 2.5rem;
   font-weight: 600;
   color: ${color.white};
-  transition: 0.15s;
+  transition: all 0.15s ease-in;
   animation: ${mainTextFadeIn} 3s;
 
   &:hover {

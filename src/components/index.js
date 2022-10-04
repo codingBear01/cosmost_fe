@@ -13,6 +13,8 @@ export {
   HashTag,
   Header,
   HeightCenterDiv,
+  Icon,
+  Input,
   MoreCourseBtn,
   PageTitle,
   Section,
@@ -22,7 +24,7 @@ export {
 } from './common/';
 
 /* 특정 페이지에서만 쓰이는 요소들 */
-export { MainPageSection } from './ui/';
+export { LoginForm, MainPageSection, UtilPageContainer } from './ui/';
 
 /* pages */
 export { CourseRegisterPage, LoginPage, MainPage, UtilPage } from './pages/';

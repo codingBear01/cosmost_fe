@@ -34,5 +34,5 @@ export const EachRanker = styled.li`
   align-items: center;
   justify-content: space-between;
   width: 60%;
-  transition: 0.2s;
+  transition: all 0.15s ease-in;
 `;

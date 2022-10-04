@@ -1,12 +1,15 @@
 import React from 'react';
 /* components */
 import { LoginPage } from '.';
+import { UtilPageContainer } from '../';
 
 function UtilPage() {
   return (
-    <div>
-      <LoginPage />
-    </div>
+    <>
+      <UtilPageContainer>
+        <LoginPage />
+      </UtilPageContainer>
+    </>
   );
 }
 

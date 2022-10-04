@@ -25,7 +25,7 @@ export const StyledMainCourse = styled.div`
   background-color: ${color.white};
   border-radius: 1.8rem;
   color: ${color.black};
-  transition: 0.2s;
+  transition: all 0.15s ease-in;
 
   &:hover {
     scale: 1.01;

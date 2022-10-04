@@ -1,7 +1,5 @@
 /* libraries */
 import styled from 'styled-components';
-/* components */
-import { Input } from '../../Input';
 /* static data */
 import {
   COLOR_LIST as color,
@@ -29,18 +27,5 @@ export const HeaderSearchBar = styled.div`
   ${media.mobile} {
     width: 90%;
     left: 5%;
-  }
-`;
-
-export const StyledSearchInput = styled(Input)`
-  margin: 0 2rem;
-  border-radius: 0;
-  border-bottom: 1px solid ${color.white};
-  background: transparent;
-  outline: none;
-  color: ${color.white};
-
-  &::placeholder {
-    color: ${color.lightGrey};
   }
 `;
