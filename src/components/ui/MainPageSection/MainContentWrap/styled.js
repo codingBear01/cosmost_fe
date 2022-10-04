@@ -1,4 +1,6 @@
+/* libraries */
 import styled from 'styled-components';
+/* static data */
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
@@ -6,13 +8,13 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
-} from './../../../style/';
+} from '../../../../style';
 
-export const StyledSection = styled.section`
+export const StyledMainContentWrap = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100%;
-  padding-bottom: ${({ pd_b }) => pd_b};
-  background-color: ${color.black};
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  padding: ${({ pd }) => pd};
 `;

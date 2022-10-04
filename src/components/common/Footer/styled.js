@@ -47,7 +47,7 @@ export const FooterInfo = styled.div`
 
     &:hover {
       border-radius: ${br.default};
-      background-color: ${color.lightBlue};
+      background-color: ${color.grey};
     }
   }
 

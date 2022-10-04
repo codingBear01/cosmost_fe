@@ -1,3 +1,5 @@
+export { mainTextFadeIn } from './animation';
+
 export {
   BORDER_RADIUS_LIST,
   BREAK_POINTS,
