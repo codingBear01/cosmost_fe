@@ -6,6 +6,7 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
+  mainTextFadeIn,
 } from '../../../style';
 
 export const StyledUtilForm = styled.form`
@@ -16,4 +17,5 @@ export const StyledUtilForm = styled.form`
   flex-direction: column;
   height: 100vh;
   padding: ${({ pd }) => pd};
+  animation: ${mainTextFadeIn} 1.2s;
 `;
