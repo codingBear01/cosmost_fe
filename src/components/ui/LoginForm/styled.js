@@ -21,7 +21,7 @@ export const LoginFindWrap = styled.div`
 `;
 
 export const LoginServiceLink = styled(Link)`
-  font-size: ${fs.xs};
+  font-size: 12px;
   color: ${color.white};
   transition: all 0.15s ease-in;
 
