@@ -1,8 +1,7 @@
 import React from 'react';
 /* components */
 import * as S from './styled';
-import { HeaderIcon } from '../';
-import { SmallProfilePic } from '../../../';
+import { SmallProfilePic, Icon } from '../../../';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 
@@ -17,9 +16,9 @@ function HeaderUtilBtn({ isLogin }) {
           alt={'profile_pic'}
         />
       ) : (
-        <HeaderIcon>
+        <Icon>
           <AiIcons.AiOutlineLogin style={{ margin: '0' }} />
-        </HeaderIcon>
+        </Icon>
       )}
     </>
   );

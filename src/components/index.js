@@ -13,16 +13,41 @@ export {
   HashTag,
   Header,
   HeightCenterDiv,
+  Icon,
+  Input,
   MoreCourseBtn,
+  NextBtn,
   PageTitle,
+  ProfilePic,
   Section,
   SectionTitle,
   SmallProfilePic,
   ToTopBtn,
+  UtilForm,
+  UtilInputWrap,
+  UtilTitle,
 } from './common/';
 
 /* 특정 페이지에서만 쓰이는 요소들 */
-export { MainPageSection } from './ui/';
+export {
+  EmailValidForm,
+  LocationDetailForm,
+  LocationInfoForm,
+  LoginForm,
+  MainPageSection,
+  UserInfoForm,
+  UserPageForm,
+  UtilPageContainer,
+} from './ui/';
 
 /* pages */
-export { CourseRegisterPage, MainPage } from './pages/';
+export {
+  CourseRegisterPage,
+  EmailValidPage,
+  LocationDetailPage,
+  LocationInfoPage,
+  LoginPage,
+  MainPage,
+  UserInfoPage,
+  UserPage,
+} from './pages/';

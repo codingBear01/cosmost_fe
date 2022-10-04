@@ -6,7 +6,8 @@ import { useRecoilState } from 'recoil';
 import { isLoginAtom } from '../../../store';
 /* components */
 import * as S from './styled';
-import { HeaderIcon, HeaderLogo, HeaderSearchBar, HeaderUtilBtn } from './';
+import { HeaderLogo, HeaderSearchBar, HeaderUtilBtn } from './';
+import { Icon } from '../../';
 /* icons */
 import * as BsIcons from 'react-icons/bs';
 /* static data */
@@ -23,31 +24,32 @@ function Header() {
   return (
     <>
       <S.Header>
-        <S.HeaderContainer>
+        <S.HeaderContainer isSearchBarOpen={isSearchBarOpen}>
           <Link to="/">
             <HeaderLogo>cosMost</HeaderLogo>
           </Link>
 
-          <HeaderSearchBar
-            isSearchBarOpen={isSearchBarOpen}
-            onClick={onSearchBarOpen}
-          />
-
           <S.HeaderUtilWrap>
-            <HeaderIcon onClick={onSearchBarOpen}>
+            <Icon onClick={onSearchBarOpen}>
               <BsIcons.BsSearch />
-            </HeaderIcon>
+            </Icon>
             <HeaderUtilBtn isLogin={isLogin} />
           </S.HeaderUtilWrap>
         </S.HeaderContainer>
 
-        {/* <button
+        <HeaderSearchBar
+          isSearchBarOpen={isSearchBarOpen}
+          onClick={onSearchBarOpen}
+        />
+      </S.Header>
+
+      <S.HeaderSearchBarOverlay isSearchBarOpen={isSearchBarOpen} />
+      {/* <button
           onClick={() => setIsLogin(!isLogin)}
           style={{ color: `${color.white}` }}
         >
           로긴ㅋ
         </button> */}
-      </S.Header>
     </>
   );
 }

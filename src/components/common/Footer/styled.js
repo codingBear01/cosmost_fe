@@ -7,12 +7,14 @@ import {
 } from './../../../style/';
 
 export const Footer = styled.footer`
+  position: absolute;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 7rem;
-  background-color: ${color.darkBlue};
+  background-color: ${color.black};
 
   svg {
     margin-right: ${gap.l};
@@ -45,7 +47,7 @@ export const FooterInfo = styled.div`
 
     &:hover {
       border-radius: ${br.default};
-      background-color: ${color.lightBlue};
+      background-color: ${color.grey};
     }
   }
 

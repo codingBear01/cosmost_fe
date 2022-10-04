@@ -1,21 +1,64 @@
 /* components */
-import { Header, Footer, CourseRegisterPage, MainPage } from './components';
+import {
+  Header,
+  Footer,
+  UtilPageContainer,
+  CourseRegisterPage,
+  EmailValidPage,
+  LocationDetailPage,
+  LocationInfoPage,
+  LoginPage,
+  MainPage,
+  UserInfoPage,
+  UserPage,
+} from './components';
 /* router */
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 /* hooks */
 import { GoToTop } from './store';
+
+const WithHeaderAndFooter = () => {
+  return (
+    <>
+      <Header />
+      <Outlet />
+      <Footer />
+    </>
+  );
+};
+
+const WithoutHeaderAndFooter = () => {
+  return (
+    <>
+      <UtilPageContainer>
+        <Outlet />
+      </UtilPageContainer>
+    </>
+  );
+};
 
 function App() {
   return (
     <>
-      <Header />
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/course">
-          <Route path="register" element={<CourseRegisterPage />} />
+        <Route path="/" element={<WithHeaderAndFooter />}>
+          <Route index element={<MainPage />} />
+          <Route path="/course">
+            <Route path="register" element={<CourseRegisterPage />} />
+          </Route>
+        </Route>
+
+        <Route path="/util" element={<WithoutHeaderAndFooter />}>
+          {/* isLogin = false */}
+          <Route path="login" element={<LoginPage />} />
+          <Route path="email-valid" element={<EmailValidPage />} />
+          <Route path="location-info" element={<LocationInfoPage />} />
+          <Route path="location-detail" element={<LocationDetailPage />} />
+          <Route path="user-info" element={<UserInfoPage />} />
+          {/* isLogin = true */}
+          <Route path="user/:id" element={<UserPage />} />
         </Route>
       </Routes>
-      <Footer />
     </>
   );
 }

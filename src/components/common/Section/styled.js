@@ -13,9 +13,6 @@ export const StyledSection = styled.section`
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-color: ${({ backgroundColor }) => backgroundColor};
-
-  ${media.mobile} {
-    height: 100vh;
-  }
+  padding-bottom: ${({ pd_b }) => pd_b};
+  background-color: ${color.black};
 `;

@@ -8,10 +8,13 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
-} from './../../../../style/';
+} from '../../../../style';
 
-export const StyledHeaderIcon = styled.button`
-  height: 3rem;
-  font-size: 3rem;
-  color: ${color.white};
+export const StyledMainContentWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  padding: ${({ pd }) => pd};
 `;

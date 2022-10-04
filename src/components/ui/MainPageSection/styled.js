@@ -8,55 +8,44 @@ import {
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
+  mainTextFadeIn,
 } from '../../../style';
 
+/* styled components */
 export const MainPageContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 76.8rem;
-  height: 100%;
+  padding: 7rem 0;
   background-color: ${color.black};
+  color: ${color.white};
 `;
 
-export const MainPageContent = styled.div`
+export const CourseRegisterBtn = styled(Link)`
   display: flex;
-  align-items: flex-end;
-  width: 100%;
-  height: ${({ h }) => h};
-  margin: ${({ mr }) => mr};
-  padding: ${({ pd }) => pd};
-  background-color: ${({ bg_color }) => bg_color};
-
-  ${media.mobile} {
-    flex-direction: column;
-  }
-`;
-
-export const MainPageTextWrap = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
-  width: 50%;
-  height: 100%;
-  padding-left: ${gap.xl};
-`;
-
-export const MainPageText = styled.span`
-  margin-bottom: ${gap.xl};
-  font-size: ${({ fs }) => fs};
-  font-weight: 600;
-  color: ${({ col }) => col};
-  text-align: center;
-`;
-
-export const StyledLink = styled(Link)`
-  margin-bottom: 2rem;
-  padding: 0 2.5rem 1.5rem 0.5rem;
+  align-items: center;
+  margin: 15rem 0 5rem;
+  padding-bottom: ${gap.s};
   border-bottom: 2px solid ${color.white};
-  font-size: ${fs.xl};
+  align-self: end;
+  font-size: 2.5rem;
   font-weight: 600;
   color: ${color.white};
+  transition: all 0.15s ease-in;
+  animation: ${mainTextFadeIn} 3s;
+
+  &:hover {
+    scale: 1.01;
+    color: ${color.skyBlue};
+    border-bottom: 2px solid ${color.skyBlue};
+  }
+
+  svg {
+    margin-top: 0.5rem;
+    margin-left: ${gap.m};
+    font-size: 2rem;
+    font-weight: 600;
+  }
 `;

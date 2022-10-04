@@ -1,7 +1,5 @@
 /* libraries */
 import styled from 'styled-components';
-/* components */
-import { Input } from '../../Input';
 /* static data */
 import {
   COLOR_LIST as color,
@@ -14,28 +12,20 @@ import {
 
 export const HeaderSearchBar = styled.div`
   position: fixed;
-  z-index: 1;
-  left: 0;
-  visibility: ${({ isSearchBarOpen }) =>
-    isSearchBarOpen ? 'visible' : 'hidden'};
+  top: 0;
+  left: 31%;
+  z-index: 200;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: ${({ isSearchBarOpen }) => (isSearchBarOpen ? '76.8rem' : '0')};
+  width: 76.8rem;
   height: 7rem;
-  padding: 0 ${gap.l};
-  background-color: ${color.darkBlue};
-  transition: 0.25s;
-`;
+  background-color: ${color.black};
+  opacity: ${({ isSearchBarOpen }) => (!isSearchBarOpen ? '0' : '1')};
+  pointer-events: ${({ isSearchBarOpen }) => (!isSearchBarOpen ? 'none' : '')};
+  transition: all 0.2s ease;
 
-export const StyledSearchInput = styled(Input)`
-  border-radius: 0;
-  border-bottom: 1px solid ${color.white};
-  background: none;
-  outline: none;
-  color: ${color.white};
-
-  &::placeholder {
-    color: ${color.lightGrey};
+  ${media.mobile} {
+    width: 90%;
+    left: 5%;
   }
 `;
