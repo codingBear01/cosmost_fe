@@ -17,7 +17,7 @@ export const MainPageContainer = styled.div`
   flex-direction: column;
   width: 76.8rem;
   height: 100%;
-  background-color: ${color.white};
+  background-color: ${color.black};
 `;
 
 export const MainPageContent = styled.div`

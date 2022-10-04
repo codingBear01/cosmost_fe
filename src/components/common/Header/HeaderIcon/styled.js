@@ -11,7 +11,7 @@ import {
 } from './../../../../style/';
 
 export const StyledHeaderIcon = styled.button`
-  height: 3rem;
-  font-size: 3rem;
+  height: 2.5rem;
+  font-size: 2.5rem;
   color: ${color.white};
 `;

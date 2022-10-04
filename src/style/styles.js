@@ -1,5 +1,5 @@
 export const COLOR_LIST = {
-  black: '#262626',
+  black: '#000',
   white: '#f5f5f7',
   grey: '#7b7b7b',
   lightGrey: '#dcdcdc',

@@ -13,7 +13,7 @@ export const StyledSection = styled.section`
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: ${({ bg_color }) => bg_color};
 
   ${media.mobile} {
     height: 100vh;

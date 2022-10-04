@@ -12,7 +12,7 @@ export const Footer = styled.footer`
   align-items: center;
   width: 100%;
   height: 7rem;
-  background-color: ${color.darkBlue};
+  background-color: ${color.black};
 
   svg {
     margin-right: ${gap.l};

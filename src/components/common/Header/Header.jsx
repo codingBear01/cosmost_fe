@@ -23,15 +23,10 @@ function Header() {
   return (
     <>
       <S.Header>
-        <S.HeaderContainer>
+        <S.HeaderContainer isSearchBarOpen={isSearchBarOpen}>
           <Link to="/">
             <HeaderLogo>cosMost</HeaderLogo>
           </Link>
-
-          <HeaderSearchBar
-            isSearchBarOpen={isSearchBarOpen}
-            onClick={onSearchBarOpen}
-          />
 
           <S.HeaderUtilWrap>
             <HeaderIcon onClick={onSearchBarOpen}>
@@ -41,13 +36,19 @@ function Header() {
           </S.HeaderUtilWrap>
         </S.HeaderContainer>
 
-        {/* <button
+        <HeaderSearchBar
+          isSearchBarOpen={isSearchBarOpen}
+          onClick={onSearchBarOpen}
+        />
+      </S.Header>
+
+      <S.HeaderSearchBarOverlay isSearchBarOpen={isSearchBarOpen} />
+      {/* <button
           onClick={() => setIsLogin(!isLogin)}
           style={{ color: `${color.white}` }}
         >
           로긴ㅋ
         </button> */}
-      </S.Header>
     </>
   );
 }
