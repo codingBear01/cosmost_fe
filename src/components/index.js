@@ -25,4 +25,4 @@ export {
 export { MainPageSection } from './ui/';
 
 /* pages */
-export { CourseRegisterPage, MainPage } from './pages/';
+export { CourseRegisterPage, LoginPage, MainPage, UtilPage } from './pages/';
