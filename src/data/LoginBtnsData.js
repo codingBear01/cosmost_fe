@@ -13,7 +13,7 @@ export const LOGIN_BTN_LIST = [
     icon: <AiIcons.AiOutlineMail />,
     bg_color: `${color.darkBlue}`,
     color: `${color.white}`,
-    hovered_col: `${color.lightBlue}`,
+    hovered_col: `${color.navy}`,
   },
   {
     id: 2,

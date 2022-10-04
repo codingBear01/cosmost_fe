@@ -16,15 +16,29 @@ export {
   Icon,
   Input,
   MoreCourseBtn,
+  NextBtn,
   PageTitle,
   Section,
   SectionTitle,
   SmallProfilePic,
   ToTopBtn,
+  UtilForm,
+  UtilInputWrap,
+  UtilTitle,
 } from './common/';
 
 /* 특정 페이지에서만 쓰이는 요소들 */
-export { LoginForm, MainPageSection, UtilPageContainer } from './ui/';
+export {
+  EmailValidForm,
+  LoginForm,
+  MainPageSection,
+  UtilPageContainer,
+} from './ui/';
 
 /* pages */
-export { CourseRegisterPage, LoginPage, MainPage, UtilPage } from './pages/';
+export {
+  CourseRegisterPage,
+  EmailValidPage,
+  LoginPage,
+  MainPage,
+} from './pages/';

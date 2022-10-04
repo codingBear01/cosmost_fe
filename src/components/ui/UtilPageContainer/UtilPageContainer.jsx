@@ -1,5 +1,6 @@
-/* hooks */
+/* libraries */
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 /* components */
 import * as S from './styled';
 import { Icon } from '../../';
@@ -7,9 +8,10 @@ import { Icon } from '../../';
 import * as AiIcons from 'react-icons/ai';
 
 function UtilPageContainer({ children }) {
+  const navigate = useNavigate();
   return (
     <S.StyledUtilPageContainer>
-      <Icon>
+      <Icon onClick={() => navigate(-1)}>
         <AiIcons.AiOutlineArrowLeft />
       </Icon>
       {children}

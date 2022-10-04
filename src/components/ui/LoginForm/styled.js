@@ -12,20 +12,6 @@ import {
 } from '../../../style';
 
 /* styled components */
-export const StyledLoginForm = styled.form`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: 100%;
-`;
-
-export const LoginInputWrap = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: ${gap.xl};
-`;
-
 export const LoginFindWrap = styled.div`
   display: flex;
   align-items: center;

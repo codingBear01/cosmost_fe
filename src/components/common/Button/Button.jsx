@@ -1,7 +1,18 @@
 /* components */
 import * as S from './styled';
 
-function Button({ type, w, h, mr, fs, bg_color, col, children, onClick }) {
+function Button({
+  type,
+  w,
+  h,
+  mr,
+  fs,
+  bg_color,
+  ho_color,
+  col,
+  children,
+  onClick,
+}) {
   return (
     <S.StyledButton
       type={type}
@@ -10,6 +21,7 @@ function Button({ type, w, h, mr, fs, bg_color, col, children, onClick }) {
       mr={mr}
       fs={fs}
       bg_color={bg_color}
+      ho_color={ho_color}
       col={col}
       onClick={onClick}
     >

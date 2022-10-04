@@ -3,6 +3,7 @@ export const COLOR_LIST = {
   white: '#f5f5f7',
   grey: '#7b7b7b',
   lightGrey: '#dcdcdc',
+  navy: '#01124f',
   darkBlue: '#001970',
   blue: '#576DDB',
   lightBlue: '#06c',

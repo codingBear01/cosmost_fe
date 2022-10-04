@@ -1,8 +1,9 @@
-/* hooks */
+/* libraries */
 import React from 'react';
+import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
-import { Button, Icon, Input } from '../../';
+import { Button, Icon, Input, UtilForm, UtilInputWrap } from '../../';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 /* static data */
@@ -11,9 +12,9 @@ import { LOGIN_BTN_LIST as btns } from '../../../data';
 
 function LoginForm() {
   return (
-    <S.StyledLoginForm>
+    <UtilForm j_content={'center'}>
       {/* 아이디, 비밀번호 인풋 */}
-      <S.LoginInputWrap>
+      <UtilInputWrap>
         <Icon>
           <AiIcons.AiOutlineUser />
         </Icon>
@@ -24,8 +25,8 @@ function LoginForm() {
           h={'4rem'}
           mr={'0 0 0 1rem'}
         />
-      </S.LoginInputWrap>
-      <S.LoginInputWrap>
+      </UtilInputWrap>
+      <UtilInputWrap>
         <Icon>
           <AiIcons.AiOutlineLock />
         </Icon>
@@ -36,17 +37,20 @@ function LoginForm() {
           h={'4rem'}
           mr={'0 0 0 1rem'}
         />
-      </S.LoginInputWrap>
+      </UtilInputWrap>
       {/* 로그인 버튼 */}
-      <Button
-        type="button"
-        w={'30rem'}
-        h={'4rem'}
-        bg_color={color.darkBlue}
-        col={color.white}
-      >
-        로그인
-      </Button>
+      <Link to="/util/email-valid">
+        <Button
+          type="button"
+          w={'30rem'}
+          h={'4rem'}
+          bg_color={color.darkBlue}
+          col={color.white}
+          ho_color={color.navy}
+        >
+          로그인
+        </Button>
+      </Link>
       {/* 비밀번호, 아이디 찾기 */}
       <S.LoginFindWrap>
         <S.LoginServiceLink>비밀번호 찾기</S.LoginServiceLink>
@@ -67,7 +71,7 @@ function LoginForm() {
             {btn.text && <span>{btn.text}</span>}
           </S.LoginBtns>
         ))}
-    </S.StyledLoginForm>
+    </UtilForm>
   );
 }
 
