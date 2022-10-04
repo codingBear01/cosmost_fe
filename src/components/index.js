@@ -36,6 +36,7 @@ export {
   LoginForm,
   MainPageSection,
   UserInfoForm,
+  UserPageForm,
   UtilPageContainer,
 } from './ui/';
 
@@ -48,4 +49,5 @@ export {
   LoginPage,
   MainPage,
   UserInfoPage,
+  UserPage,
 } from './pages/';

@@ -2,6 +2,7 @@
 import {
   Header,
   Footer,
+  UtilPageContainer,
   CourseRegisterPage,
   EmailValidPage,
   LocationDetailPage,
@@ -9,7 +10,7 @@ import {
   LoginPage,
   MainPage,
   UserInfoPage,
-  UtilPageContainer,
+  UserPage,
 } from './components';
 /* router */
 import { Routes, Route, Outlet } from 'react-router-dom';
@@ -48,11 +49,14 @@ function App() {
         </Route>
 
         <Route path="/util" element={<WithoutHeaderAndFooter />}>
-          <Route exact path="login" element={<LoginPage />} />
+          {/* isLogin = false */}
+          <Route path="login" element={<LoginPage />} />
           <Route path="email-valid" element={<EmailValidPage />} />
           <Route path="location-info" element={<LocationInfoPage />} />
           <Route path="location-detail" element={<LocationDetailPage />} />
           <Route path="user-info" element={<UserInfoPage />} />
+          {/* isLogin = true */}
+          <Route path="user/:id" element={<UserPage />} />
         </Route>
       </Routes>
     </>
