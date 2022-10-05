@@ -1,7 +1,7 @@
 import DaumPostcode from 'react-daum-postcode';
 import { AiFillCloseSquare } from 'react-icons/ai';
 import { BiCurrentLocation } from 'react-icons/bi';
-import { COLOR_LIST } from '../../../style';
+import { COLOR_LIST as color } from '../../../style';
 import styled from 'styled-components';
 import { Button, FlexDiv } from '../../common';
 import { useNavigate } from 'react-router-dom';
@@ -11,10 +11,10 @@ const AddressApi = styled(DaumPostcode)`
 `;
 
 const LocationBaseImg = styled(BiCurrentLocation)`
-  width: 5rem;
-  height: 5rem;
-  background-color: ${COLOR_LIST.white};
-  color: black;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  color: ${color.white};
 `;
 
 const Div = styled.div`
@@ -86,7 +86,7 @@ function DaumAddressApiModal({ state }) {
           width="12rem"
           h="5rem"
           fs="1.5rem"
-          col={COLOR_LIST.white}
+          col={color.white}
           onClick={onClickCurrentLocation}
         >
           현재 위치로 설정
