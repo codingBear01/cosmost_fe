@@ -44,9 +44,9 @@ function LoginForm() {
           type="button"
           w={'340px'}
           h={'40px'}
-          bg_color={color.darkBlue}
           col={color.white}
-          ho_color={color.navy}
+          bg_col={color.darkBlue}
+          hov_col={color.navy}
         >
           로그인
         </Button>
@@ -63,9 +63,9 @@ function LoginForm() {
           <S.LoginBtns
             key={btn.id}
             type="button"
-            bg_color={btn.bg_color}
+            bg_col={btn.bg_col}
             col={btn.color}
-            hovered_col={btn.hovered_col}
+            hov_col={btn.hov_col}
           >
             {btn.icon}
             {btn.text && <span>{btn.text}</span>}

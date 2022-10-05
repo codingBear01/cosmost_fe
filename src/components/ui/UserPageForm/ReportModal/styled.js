@@ -23,7 +23,7 @@ export const ReportModalBg = styled.div`
   width: 100%;
   height: 100vh;
   background: ${color.black};
-  transition: all 0.5s;
+  transition: 0.5s;
 `;
 
 export const ReportModalForm = styled.form`

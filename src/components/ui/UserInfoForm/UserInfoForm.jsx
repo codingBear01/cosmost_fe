@@ -55,9 +55,9 @@ function UserInfoForm() {
               type="button"
               w={'80px'}
               h={'40px'}
-              bg_color={color.darkBlue}
+              bg_col={color.darkBlue}
               col={color.white}
-              ho_color={color.navy}
+              hov_col={color.navy}
             >
               중복확인
             </Button>
@@ -74,9 +74,9 @@ function UserInfoForm() {
               type="button"
               w={'80px'}
               h={'40px'}
-              bg_color={color.darkBlue}
+              bg_col={color.darkBlue}
               col={color.white}
-              ho_color={color.navy}
+              hov_col={color.navy}
             >
               중복확인
             </Button>
@@ -147,9 +147,9 @@ function UserInfoForm() {
         w={'340px'}
         h={'40px'}
         mr={'20px 0 0 0'}
-        bg_color={color.darkBlue}
+        bg_col={color.darkBlue}
         col={color.white}
-        ho_color={color.navy}
+        hov_col={color.navy}
       >
         회원가입
       </Button>

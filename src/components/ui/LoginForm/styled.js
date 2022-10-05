@@ -42,14 +42,14 @@ export const LoginBtns = styled.button`
   height: 40px;
   margin-bottom: 10px;
   border-radius: ${br.default};
-  background-color: ${({ bg_color }) => bg_color};
+  background-color: ${({ bg_col }) => bg_col};
   color: ${({ col }) => col};
   font-weight: 600;
   transition: all 0.15s ease-in;
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ hovered_col }) => hovered_col};
+    background-color: ${({ hov_col }) => hov_col};
   }
 
   svg {
