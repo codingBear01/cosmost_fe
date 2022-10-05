@@ -9,13 +9,13 @@ import {
   GAP_LIST as gap,
   BREAK_POINTS as media,
   mainTextFadeIn,
-} from '../../../../style';
+} from '../../../style';
 
-export const ReportModalBg = styled.div`
-  visibility: ${({ isReportModalOpened }) =>
-    isReportModalOpened ? 'visible' : 'hidden'};
+export const ReportFormBg = styled.div`
+  visibility: ${({ isReportFormOpened }) =>
+    isReportFormOpened ? 'visible' : 'hidden'};
   position: absolute;
-  top: ${({ isReportModalOpened }) => (isReportModalOpened ? '0' : '-100%')};
+  top: ${({ isReportFormOpened }) => (isReportFormOpened ? '0' : '-100%')};
   z-index: 1;
   display: flex;
   align-items: center;
@@ -26,7 +26,7 @@ export const ReportModalBg = styled.div`
   transition: 0.5s;
 `;
 
-export const ReportModalForm = styled.form`
+export const ReportForm = styled.form`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,7 +34,7 @@ export const ReportModalForm = styled.form`
   width: 45rem;
 `;
 
-export const ReportModalCats = styled.select`
+export const ReportFormCats = styled.select`
   align-self: start;
   margin: 2rem 0;
   border: none;
@@ -48,7 +48,7 @@ export const ReportModalCats = styled.select`
   }
 `;
 
-export const ReportModalTextArea = styled.textarea`
+export const ReportFormTextArea = styled.textarea`
   width: 45rem;
   height: 50rem;
   margin: 3rem 0;
@@ -59,4 +59,4 @@ export const ReportModalTextArea = styled.textarea`
   color: ${color.white};
 `;
 
-export const ReportModalBtnWrap = styled.div``;
+export const ReportFormBtnWrap = styled.div``;

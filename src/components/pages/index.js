@@ -1,5 +1,6 @@
 export { default as CourseRegisterPage } from './CourseRegisterPage';
 export { default as EmailValidPage } from './EmailValidPage';
+export { default as FollowPage } from './FollowPage';
 export { default as LocationDetailPage } from './LocationDetailPage';
 export { default as LocationInfoPage } from './LocationInfoPage';
 export { default as LoginPage } from './LoginPage';

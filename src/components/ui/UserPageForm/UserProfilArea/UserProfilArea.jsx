@@ -27,11 +27,11 @@ function UserProfilArea() {
             <span>랭킹</span>
             <span>1</span>
           </Link>
-          <Link to="/">
+          <Link to={'followers'}>
             <span>팔로워</span>
             <span>100</span>
           </Link>
-          <Link to="/">
+          <Link to={'followings'}>
             <span>팔로잉</span>
             <span>100</span>
           </Link>

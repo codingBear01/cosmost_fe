@@ -1,5 +1,6 @@
 /* libraries */
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 /* static data */
 import {
   COLOR_LIST as color,
@@ -9,11 +10,3 @@ import {
   BREAK_POINTS as media,
   mainTextFadeIn,
 } from '../../../style';
-
-export const StyledUtilPageContainer = styled.div`
-  width: 76.8rem;
-  height: 100vh;
-  margin: 0 auto;
-  padding: 3rem;
-  color: ${color.white};
-`;

@@ -10,7 +10,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
 
-function UserPageMenuList({ onClickOpenReportModal }) {
+function UserPageMenuList({ onClickOpenReportForm }) {
   return (
     <S.UserPageMenuList>
       <Link to="/">
@@ -37,7 +37,7 @@ function UserPageMenuList({ onClickOpenReportModal }) {
           <span>내가 남긴 리뷰</span>
         </S.UserPageMenuItem>
       </Link>
-      <S.UserPageMenuItem onClick={onClickOpenReportModal}>
+      <S.UserPageMenuItem onClick={onClickOpenReportForm}>
         <AiIcons.AiOutlineAlert />
         <span>신고하기</span>
       </S.UserPageMenuItem>

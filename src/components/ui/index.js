@@ -1,4 +1,5 @@
 export { EmailValidForm } from './EmailValidForm';
+export { FollowForm } from './FollowForm';
 export { LocationDetailForm } from './LocationDetailForm';
 export { LocationInfoForm } from './LocationInfoForm';
 export { LoginForm } from './LoginForm';

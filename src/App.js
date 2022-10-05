@@ -5,6 +5,7 @@ import {
   UtilPageContainer,
   CourseRegisterPage,
   EmailValidPage,
+  FollowPage,
   LocationDetailPage,
   LocationInfoPage,
   LoginPage,
@@ -56,7 +57,11 @@ function App() {
           <Route path="location-detail" element={<LocationDetailPage />} />
           <Route path="user-info" element={<UserInfoPage />} />
           {/* isLogin = true */}
-          <Route path="user/:id" element={<UserPage />} />
+          <Route path="user">
+            <Route path=":id" element={<UserPage />} />
+            <Route path=":id/followers" element={<FollowPage />} />
+            <Route path=":id/followings" element={<FollowPage />} />
+          </Route>
         </Route>
       </Routes>
     </>

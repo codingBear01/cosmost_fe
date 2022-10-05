@@ -1,7 +1,7 @@
 /* hooks */
 import React from 'react';
 /* components */
-import { MainPageSection } from '../';
+import { MainPageSection } from '..';
 
 function MainPage() {
   return <MainPageSection />;
