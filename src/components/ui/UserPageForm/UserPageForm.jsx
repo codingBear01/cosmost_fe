@@ -12,7 +12,6 @@ function UserInfoForm() {
   /* 신고 모달창 Open 여부 조작하는 핸들러 */
   const onClickOpenReportForm = () => {
     setIsReportFormOpened(!isReportFormOpened);
-    console.log('클릭됨!');
   };
 
   return (

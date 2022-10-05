@@ -5,5 +5,6 @@ export { default as LocationDetailPage } from './LocationDetailPage';
 export { default as LocationInfoPage } from './LocationInfoPage';
 export { default as LoginPage } from './LoginPage';
 export { default as MainPage } from './MainPage';
+export { default as ReportHistoryPage } from './ReportHistoryPage';
 export { default as UserInfoPage } from './UserInfoPage';
 export { default as UserPage } from './UserPage';

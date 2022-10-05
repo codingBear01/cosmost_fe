@@ -38,6 +38,7 @@ export {
   LocationInfoForm,
   LoginForm,
   MainPageSection,
+  ReportHistoryForm,
   UserInfoForm,
   UserPageForm,
   UtilPageContainer,
@@ -52,6 +53,7 @@ export {
   LocationInfoPage,
   LoginPage,
   MainPage,
+  ReportHistoryPage,
   UserInfoPage,
   UserPage,
 } from './pages/';

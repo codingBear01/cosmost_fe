@@ -10,13 +10,12 @@ import {
   LocationInfoPage,
   LoginPage,
   MainPage,
+  ReportHistoryPage,
   UserInfoPage,
   UserPage,
 } from './components';
 /* router */
 import { Routes, Route, Outlet } from 'react-router-dom';
-/* hooks */
-import { GoToTop } from './store';
 
 const WithHeaderAndFooter = () => {
   return (
@@ -49,7 +48,7 @@ function App() {
           </Route>
         </Route>
 
-        <Route path="/util" element={<WithoutHeaderAndFooter />}>
+        <Route element={<WithoutHeaderAndFooter />}>
           {/* isLogin = false */}
           <Route path="login" element={<LoginPage />} />
           <Route path="email-valid" element={<EmailValidPage />} />
@@ -61,6 +60,7 @@ function App() {
             <Route path=":id" element={<UserPage />} />
             <Route path=":id/followers" element={<FollowPage />} />
             <Route path=":id/followings" element={<FollowPage />} />
+            <Route path=":id/report-history" element={<ReportHistoryPage />} />
           </Route>
         </Route>
       </Routes>
