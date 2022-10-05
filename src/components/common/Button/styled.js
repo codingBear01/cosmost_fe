@@ -11,7 +11,7 @@ export const StyledButton = styled.button`
   height: ${({ h }) => h};
   margin: ${({ mr }) => mr};
   border-radius: ${br.default};
-  background-color: ${({ bg_color }) => bg_color};
+  background-color: ${({ bg_col }) => bg_col};
   font-size: ${({ fs }) => fs};
   font-weight: 600;
   color: ${({ col }) => col};
@@ -19,6 +19,7 @@ export const StyledButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ ho_color }) => ho_color};
+    border: none;
+    background-color: ${({ ho_bg_col }) => ho_bg_col};
   }
 `;

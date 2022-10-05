@@ -17,7 +17,7 @@ export const ProfileWrap = styled.div`
   justify-content: space-between;
   width: 340px;
   padding: 10px 15px 20px;
-  font-size: 14px;
+  font-size: 16px;
   border-bottom: 1px solid ${color.white};
 `;
 

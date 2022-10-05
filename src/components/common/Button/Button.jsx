@@ -7,9 +7,10 @@ function Button({
   h,
   mr,
   fs,
-  bg_color,
-  ho_color,
   col,
+  bg_col,
+  ho_col,
+  ho_bg_col,
   children,
   onClick,
 }) {
@@ -20,9 +21,10 @@ function Button({
       h={h}
       mr={mr}
       fs={fs}
-      bg_color={bg_color}
-      ho_color={ho_color}
       col={col}
+      bg_col={bg_col}
+      ho_col={ho_col}
+      ho_bg_col={ho_bg_col}
       onClick={onClick}
     >
       {children}

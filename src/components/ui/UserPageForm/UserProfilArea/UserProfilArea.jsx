@@ -40,7 +40,7 @@ function UserProfilArea() {
           <Button
             type="button"
             w={'220px'}
-            h={'20px'}
+            h={'25px'}
             fs={'12px'}
             bg_color={color.darkBlue}
             ho_color={color.navy}
