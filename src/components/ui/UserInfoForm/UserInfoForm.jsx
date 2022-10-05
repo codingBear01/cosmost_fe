@@ -11,6 +11,7 @@ import {
 } from '../..';
 /* static data */
 import { COLOR_LIST as color, GAP_LIST as gap } from '../../../style';
+import { Link } from 'react-router-dom';
 
 const PROFILE_PIC_URL = `url('https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMjI0/MDAxNTU0NDc3OTE1Mjc5.eljTe4bpgeYf2O0fbBqpB74ruNcyO5dLd2GZtXL4VEYg.p0ZIX-d01subwWzvY53FAF_hF2BHnKXuIpEB2Av8eg8g.JPEG.xvx404/1542459444594.jpg?type=w800')`;
 
@@ -142,17 +143,19 @@ function UserInfoForm() {
         </S.UserInfoDropDown>
       </S.UserInfoDropDownWrap>
       {/* 회원가입 버튼 */}
-      <Button
-        type={'button'}
-        w={'340px'}
-        h={'40px'}
-        mr={'20px 0 0 0'}
-        bg_col={color.darkBlue}
-        col={color.white}
-        hov_bg_col={color.navy}
-      >
-        회원가입
-      </Button>
+      <Link to="/user/1">
+        <Button
+          type={'button'}
+          w={'340px'}
+          h={'40px'}
+          mr={'20px 0 0 0'}
+          bg_col={color.darkBlue}
+          col={color.white}
+          hov_bg_col={color.navy}
+        >
+          회원가입
+        </Button>
+      </Link>
     </UtilForm>
   );
 }

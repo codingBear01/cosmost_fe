@@ -6,9 +6,11 @@ import * as S from './styled';
 import { Button, Icon, Input, UtilForm, UtilInputWrap } from '../../';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
+import * as RiIcons from 'react-icons/ri';
+import * as SiIcons from 'react-icons/si';
+import * as FcIcons from 'react-icons/fc';
 /* static data */
-import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
-import { LOGIN_BTN_LIST as btns } from '../../../data';
+import { COLOR_LIST as color } from '../../../style';
 
 function LoginForm() {
   return (
@@ -57,20 +59,40 @@ function LoginForm() {
         <span style={{ color: 'white' }}>|</span>
         <S.LoginServiceLink>아이디 찾기</S.LoginServiceLink>
       </S.LoginFindWrap>
-
-      {btns &&
-        btns.map((btn) => (
-          <S.LoginBtns
-            key={btn.id}
-            type="button"
-            col={btn.color}
-            bg_col={btn.bg_col}
-            hov_bg_col={btn.hov_bg_col}
-          >
-            {btn.icon}
-            {btn.text && <span>{btn.text}</span>}
-          </S.LoginBtns>
-        ))}
+      {/* 회원가입 및 SNS 로그인 버튼들 */}
+      <Link to="/sign-up/email-valid">
+        <S.LoginBtns
+          type="button"
+          col={color.white}
+          bg_col={color.darkBlue}
+          hov_bg_col={color.navy}
+        >
+          <AiIcons.AiOutlineMail />
+          <span>이메일로 회원가입</span>
+        </S.LoginBtns>
+      </Link>
+      <S.LoginBtns
+        type="button"
+        bg_col={color.yellow}
+        hov_bg_col={color.darkYellow}
+      >
+        <RiIcons.RiKakaoTalkFill />
+      </S.LoginBtns>
+      <S.LoginBtns
+        type="button"
+        col={color.white}
+        bg_col={color.naverGreen}
+        hov_bg_col={color.naverDarkGreen}
+      >
+        <SiIcons.SiNaver />
+      </S.LoginBtns>
+      <S.LoginBtns
+        type="button"
+        bg_col={color.white}
+        hov_bg_col={color.lightGrey}
+      >
+        <FcIcons.FcGoogle />
+      </S.LoginBtns>
     </UtilForm>
   );
 }

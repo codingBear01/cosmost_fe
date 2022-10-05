@@ -51,10 +51,12 @@ function App() {
         <Route element={<WithoutHeaderAndFooter />}>
           {/* isLogin = false */}
           <Route path="login" element={<LoginPage />} />
-          <Route path="email-valid" element={<EmailValidPage />} />
-          <Route path="location-info" element={<LocationInfoPage />} />
-          <Route path="location-detail" element={<LocationDetailPage />} />
-          <Route path="user-info" element={<UserInfoPage />} />
+          <Route path="sign-up">
+            <Route path="email-valid" element={<EmailValidPage />} />
+            <Route path="location-info" element={<LocationInfoPage />} />
+            <Route path="location-detail" element={<LocationDetailPage />} />
+            <Route path="user-info" element={<UserInfoPage />} />
+          </Route>
           {/* isLogin = true */}
           <Route path="user">
             <Route path=":id" element={<UserPage />} />

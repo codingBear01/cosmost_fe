@@ -17,7 +17,7 @@ function LocationDetailForm() {
       <UtilInputWrap>
         <Input type="text" placeholder="상세 주소" w={'340px'} h={'40px'} />
       </UtilInputWrap>
-      <NextBtn to={'/util/user-info'} />
+      <NextBtn to={'/sign-up/user-info'} />
     </UtilForm>
   );
 }

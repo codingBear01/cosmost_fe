@@ -54,7 +54,7 @@ function EmailValidForm() {
         />
       </UtilInputWrap>
       {/* 다음으로 버튼 */}
-      <NextBtn to={'/util/location-info'} />
+      <NextBtn to={'/sign-up/location-info'} />
     </UtilForm>
   );
 }

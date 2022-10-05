@@ -12,7 +12,10 @@ export const COLOR_LIST = {
   lightGreen: '#C3E88D',
   darkRed: '#e8414b',
   red: '#f07178',
+  darkYellow: '#c7b50e',
   yellow: '#FBF305',
+  naverDarkGreen: '#02b34e',
+  naverGreen: '#04CF5C',
 };
 
 export const FONT_SIZE_LIST = {

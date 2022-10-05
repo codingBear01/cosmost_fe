@@ -11,6 +11,7 @@ export { Footer } from './Footer/';
 export { HashTag } from './HashTag/';
 export { Header } from './Header/';
 export { HeightCenterDiv } from './HeightCenterDiv/';
+export { HistoryForm } from './HistoryForm/';
 export { Icon } from './Icon/';
 export { Input } from './Input/';
 export { MoreCourseBtn } from './MoreCourseBtn/';

@@ -13,7 +13,7 @@ import * as RiIcons from 'react-icons/ri';
 function UserPageMenuList({ onClickOpenReportForm }) {
   return (
     <S.UserPageMenuList>
-      <Link to="/">
+      <Link to="/course/register">
         <S.UserPageMenuItem>
           <AiIcons.AiOutlineAppstoreAdd />
           <span>코스 등록하기</span>
@@ -41,7 +41,7 @@ function UserPageMenuList({ onClickOpenReportForm }) {
         <AiIcons.AiOutlineAlert />
         <span>신고하기</span>
       </S.UserPageMenuItem>
-      <Link to="/">
+      <Link to="report-history">
         <S.UserPageMenuItem>
           <RiIcons.RiPoliceCarLine />
           <span>신고내역</span>

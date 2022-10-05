@@ -33,7 +33,9 @@ function Header() {
             <Icon onClick={onSearchBarOpen}>
               <BsIcons.BsSearch />
             </Icon>
-            <HeaderUtilBtn isLogin={isLogin} />
+            <Link to="/login">
+              <HeaderUtilBtn isLogin={isLogin} />
+            </Link>
           </S.HeaderUtilWrap>
         </S.HeaderContainer>
 
