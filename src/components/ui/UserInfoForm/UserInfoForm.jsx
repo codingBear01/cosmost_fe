@@ -26,6 +26,8 @@ function UserInfoForm({ state }) {
     profileInputRef.current.click();
   };
 
+  console.log(state);
+
   return (
     <UtilForm pd={'10rem 0'}>
       <UtilTitle>회원 정보를 입력해주세요.</UtilTitle>
@@ -99,6 +101,16 @@ function UserInfoForm({ state }) {
         <Input
           type="text"
           value={state.address}
+          disabled={true}
+          w={'340px'}
+          h={'40px'}
+          mr={'0 10px'}
+        />
+      </UtilInputWrap>
+      <UtilInputWrap>
+        <Input
+          type="text"
+          value={state.detailAddress}
           disabled={true}
           w={'340px'}
           h={'40px'}

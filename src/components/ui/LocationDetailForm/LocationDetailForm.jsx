@@ -10,6 +10,7 @@ function LocationDetailForm({ state }) {
   const onChangeDetailAddress = (e) => {
     setDetailAddress(e.target.value);
   };
+
   return (
     <UtilForm pd={'15.4rem 10rem'}>
       <UtilTitle>상세 주소를 입력해주세요.</UtilTitle>
