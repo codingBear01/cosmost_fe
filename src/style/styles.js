@@ -1,19 +1,19 @@
 export const COLOR_LIST = {
-  black: '#0a0a0a',
-  white: '#f5f5f5',
+  black: '#000',
+  white: '#f5f5f7',
   grey: '#7b7b7b',
   lightGrey: '#dcdcdc',
+  navy: '#01124f',
   darkBlue: '#001970',
-  blue: '#303f9f',
-  lightBlue: '#666ad1',
-  skyBlue: '#E6E7FF',
+  blue: '#576DDB',
+  lightBlue: '#06c',
+  skyBlue: '#89DDFF',
   lightGreen: '#C3E88D',
   red: '#f07178',
   yellow: '#FBF305',
 };
 
 export const FONT_SIZE_LIST = {
-  xxs: '1rem', // 모바일에만
   xs: '1.2rem',
   s: '1.4rem',
   m: '1.6rem',

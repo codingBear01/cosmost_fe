@@ -5,13 +5,14 @@ import {
   BUTTON_SIZE_LIST as bs,
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
+  BREAK_POINTS as media,
 } from './../../../style/';
 
 export const StyledSection = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: ${({ height }) => height};
-  padding-top: ${({ paddingTop }) => paddingTop};
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  height: 100%;
+  padding-bottom: ${({ pd_b }) => pd_b};
+  background-color: ${color.black};
 `;

@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
-} from "./../../../style/";
+} from './../../../style/';
 
 export const CourseTitleWrap = styled.div`
   display: flex;
@@ -14,14 +14,14 @@ export const CourseTitleWrap = styled.div`
 `;
 
 export const StyledCourseTitle = styled.span`
-  margin-bottom: ${gap.m};
+  margin-bottom: ${gap.xs};
   font-size: ${({ fontSize }) => fontSize};
   font-weight: 600;
   cursor: pointer;
 
-  overflow: ${({ overflow }) => overflow || "visible"};
-  text-overflow: ${({ textOverflow }) => textOverflow || "clip"};
-  white-space: ${({ whiteSpace }) => whiteSpace || "normal"};
+  overflow: ${({ overflow }) => overflow || 'visible'};
+  text-overflow: ${({ textOverflow }) => textOverflow || 'clip'};
+  white-space: ${({ whiteSpace }) => whiteSpace || 'normal'};
 `;
 
 export const CourseTotalRate = styled.span`
