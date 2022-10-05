@@ -1,1 +1,1 @@
-export { default as EmailValidForm } from './EmailValidForm';
+export { default as EmailValidForm } from "./EmailValidForm";

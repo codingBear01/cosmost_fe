@@ -45,6 +45,15 @@ export const ReportFormTitleWrap = styled.div`
   }
 `;
 
+export const ReportFormTitle = styled.span`
+  width: 45rem;
+  height: 4rem;
+  padding-left: 1rem;
+  border-bottom: 1px solid ${color.white};
+  font-size: ${fs.s};
+  color: ${color.white};
+`;
+
 export const ReportForm = styled.form`
   display: flex;
   align-items: center;

@@ -1,8 +1,10 @@
-import React from 'react';
-import { UserInfoForm } from '..';
+import React from "react";
+import { useLocation } from "react-router-dom";
+import { UserInfoForm } from "..";
 
 function UserInfoPage() {
-  return <UserInfoForm />;
+  const location = useLocation();
+  return <UserInfoForm state={location.state} />;
 }
 
 export default UserInfoPage;

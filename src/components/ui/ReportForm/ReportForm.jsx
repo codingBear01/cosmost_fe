@@ -21,8 +21,6 @@ function ReportForm({
     setIsReportFormOpened(!isReportFormOpened);
   };
 
-  console.log(item);
-
   return (
     <S.ReportFormBg isReportFormOpened={isReportFormOpened}>
       <S.ReportForm>
@@ -45,16 +43,19 @@ function ReportForm({
             <option value="review">리뷰</option>
           </S.ReportFormCats>
         )}
-
-        {/* 신고 제목 */}
-        <Input
-          type="text"
-          placeholder="제목"
-          w={'45rem'}
-          h={'4rem'}
-          value={item?.title}
-          disabled
-        />
+        {isReportHistoryPage ? (
+          <S.ReportFormTitle>{item?.title}</S.ReportFormTitle>
+        ) : (
+          // 신고 제목
+          <Input
+            type="text"
+            placeholder="제목"
+            w={'45rem'}
+            h={'4rem'}
+            // value={item?.title}
+            disabled
+          />
+        )}
         {/* 신고 내용 */}
         <S.ReportFormTextArea
           placeholder="신고 내용을 입력해주세요."

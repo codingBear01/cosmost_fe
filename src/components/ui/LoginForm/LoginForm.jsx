@@ -1,6 +1,6 @@
 /* libraries */
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 /* components */
 import * as S from './styled';
 import { Button, Icon, Input, UtilForm, UtilInputWrap } from '../../';
@@ -10,11 +10,53 @@ import * as RiIcons from 'react-icons/ri';
 import * as SiIcons from 'react-icons/si';
 import * as FcIcons from 'react-icons/fc';
 /* static data */
-import { COLOR_LIST as color } from '../../../style';
+import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
+import { LOGIN_BTN_LIST as btns } from '../../../data';
+import axios from 'axios';
+import { LoginStateContext } from '../../context';
+
+const LoginApiUrl = 'http://10.10.10.21:8080/v1/signin';
 
 function LoginForm() {
+  //로그인 토큰
+  const loginTokenState = useContext(LoginStateContext);
+
+  //아이디, 패스워드 state
+  const [inputValue, setInputValue] = useState({
+    loginId: '',
+    loginPwd: '',
+  });
+
+  const navigate = useNavigate();
+
+  /* 아이디와 패스워드를 입력할 때마다 호출될 핸들러 */
+  const onChangeInput = (e) => {
+    setInputValue({
+      ...inputValue,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  /* 로그인을 눌렀을시 호출될 핸들러*/
+  const onSubmitForm = (e) => {
+    e.preventDefault();
+    axios
+      .put(LoginApiUrl, inputValue, { timeout: 1000 })
+      .then((response) => {
+        console.log(response);
+        if (response.data.isSuccess) {
+          sessionStorage.setItem('token', response.data.result);
+          navigate('/');
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((e) => {
+        alert('서버와 연결이 되지 않았습니다. 관리자에게 문의하세요.');
+      });
+  };
   return (
-    <UtilForm j_content={'center'}>
+    <UtilForm j_content={'center'} onSubmit={onSubmitForm}>
       {/* 아이디, 비밀번호 인풋 */}
       <UtilInputWrap>
         <Icon>
@@ -22,10 +64,13 @@ function LoginForm() {
         </Icon>
         <Input
           type="text"
+          name="loginId"
+          value={inputValue.loginId}
           placeholder="아이디"
           w={'305px'}
           h={'40px'}
           mr={'0 0 0 10px'}
+          onChange={onChangeInput}
         />
       </UtilInputWrap>
       <UtilInputWrap>
@@ -33,26 +78,27 @@ function LoginForm() {
           <AiIcons.AiOutlineLock />
         </Icon>
         <Input
-          type="text"
+          type="password"
+          name="loginPwd"
+          value={inputValue.loginPwd}
           placeholder="비밀번호"
           w={'305px'}
           h={'40px'}
           mr={'0 0 0 10px'}
+          onChange={onChangeInput}
         />
       </UtilInputWrap>
       {/* 로그인 버튼 */}
-      <Link to="/util/email-valid">
-        <Button
-          type="button"
-          w={'340px'}
-          h={'40px'}
-          col={color.white}
-          bg_col={color.darkBlue}
-          hov_bg_col={color.navy}
-        >
-          로그인
-        </Button>
-      </Link>
+      <Button
+        type="submit"
+        w={'340px'}
+        h={'40px'}
+        col={color.white}
+        bg_col={color.darkBlue}
+        hov_bg_col={color.navy}
+      >
+        로그인
+      </Button>
       {/* 비밀번호, 아이디 찾기 */}
       <S.LoginFindWrap>
         <S.LoginServiceLink>비밀번호 찾기</S.LoginServiceLink>

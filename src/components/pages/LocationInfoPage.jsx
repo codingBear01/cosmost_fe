@@ -1,9 +1,11 @@
-import React from 'react';
+import React from "react";
+import { useLocation } from "react-router-dom";
 /* components */
-import { LocationInfoForm } from '..';
+import { LocationInfoForm } from "..";
 
 function LocationInfoPage() {
-  return <LocationInfoForm />;
+  const location = useLocation();
+  return <LocationInfoForm state={location.state} />;
 }
 
 export default LocationInfoPage;

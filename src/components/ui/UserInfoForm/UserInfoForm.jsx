@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 
 const PROFILE_PIC_URL = `url('https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMjI0/MDAxNTU0NDc3OTE1Mjc5.eljTe4bpgeYf2O0fbBqpB74ruNcyO5dLd2GZtXL4VEYg.p0ZIX-d01subwWzvY53FAF_hF2BHnKXuIpEB2Av8eg8g.JPEG.xvx404/1542459444594.jpg?type=w800')`;
 
-function UserInfoForm() {
+function UserInfoForm({ state }) {
   /* 프로필 이미지 업로드에 쓰이는 useRef */
   const profileInputRef = useRef();
 
@@ -88,7 +88,7 @@ function UserInfoForm() {
       <UtilInputWrap>
         <Input
           type="text"
-          value="jokingbear01@gmail.com"
+          value={state.email}
           disabled={true}
           w={'340px'}
           h={'40px'}
@@ -98,7 +98,7 @@ function UserInfoForm() {
       <UtilInputWrap>
         <Input
           type="text"
-          value="부산시 수영구 광서로 42번길 9호 1층"
+          value={state.address}
           disabled={true}
           w={'340px'}
           h={'40px'}

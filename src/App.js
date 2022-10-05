@@ -1,3 +1,6 @@
+import React, { useState, useContext } from 'react';
+/* context */
+import { LoginStateContext } from './components/context';
 /* components */
 import {
   Header,
@@ -15,7 +18,7 @@ import {
   UserPage,
 } from './components';
 /* router */
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
 
 const WithHeaderAndFooter = () => {
   return (
@@ -38,6 +41,7 @@ const WithoutHeaderAndFooter = () => {
 };
 
 function App() {
+  const loginTokenState = useContext(LoginStateContext);
   return (
     <>
       <Routes>
@@ -47,25 +51,33 @@ function App() {
             <Route path="register" element={<CourseRegisterPage />} />
           </Route>
         </Route>
-
         <Route element={<WithoutHeaderAndFooter />}>
-          {/* isLogin = false */}
-          <Route path="login" element={<LoginPage />} />
-          <Route path="sign-up">
-            <Route path="email-valid" element={<EmailValidPage />} />
-            <Route path="location-info" element={<LocationInfoPage />} />
-            <Route path="location-detail" element={<LocationDetailPage />} />
-            <Route path="user-info" element={<UserInfoPage />} />
-          </Route>
-          {/* isLogin = true */}
-          <Route path="user">
-            <Route path=":id" element={<UserPage />} />
-            <Route path=":id/followers" element={<FollowPage />} />
-            <Route path=":id/followings" element={<FollowPage />} />
-            <Route path=":id/report-histories" element={<HistoryPage />} />
-            <Route path=":id/review-histories" element={<HistoryPage />} />
-          </Route>
+          {loginTokenState || (
+            <>
+              <Route path="login" element={<LoginPage />} />
+              <Route path="sign-up">
+                <Route path="email-valid" element={<EmailValidPage />} />
+                <Route path="location-info" element={<LocationInfoPage />} />
+                <Route
+                  path="location-detail"
+                  element={<LocationDetailPage />}
+                />
+                <Route path="user-info" element={<UserInfoPage />} />
+              </Route>
+            </>
+          )}
+          {loginTokenState && (
+            <Route path="user">
+              <Route path=":id" element={<UserPage />} />
+              <Route path=":id/followers" element={<FollowPage />} />
+              <Route path=":id/followings" element={<FollowPage />} />
+              <Route path=":id/report-histories" element={<HistoryPage />} />
+              <Route path=":id/review-histories" element={<HistoryPage />} />
+            </Route>
+          )}
         </Route>
+        {/* 잘못된 경로에 접근시 메인 페이지로 리다이렉트 시킴*/}
+        <Route path="*" element={<Navigate to={'/'} />} />
       </Routes>
     </>
   );
