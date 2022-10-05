@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import react, { useState, useContext } from "react";
 
 /* context */
 import { LoginStateContext } from "./components/context";
@@ -17,7 +17,7 @@ import {
   UserPage,
 } from "./components";
 /* router */
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 /* hooks */
 import { GoToTop } from "./store";
 
@@ -42,8 +42,9 @@ const WithoutHeaderAndFooter = () => {
 };
 
 function App() {
+  const loginTokenState = useContext(LoginStateContext);
   return (
-    <LoginStateContext.Provider value={sessionStorage.getItem("token")}>
+    <>
       <Routes>
         <Route path="/" element={<WithHeaderAndFooter />}>
           <Route index element={<MainPage />} />
@@ -51,19 +52,23 @@ function App() {
             <Route path="register" element={<CourseRegisterPage />} />
           </Route>
         </Route>
-
         <Route path="/util" element={<WithoutHeaderAndFooter />}>
-          {/* isLogin = false */}
-          <Route path="login" element={<LoginPage />} />
-          <Route path="email-valid" element={<EmailValidPage />} />
-          <Route path="location-info" element={<LocationInfoPage />} />
-          <Route path="location-detail" element={<LocationDetailPage />} />
-          <Route path="user-info" element={<UserInfoPage />} />
-          {/* isLogin = true */}
-          <Route path="user/:id" element={<UserPage />} />
+          {loginTokenState || (
+            <>
+              <Route path="login" element={<LoginPage />} />
+              <Route path="email-valid" element={<EmailValidPage />} />
+              <Route path="location-info" element={<LocationInfoPage />} />
+              <Route path="location-detail" element={<LocationDetailPage />} />
+              <Route path="user-info" element={<UserInfoPage />} />
+            </>
+          )}
+          {loginTokenState && <Route path="user/:id" element={<UserPage />} />}
         </Route>
+
+        {/* 잘못된 경로에 접근시 메인 페이지로 리다이렉트 시킴*/}
+        <Route path="*" element={<Navigate to={"/"} />} />
       </Routes>
-    </LoginStateContext.Provider>
+    </>
   );
 }
 export default App;

@@ -1,6 +1,6 @@
 /* libraries */
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 /* components */
 import * as S from "./styled";
 import { Button, Icon, Input, UtilForm, UtilInputWrap } from "../../";
@@ -17,11 +17,14 @@ const LoginApiUrl = "http://10.10.10.21:8080/v1/signin";
 function LoginForm() {
   //로그인 토큰
   const loginTokenState = useContext(LoginStateContext);
+
   //아이디, 패스워드 state
   const [inputValue, setInputValue] = useState({
     loginId: "",
     loginPwd: "",
   });
+
+  const navigate = useNavigate();
 
   /* 아이디와 패스워드를 입력할 때마다 호출될 핸들러 */
   const onChangeInput = (e) => {
@@ -39,8 +42,8 @@ function LoginForm() {
       .then((response) => {
         console.log(response);
         if (response.data.isSuccess) {
-          console.log(response);
           sessionStorage.setItem("token", response.data.result);
+          navigate("/");
         } else {
           alert(response.data.message);
         }
