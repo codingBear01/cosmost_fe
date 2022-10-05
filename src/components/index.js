@@ -27,7 +27,7 @@ export {
   UtilForm,
   UtilInputWrap,
   UtilTitle,
-} from './common/';
+} from "./common/";
 
 /* 특정 페이지에서만 쓰이는 요소들 */
 export {
@@ -39,7 +39,7 @@ export {
   UserInfoForm,
   UserPageForm,
   UtilPageContainer,
-} from './ui/';
+} from "./ui/";
 
 /* pages */
 export {
@@ -51,4 +51,4 @@ export {
   MainPage,
   UserInfoPage,
   UserPage,
-} from './pages/';
+} from "./pages/";
