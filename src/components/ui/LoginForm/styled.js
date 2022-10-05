@@ -49,7 +49,7 @@ export const LoginBtns = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ hov_col }) => hov_col};
+    background-color: ${({ hov_bg_col }) => hov_bg_col};
   }
 
   svg {

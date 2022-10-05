@@ -36,7 +36,7 @@ function EmailValidForm() {
           h={'40px'}
           col={color.white}
           bg_col={color.darkBlue}
-          hov_col={color.navy}
+          hov_bg_col={color.navy}
         >
           인증번호 발송
         </Button>

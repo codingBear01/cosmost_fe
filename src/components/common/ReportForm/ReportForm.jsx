@@ -41,7 +41,7 @@ function ReportForm({
             mr={'0 3rem'}
             col={color.black}
             bg_col={color.lightGrey}
-            ho_bg_col={color.grey}
+            hov_bg_col={color.grey}
             onClick={onClickOpenReportForm}
           >
             취소
@@ -53,7 +53,7 @@ function ReportForm({
             mr={'0 3rem'}
             col={color.white}
             bg_col={color.darkBlue}
-            ho_bg_col={color.navy}
+            hov_bg_col={color.navy}
             onClick={(e) => onClickReport(e)}
           >
             신고

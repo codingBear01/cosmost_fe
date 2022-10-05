@@ -20,6 +20,6 @@ export const StyledButton = styled.button`
 
   &:hover {
     border: none;
-    background-color: ${({ ho_bg_col }) => ho_bg_col};
+    background-color: ${({ hov_bg_col }) => hov_bg_col};
   }
 `;

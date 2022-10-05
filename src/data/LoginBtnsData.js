@@ -13,14 +13,14 @@ export const LOGIN_BTN_LIST = [
     icon: <AiIcons.AiOutlineMail />,
     bg_col: `${color.darkBlue}`,
     color: `${color.white}`,
-    hov_col: `${color.navy}`,
+    hov_bg_col: `${color.navy}`,
   },
   {
     id: 2,
     text: '',
     icon: <RiIcons.RiKakaoTalkFill />,
     bg_col: '#F7E111',
-    hov_col: '#c7b50e',
+    hov_bg_col: '#c7b50e',
   },
   {
     id: 3,
@@ -28,13 +28,13 @@ export const LOGIN_BTN_LIST = [
     icon: <SiIcons.SiNaver />,
     bg_col: '#04CF5C',
     color: `${color.white}`,
-    hov_col: '#02b34e',
+    hov_bg_col: '#02b34e',
   },
   {
     id: 4,
     text: '',
     icon: <FcIcons.FcGoogle />,
     bg_col: '#F5F5F7',
-    hov_col: `${color.lightGrey}`,
+    hov_bg_col: `${color.lightGrey}`,
   },
 ];

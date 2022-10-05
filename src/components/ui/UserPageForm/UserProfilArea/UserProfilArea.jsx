@@ -43,7 +43,7 @@ function UserProfilArea() {
             h={'25px'}
             fs={'12px'}
             bg_col={color.darkBlue}
-            hov_col={color.navy}
+            hov_bg_col={color.navy}
           >
             프로필 편집
           </Button>

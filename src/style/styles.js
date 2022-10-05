@@ -8,7 +8,9 @@ export const COLOR_LIST = {
   blue: '#576DDB',
   lightBlue: '#06c',
   skyBlue: '#89DDFF',
+  darkGreen: '#afe660',
   lightGreen: '#C3E88D',
+  darkRed: '#e8414b',
   red: '#f07178',
   yellow: '#FBF305',
 };
