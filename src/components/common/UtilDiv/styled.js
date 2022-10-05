@@ -9,7 +9,7 @@ import {
   mainTextFadeIn,
 } from '../../../style';
 
-export const StyledUtilForm = styled.form`
+export const StyledUtilDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: ${({ j_content }) => (j_content ? j_content : 'flex-start')};

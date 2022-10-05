@@ -1,17 +1,25 @@
 import React from 'react';
 /* components */
 import * as S from './styled';
+import { UserProfilArea } from '.';
 import {
   Button,
   Input,
   ProfilePic,
-  UtilForm,
+  UtilDiv,
   UtilInputWrap,
   UtilTitle,
 } from '../..';
+/* static data */
+import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
 
 function UserInfoForm() {
-  return <h1 style={{ color: 'white' }}>유저 페이지닷</h1>;
+  return (
+    <UtilDiv pd={'5rem'}>
+      <UtilTitle>닉네임 님</UtilTitle>
+      <UserProfilArea />
+    </UtilDiv>
+  );
 }
 
 export default UserInfoForm;

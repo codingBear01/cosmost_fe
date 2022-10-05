@@ -21,6 +21,7 @@ export { Section } from './Section/';
 export { SectionTitle } from './SectionTitle';
 export { SmallProfilePic } from './SmallProfilePic';
 export { ToTopBtn } from './ToTopBtn';
+export { UtilDiv } from './UtilDiv';
 export { UtilForm } from './UtilForm';
 export { UtilInputWrap } from './UtilInputWrap';
 export { UtilTitle } from './UtilTitle';
