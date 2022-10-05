@@ -1,4 +1,6 @@
+/* libraries */
 import React from 'react';
+import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
 import { Button, ProfilePic } from '../../../';
@@ -21,29 +23,31 @@ function UserProfilArea() {
       {/* 유저 정보 */}
       <S.ProfileUtilWrap>
         <S.UserInfoWrap>
-          <div>
+          <Link to="/">
             <span>랭킹</span>
             <span>1</span>
-          </div>
-          <div>
+          </Link>
+          <Link to="/">
             <span>팔로워</span>
             <span>100</span>
-          </div>
-          <div>
+          </Link>
+          <Link to="/">
             <span>팔로잉</span>
             <span>100</span>
-          </div>
+          </Link>
         </S.UserInfoWrap>
-        <Button
-          type="button"
-          w={'220px'}
-          h={'20px'}
-          fs={'12px'}
-          bg_color={color.darkBlue}
-          ho_color={color.navy}
-        >
-          프로필 편집
-        </Button>
+        <Link to="/">
+          <Button
+            type="button"
+            w={'220px'}
+            h={'20px'}
+            fs={'12px'}
+            bg_color={color.darkBlue}
+            ho_color={color.navy}
+          >
+            프로필 편집
+          </Button>
+        </Link>
       </S.ProfileUtilWrap>
     </S.ProfileWrap>
   );

@@ -27,6 +27,21 @@ export const UserInfoDropDownWrap = styled.div`
   margin-bottom: ${gap.xl};
 `;
 
+export const UploadProfilePicBtn = styled.button`
+  width: 100px;
+  height: 100px;
+  border: 1px solid white;
+  border-radius: ${br.default};
+  background-image: ${({ bg_img_url }) => bg_img_url};
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: ${color.white};
+`;
+
+export const ProfilePicUploadInput = styled.input`
+  display: none;
+`;
+
 export const UserInfoDropDown = styled.select`
   width: 160px;
   height: 40px;

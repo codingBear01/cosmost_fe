@@ -51,9 +51,10 @@ export const UserInfoWrap = styled.div`
   justify-content: space-between;
   width: 100%;
 
-  div {
+  a {
     display: flex;
     align-items: center;
     flex-direction: column;
+    color: ${color.white};
   }
 `;
