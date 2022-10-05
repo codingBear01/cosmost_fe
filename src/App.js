@@ -1,3 +1,7 @@
+import react, { useState } from "react";
+
+/* context */
+import { LoginStateContext } from "./components/context";
 /* components */
 import {
   Header,
@@ -11,11 +15,11 @@ import {
   MainPage,
   UserInfoPage,
   UserPage,
-} from './components';
+} from "./components";
 /* router */
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet } from "react-router-dom";
 /* hooks */
-import { GoToTop } from './store';
+import { GoToTop } from "./store";
 
 const WithHeaderAndFooter = () => {
   return (
@@ -39,7 +43,7 @@ const WithoutHeaderAndFooter = () => {
 
 function App() {
   return (
-    <>
+    <LoginStateContext.Provider value={sessionStorage.getItem("token")}>
       <Routes>
         <Route path="/" element={<WithHeaderAndFooter />}>
           <Route index element={<MainPage />} />
@@ -59,7 +63,7 @@ function App() {
           <Route path="user/:id" element={<UserPage />} />
         </Route>
       </Routes>
-    </>
+    </LoginStateContext.Provider>
   );
 }
 export default App;

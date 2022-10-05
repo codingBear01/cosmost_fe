@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 /* components */
-import { LoginForm } from '../';
+import { LoginForm } from "../";
 
 function LoginPage() {
   return <LoginForm />;

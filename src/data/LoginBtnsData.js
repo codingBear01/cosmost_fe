@@ -1,40 +1,44 @@
 /* icons */
-import * as AiIcons from 'react-icons/ai';
-import * as RiIcons from 'react-icons/ri';
-import * as SiIcons from 'react-icons/si';
-import * as FcIcons from 'react-icons/fc';
+import * as AiIcons from "react-icons/ai";
+import * as RiIcons from "react-icons/ri";
+import * as SiIcons from "react-icons/si";
+import * as FcIcons from "react-icons/fc";
 /* static data */
-import { COLOR_LIST as color } from '../style';
+import { COLOR_LIST as color } from "../style";
 
 export const LOGIN_BTN_LIST = [
   {
     id: 1,
-    text: '이메일로 회원가입',
+    text: "이메일로 회원가입",
     icon: <AiIcons.AiOutlineMail />,
     bg_color: `${color.darkBlue}`,
     color: `${color.white}`,
     hovered_col: `${color.navy}`,
+    src: "/util/email-valid",
   },
   {
     id: 2,
-    text: '',
+    text: "",
     icon: <RiIcons.RiKakaoTalkFill />,
-    bg_color: '#F7E111',
-    hovered_col: '#c7b50e',
+    bg_color: "#F7E111",
+    hovered_col: "#c7b50e",
+    src: "",
   },
   {
     id: 3,
-    text: '',
+    text: "",
     icon: <SiIcons.SiNaver />,
-    bg_color: '#04CF5C',
+    bg_color: "#04CF5C",
     color: `${color.white}`,
-    hovered_col: '#02b34e',
+    hovered_col: "#02b34e",
+    src: "",
   },
   {
     id: 4,
-    text: '',
+    text: "",
     icon: <FcIcons.FcGoogle />,
-    bg_color: '#F5F5F7',
+    bg_color: "#F5F5F7",
     hovered_col: `${color.lightGrey}`,
+    src: "",
   },
 ];
