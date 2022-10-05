@@ -32,7 +32,7 @@ function UserPageMenuList({ onClickOpenReportForm }) {
           <span>좋아요 한 코스</span>
         </S.UserPageMenuItem>
       </Link>
-      <Link to="/">
+      <Link to="review-histories">
         <S.UserPageMenuItem>
           <MdIcons.MdOutlineRateReview />
           <span>내가 남긴 리뷰</span>
