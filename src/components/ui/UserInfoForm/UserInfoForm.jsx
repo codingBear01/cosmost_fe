@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 /* components */
-import * as S from './styled';
+import * as S from "./styled";
 import {
   Button,
   Input,
@@ -8,13 +8,13 @@ import {
   UtilForm,
   UtilInputWrap,
   UtilTitle,
-} from '../..';
+} from "../..";
 /* static data */
-import { COLOR_LIST as color, GAP_LIST as gap } from '../../../style';
+import { COLOR_LIST as color, GAP_LIST as gap } from "../../../style";
 
 const PROFILE_PIC_URL = `url('https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMjI0/MDAxNTU0NDc3OTE1Mjc5.eljTe4bpgeYf2O0fbBqpB74ruNcyO5dLd2GZtXL4VEYg.p0ZIX-d01subwWzvY53FAF_hF2BHnKXuIpEB2Av8eg8g.JPEG.xvx404/1542459444594.jpg?type=w800')`;
 
-function UserInfoForm() {
+function UserInfoForm({ state }) {
   /* 프로필 이미지 업로드에 쓰이는 useRef */
   const profileInputRef = useRef();
 
@@ -26,7 +26,7 @@ function UserInfoForm() {
   };
 
   return (
-    <UtilForm pd={'10rem 0'}>
+    <UtilForm pd={"10rem 0"}>
       <UtilTitle>회원 정보를 입력해주세요.</UtilTitle>
       {/* 프사, 아이디, 닉네임 */}
       <S.UserProfileWrap mb={gap.xl}>
@@ -42,19 +42,19 @@ function UserInfoForm() {
           </S.UploadProfilePicBtn>
           <S.ProfilePicUploadInput ref={profileInputRef} type="file" />
         </div>
-        <S.UserProfileWrap fd={'column'}>
+        <S.UserProfileWrap fd={"column"}>
           <UtilInputWrap>
             <Input
               type="text"
               placeholder="아이디"
-              w={'150px'}
-              h={'40px'}
-              mr={'0 10px'}
+              w={"150px"}
+              h={"40px"}
+              mr={"0 10px"}
             />
             <Button
               type="button"
-              w={'80px'}
-              h={'40px'}
+              w={"80px"}
+              h={"40px"}
               bg_color={color.darkBlue}
               col={color.white}
               ho_color={color.navy}
@@ -62,18 +62,18 @@ function UserInfoForm() {
               중복확인
             </Button>
           </UtilInputWrap>
-          <UtilInputWrap mb={'0'}>
+          <UtilInputWrap mb={"0"}>
             <Input
               type="text"
               placeholder="닉네임"
-              w={'150px'}
-              h={'40px'}
-              mr={'0 10px'}
+              w={"150px"}
+              h={"40px"}
+              mr={"0 10px"}
             />
             <Button
               type="button"
-              w={'80px'}
-              h={'40px'}
+              w={"80px"}
+              h={"40px"}
               bg_color={color.darkBlue}
               col={color.white}
               ho_color={color.navy}
@@ -87,21 +87,21 @@ function UserInfoForm() {
       <UtilInputWrap>
         <Input
           type="text"
-          value="jokingbear01@gmail.com"
+          value={state.email}
           disabled={true}
-          w={'340px'}
-          h={'40px'}
-          mr={'0 10px'}
+          w={"340px"}
+          h={"40px"}
+          mr={"0 10px"}
         />
       </UtilInputWrap>
       <UtilInputWrap>
         <Input
           type="text"
-          value="부산시 수영구 광서로 42번길 9호 1층"
+          value={state.address}
           disabled={true}
-          w={'340px'}
-          h={'40px'}
-          mr={'0 10px'}
+          w={"340px"}
+          h={"40px"}
+          mr={"0 10px"}
         />
       </UtilInputWrap>
       {/* 비밀번호 */}
@@ -109,18 +109,18 @@ function UserInfoForm() {
         <Input
           type="text"
           placeholder="비밀번호"
-          w={'340px'}
-          h={'40px'}
-          mr={'0 10px'}
+          w={"340px"}
+          h={"40px"}
+          mr={"0 10px"}
         />
       </UtilInputWrap>
       <UtilInputWrap>
         <Input
           type="text"
           placeholder="비밀번호 재확인"
-          w={'340px'}
-          h={'40px'}
-          mr={'0 10px'}
+          w={"340px"}
+          h={"40px"}
+          mr={"0 10px"}
         />
       </UtilInputWrap>
       {/* 연령대, 결혼 여부 드롭다운 */}
@@ -143,10 +143,10 @@ function UserInfoForm() {
       </S.UserInfoDropDownWrap>
       {/* 회원가입 버튼 */}
       <Button
-        type={'button'}
-        w={'340px'}
-        h={'40px'}
-        mr={'20px 0 0 0'}
+        type={"button"}
+        w={"340px"}
+        h={"40px"}
+        mr={"20px 0 0 0"}
         bg_color={color.darkBlue}
         col={color.white}
         ho_color={color.navy}

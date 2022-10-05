@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 
 function LocationDetailPage() {
   const location = useLocation();
-  return <LocationDetailForm address={location.state.address} />;
+  return <LocationDetailForm state={location.state} />;
 }
 
 export default LocationDetailPage;
