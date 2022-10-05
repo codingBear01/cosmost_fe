@@ -23,6 +23,7 @@ export {
   SectionTitle,
   SmallProfilePic,
   ToTopBtn,
+  UtilDiv,
   UtilForm,
   UtilInputWrap,
   UtilTitle,
