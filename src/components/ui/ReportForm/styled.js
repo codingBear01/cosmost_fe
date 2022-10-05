@@ -26,6 +26,25 @@ export const ReportFormBg = styled.div`
   transition: 0.5s;
 `;
 
+export const ReportHistoryCat = styled.span`
+  align-self: start;
+  margin-bottom: 2rem;
+  font-size: 18px;
+`;
+
+export const ReportFormTitleWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  svg {
+    margin: 5px 10px 50px;
+    font-size: 25px;
+    cursor: pointer;
+  }
+`;
+
 export const ReportForm = styled.form`
   display: flex;
   align-items: center;

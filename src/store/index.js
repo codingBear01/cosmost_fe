@@ -2,4 +2,4 @@
 export { default as GoToTop } from './GoToTop';
 
 /* recoil states */
-export { isLoginAtom } from './recoilStates';
+export { isLoginAtom, isReportFormOpenedAtom } from './recoilStates';

@@ -11,12 +11,16 @@ import {
 } from '../../../style';
 
 export const HistoryList = styled.ul`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   width: 100%;
 `;
 
 export const HistoryListItem = styled.li`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   flex-direction: column;
   width: 100%;
@@ -31,6 +35,12 @@ export const HistoryDateWrap = styled.div`
   border-radius: ${br.default};
   font-size: 16px;
   cursor: pointer;
+`;
+
+export const ReportHistoryCat = styled.span`
+  align-self: start;
+  margin-left: ${gap.l};
+  font-size: 14px;
 `;
 
 export const HistoryTitleWrap = styled.div`

@@ -5,3 +5,9 @@ export const isLoginAtom = atom({
   key: 'isLoginAtom',
   default: false,
 });
+
+/* ReportForm Open 여부 state*/
+export const isReportFormOpenedAtom = atom({
+  key: 'isReportFormOpenedAtom',
+  default: false,
+});

@@ -1,5 +1,8 @@
 /* libraries */
-import React, { useState } from 'react';
+import React from 'react';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { isReportFormOpenedAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { UserPageMenuList, UserProfilArea } from '.';
@@ -7,7 +10,9 @@ import { ReportForm, UtilDiv, UtilTitle } from '../..';
 
 function UserInfoForm() {
   /* 모달창 Open 여부 state */
-  const [isReportFormOpened, setIsReportFormOpened] = useState(false);
+  const [isReportFormOpened, setIsReportFormOpened] = useRecoilState(
+    isReportFormOpenedAtom
+  );
 
   /* 신고 모달창 Open 여부 조작하는 핸들러 */
   const onClickOpenReportForm = () => {
@@ -23,7 +28,7 @@ function UserInfoForm() {
       <UserPageMenuList onClickOpenReportForm={onClickOpenReportForm} />
       {/* 신고하기 모달창 */}
       <ReportForm
-        onClickOpenReportForm={onClickOpenReportForm}
+        onClick={onClickOpenReportForm}
         setIsReportFormOpened={setIsReportFormOpened}
         isReportFormOpened={isReportFormOpened}
       />

@@ -1,7 +1,11 @@
 /* libraries */
 import React, { useState } from 'react';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { isReportFormOpenedAtom } from '../../../store';
 /* components */
 import * as S from './styled';
+import { ReportForm } from '..';
 import { Button, UtilDiv, UtilTitle } from '../..';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
@@ -10,16 +14,25 @@ import {
   REVIEW_HISTORY_DATA_LIST as review,
 } from '../../../data';
 
-function HistoryForm({ isReport }) {
-  const [isReportReplyOpened, setIsReportReplyOpened] = useState(false);
+function HistoryForm({ isReportHistoryPage }) {
+  /* ReportForm 및 ReportReply Open 여부 관련 state */
+  const [isReportFormOpened, setIsReportFormOpened] = useRecoilState(
+    isReportFormOpenedAtom
+  );
+  const [isReportReplyCanOpen, setIsReportReplyCanOpen] = useState(false);
+  /* ReportForm에 넘겨줄 reportDetail state */
+  const [reportDetail, setReportDetail] = useState(null);
 
-  const onClickOpenReportDetail = () => {
+  /* 신고 상세 조회 폼의 Open 여부를 조작하는 핸들러 */
+  const onClickOpenReportDetail = (item) => {
+    setIsReportFormOpened(!isReportFormOpened);
+    setReportDetail(item);
     console.log('신고상세');
   };
 
   const onClickOpenReportReply = (isReplied) => {
     if (isReplied) {
-      setIsReportReplyOpened(!isReportReplyOpened);
+      setIsReportReplyCanOpen(!isReportReplyCanOpen);
       console.log('답변 조회');
     }
   };
@@ -27,22 +40,35 @@ function HistoryForm({ isReport }) {
   return (
     <UtilDiv pd={'5rem 12.9rem'}>
       {/* 페이지 이름 */}
-      <UtilTitle>{isReport ? '신고내역' : '내가 남긴 리뷰'}</UtilTitle>
+      <UtilTitle>
+        {isReportHistoryPage ? '신고내역' : '내가 남긴 리뷰'}
+      </UtilTitle>
       {/* 신고내역 목록 */}
       <S.HistoryList>
-        {isReport
+        <ReportForm
+          onClick={onClickOpenReportDetail}
+          setIsReportFormOpened={setIsReportFormOpened}
+          isReportFormOpened={isReportFormOpened}
+          isReportHistoryPage={isReportHistoryPage}
+          item={reportDetail}
+        />
+        {isReportHistoryPage
           ? history &&
             history.map((item) => (
               // 신고 내역 아이템
               <S.HistoryListItem key={item.id}>
                 {/* 신고 날짜 */}
-                <S.HistoryDateWrap onClick={onClickOpenReportDetail}>
+                <S.HistoryDateWrap
+                  onClick={() => onClickOpenReportDetail(item)}
+                >
                   {item.date}
                 </S.HistoryDateWrap>
+                {/* 신고 분류 */}
+                <S.ReportHistoryCat>분류: {item.category}</S.ReportHistoryCat>
                 {/* 신고 제목 및 답변 여부 버튼 */}
                 <S.HistoryTitleWrap>
                   {/* 신고 제목 */}
-                  <S.HistoryTitle onClick={onClickOpenReportDetail}>
+                  <S.HistoryTitle onClick={() => onClickOpenReportDetail(item)}>
                     {item.title}
                   </S.HistoryTitle>
                   {/* 답변 여부 버튼 */}
@@ -58,7 +84,7 @@ function HistoryForm({ isReport }) {
                   </Button>
                 </S.HistoryTitleWrap>
                 {/* 신고 내용 */}
-                <S.HistoryContent onClick={onClickOpenReportDetail}>
+                <S.HistoryContent onClick={() => onClickOpenReportDetail(item)}>
                   {item.content}
                 </S.HistoryContent>
               </S.HistoryListItem>
@@ -81,6 +107,7 @@ function HistoryForm({ isReport }) {
               </S.HistoryListItem>
             ))}
       </S.HistoryList>
+      {/* 신고 상세 내역 조회 모달 */}
     </UtilDiv>
   );
 }
