@@ -1,6 +1,5 @@
 /* libraries */
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 /* static data */
 import {
   COLOR_LIST as color,
@@ -11,30 +10,30 @@ import {
   mainTextFadeIn,
 } from '../../../style';
 
-export const ReportHistoryList = styled.ul`
+export const HistoryList = styled.ul`
   width: 100%;
 `;
 
-export const ReportHistoryListItem = styled.li`
+export const HistoryListItem = styled.li`
   display: flex;
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
   width: 100%;
   margin-bottom: ${gap.l};
-  cursor: pointer;
 `;
 
-export const ReportHistoryDateWrap = styled.div`
+export const HistoryDateWrap = styled.div`
   width: 100%;
   margin-bottom: ${gap.s};
   padding: 0.5rem ${gap.s};
   border: 2px solid ${color.white};
   border-radius: ${br.default};
   font-size: 16px;
+  cursor: pointer;
 `;
 
-export const ReportHistoryTitleWrap = styled.div`
+export const HistoryTitleWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,12 +42,19 @@ export const ReportHistoryTitleWrap = styled.div`
   width: 100%;
 `;
 
-export const ReportHistoryTitle = styled.span`
+export const HistoryTitle = styled.span`
   font-size: 14px;
   color: ${color.white};
+  cursor: pointer;
+
+  span {
+    &:hover {
+      border-bottom: 1px solid ${color.white};
+    }
+  }
 `;
 
-export const ReportHistoryContent = styled.p`
+export const HistoryContent = styled.p`
   width: 100%;
   height: 6rem;
   padding: 0 4rem;
@@ -61,4 +67,5 @@ export const ReportHistoryContent = styled.p`
   word-wrap: break-word;
   line-height: 1.2em;
   height: 3.6em;
+  cursor: pointer;
 `;

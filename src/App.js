@@ -10,7 +10,7 @@ import {
   LocationInfoPage,
   LoginPage,
   MainPage,
-  ReportHistoryPage,
+  HistoryPage,
   UserInfoPage,
   UserPage,
 } from './components';
@@ -62,7 +62,8 @@ function App() {
             <Route path=":id" element={<UserPage />} />
             <Route path=":id/followers" element={<FollowPage />} />
             <Route path=":id/followings" element={<FollowPage />} />
-            <Route path=":id/report-history" element={<ReportHistoryPage />} />
+            <Route path=":id/report-histories" element={<HistoryPage />} />
+            <Route path=":id/review-histories" element={<HistoryPage />} />
           </Route>
         </Route>
       </Routes>

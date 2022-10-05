@@ -13,7 +13,6 @@ export {
   HashTag,
   Header,
   HeightCenterDiv,
-  HistoryForm,
   Icon,
   Input,
   MoreCourseBtn,
@@ -35,6 +34,7 @@ export {
 export {
   EmailValidForm,
   FollowForm,
+  HistoryForm,
   LocationDetailForm,
   LocationInfoForm,
   LoginForm,
@@ -49,11 +49,11 @@ export {
   CourseRegisterPage,
   EmailValidPage,
   FollowPage,
+  HistoryPage,
   LocationDetailPage,
   LocationInfoPage,
   LoginPage,
   MainPage,
-  ReportHistoryPage,
   UserInfoPage,
   UserPage,
 } from './pages/';

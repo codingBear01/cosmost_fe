@@ -1,5 +1,6 @@
 export { EmailValidForm } from './EmailValidForm';
 export { FollowForm } from './FollowForm';
+export { HistoryForm } from './HistoryForm';
 export { LocationDetailForm } from './LocationDetailForm';
 export { LocationInfoForm } from './LocationInfoForm';
 export { LoginForm } from './LoginForm';
