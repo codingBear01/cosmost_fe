@@ -11,7 +11,7 @@ import { MAIN_COURSES } from '../../../store/temporaryArray';
 
 function MainPageSection() {
   return (
-    <Section height={'100vh'} pd_b={'7rem'}>
+    <Section height={'100vh'} paddingBottom={'7rem'}>
       <S.MainPageContainer>
         <MainContentWrap pd={'10rem'}>
           {/* 메인 텍스트 */}

@@ -9,6 +9,7 @@ import * as AiIcons from 'react-icons/ai';
 
 function UtilPageContainer({ children }) {
   const navigate = useNavigate();
+
   return (
     <S.StyledUtilPageContainer>
       <Icon onClick={() => navigate(-1)}>

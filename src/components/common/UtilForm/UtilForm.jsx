@@ -1,12 +1,16 @@
 /* hooks */
-import React from "react";
+import React from 'react';
 /* components */
-import * as S from "./styled";
+import * as S from './styled';
 
-function UtilForm({ j_content, pd, children, onSubmit }) {
+function UtilForm({ justifyContent, padding, children, onSubmit }) {
   return (
     <>
-      <S.StyledUtilForm j_content={j_content} pd={pd} onSubmit={onSubmit}>
+      <S.StyledUtilForm
+        justifyContent={justifyContent}
+        padding={padding}
+        onSubmit={onSubmit}
+      >
         {children}
       </S.StyledUtilForm>
     </>

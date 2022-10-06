@@ -11,8 +11,8 @@ export const UserProfileWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: ${({ fd }) => fd};
-  margin-bottom: ${({ mb }) => (mb ? mb : '')};
+  flex-direction: ${({ flexDirection }) => flexDirection};
+  margin-bottom: ${({ marginBottom }) => (marginBottom ? marginBottom : '')};
 `;
 
 export const UserInfoDropDownWrap = styled.div`
@@ -28,7 +28,7 @@ export const UploadProfilePicBtn = styled.button`
   height: 100px;
   border: 1px solid white;
   border-radius: ${br.default};
-  background-image: ${({ bg_img_url }) => bg_img_url};
+  background-image: ${({ bgImgUrl }) => bgImgUrl};
   background-repeat: no-repeat;
   background-size: cover;
   color: ${color.white};

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 /* components */
-import * as S from "./styled";
+import * as S from './styled';
 
 function Input({
   type,
@@ -8,9 +8,9 @@ function Input({
   placeholder,
   value,
   disabled,
-  w,
-  h,
-  mr,
+  width,
+  height,
+  margin,
   onChange,
 }) {
   return (
@@ -20,9 +20,9 @@ function Input({
       placeholder={placeholder}
       value={value}
       disabled={disabled}
-      w={w}
-      h={h}
-      mr={mr}
+      width={width}
+      height={height}
+      margin={margin}
       onChange={onChange}
     />
   );

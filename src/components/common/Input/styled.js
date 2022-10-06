@@ -8,9 +8,9 @@ import {
 } from './../../../style/';
 
 export const StyledInput = styled.input`
-  width: ${({ w }) => w};
-  height: ${({ h }) => h};
-  margin: ${({ mr }) => mr};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  margin: ${({ margin }) => margin};
   padding-left: ${gap.s};
   background: transparent;
   border-bottom: 1px solid ${color.white};

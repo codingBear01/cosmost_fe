@@ -20,8 +20,9 @@ export const HeaderSearchBar = styled.div`
   width: 76.8rem;
   height: 7rem;
   background-color: ${color.black};
-  opacity: ${({ isSearchBarOpen }) => (!isSearchBarOpen ? '0' : '1')};
-  pointer-events: ${({ isSearchBarOpen }) => (!isSearchBarOpen ? 'none' : '')};
+  opacity: ${({ isSearchBarOpened }) => (!isSearchBarOpened ? '0' : '1')};
+  pointer-events: ${({ isSearchBarOpened }) =>
+    !isSearchBarOpened ? 'none' : ''};
   transition: all 0.2s ease;
 
   ${media.mobile} {

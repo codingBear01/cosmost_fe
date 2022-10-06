@@ -84,9 +84,9 @@ function DaumAddressApiModal({ state }) {
         <LocationBaseImg />
         <Button
           width="12rem"
-          h="5rem"
-          fs="1.5rem"
-          col={color.white}
+          height="5rem"
+          fontSize="1.5rem"
+          color={color.white}
           onClick={onClickCurrentLocation}
         >
           현재 위치로 설정

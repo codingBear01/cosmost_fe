@@ -22,57 +22,57 @@ function SignUpForm({ state }) {
   console.log(state);
 
   return (
-    <UtilForm pd={'10rem 0'}>
+    <UtilForm padding={'10rem 0'}>
       <UtilTitle>회원 정보를 입력해주세요.</UtilTitle>
       {/* 프사, 아이디, 닉네임 */}
-      <S.UserProfileWrap mb={gap.xl}>
+      <S.UserProfileWrap marginBottom={gap.xl}>
         {/* 프로필 이미지 업로드에 쓰이는 버튼 및 인풋
         이미지 경로 받아와서 bg_img_url props로 전달하면 될 듯?
         */}
         <div>
           <S.UploadProfilePicBtn
-            bg_img_url={PROFILE_PIC_URL}
+            bgImgUrl={PROFILE_PIC_URL}
             onClick={onClickUploadProilePic}
           >
             프로필 이미지 업로드
           </S.UploadProfilePicBtn>
           <S.ProfilePicUploadInput ref={profileInputRef} type="file" />
         </div>
-        <S.UserProfileWrap fd={'column'}>
+        <S.UserProfileWrap flexDirection={'column'}>
           <UtilInputWrap>
             <Input
               type="text"
               placeholder="아이디"
-              w={'150px'}
-              h={'40px'}
-              mr={'0 10px'}
+              width={'150px'}
+              height={'40px'}
+              margin={'0 10px'}
             />
             <Button
               type="button"
-              w={'80px'}
-              h={'40px'}
-              bg_col={color.darkBlue}
-              col={color.white}
-              hov_bg_col={color.navy}
+              width={'80px'}
+              height={'40px'}
+              color={color.white}
+              bgColor={color.darkBlue}
+              hoveredBgColor={color.navy}
             >
               중복확인
             </Button>
           </UtilInputWrap>
-          <UtilInputWrap mb={'0'}>
+          <UtilInputWrap marginBottom={'0'}>
             <Input
               type="text"
               placeholder="닉네임"
-              w={'150px'}
-              h={'40px'}
-              mr={'0 10px'}
+              width={'150px'}
+              height={'40px'}
+              margin={'0 10px'}
             />
             <Button
               type="button"
-              w={'80px'}
-              h={'40px'}
-              bg_col={color.darkBlue}
-              col={color.white}
-              hov_bg_col={color.navy}
+              width={'80px'}
+              height={'40px'}
+              color={color.white}
+              bgColor={color.darkBlue}
+              hoveredBgColor={color.navy}
             >
               중복확인
             </Button>
@@ -85,9 +85,9 @@ function SignUpForm({ state }) {
           type="text"
           value={state.email}
           disabled={true}
-          w={'340px'}
-          h={'40px'}
-          mr={'0 10px'}
+          width={'340px'}
+          height={'40px'}
+          margin={'0 10px'}
         />
       </UtilInputWrap>
       <UtilInputWrap>
@@ -95,9 +95,9 @@ function SignUpForm({ state }) {
           type="text"
           value={state.address}
           disabled={true}
-          w={'340px'}
-          h={'40px'}
-          mr={'0 10px'}
+          width={'340px'}
+          height={'40px'}
+          margin={'0 10px'}
         />
       </UtilInputWrap>
       <UtilInputWrap>
@@ -105,9 +105,9 @@ function SignUpForm({ state }) {
           type="text"
           value={state.detailAddress}
           disabled={true}
-          w={'340px'}
-          h={'40px'}
-          mr={'0 10px'}
+          width={'340px'}
+          height={'40px'}
+          margin={'0 10px'}
         />
       </UtilInputWrap>
       {/* 비밀번호 */}
@@ -115,18 +115,18 @@ function SignUpForm({ state }) {
         <Input
           type="text"
           placeholder="비밀번호"
-          w={'340px'}
-          h={'40px'}
-          mr={'0 10px'}
+          width={'340px'}
+          height={'40px'}
+          margin={'0 10px'}
         />
       </UtilInputWrap>
       <UtilInputWrap>
         <Input
           type="text"
           placeholder="비밀번호 재확인"
-          w={'340px'}
-          h={'40px'}
-          mr={'0 10px'}
+          width={'340px'}
+          height={'40px'}
+          margin={'0 10px'}
         />
       </UtilInputWrap>
       {/* 연령대, 결혼 여부 드롭다운 */}
@@ -151,12 +151,12 @@ function SignUpForm({ state }) {
       <Link to="/login">
         <Button
           type={'button'}
-          w={'340px'}
-          h={'40px'}
-          mr={'20px 0 0 0'}
-          bg_col={color.darkBlue}
-          col={color.white}
-          hov_bg_col={color.navy}
+          width={'340px'}
+          height={'40px'}
+          margin={'20px 0 0 0'}
+          color={color.white}
+          bgColor={color.darkBlue}
+          hoveredBgColor={color.navy}
         >
           회원가입
         </Button>

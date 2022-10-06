@@ -12,15 +12,15 @@ function InputDetailAddressForm({ state }) {
   };
 
   return (
-    <UtilForm pd={'15.4rem 10rem'}>
+    <UtilForm padding={'15.4rem 10rem'}>
       <UtilTitle>상세 주소를 입력해주세요.</UtilTitle>
       <UtilInputWrap>
         <Input
           type="text"
           value={state.address}
           disabled
-          w={'340px'}
-          h={'40px'}
+          width={'340px'}
+          height={'40px'}
         />
       </UtilInputWrap>
       <UtilInputWrap>
@@ -28,8 +28,8 @@ function InputDetailAddressForm({ state }) {
           type="text"
           value={detailAddress}
           placeholder="상세 주소"
-          w={'340px'}
-          h={'40px'}
+          width={'340px'}
+          height={'40px'}
           onChange={onChangeDetailAddress}
         />
       </UtilInputWrap>

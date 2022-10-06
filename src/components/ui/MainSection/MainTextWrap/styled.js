@@ -19,13 +19,13 @@ export const StyledMainTextWrap = styled.div`
 `;
 
 export const MainText = styled.span`
-  margin: ${({ mr }) => mr};
-  font-size: ${({ fs }) => fs};
+  margin: ${({ margin }) => margin};
+  font-size: ${({ fontSize }) => fontSize};
   font-weight: 600;
-  color: ${({ col }) => col};
+  color: ${({ color }) => color};
   transition: all 0.15s ease-in;
 
   &:hover {
-    color: ${({ hover_col }) => hover_col};
+    color: ${({ hoveredColor }) => hoveredColor};
   }
 `;

@@ -7,20 +7,32 @@ import { COLOR_LIST as color } from '../../../../style';
 function MainTextWrap() {
   return (
     <S.StyledMainTextWrap>
-      <S.MainText fs={'10rem'} col={color.white} hover_col={color.darkBlue}>
+      <S.MainText
+        fontSize={'10rem'}
+        color={color.white}
+        hoveredColor={color.darkBlue}
+      >
         공유
-        <S.MainText fs={'7rem'} col={color.lightGrey}>
+        <S.MainText fontSize={'7rem'} color={color.lightGrey}>
           하세요
         </S.MainText>
       </S.MainText>
-      <S.MainText fs={'4rem'} mr={'5rem 0 0 0'} col={color.lightGrey}>
+      <S.MainText
+        fontSize={'4rem'}
+        margin={'5rem 0 0 0'}
+        color={color.lightGrey}
+      >
         당신만의{' '}
-        <S.MainText fs={'6rem'} col={color.white} hover_col={color.blue}>
+        <S.MainText
+          fontSize={'6rem'}
+          color={color.white}
+          hoveredColor={color.blue}
+        >
           코스
         </S.MainText>
         를
       </S.MainText>
-      <S.MainText fs={'3rem'} mr={'8rem 0 0 0'} col={color.lightGrey}>
+      <S.MainText fontSize={'3rem'} mr={'8rem 0 0 0'} color={color.lightGrey}>
         여기서 지금
       </S.MainText>
     </S.StyledMainTextWrap>

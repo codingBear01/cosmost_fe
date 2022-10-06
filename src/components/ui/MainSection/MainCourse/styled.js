@@ -9,7 +9,7 @@ export const StyledMainCourse = styled.div`
   align-items: center;
   justify-content: space-around;
   flex-direction: column;
-  align-self: ${({ a_self }) => a_self};
+  align-self: ${({ alignSelf }) => alignSelf};
   height: 45rem;
   width: 35rem;
   margin-top: 5rem;
