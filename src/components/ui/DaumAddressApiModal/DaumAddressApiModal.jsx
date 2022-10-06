@@ -1,10 +1,10 @@
-import DaumPostcode from 'react-daum-postcode';
-import { AiFillCloseSquare } from 'react-icons/ai';
-import { BiCurrentLocation } from 'react-icons/bi';
-import { COLOR_LIST } from '../../../style';
-import styled from 'styled-components';
-import { Button, FlexDiv } from '../../common';
-import { useNavigate } from 'react-router-dom';
+import DaumPostcode from "react-daum-postcode";
+import { AiFillCloseSquare } from "react-icons/ai";
+import { BiCurrentLocation } from "react-icons/bi";
+import { COLOR_LIST } from "../../../style";
+import styled from "styled-components";
+import { Button, FlexDiv } from "../../common";
+import { useNavigate } from "react-router-dom";
 
 const AddressApi = styled(DaumPostcode)`
   height: 100% !important;
@@ -28,7 +28,7 @@ function DaumAddressApiModal({ state }) {
   /* 사용자가 주소창에서 주소를 선택했을 시 호출할 핸들러 
      주소 상세 페이지로 리다이렉트 시켜주며 이 때 사용자가 선택한 주소값을 다음 페이지로 전달시켜준다. */
   const onCompleteAddressModal = (result) => {
-    navigate('/sign-up/location-detail', {
+    navigate("/sign-up/location-detail", {
       state: { ...state, address: result.address },
     });
   };
@@ -51,25 +51,25 @@ function DaumAddressApiModal({ state }) {
           },
           function (status, response) {
             if (status !== naver.maps.Service.Status.OK) {
-              return alert('Something wrong!');
+              return alert("Something wrong!");
             }
 
             let result = response.result,
               Address = result.items[1];
             console.log(Address);
-            navigate('/sign-up/location-detail', {
+            navigate("/sign-up/location-detail", {
               state: { ...state, address: Address.address },
             });
           }
         );
       },
       (e) => {
-        if (e.message === 'User denied Geolocation') {
+        if (e.message === "User denied Geolocation") {
           alert(
-            '현재 사용자가 위치 검색 기능을 허용하지 않았습니다. 위치 검색을 허용해주세요.'
+            "현재 사용자가 위치 검색 기능을 허용하지 않았습니다. 위치 검색을 허용해주세요."
           );
         } else {
-          alert('알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.');
+          alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
         }
       },
       {
