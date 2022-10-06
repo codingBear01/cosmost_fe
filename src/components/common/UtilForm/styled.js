@@ -16,7 +16,7 @@ export const StyledUtilForm = styled.form`
     justifyContent ? justifyContent : 'flex-start'};
   flex-direction: column;
   width: ${({ width }) => width};
-  height: 100vh;
+  height: ${({ height }) => (height ? height : '100%')};
   padding: ${({ padding }) => padding};
   color: ${color.white};
   animation: ${mainTextFadeIn} 1.2s;

@@ -54,8 +54,13 @@ function LoginForm() {
         alert('서버와 연결이 되지 않았습니다. 관리자에게 문의하세요.');
       });
   };
+
   return (
-    <UtilForm justifyContent={'center'} onSubmit={onSubmitForm}>
+    <UtilForm
+      justifyContent={'center'}
+      height={'100vh'}
+      onSubmit={onSubmitForm}
+    >
       {/* 아이디, 비밀번호 인풋 */}
       <UtilInputWrap>
         <Icon>

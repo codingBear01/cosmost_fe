@@ -19,8 +19,6 @@ function SignUpForm({ state }) {
     profileInputRef.current.click();
   };
 
-  console.log(state);
-
   return (
     <UtilForm padding={'10rem 0'}>
       <UtilTitle>회원 정보를 입력해주세요.</UtilTitle>
