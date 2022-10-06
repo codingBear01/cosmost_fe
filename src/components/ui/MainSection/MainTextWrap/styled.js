@@ -1,5 +1,5 @@
 /* libraries */
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 /* static data */
 import {
   COLOR_LIST as color,

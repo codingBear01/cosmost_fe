@@ -32,7 +32,11 @@ function MainTextWrap() {
         </S.MainText>
         를
       </S.MainText>
-      <S.MainText fontSize={'3rem'} mr={'8rem 0 0 0'} color={color.lightGrey}>
+      <S.MainText
+        fontSize={'3rem'}
+        margin={'8rem 0 0 0'}
+        color={color.lightGrey}
+      >
         여기서 지금
       </S.MainText>
     </S.StyledMainTextWrap>

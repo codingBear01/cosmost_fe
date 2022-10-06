@@ -13,7 +13,7 @@ function MainPageSection() {
   return (
     <Section height={'100vh'} paddingBottom={'7rem'}>
       <S.MainPageContainer>
-        <MainContentWrap pd={'10rem'}>
+        <MainContentWrap padding={'10rem'}>
           {/* 메인 텍스트 */}
           <MainTextWrap />
           {/* 코스 등록 버튼 */}
