@@ -1,25 +1,13 @@
 import { atom } from 'recoil';
 
-/* HeaderSearchBar Open 관련 Atoms */
-export const searchBarOpenAtom = atom({
-  key: 'searchBarAtom',
+/* Login 상태 관련 임시 state */
+export const isLoginAtom = atom({
+  key: 'isLoginAtom',
   default: false,
-});
-export const scrollYAtom = atom({
-  key: 'scrollYAtom',
-  default: 0,
 });
 
-/* MenuBarCategory Open 관련 Atoms */
-export const categoryOpenAtom = atom({
-  key: 'categoryOpenAtom',
-  default: false,
-});
-export const guCategoryOpenAtom = atom({
-  key: 'guCategoryOpenAtom',
-  default: false,
-});
-export const themeCategoryOpenAtom = atom({
-  key: 'themeCategoryOpenAtom',
+/* ReportForm Open 여부 state*/
+export const isReportFormOpenedAtom = atom({
+  key: 'isReportFormOpenedAtom',
   default: false,
 });

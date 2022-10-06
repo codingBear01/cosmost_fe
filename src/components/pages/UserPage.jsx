@@ -1,13 +1,8 @@
 import React from 'react';
-import { Header } from './../common';
+import { UserPageForm } from '..';
 
 function UserPage() {
-  return (
-    <div>
-      <Header />
-      유저 페이지이무니댯
-    </div>
-  );
+  return <UserPageForm />;
 }
 
 export default UserPage;

@@ -8,21 +8,25 @@ function Footer() {
     <S.Footer>
       <BsGithub />
       <S.FooterInfo>
-        <a
-          href="https://github.com/CosMost-BE"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Back-end Repo.
-        </a>
-        <a
-          href="https://github.com/codingBear01/cosMost_FE"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Front-end Repo.
-        </a>
-        <span>Mady By Team_NiceCream</span>
+        <div>
+          <a
+            href="https://github.com/CosMost-BE"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Back-end Repo.
+          </a>
+          <a
+            href="https://github.com/codingBear01/cosMost_FE"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Front-end Repo.
+          </a>
+        </div>
+        <div>
+          <span>Mady By Team_NiceCream</span>
+        </div>
       </S.FooterInfo>
     </S.Footer>
   );

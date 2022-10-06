@@ -1,38 +1,59 @@
 /* 여러 페이지에 중복해서 쓰이는 components */
 export {
   Button,
+  CategoriesWrap,
+  CourseContainer,
   CourseImg,
+  CoursesWrap,
   CourseTitle,
+  EachCourseBox,
+  EachCourseWrap,
   FlexDiv,
   Footer,
   HashTag,
   Header,
   HeightCenterDiv,
+  Icon,
   Input,
   MoreCourseBtn,
+  NextBtn,
   PageTitle,
+  ProfilePic,
   Section,
   SectionTitle,
   SmallProfilePic,
   ToTopBtn,
-} from './common/';
+  UtilDiv,
+  UtilForm,
+  UtilInputWrap,
+  UtilTitle,
+} from "./common/";
 
 /* 특정 페이지에서만 쓰이는 요소들 */
 export {
-  MainFirstSection,
-  MainFourthSection,
-  MainSecondSection,
-  MainThirdSection,
-} from './ui/';
+  EmailValidForm,
+  FollowForm,
+  HistoryForm,
+  LocationDetailForm,
+  LocationInfoForm,
+  LoginForm,
+  MainPageSection,
+  ReportForm,
+  UserInfoForm,
+  UserPageForm,
+  UtilPageContainer,
+} from "./ui/";
 
 /* pages */
 export {
-  AgreementPage,
-  CouresDetailPage,
   CourseRegisterPage,
+  EmailValidPage,
+  FollowPage,
+  HistoryPage,
+  LocationDetailPage,
+  LocationInfoPage,
   LoginPage,
-  SignUpPage,
   MainPage,
-  SearchResultPage,
+  UserInfoPage,
   UserPage,
-} from './pages/';
+} from "./pages/";

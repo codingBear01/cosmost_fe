@@ -1,4 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Sen:wght@400;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Sen:wght@400;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+}
 
 html {
   font-size: 62.5%;
@@ -21,18 +25,13 @@ html {
 
 body {
   position: relative;
-  box-sizing: content-box;
+  width: 100%;
   margin: 0;
   padding: 0;
-  font-family: "Sen", "Noto Sans KR", sans-serif;
+  background-color: black;
+  font-family: 'Sen', 'Noto Sans KR', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#root {
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
 }
 
 p {
@@ -40,6 +39,7 @@ p {
 }
 
 button {
+  padding: 0;
   border: none;
   background: none;
   outline: none;

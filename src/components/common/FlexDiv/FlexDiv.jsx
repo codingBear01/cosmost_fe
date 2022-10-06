@@ -10,6 +10,7 @@ import {
 
 const FlexDiv = styled.div`
   width: ${(props) => props.width || "100%"};
+  height: ${(props) => props.height || "auto"};
   display: ${(props) => props.display || "flex"};
   justify-content: ${(props) => props.justifyContent || "normal"};
   align-items: ${(props) => props.alignItems || "center"};

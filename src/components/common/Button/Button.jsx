@@ -1,13 +1,28 @@
 /* components */
-import * as S from "./styled";
+import * as S from './styled';
 
-function Button({ width, height, fontSize, bgColor, children, onClick }) {
+function Button({
+  type,
+  w,
+  h,
+  mr,
+  fs,
+  col,
+  bg_col,
+  hov_bg_col,
+  children,
+  onClick,
+}) {
   return (
     <S.StyledButton
-      width={width}
-      height={height}
-      fontSize={fontSize}
-      bgColor={bgColor || "#666AD1"}
+      type={type}
+      w={w}
+      h={h}
+      mr={mr}
+      fs={fs}
+      col={col}
+      bg_col={bg_col}
+      hov_bg_col={hov_bg_col}
       onClick={onClick}
     >
       {children}

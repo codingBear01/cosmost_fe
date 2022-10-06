@@ -7,46 +7,54 @@ import {
 } from './../../../style/';
 
 export const Footer = styled.footer`
+  position: absolute;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 20rem;
-  background-color: ${color.darkBlue};
+  height: 7rem;
+  background-color: ${color.black};
 
   svg {
-    font-size: 9rem;
+    margin-right: ${gap.l};
+    font-size: 4rem;
     color: ${color.white};
   }
 `;
 
-export const FooterInfo = styled.p`
+export const FooterInfo = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   width: 40rem;
 
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  div:first-child {
+    flex-direction: column;
+  }
+
   a {
-    margin-left: 5rem;
     padding: ${gap.xs};
-    font-size: ${fs.m};
+    font-size: ${fs.s};
     font-weight: 600;
     color: ${color.white};
     transition: all 0.15s ease-in;
 
     &:hover {
       border-radius: ${br.default};
-      background-color: ${color.lightBlue};
+      background-color: ${color.grey};
     }
   }
 
   span {
     width: 100%;
-    margin: ${gap.s} 0 0 5rem;
     font-size: ${fs.m};
     font-weight: 600;
     color: ${color.white};
-    text-align: right;
   }
 `;

@@ -7,17 +7,19 @@ import {
 } from './../../../style/';
 
 export const StyledButton = styled.button`
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
+  width: ${({ w }) => w};
+  height: ${({ h }) => h};
+  margin: ${({ mr }) => mr};
   border-radius: ${br.default};
-  background-color: ${({ bgColor }) => bgColor};
-  font-size: ${({ fontSize }) => fontSize};
+  background-color: ${({ bg_col }) => bg_col};
+  font-size: ${({ fs }) => fs};
   font-weight: 600;
-  color: ${color.white};
+  color: ${({ col }) => col};
   transition: all 0.15s ease-in;
   cursor: pointer;
 
   &:hover {
-    background-color: ${color.blue};
+    border: none;
+    background-color: ${({ hov_bg_col }) => hov_bg_col};
   }
 `;
