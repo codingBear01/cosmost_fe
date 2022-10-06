@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 /* components */
 import {
   Button,
@@ -14,7 +14,6 @@ import * as AiIcons from 'react-icons/ai';
 import * as BsIcons from 'react-icons/bs';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
-import { useState } from 'react';
 
 function EmailValidForm() {
   const [emailAndNumber, setEmail] = useState({

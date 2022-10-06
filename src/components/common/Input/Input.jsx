@@ -7,10 +7,12 @@ function Input({
   name,
   placeholder,
   value,
+  maxLength,
   disabled,
   width,
   height,
   margin,
+  fontSize,
   onChange,
 }) {
   return (
@@ -19,10 +21,12 @@ function Input({
       name={name}
       placeholder={placeholder}
       value={value}
+      maxLength={maxLength}
       disabled={disabled}
       width={width}
       height={height}
       margin={margin}
+      fontSize={fontSize}
       onChange={onChange}
     />
   );

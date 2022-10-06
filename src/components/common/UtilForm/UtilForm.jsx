@@ -3,11 +3,12 @@ import React from 'react';
 /* components */
 import * as S from './styled';
 
-function UtilForm({ justifyContent, padding, children, onSubmit }) {
+function UtilForm({ justifyContent, width, padding, children, onSubmit }) {
   return (
     <>
       <S.StyledUtilForm
         justifyContent={justifyContent}
+        width={width}
         padding={padding}
         onSubmit={onSubmit}
       >

@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 /* components */
 import * as S from './styled';
-import { Icon } from '../../';
+import { Icon } from '../..';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 
@@ -12,9 +12,7 @@ function UtilPageContainer({ children }) {
 
   return (
     <S.StyledUtilPageContainer>
-      <Icon onClick={() => navigate(-1)}>
-        <AiIcons.AiOutlineArrowLeft />
-      </Icon>
+      <AiIcons.AiOutlineArrowLeft onClick={() => navigate(-1)} />
       {children}
     </S.StyledUtilPageContainer>
   );

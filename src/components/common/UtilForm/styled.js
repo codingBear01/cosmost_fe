@@ -15,6 +15,7 @@ export const StyledUtilForm = styled.form`
   justify-content: ${({ justifyContent }) =>
     justifyContent ? justifyContent : 'flex-start'};
   flex-direction: column;
+  width: ${({ width }) => width};
   height: 100vh;
   padding: ${({ padding }) => padding};
   color: ${color.white};

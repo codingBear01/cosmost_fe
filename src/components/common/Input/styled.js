@@ -15,7 +15,7 @@ export const StyledInput = styled.input`
   background: transparent;
   border-bottom: 1px solid ${color.white};
   outline: none;
-  font-size: ${fs.s};
+  font-size: ${({ fontSize }) => (fontSize ? fontSize : `${fs.s}`)};
   color: ${color.white};
 
   &::placeholder {

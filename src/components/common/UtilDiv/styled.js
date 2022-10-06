@@ -16,8 +16,9 @@ export const StyledUtilDiv = styled.div`
     justifyContent ? justifyContent : 'flex-start'};
   flex-direction: column;
   width: ${({ width }) => width};
-  height: 100vh;
+  height: ${({ height }) => (height ? height : '100%')};
   padding: ${({ padding }) => padding};
+  background-color: ${({ bgColor }) => bgColor};
   color: ${color.white};
   animation: ${mainTextFadeIn} 1.2s;
 `;

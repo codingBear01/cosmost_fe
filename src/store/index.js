@@ -3,3 +3,13 @@ export { default as GoToTop } from './GoToTop';
 
 /* recoil states */
 export { isLoginAtom, isReportFormOpenedAtom } from './recoilStates';
+
+/* temporary array */
+export {
+  FOLLOWS,
+  CATEGORIES,
+  MAIN_COURSES,
+  RANKERS,
+  REPORT_HISTORIES,
+  REVIEW_HISTORIES,
+} from './temporaryArray/';

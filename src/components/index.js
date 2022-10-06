@@ -7,6 +7,7 @@ export {
   Icon,
   Input,
   NextBtn,
+  PageContainer,
   ProfilePic,
   Section,
   SmallProfilePic,
@@ -19,6 +20,7 @@ export {
 
 /* 특정 페이지에서만 쓰이는 요소들 */
 export {
+  CourseRegistrationForm,
   EmailValidationForm,
   FollowsForm,
   HistoriesForm,
@@ -29,7 +31,6 @@ export {
   ReportForm,
   SignUpForm,
   UserPageForm,
-  UtilPageContainer,
 } from './ui/';
 
 /* pages */
