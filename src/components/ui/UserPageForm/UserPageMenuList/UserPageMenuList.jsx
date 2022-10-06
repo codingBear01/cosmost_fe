@@ -14,7 +14,7 @@ function UserPageMenuList({ onClickOpenReportForm }) {
   return (
     // 유저 페이지 메뉴들
     <S.UserPageMenuList>
-      <Link to="/course/register">
+      <Link to="/course/registration">
         <S.UserPageMenuItem>
           <AiIcons.AiOutlineAppstoreAdd />
           <span>코스 등록하기</span>

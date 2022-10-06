@@ -10,8 +10,7 @@ import * as RiIcons from 'react-icons/ri';
 import * as SiIcons from 'react-icons/si';
 import * as FcIcons from 'react-icons/fc';
 /* static data */
-import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
-import { LOGIN_BTN_LIST as btns } from '../../../data';
+import { COLOR_LIST as color } from '../../../style';
 import axios from 'axios';
 import { LoginStateContext } from '../../context';
 
@@ -106,7 +105,7 @@ function LoginForm() {
         <S.LoginServiceLink>아이디 찾기</S.LoginServiceLink>
       </S.LoginFindWrap>
       {/* 회원가입 및 SNS 로그인 버튼들 */}
-      <Link to="/sign-up/email-valid">
+      <Link to="/email-validation">
         <S.LoginBtns
           type="button"
           col={color.white}

@@ -4,7 +4,6 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { isReportFormOpenedAtom } from '../../../store';
 /* components */
-import * as S from './styled';
 import { UserPageMenuList, UserProfilArea } from '.';
 import { ReportForm, UtilDiv, UtilTitle } from '../..';
 

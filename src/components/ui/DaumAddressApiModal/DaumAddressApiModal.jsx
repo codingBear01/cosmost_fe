@@ -28,7 +28,7 @@ function DaumAddressApiModal({ state }) {
   /* 사용자가 주소창에서 주소를 선택했을 시 호출할 핸들러 
      주소 상세 페이지로 리다이렉트 시켜주며 이 때 사용자가 선택한 주소값을 다음 페이지로 전달시켜준다. */
   const onCompleteAddressModal = (result) => {
-    navigate('/sign-up/location-detail', {
+    navigate('/detail-address', {
       state: { ...state, address: result.address },
     });
   };
@@ -57,7 +57,7 @@ function DaumAddressApiModal({ state }) {
             let result = response.result,
               Address = result.items[1];
             console.log(Address);
-            navigate('/sign-up/location-detail', {
+            navigate('/detail-address', {
               state: { ...state, address: Address.address },
             });
           }

@@ -1,5 +1,5 @@
 /* libraries */
-import styled, { keyframes } from 'styled-components';
+import { keyframes } from 'styled-components';
 
 /* animation */
 export const mainTextFadeIn = keyframes`
