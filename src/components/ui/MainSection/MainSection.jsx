@@ -25,7 +25,7 @@ function MainPageSection() {
         {/* 메인 코스 */}
         {MAIN_COURSES &&
           MAIN_COURSES.map((item, i) => (
-            <MainContentWrap key={item.id} pd={'0 10rem'}>
+            <MainContentWrap key={item.id} padding={'0 10rem'}>
               <MainCourse item={item} />
             </MainContentWrap>
           ))}
