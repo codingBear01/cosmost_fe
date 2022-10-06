@@ -1,6 +1,6 @@
 export const REVIEW_HISTORIES = [
   {
-    id: 1,
+    id: 11,
     date: '1952/04/14',
     title: '임진왜란 발발, 고니시 1번대 부산항 상륙',
     content:
