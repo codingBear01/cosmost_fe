@@ -12,6 +12,7 @@ function Input({
   h,
   mr,
   onChange,
+  required,
 }) {
   return (
     <S.StyledInput
@@ -24,6 +25,7 @@ function Input({
       h={h}
       mr={mr}
       onChange={onChange}
+      required={required}
     />
   );
 }
