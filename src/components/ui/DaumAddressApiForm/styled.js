@@ -35,10 +35,3 @@ export const GettingCurrentLocationButtonWrap = styled.div`
 export const AddressApiContent = styled(DaumPostcode)`
   height: 50rem !important;
 `;
-
-// export const LocationBaseImg = styled(BiCurrentLocation)`
-//   width: 3rem;
-//   height: 3rem;
-//   margin-right: 1rem;
-//   color: ${color.white};
-// `;

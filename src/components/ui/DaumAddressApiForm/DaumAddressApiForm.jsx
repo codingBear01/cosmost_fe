@@ -28,7 +28,6 @@ function DaumAddressApiModal({ state }) {
 
     window.navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log(position);
         let latitude = position.coords.latitude;
         let longitude = position.coords.longitude;
 
@@ -43,7 +42,6 @@ function DaumAddressApiModal({ state }) {
 
             let result = response.result,
               Address = result.items[1];
-            console.log(Address);
             navigate('/detail-address', {
               state: { ...state, address: Address.address },
             });

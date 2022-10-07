@@ -60,6 +60,7 @@ function ReportForm({
           placeholder="신고 내용을 입력해주세요."
           disabled
           value={item?.content}
+          maxLength={500}
         ></S.ReportFormTextArea>
         {/* 신고 버튼 */}
         {!isReportHistoryPage && (

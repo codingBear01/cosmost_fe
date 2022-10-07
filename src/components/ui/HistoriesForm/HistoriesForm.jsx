@@ -27,13 +27,11 @@ function HistoriesForm({ isReportHistoryPage }) {
   const onClickOpenReportDetail = (item) => {
     setIsReportFormOpened(!isReportFormOpened);
     setReportDetail(item);
-    console.log('신고상세');
   };
 
   const onClickOpenReportReply = (isReplied) => {
     if (isReplied) {
       setIsReportReplyCanOpen(!isReportReplyCanOpen);
-      console.log('답변 조회');
     }
   };
 
