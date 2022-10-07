@@ -7,6 +7,7 @@ import {
   Footer,
   PageContainer,
   // pages
+  CourseDetail,
   CourseRegistration,
   EmailValidation,
   Follows,
@@ -43,11 +44,13 @@ const WithoutHeaderAndFooter = () => {
 
 function App() {
   const loginTokenState = useContext(LoginStateContext);
+
   return (
     <>
       <Routes>
         <Route path="/" element={<WithHeaderAndFooter />}>
           <Route index element={<Main />} />
+          <Route path="/course-detail" element={<CourseDetail />} />
         </Route>
         <Route element={<WithoutHeaderAndFooter />}>
           {loginTokenState || (

@@ -7,6 +7,7 @@ function UtilDiv({
   justifyContent,
   width,
   height,
+  margin,
   padding,
   bgColor,
   children,
@@ -17,6 +18,7 @@ function UtilDiv({
         justifyContent={justifyContent}
         width={width}
         height={height}
+        margin={margin}
         padding={padding}
         bgColor={bgColor}
       >

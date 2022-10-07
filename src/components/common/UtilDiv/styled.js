@@ -17,6 +17,7 @@ export const StyledUtilDiv = styled.div`
   flex-direction: column;
   width: ${({ width }) => width};
   height: ${({ height }) => (height ? height : '100%')};
+  margin: ${({ margin }) => margin};
   padding: ${({ padding }) => padding};
   background-color: ${({ bgColor }) => bgColor};
   color: ${color.white};

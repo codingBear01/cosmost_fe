@@ -1,3 +1,4 @@
+export { CourseDetailForm } from './CourseDetailForm/';
 export { CourseRegistrationForm } from './CourseRegistrationForm/';
 export { DaumAddressApiForm } from './DaumAddressApiForm/';
 export { EmailValidationForm } from './EmailValidationForm/';

@@ -20,6 +20,7 @@ export {
 
 /* 특정 페이지에서만 쓰이는 요소들 */
 export {
+  CourseDetailForm,
   CourseRegistrationForm,
   DaumAddressApiForm,
   EmailValidationForm,
@@ -36,6 +37,7 @@ export {
 
 /* pages */
 export {
+  CourseDetail,
   CourseRegistration,
   EmailValidation,
   Follows,

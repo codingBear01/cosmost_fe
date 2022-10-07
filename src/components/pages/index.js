@@ -1,3 +1,4 @@
+export { default as CourseDetail } from './CourseDetail';
 export { default as CourseRegistration } from './CourseRegistration';
 export { default as EmailValidation } from './EmailValidation';
 export { default as Follows } from './Follows';
