@@ -50,7 +50,7 @@ function App() {
       <Routes>
         <Route path="/" element={<WithHeaderAndFooter />}>
           <Route index element={<Main />} />
-          <Route path="/course-detail" element={<CourseDetail />} />
+          <Route path="/course-detail/:id" element={<CourseDetail />} />
         </Route>
         <Route element={<WithoutHeaderAndFooter />}>
           {loginTokenState || (
