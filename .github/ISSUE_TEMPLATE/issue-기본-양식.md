@@ -3,7 +3,7 @@ name: issue 기본 양식
 about: issue를 작성하기 위해 쓰이는 기본 양식
 title: ''
 labels: ''
-assignees: ''
+assignees: InvincibleGaren, codingBear01
 
 ---
 
