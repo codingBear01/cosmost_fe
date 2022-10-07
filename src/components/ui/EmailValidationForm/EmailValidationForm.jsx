@@ -70,7 +70,7 @@ function EmailValidForm() {
           onChange={onChangeEmail}
         />
       </UtilInputWrap>
-      {/* 다음으로 버튼 */}
+      {/* 다음으로 버튼    */}
       <NextBtn to="/address" />
     </UtilForm>
   );
