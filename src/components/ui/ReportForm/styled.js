@@ -21,7 +21,7 @@ export const ReportFormBg = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: ${color.black};
   transition: 0.5s;
 `;

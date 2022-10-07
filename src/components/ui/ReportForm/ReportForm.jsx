@@ -50,9 +50,8 @@ function ReportForm({
           <Input
             type="text"
             placeholder="제목"
-            w={'45rem'}
-            h={'4rem'}
-            // value={item?.title}
+            width={'45rem'}
+            height={'4rem'}
             disabled
           />
         )}
@@ -61,30 +60,31 @@ function ReportForm({
           placeholder="신고 내용을 입력해주세요."
           disabled
           value={item?.content}
+          maxLength={500}
         ></S.ReportFormTextArea>
         {/* 신고 버튼 */}
         {!isReportHistoryPage && (
           <S.ReportFormBtnWrap>
             <Button
               type="button"
-              w={'8rem'}
-              h={'3.5rem'}
-              mr={'0 3rem'}
-              col={color.black}
-              bg_col={color.lightGrey}
-              hov_bg_col={color.grey}
+              width={'8rem'}
+              height={'3.5rem'}
+              marign={'0 3rem'}
+              color={color.black}
+              bgColor={color.lightGrey}
+              hoveredBgColor={color.grey}
               onClick={onClick}
             >
               취소
             </Button>
             <Button
               type="submit"
-              w={'8rem'}
-              h={'3.5rem'}
-              mr={'0 3rem'}
-              col={color.white}
-              bg_col={color.darkBlue}
-              hov_bg_col={color.navy}
+              width={'8rem'}
+              height={'3.5rem'}
+              margin={'0 3rem'}
+              color={color.white}
+              bgColor={color.darkBlue}
+              hoveredBgColor={color.navy}
               onClick={(e) => onClickReport(e)}
             >
               신고

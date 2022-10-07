@@ -11,9 +11,9 @@ import { MAIN_COURSES } from '../../../store/temporaryArray';
 
 function MainPageSection() {
   return (
-    <Section height={'100vh'} pd_b={'7rem'}>
+    <Section height={'100vh'} paddingBottom={'7rem'}>
       <S.MainPageContainer>
-        <MainContentWrap pd={'10rem'}>
+        <MainContentWrap padding={'10rem'}>
           {/* 메인 텍스트 */}
           <MainTextWrap />
           {/* 코스 등록 버튼 */}
@@ -25,7 +25,7 @@ function MainPageSection() {
         {/* 메인 코스 */}
         {MAIN_COURSES &&
           MAIN_COURSES.map((item, i) => (
-            <MainContentWrap key={item.id} pd={'0 10rem'}>
+            <MainContentWrap key={item.id} padding={'0 10rem'}>
               <MainCourse item={item} />
             </MainContentWrap>
           ))}

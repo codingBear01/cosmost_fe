@@ -13,6 +13,6 @@ export const StyledSection = styled.section`
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding-bottom: ${({ pd_b }) => pd_b};
+  padding-bottom: ${({ paddingBottom }) => paddingBottom};
   background-color: ${color.black};
 `;

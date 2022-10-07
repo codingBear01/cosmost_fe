@@ -19,7 +19,7 @@ function UserInfoForm() {
   };
 
   return (
-    <UtilDiv pd={'5rem'}>
+    <UtilDiv width={'100%'} height={'100vh'} padding={'5rem'}>
       <UtilTitle>닉네임 님</UtilTitle>
       {/* 유저 프로필 및 유저 정보, 프로필 편집 버튼 */}
       <UserProfilArea />

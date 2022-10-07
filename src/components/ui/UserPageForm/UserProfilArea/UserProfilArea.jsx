@@ -15,8 +15,8 @@ function UserProfilArea() {
         <ProfilePic
           src="https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMjI0/MDAxNTU0NDc3OTE1Mjc5.eljTe4bpgeYf2O0fbBqpB74ruNcyO5dLd2GZtXL4VEYg.p0ZIX-d01subwWzvY53FAF_hF2BHnKXuIpEB2Av8eg8g.JPEG.xvx404/1542459444594.jpg?type=w800"
           alt="profile_pic"
-          w={'60px'}
-          h={'60px'}
+          width={'60px'}
+          height={'60px'}
         />
         <span>닉네임</span>
       </S.ProfilePicWrap>
@@ -39,11 +39,11 @@ function UserProfilArea() {
         <Link to="/">
           <Button
             type="button"
-            w={'220px'}
-            h={'25px'}
-            fs={'12px'}
-            bg_col={color.darkBlue}
-            hov_bg_col={color.navy}
+            width={'220px'}
+            height={'25px'}
+            font_size={'12px'}
+            bgColor={color.darkBlue}
+            hoveredBgColor={color.navy}
           >
             프로필 편집
           </Button>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 /* components */
 import {
   Button,
@@ -14,7 +14,6 @@ import * as AiIcons from 'react-icons/ai';
 import * as BsIcons from 'react-icons/bs';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
-import { useState } from 'react';
 
 function EmailValidForm() {
   const [emailAndNumber, setEmail] = useState({
@@ -29,7 +28,7 @@ function EmailValidForm() {
   };
 
   return (
-    <UtilForm pd={'15.4rem 10rem'}>
+    <UtilForm padding={'15.4rem 10rem'}>
       <UtilTitle>이메일 인증을 해주세요.</UtilTitle>
       <UtilInputWrap>
         <Icon>
@@ -40,18 +39,18 @@ function EmailValidForm() {
           placeholder="이메일"
           name="email"
           value={emailAndNumber.email}
-          w={'205px'}
-          h={'40px'}
-          mr={'0 10px'}
+          width={'205px'}
+          height={'40px'}
+          margin={'0 10px'}
           onChange={onChangeEmail}
         />
         <Button
           type="button"
-          w={'100px'}
-          h={'40px'}
-          col={color.white}
-          bg_col={color.darkBlue}
-          hov_bg_col={color.navy}
+          width={'100px'}
+          height={'40px'}
+          color={color.white}
+          bgColor={color.darkBlue}
+          hoveredBgColor={color.navy}
         >
           인증번호 발송
         </Button>
@@ -65,9 +64,9 @@ function EmailValidForm() {
           name="CertificationNumber"
           value={emailAndNumber.CertificationNumber}
           placeholder="인증번호"
-          w={'305px'}
-          h={'40px'}
-          mr={'0 10px'}
+          width={'305px'}
+          height={'40px'}
+          margin={'0 10px'}
           onChange={onChangeEmail}
         />
       </UtilInputWrap>

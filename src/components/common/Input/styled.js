@@ -8,14 +8,14 @@ import {
 } from './../../../style/';
 
 export const StyledInput = styled.input`
-  width: ${({ w }) => w};
-  height: ${({ h }) => h};
-  margin: ${({ mr }) => mr};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  margin: ${({ margin }) => margin};
   padding-left: ${gap.s};
   background: transparent;
   border-bottom: 1px solid ${color.white};
   outline: none;
-  font-size: ${fs.s};
+  font-size: ${({ fontSize }) => (fontSize ? fontSize : `${fs.s}`)};
   color: ${color.white};
 
   &::placeholder {

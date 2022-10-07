@@ -8,18 +8,18 @@ import * as AiIcons from 'react-icons/ai';
 /* static data */
 import { FONT_SIZE_LIST as fs } from '../../../../style';
 
-function HeaderSearchBar({ onClick, isSearchBarOpen }) {
+function HeaderSearchBar({ onClick, isSearchBarOpened }) {
   return (
-    <S.HeaderSearchBar isSearchBarOpen={isSearchBarOpen}>
+    <S.HeaderSearchBar isSearchBarOpened={isSearchBarOpened}>
       <Icon>
         <BsIcons.BsSearch />
       </Icon>
       <Input
         type="text"
         placeholder="키워드를 입력하세요."
-        w={'60rem'}
-        h={'2.5rem'}
-        mr={'0 2rem'}
+        width={'60rem'}
+        height={'2.5rem'}
+        margin={'0 2rem'}
       />
       <Icon onClick={onClick}>
         <AiIcons.AiOutlineClose />

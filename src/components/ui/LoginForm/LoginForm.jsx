@@ -54,8 +54,13 @@ function LoginForm() {
         alert('서버와 연결이 되지 않았습니다. 관리자에게 문의하세요.');
       });
   };
+
   return (
-    <UtilForm j_content={'center'} onSubmit={onSubmitForm}>
+    <UtilForm
+      justifyContent={'center'}
+      height={'100vh'}
+      onSubmit={onSubmitForm}
+    >
       {/* 아이디, 비밀번호 인풋 */}
       <UtilInputWrap>
         <Icon>
@@ -66,9 +71,9 @@ function LoginForm() {
           name="loginId"
           value={inputValue.loginId}
           placeholder="아이디"
-          w={'305px'}
-          h={'40px'}
-          mr={'0 0 0 10px'}
+          width={'305px'}
+          height={'40px'}
+          margin={'0 0 0 10px'}
           onChange={onChangeInput}
         />
       </UtilInputWrap>
@@ -81,20 +86,20 @@ function LoginForm() {
           name="loginPwd"
           value={inputValue.loginPwd}
           placeholder="비밀번호"
-          w={'305px'}
-          h={'40px'}
-          mr={'0 0 0 10px'}
+          width={'305px'}
+          height={'40px'}
+          margin={'0 0 0 10px'}
           onChange={onChangeInput}
         />
       </UtilInputWrap>
       {/* 로그인 버튼 */}
       <Button
         type="submit"
-        w={'340px'}
-        h={'40px'}
-        col={color.white}
-        bg_col={color.darkBlue}
-        hov_bg_col={color.navy}
+        width={'340px'}
+        height={'40px'}
+        color={color.white}
+        bgColor={color.darkBlue}
+        hoveredBgColor={color.navy}
       >
         로그인
       </Button>
@@ -106,38 +111,52 @@ function LoginForm() {
       </S.LoginFindWrap>
       {/* 회원가입 및 SNS 로그인 버튼들 */}
       <Link to="/email-validation">
-        <S.LoginBtns
-          type="button"
-          col={color.white}
-          bg_col={color.darkBlue}
-          hov_bg_col={color.navy}
+        <Button
+          type="submit"
+          width={'340px'}
+          height={'40px'}
+          margin={'0 0 10px 0'}
+          color={color.white}
+          bgColor={color.darkBlue}
+          hoveredBgColor={color.navy}
         >
-          <AiIcons.AiOutlineMail />
           <span>이메일로 회원가입</span>
-        </S.LoginBtns>
+        </Button>
       </Link>
-      <S.LoginBtns
-        type="button"
-        bg_col={color.yellow}
-        hov_bg_col={color.darkYellow}
+      <Button
+        type="submit"
+        width={'340px'}
+        height={'40px'}
+        margin={'0 0 10px 0'}
+        fontSize={'20px'}
+        bgColor={color.yellow}
+        hoveredBgColor={color.darkYellow}
       >
         <RiIcons.RiKakaoTalkFill />
-      </S.LoginBtns>
-      <S.LoginBtns
-        type="button"
-        col={color.white}
-        bg_col={color.naverGreen}
-        hov_bg_col={color.naverDarkGreen}
+      </Button>
+      <Button
+        type="submit"
+        width={'340px'}
+        height={'40px'}
+        margin={'0 0 10px 0'}
+        fontSize={'20px'}
+        color={color.white}
+        bgColor={color.naverGreen}
+        hoveredBgColor={color.naverDarkGreen}
       >
         <SiIcons.SiNaver />
-      </S.LoginBtns>
-      <S.LoginBtns
-        type="button"
-        bg_col={color.white}
-        hov_bg_col={color.lightGrey}
+      </Button>
+      <Button
+        type="submit"
+        width={'340px'}
+        height={'40px'}
+        margin={'0 0 10px 0'}
+        fontSize={'20px'}
+        bgColor={color.white}
+        hoveredBgColor={color.lightGrey}
       >
         <FcIcons.FcGoogle />
-      </S.LoginBtns>
+      </Button>
     </UtilForm>
   );
 }

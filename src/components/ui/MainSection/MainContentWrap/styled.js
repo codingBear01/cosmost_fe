@@ -16,5 +16,5 @@ export const StyledMainContentWrap = styled.div`
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  padding: ${({ pd }) => pd};
+  padding: ${({ padding }) => padding};
 `;

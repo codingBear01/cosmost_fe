@@ -10,7 +10,7 @@ import { FOLLOWS } from '../../../store/temporaryArray';
 
 function FollowsForm({ isFollower }) {
   return (
-    <UtilForm pd={'15.4rem 10rem'}>
+    <UtilForm padding={'15.4rem 10rem'}>
       <UtilTitle>{isFollower ? '팔로워' : '팔로잉'}</UtilTitle>
       <S.FollowList>
         {FOLLOWS &&
@@ -20,19 +20,19 @@ function FollowsForm({ isFollower }) {
                 <ProfilePic
                   src={item.imgUrl}
                   alt={item.alt}
-                  w={'60px'}
-                  h={'60px'}
+                  width={'60px'}
+                  height={'60px'}
                 />
                 <span>{item.nickname}</span>
               </Link>
               <Button
                 type="button"
-                w={'70px'}
-                h={'30px'}
-                fs={'12px'}
-                col={color.black}
-                bg_col={item.isFollow ? color.darkRed : color.darkGreen}
-                hov_bg_col={item.isFollow ? color.red : color.lightGreen}
+                width={'70px'}
+                height={'30px'}
+                fontSize={'12px'}
+                color={color.black}
+                bgColor={item.isFollow ? color.darkRed : color.darkGreen}
+                hoveredBgColor={item.isFollow ? color.red : color.lightGreen}
               >
                 {item.isFollow ? '언팔로우' : '팔로우'}
               </Button>

@@ -1,26 +1,13 @@
-import DaumPostcode from 'react-daum-postcode';
-import { AiFillCloseSquare } from 'react-icons/ai';
-import { BiCurrentLocation } from 'react-icons/bi';
-import { COLOR_LIST as color } from '../../../style';
-import styled from 'styled-components';
-import { Button, FlexDiv } from '../../common';
+/* libraries */
 import { useNavigate } from 'react-router-dom';
-
-const AddressApi = styled(DaumPostcode)`
-  height: 100% !important;
-`;
-
-const LocationBaseImg = styled(BiCurrentLocation)`
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
-  color: ${color.white};
-`;
-
-const Div = styled.div`
-  width: 100%;
-  height: 100%;
-`;
+/* components */
+import * as S from './styled';
+import { Button } from '../../';
+/* icons */
+import * as BiIcons from 'react-icons/bi';
+/* static data */
+import { COLOR_LIST as color } from '../../../style';
+import './style.css';
 
 function DaumAddressApiModal({ state }) {
   const navigate = useNavigate();
@@ -41,7 +28,6 @@ function DaumAddressApiModal({ state }) {
 
     window.navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log(position);
         let latitude = position.coords.latitude;
         let longitude = position.coords.longitude;
 
@@ -56,7 +42,6 @@ function DaumAddressApiModal({ state }) {
 
             let result = response.result,
               Address = result.items[1];
-            console.log(Address);
             navigate('/detail-address', {
               state: { ...state, address: Address.address },
             });
@@ -79,21 +64,21 @@ function DaumAddressApiModal({ state }) {
   };
 
   return (
-    <Div>
-      <FlexDiv justifyContent="right">
-        <LocationBaseImg />
+    <S.AddressApiWrap>
+      <S.GettingCurrentLocationButtonWrap>
+        <BiIcons.BiCurrentLocation />
         <Button
-          width="12rem"
-          h="5rem"
-          fs="1.5rem"
-          col={color.white}
+          width="15rem"
+          height="5rem"
+          fontSize="1.5rem"
+          color={color.white}
           onClick={onClickCurrentLocation}
         >
           현재 위치로 설정
         </Button>
-      </FlexDiv>
-      <AddressApi onComplete={onCompleteAddressModal} />
-    </Div>
+      </S.GettingCurrentLocationButtonWrap>
+      <S.AddressApiContent onComplete={onCompleteAddressModal} />
+    </S.AddressApiWrap>
   );
 }
 

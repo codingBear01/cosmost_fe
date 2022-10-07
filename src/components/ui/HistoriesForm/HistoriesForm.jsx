@@ -27,18 +27,16 @@ function HistoriesForm({ isReportHistoryPage }) {
   const onClickOpenReportDetail = (item) => {
     setIsReportFormOpened(!isReportFormOpened);
     setReportDetail(item);
-    console.log('신고상세');
   };
 
   const onClickOpenReportReply = (isReplied) => {
     if (isReplied) {
       setIsReportReplyCanOpen(!isReportReplyCanOpen);
-      console.log('답변 조회');
     }
   };
 
   return (
-    <UtilDiv pd={'5rem 12.9rem'}>
+    <UtilDiv padding={'5rem 12.9rem'}>
       {/* 페이지 이름 */}
       <UtilTitle>
         {isReportHistoryPage ? '신고내역' : '내가 남긴 리뷰'}
@@ -74,10 +72,10 @@ function HistoriesForm({ isReportHistoryPage }) {
                   {/* 답변 여부 버튼 */}
                   <Button
                     type="button"
-                    w={'80px'}
-                    h={'30px'}
-                    fs={'12px'}
-                    bg_col={item.isReplied ? color.darkGreen : color.darkRed}
+                    widht={'80px'}
+                    height={'30px'}
+                    fontSize={'12px'}
+                    bgColor={item.isReplied ? color.darkGreen : color.darkRed}
                     onClick={() => onClickOpenReportReply(item.isReplied)}
                   >
                     {item.isReplied ? '답변 완료' : '답변 미완료'}

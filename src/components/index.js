@@ -1,26 +1,15 @@
 /* 여러 페이지에 중복해서 쓰이는 components */
 export {
   Button,
-  CategoriesWrap,
-  CourseContainer,
-  CourseImg,
-  CoursesWrap,
-  CourseTitle,
-  EachCourseBox,
-  EachCourseWrap,
   FlexDiv,
   Footer,
-  HashTag,
   Header,
-  HeightCenterDiv,
   Icon,
   Input,
-  MoreCourseBtn,
   NextBtn,
-  PageTitle,
+  PageContainer,
   ProfilePic,
   Section,
-  SectionTitle,
   SmallProfilePic,
   ToTopBtn,
   UtilDiv,
@@ -31,6 +20,8 @@ export {
 
 /* 특정 페이지에서만 쓰이는 요소들 */
 export {
+  CourseRegistrationForm,
+  DaumAddressApiForm,
   EmailValidationForm,
   FollowsForm,
   HistoriesForm,
@@ -41,7 +32,6 @@ export {
   ReportForm,
   SignUpForm,
   UserPageForm,
-  UtilPageContainer,
 } from './ui/';
 
 /* pages */

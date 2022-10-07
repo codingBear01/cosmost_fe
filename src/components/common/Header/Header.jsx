@@ -14,38 +14,38 @@ import * as BsIcons from 'react-icons/bs';
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
 
 function Header() {
-  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
-  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+  const [isLoggedin, setIsLoggedin] = useRecoilState(isLoginAtom);
+  const [isSearchBarOpened, setIsSearchBarOpened] = useState(false);
 
-  const onSearchBarOpen = () => {
-    setIsSearchBarOpen(!isSearchBarOpen);
+  const onClickOpenSearchBar = () => {
+    setIsSearchBarOpened(!isSearchBarOpened);
   };
 
   return (
     <>
       <S.Header>
-        <S.HeaderContainer isSearchBarOpen={isSearchBarOpen}>
+        <S.HeaderContainer isSearchBarOpened={isSearchBarOpened}>
           <Link to="/">
             <HeaderLogo>cosMost</HeaderLogo>
           </Link>
 
           <S.HeaderUtilWrap>
-            <Icon onClick={onSearchBarOpen}>
+            <Icon onClick={onClickOpenSearchBar}>
               <BsIcons.BsSearch />
             </Icon>
             <Link to="/login">
-              <HeaderUtilBtn isLogin={isLogin} />
+              <HeaderUtilBtn isLogin={isLoggedin} />
             </Link>
           </S.HeaderUtilWrap>
         </S.HeaderContainer>
 
         <HeaderSearchBar
-          isSearchBarOpen={isSearchBarOpen}
-          onClick={onSearchBarOpen}
+          isSearchBarOpened={isSearchBarOpened}
+          onClick={onClickOpenSearchBar}
         />
       </S.Header>
 
-      <S.HeaderSearchBarOverlay isSearchBarOpen={isSearchBarOpen} />
+      <S.HeaderSearchBarOverlay isSearchBarOpened={isSearchBarOpened} />
       {/* <button
           onClick={() => setIsLogin(!isLogin)}
           style={{ color: `${color.white}` }}

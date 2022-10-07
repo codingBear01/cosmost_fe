@@ -1,23 +1,23 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
   BUTTON_SIZE_LIST as bs,
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
-} from "../../../style";
+} from '../../../style';
 
 const FlexDiv = styled.div`
-  width: ${(props) => props.width || "100%"};
-  height: ${(props) => props.height || "auto"};
-  display: ${(props) => props.display || "flex"};
-  justify-content: ${(props) => props.justifyContent || "normal"};
-  align-items: ${(props) => props.alignItems || "center"};
-  margin: ${(props) => props.margin || "0 0 0 0"};
-  flex-wrap: ${(props) => props.flexWrap || "nowrap"};
-  font-size: ${(props) => props.fontSize || "1.5rem"};
-  font-weight: ${(props) => props.fontWeight || "normal"};
+  width: ${({ width }) => width || '100%'};
+  height: ${({ height }) => height || 'auto'};
+  display: ${({ display }) => display || 'flex'};
+  justify-content: ${({ justifyContent }) => justifyContent || 'normal'};
+  align-items: ${({ align_items }) => align_items || 'center'};
+  margin: ${({ margin }) => margin || '0 0 0 0'};
+  flex-wrap: ${({ flex_wrap }) => flex_wrap || 'nowrap'};
+  font-size: ${({ font_size }) => font_size || '1.5rem'};
+  font-weight: ${({ font_weight }) => font_weight || 'normal'};
 `;
 
 export default FlexDiv;

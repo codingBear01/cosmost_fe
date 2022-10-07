@@ -12,7 +12,7 @@ import {
 } from '../../../style';
 
 export const StyledProfilePic = styled.img`
-  width: ${({ w }) => w};
-  height: ${({ h }) => h};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
   border-radius: ${br.default};
 `;
