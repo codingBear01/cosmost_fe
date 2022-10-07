@@ -11,6 +11,16 @@ function InputDetailAddressForm({ state }) {
     setDetailAddress(e.target.value);
   };
 
+  /* 다음 버튼 클릭시 호출할 핸들러
+     상세주소 유효성 검사후 다음 창으로 넘어간다.*/
+  const onClickNextButton = (e) => {
+    if (detailAddress === '') {
+      alert('상세주소를 입력해주세요.');
+      e.preventDefault();
+      return;
+    }
+  };
+
   return (
     <UtilForm padding={'15.4rem 10rem'}>
       <UtilTitle>상세 주소를 입력해주세요.</UtilTitle>
@@ -33,7 +43,11 @@ function InputDetailAddressForm({ state }) {
           onChange={onChangeDetailAddress}
         />
       </UtilInputWrap>
-      <NextBtn to="/sign-up" state={{ ...state, detailAddress }} />
+      <NextBtn
+        to={'/sign-up'}
+        state={{ ...state, detailAddress }}
+        onClick={onClickNextButton}
+      />
     </UtilForm>
   );
 }

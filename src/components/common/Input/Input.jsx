@@ -14,6 +14,7 @@ function Input({
   margin,
   fontSize,
   onChange,
+  required,
 }) {
   return (
     <S.StyledInput
@@ -28,6 +29,7 @@ function Input({
       margin={margin}
       fontSize={fontSize}
       onChange={onChange}
+      required={required}
     />
   );
 }

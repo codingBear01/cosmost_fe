@@ -1,14 +1,50 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 /* components */
 import * as S from './styled';
-import { Button, Input, UtilForm, UtilInputWrap, UtilTitle } from '../..';
+import {
+  Button,
+  Input,
+  ProfilePic,
+  UtilForm,
+  UtilInputWrap,
+  UtilTitle,
+} from '../..';
 /* static data */
 import { COLOR_LIST as color, GAP_LIST as gap } from '../../../style';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
-const PROFILE_PIC_URL = `url('https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMjI0/MDAxNTU0NDc3OTE1Mjc5.eljTe4bpgeYf2O0fbBqpB74ruNcyO5dLd2GZtXL4VEYg.p0ZIX-d01subwWzvY53FAF_hF2BHnKXuIpEB2Av8eg8g.JPEG.xvx404/1542459444594.jpg?type=w800')`;
+const PROFILE_PIC_DEFAULT_URL = '/assets/images/ProfileDefaultImage.png';
+
+const RegExpId = /^[A-Za-z][A-Za-z0-9]{2,15}$/;
+const RegExpNickName = /^[a-z0-9가-힣]{2,16}$/;
+const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
 
 function SignUpForm({ state }) {
+  const [userInformation, setUserInformation] = useState({
+    id: '',
+    nickname: '',
+    ...state,
+    password: '',
+    passwordConfirm: '',
+    age: 'default',
+    marriage: 'default',
+    PROFILE_PIC_URL: PROFILE_PIC_DEFAULT_URL,
+  });
+
+  const [inputError, setInputError] = useState({
+    idError: true,
+    nicknameError: true,
+    passwordError: true,
+    passwordConfirmError: true,
+    ageError: true,
+    marriageError: true,
+    PROFILE_PIC_URL_ERROR: true,
+  });
+
+  //프로필 이미지 업로드 여부를 나타내는 state
+  const [profileChangeState, setProfileChangeState] = useState(false);
+
   /* 프로필 이미지 업로드에 쓰이는 useRef */
   const profileInputRef = useRef();
 
@@ -19,32 +55,111 @@ function SignUpForm({ state }) {
     profileInputRef.current.click();
   };
 
+  /* 사용자가 데이터를 입력할 때 호출할 핸들러
+     state를 전달한다. */
+  const onChangeUserInformation = (e) => {
+    if (e.target.name === 'id') {
+      if (RegExpId.test(e.target.value) === false) {
+        setInputError({ ...inputError, idError: true });
+      } else setInputError({ ...inputError, idError: false });
+    } else if (e.target.name === 'nickname') {
+      if (RegExpNickName.test(e.target.value) === false) {
+        setInputError({ ...inputError, nicknameError: true });
+      } else setInputError({ ...inputError, nicknameError: false });
+    } else if (e.target.name === 'password') {
+      if (RegExpPassword.test(e.target.value) === false) {
+        setInputError({ ...inputError, passwordError: true });
+      } else setInputError({ ...inputError, passwordError: false });
+    } else if (e.target.name === 'passwordConfirm') {
+      if (userInformation.password !== e.target.value) {
+        setInputError({ ...inputError, passwordConfirmError: true });
+      } else setInputError({ ...inputError, passwordConfirmError: false });
+    } else if (e.target.name === 'age') {
+      if (e.target.value == 'default') {
+        setInputError({ ...inputError, ageError: true });
+      } else setInputError({ ...inputError, ageError: false });
+    } else if (e.target.name === 'marriage') {
+      if (e.target.value == 'default') {
+        setInputError({ ...inputError, marriageError: true });
+      } else setInputError({ ...inputError, marriageError: false });
+    }
+
+    setUserInformation({ ...userInformation, [e.target.name]: e.target.value });
+  };
+
+  /* 사용자가 프로파일 이미지를 선택했을 때 호출할 핸들러
+     선택한 이미지의 URL 경로를 state로 전달한다. */
+  const onChangeProfileImg = (e) => {
+    const FileReaderObject = new FileReader();
+    FileReaderObject.onload = () => {
+      setUserInformation({
+        ...userInformation,
+        PROFILE_PIC_URL: FileReaderObject.result,
+      });
+      setProfileChangeState(true);
+      setInputError({ ...inputError, PROFILE_PIC_URL_ERROR: false });
+    };
+    FileReaderObject.readAsDataURL(e.target.files.item(0));
+  };
+
+  /* 회원가입 버튼을 클릭할 때 호출할 핸들러*/
+  const onSubmitRegisterUser = (e) => {
+    e.preventDefault();
+
+    const ErrorCheck = Object.values(inputError).every((element) => {
+      return !element;
+    });
+
+    if (ErrorCheck) {
+      const sendData = {
+        loginId: userInformation.id,
+        loginPwd: userInformation.password,
+        email: userInformation.email,
+        status: 1,
+        role: 0,
+        nickname: userInformation.nickname,
+        address: `${userInformation.address} ${userInformation.detailAddress}`,
+        birthdate: userInformation.age,
+        married: userInformation.marriage,
+      };
+      console.log(sendData);
+    } else {
+      alert('유효하지 않은 데이터가 있습니다.');
+      return;
+    }
+  };
+
   return (
-    <UtilForm padding={'10rem 0'}>
+    <UtilForm padding={'10rem 0'} onSubmit={onSubmitRegisterUser}>
       <UtilTitle>회원 정보를 입력해주세요.</UtilTitle>
       {/* 프사, 아이디, 닉네임 */}
       <S.UserProfileWrap marginBottom={gap.xl}>
-        {/* 프로필 이미지 업로드에 쓰이는 버튼 및 인풋
-        이미지 경로 받아와서 bg_img_url props로 전달하면 될 듯?
-        */}
         <div>
           <S.UploadProfilePicBtn
-            bgImgUrl={PROFILE_PIC_URL}
+            bgImgUrl={`url(${userInformation.PROFILE_PIC_URL})`}
             onClick={onClickUploadProilePic}
           >
-            프로필 이미지 업로드
+            {profileChangeState || '프로필 이미지 업로드'}
           </S.UploadProfilePicBtn>
-          <S.ProfilePicUploadInput ref={profileInputRef} type="file" />
+          <S.ProfilePicUploadInput
+            ref={profileInputRef}
+            type="file"
+            onChange={onChangeProfileImg}
+          />
         </div>
         <S.UserProfileWrap flexDirection={'column'}>
-          <UtilInputWrap>
+          <UtilInputWrap marginBottom={'0'}>
             <Input
               type="text"
+              name="id"
+              value={userInformation.id}
               placeholder="아이디"
               width={'150px'}
               height={'40px'}
               margin={'0 10px'}
+              onChange={onChangeUserInformation}
             />
+
             <Button
               type="button"
               width={'80px'}
@@ -56,32 +171,56 @@ function SignUpForm({ state }) {
               중복확인
             </Button>
           </UtilInputWrap>
+          {inputError.idError && (
+            <div style={{ width: '250px', color: 'red', paddingLeft: '10px' }}>
+              ID는 대소문자로 시작하며 대소문자 및 숫자로 구성된 3자리 이상
+              16자리 이하여야 합니다
+            </div>
+          )}
+          {inputError.idError || (
+            <div style={{ width: '250px', color: 'blue', paddingLeft: '10px' }}>
+              사용 가능한 아이디입니다.
+            </div>
+          )}
           <UtilInputWrap marginBottom={'0'}>
             <Input
               type="text"
+              name="nickname"
               placeholder="닉네임"
-              width={'150px'}
-              height={'40px'}
-              margin={'0 10px'}
+              w={'150px'}
+              h={'40px'}
+              mr={'0 10px'}
+              onChange={onChangeUserInformation}
             />
             <Button
               type="button"
-              width={'80px'}
-              height={'40px'}
-              color={color.white}
-              bgColor={color.darkBlue}
-              hoveredBgColor={color.navy}
+              w={'80px'}
+              h={'40px'}
+              bg_col={color.darkBlue}
+              col={color.white}
+              hov_bg_col={color.navy}
             >
               중복확인
             </Button>
           </UtilInputWrap>
+          {inputError.nicknameError && (
+            <div style={{ width: '250px', color: 'red', paddingLeft: '10px' }}>
+              "닉네임은 대소문자, 숫자, 한글로 구성된 2자리 이상 16자리 이하여야
+              합니다."
+            </div>
+          )}
+          {inputError.nicknameError || (
+            <div style={{ width: '250px', color: 'blue', paddingLeft: '10px' }}>
+              올바른 닉네임입니다.
+            </div>
+          )}
         </S.UserProfileWrap>
       </S.UserProfileWrap>
-      {/* 앞서 입력한 이메일, 주소 */}
+      {/* 앞서 입력한 이메일, 주소, 상세주소 */}
       <UtilInputWrap>
         <Input
           type="text"
-          value={state.email}
+          value={userInformation.email}
           disabled={true}
           width={'340px'}
           height={'40px'}
@@ -91,7 +230,7 @@ function SignUpForm({ state }) {
       <UtilInputWrap>
         <Input
           type="text"
-          value={state.address}
+          value={userInformation.address}
           disabled={true}
           width={'340px'}
           height={'40px'}
@@ -101,7 +240,7 @@ function SignUpForm({ state }) {
       <UtilInputWrap>
         <Input
           type="text"
-          value={state.detailAddress}
+          value={userInformation.detailAddress}
           disabled={true}
           width={'340px'}
           height={'40px'}
@@ -109,56 +248,112 @@ function SignUpForm({ state }) {
         />
       </UtilInputWrap>
       {/* 비밀번호 */}
-      <UtilInputWrap>
+      <UtilInputWrap mb={'0'}>
         <Input
-          type="text"
+          type="password"
+          name="password"
+          value={userInformation.password}
           placeholder="비밀번호"
           width={'340px'}
           height={'40px'}
           margin={'0 10px'}
+          onChange={onChangeUserInformation}
         />
       </UtilInputWrap>
-      <UtilInputWrap>
+      {inputError.passwordError && (
+        <div style={{ width: '360px', color: 'red', paddingLeft: '10px' }}>
+          "패스워드는 영소문자, 특수문자를 포함하여 8글자 이상 16자리 이하여야
+          합니다."
+        </div>
+      )}
+      {inputError.passwordError || (
+        <div style={{ width: '360px', color: 'blue', paddingLeft: '10px' }}>
+          올바른 패스워드입니다.
+        </div>
+      )}
+      <UtilInputWrap mb={'0'}>
         <Input
-          type="text"
+          type="password"
+          name="passwordConfirm"
+          value={userInformation.passwordConfirm}
           placeholder="비밀번호 재확인"
           width={'340px'}
           height={'40px'}
           margin={'0 10px'}
+          onChange={onChangeUserInformation}
         />
       </UtilInputWrap>
+      {inputError.passwordConfirmError && (
+        <div style={{ width: '360px', color: 'red', paddingLeft: '10px' }}>
+          "패스워드 확인은 패스워드와 동일해야 합니다."
+        </div>
+      )}
+      {inputError.passwordConfirmError || (
+        <div style={{ width: '360px', color: 'blue', paddingLeft: '10px' }}>
+          패스워드 확인이 패스워드와 동일합니다.
+        </div>
+      )}
       {/* 연령대, 결혼 여부 드롭다운 */}
       <S.UserInfoDropDownWrap>
-        <S.UserInfoDropDown name="age">
-          <option value="default">연령대</option>
-          <option value="10">10대</option>
-          <option value="20">20대</option>
-          <option value="30">30대</option>
-          <option value="40">40대</option>
-          <option value="50">50대</option>
-          <option value="60">60대 이상</option>
-        </S.UserInfoDropDown>
-
-        <S.UserInfoDropDown name="marriage">
-          <option value="default">결혼 여부</option>
-          <option value={false}>미혼</option>
-          <option value={true}>기혼</option>
-        </S.UserInfoDropDown>
+        <div>
+          <S.UserInfoDropDown
+            name="age"
+            value={userInformation.age}
+            onChange={onChangeUserInformation}
+          >
+            <option value="default">연령대</option>
+            <option value="10">10대</option>
+            <option value="20">20대</option>
+            <option value="30">30대</option>
+            <option value="40">40대</option>
+            <option value="50">50대</option>
+            <option value="60">60대 이상</option>
+          </S.UserInfoDropDown>
+          {inputError.ageError && (
+            <div style={{ width: '160px', color: 'red', paddingLeft: '10px' }}>
+              연령대를 선택해주세요
+            </div>
+          )}
+          {inputError.ageError || (
+            <div style={{ width: '160px', color: 'blue', paddingLeft: '10px' }}>
+              연령대를 선택하셨습니다.
+            </div>
+          )}
+        </div>
+        <div>
+          <S.UserInfoDropDown
+            name="marriage"
+            value={userInformation.marriage}
+            onChange={onChangeUserInformation}
+          >
+            <option value="default">결혼 여부</option>
+            <option value={'미혼'}>미혼</option>
+            <option value={'기혼'}>기혼</option>
+          </S.UserInfoDropDown>
+          {inputError.marriageError && (
+            <div style={{ width: '160px', color: 'red', paddingLeft: '10px' }}>
+              결혼 여부를 선택해주세요
+            </div>
+          )}
+          {inputError.marriageError || (
+            <div style={{ width: '160px', color: 'blue', paddingLeft: '10px' }}>
+              결혼 여부를 선택했습니다.
+            </div>
+          )}
+        </div>
       </S.UserInfoDropDownWrap>
       {/* 회원가입 버튼 */}
-      <Link to="/login">
-        <Button
-          type={'button'}
-          width={'340px'}
-          height={'40px'}
-          margin={'20px 0 0 0'}
-          color={color.white}
-          bgColor={color.darkBlue}
-          hoveredBgColor={color.navy}
-        >
-          회원가입
-        </Button>
-      </Link>
+      <Button
+        type={'submit'}
+        width={'340px'}
+        height={'40px'}
+        margin={'20px 0 0 0'}
+        bgColor={color.darkBlue}
+        color={color.white}
+        hoveredBgColor={color.navy}
+      >
+        회원가입
+      </Button>
     </UtilForm>
   );
 }
