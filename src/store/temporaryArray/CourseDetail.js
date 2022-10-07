@@ -5,7 +5,7 @@ export const COURSE_DETAIL = {
   createdDate: '2022/10/07',
   likeCount: 999,
   reviewCount: 999,
-  coureImages: [
+  courseImages: [
     {
       id: 1,
       imageUrl:

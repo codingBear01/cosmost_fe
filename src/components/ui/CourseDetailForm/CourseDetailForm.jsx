@@ -2,7 +2,7 @@
 import React from 'react';
 /* components */
 import * as S from './styled';
-import { CourseImageCarousel } from '.';
+import { CourseImageCarousel, CourseTitleArea } from '.';
 import {
   Button,
   Icon,
@@ -12,23 +12,17 @@ import {
   UtilInputWrap,
   UtilTitle,
 } from '../..';
-
-const sliderSettings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-};
+/* static data */
+import { COURSE_DETAIL as courseData } from '../../../store';
 
 function CourseDetailForm() {
   return (
     <>
       {/* 코스 이미지 carousel */}
-      <CourseImageCarousel />
+      <CourseImageCarousel courseData={courseData} />
       {/* 본문 */}
       <UtilDiv width={'76.8rem'} padding={'7rem 0'} margin={'0 auto'}>
-        <h1 style={{ color: 'white' }}>코스 상세 조회 페이지</h1>
+        <CourseTitleArea courseData={courseData} />
       </UtilDiv>
     </>
   );

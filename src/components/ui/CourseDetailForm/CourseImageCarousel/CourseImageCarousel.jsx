@@ -12,12 +12,12 @@ const carouselSettings = {
   slidesToScroll: 1,
 };
 
-function CourseImgCarousel() {
+function CourseImgCarousel({ courseData }) {
   return (
     <S.CarouselArea>
       <S.CarouselWrap {...carouselSettings}>
-        {COURSE_DETAIL &&
-          COURSE_DETAIL.coureImages.map((item) => (
+        {courseData &&
+          courseData.courseImages.map((item) => (
             <S.CarouselImage key={item.id} src={item.imageUrl} alt={item.alt} />
           ))}
       </S.CarouselWrap>
