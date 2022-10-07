@@ -10,10 +10,10 @@ import {
   mainTextFadeIn,
 } from '../../../../style';
 
-export const CourseTitleAreaWrap = styled.div`
+export const StyledCourseUpperInfoWrap = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: ${({ justifyContent }) => justifyContent};
   width: 100%;
   height: 6.5rem;
   padding: 1rem;
@@ -33,8 +33,8 @@ export const CourseTitle = styled.span`
 export const CourseAverageRate = styled.span`
   margin-left: 1rem;
   padding: 0.5rem 1rem;
+  border: 1px solid ${color.white};
   border-radius: ${br.default};
-  background-color: ${color.grey};
   font-size: ${fs.l};
   font-weight: 600;
 `;

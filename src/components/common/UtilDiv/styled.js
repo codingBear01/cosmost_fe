@@ -22,4 +22,8 @@ export const StyledUtilDiv = styled.div`
   background-color: ${({ bgColor }) => bgColor};
   color: ${color.white};
   animation: ${mainTextFadeIn} 1.2s;
+
+  ${media.mobile} {
+    width: 100%;
+  }
 `;

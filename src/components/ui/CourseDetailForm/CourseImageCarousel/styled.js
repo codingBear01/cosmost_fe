@@ -42,6 +42,9 @@ export const CarouselWrap = styled(Slider)`
     opacity: 1;
     color: ${color.black};
     cursor: pointer;
+    ${media.mobile} {
+      display: none;
+    }
   }
   .slick-dots {
     bottom: -4rem;

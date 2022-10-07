@@ -37,6 +37,16 @@ export const COURSE_DETAIL = {
       alt: 'busan',
     },
   ],
+  categories: [
+    {
+      id: 1,
+      name: '수영구',
+    },
+    {
+      id: 2,
+      name: '조용히 커피 한잔',
+    },
+  ],
   hashTags: [
     {
       id: 1,
