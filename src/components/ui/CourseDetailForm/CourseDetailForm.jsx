@@ -2,7 +2,11 @@
 import React from 'react';
 /* components */
 import * as S from './styled';
-import { CourseImageCarousel, CourseTagWrap } from '.';
+import {
+  CourseImageCarousel,
+  CourseReviewRegisterForm,
+  CourseTagWrap,
+} from '.';
 import {
   Button,
   Icon,
@@ -46,6 +50,36 @@ function CourseDetailForm() {
           courseData={courseData}
           dataCategory="authorProfile"
         />
+        {/* 코스에 등록된 장소를 표시하는 지도 */}
+        <S.LocationMap
+          src="https://file.mk.co.kr/meet/neds/2020/11/image_readtop_2020_1206310_16061899354442297.jpg"
+          alt="locations"
+        />
+        {/* 코스에 등록된 장소 순서 */}
+        <CourseTagWrap
+          justifyContent={'center'}
+          height={'10rem'}
+          courseData={courseData}
+          dataCategory="courses"
+        />
+        {/* 코스 설명 */}
+        <S.CourseDescription>{courseData.description}</S.CourseDescription>
+        {/* 공유, 좋아요 버튼 */}
+        <CourseTagWrap
+          justifyContent={'flex-end'}
+          height={'10rem'}
+          courseData={courseData}
+          dataCategory="shareAndLikeButton"
+        />
+        {/* 코스 평균 평점 및 별 개수별 퍼센테이지 */}
+        <CourseTagWrap
+          justifyContent={'center'}
+          height={'30rem'}
+          courseData={courseData}
+          dataCategory="averageRate"
+        />
+        {/* 리뷰 작성 폼 */}
+        <CourseReviewRegisterForm />
       </UtilDiv>
     </>
   );

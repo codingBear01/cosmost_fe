@@ -11,19 +11,21 @@ import * as GrIcons from 'react-icons/gr';
 import * as BiIcons from 'react-icons/bi';
 import * as FiIcons from 'react-icons/fi';
 import * as GiIcons from 'react-icons/gi';
+import * as AiIcons from 'react-icons/ai';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../../style';
 
 function CourseTagWrap({ justifyContent, height, courseData, dataCategory }) {
   return (
-    // 코스 제목, 평점, 작성일, 더보기 버튼
+    // dataCategory에 따라 다른 컴포넌트 렌더링됨
     <S.StyledCourseTagWrap justifyContent={justifyContent} height={height}>
       {dataCategory === 'titleAndDate' ? (
+        // 코스 제목, 평점, 작성일, 더보기 버튼
         <>
           <S.StyledCourseTagWrap>
             <S.CourseTitle>{courseData.title}</S.CourseTitle>
             <S.CourseAverageRate>
-              ⭐ {courseData.averageRate}
+              ⭐ {courseData.rate.average}
             </S.CourseAverageRate>
           </S.StyledCourseTagWrap>
           <S.CourseCreatedDateAndMoreIconWrap>
@@ -78,6 +80,55 @@ function CourseTagWrap({ justifyContent, height, courseData, dataCategory }) {
             <GiIcons.GiRoad />
             <span>{courseData.author.courses}</span>
           </S.AutorProfileVerticalWrap>
+        </>
+      ) : dataCategory === 'courses' ? (
+        // 코스 순서
+        <>
+          {courseData.uploadedLocations.map((item) => (
+            <div key={item.id}>
+              <S.CourseName>
+                {item.id}. {item.name}
+              </S.CourseName>
+              {item.id !== courseData.uploadedLocations.length && (
+                <AiIcons.AiOutlineArrowRight style={{ fontSize: `${fs.s}` }} />
+              )}
+            </div>
+          ))}
+        </>
+      ) : dataCategory === 'shareAndLikeButton' ? (
+        // 공유, 좋아요 버튼
+        <>
+          <S.ShareAndLikeButton>
+            <AiIcons.AiOutlineShareAlt />
+          </S.ShareAndLikeButton>
+          <S.ShareAndLikeButton>
+            <FaIcons.FaRegThumbsUp />
+          </S.ShareAndLikeButton>
+        </>
+      ) : dataCategory === 'averageRate' ? (
+        // 코스 평균 평점 및 별 개수별 퍼센테이지
+        <>
+          {/* 코스 평균 평점 */}
+          <S.AverageRate>
+            <span>평균 평점</span>
+            <span>{courseData.rate.average}</span>
+          </S.AverageRate>
+          <ul>
+            {/* 별 개수별 퍼센테이지 */}
+            {courseData.rate.stars.map((item) => (
+              <S.CourseRateStarWrap key={item.id}>
+                <S.CourseRateStar>{item.star}</S.CourseRateStar>
+                <S.CourseRateStarPercentGaugeWrap>
+                  <S.CourseRateStarPercentGauge
+                    width={`${item.percent}%`}
+                  ></S.CourseRateStarPercentGauge>
+                </S.CourseRateStarPercentGaugeWrap>
+                <S.CourseRateStarPercent>
+                  {item.percent}%
+                </S.CourseRateStarPercent>
+              </S.CourseRateStarWrap>
+            ))}
+          </ul>
         </>
       ) : (
         courseData[`${dataCategory}`].map((item) => (
