@@ -10,12 +10,12 @@ import {
   mainTextFadeIn,
 } from '../../../../style';
 
-export const StyledCourseUpperInfoWrap = styled.div`
+export const StyledCourseTagWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: ${({ justifyContent }) => justifyContent};
   width: 100%;
-  height: 6.5rem;
+  height: ${({ height }) => (height ? height : '6.5rem')};
   padding: 1rem;
   border-bottom: 1px solid ${color.white};
 `;
@@ -39,7 +39,7 @@ export const CourseAverageRate = styled.span`
   font-weight: 600;
 `;
 
-export const CourseCreatedDataAndMoreIconWrap = styled.div`
+export const CourseCreatedDateAndMoreIconWrap = styled.div`
   display: flex;
   align-items: flex-start;
   height: 100%;
@@ -53,4 +53,31 @@ export const CourseCreatedDataAndMoreIconWrap = styled.div`
 
 export const CourseCreatedDate = styled.div`
   font-size: ${fs.m};
+  font-weight: 600;
+`;
+
+export const AutorProfileVerticalWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: 100%;
+  margin-left: 2rem;
+  margin-right: ${({ marginRight }) => (marginRight ? marginRight : '1rem')};
+
+  svg {
+    font-size: ${fs.xl};
+    cursor: pointer;
+  }
+
+  span {
+    font-size: ${fs.l};
+    font-weight: 600;
+    cursor: pointer;
+  }
+`;
+
+export const AutorNickname = styled.span`
+  font-size: ${fs.l};
+  font-weight: 600;
 `;
