@@ -4,8 +4,9 @@ import React from 'react';
 import * as S from './styled';
 import {
   CourseImageCarousel,
+  CourseReview,
   CourseReviewRegisterForm,
-  CourseTagWrap,
+  CourseContentWrap,
 } from '.';
 import {
   Button,
@@ -32,19 +33,22 @@ function CourseDetailForm() {
         margin={'0 auto'}
       >
         {/* 코스 제목 및 날짜, 더보기 버튼 */}
-        <CourseTagWrap
+        <CourseContentWrap
           justifyContent={'space-between'}
           courseData={courseData}
           dataCategory="titleAndDate"
         />
         {/* 좋아요, 리뷰 숫자 */}
-        <CourseTagWrap courseData={courseData} dataCategory="likeAndReview" />
+        <CourseContentWrap
+          courseData={courseData}
+          dataCategory="likeAndReview"
+        />
         {/* 카테고리 */}
-        <CourseTagWrap courseData={courseData} dataCategory="categories" />
+        <CourseContentWrap courseData={courseData} dataCategory="categories" />
         {/* 해시태그 */}
-        <CourseTagWrap courseData={courseData} dataCategory="hashTags" />
+        <CourseContentWrap courseData={courseData} dataCategory="hashTags" />
         {/* 작성자 정보 */}
-        <CourseTagWrap
+        <CourseContentWrap
           justifyContent={'center'}
           height={'10rem'}
           courseData={courseData}
@@ -56,7 +60,7 @@ function CourseDetailForm() {
           alt="locations"
         />
         {/* 코스에 등록된 장소 순서 */}
-        <CourseTagWrap
+        <CourseContentWrap
           justifyContent={'center'}
           height={'10rem'}
           courseData={courseData}
@@ -65,14 +69,14 @@ function CourseDetailForm() {
         {/* 코스 설명 */}
         <S.CourseDescription>{courseData.description}</S.CourseDescription>
         {/* 공유, 좋아요 버튼 */}
-        <CourseTagWrap
+        <CourseContentWrap
           justifyContent={'flex-end'}
           height={'10rem'}
           courseData={courseData}
           dataCategory="shareAndLikeButton"
         />
         {/* 코스 평균 평점 및 별 개수별 퍼센테이지 */}
-        <CourseTagWrap
+        <CourseContentWrap
           justifyContent={'center'}
           height={'30rem'}
           courseData={courseData}
@@ -80,6 +84,8 @@ function CourseDetailForm() {
         />
         {/* 리뷰 작성 폼 */}
         <CourseReviewRegisterForm />
+        {/* 코스 리뷰 */}
+        <CourseReview />
       </UtilDiv>
     </>
   );

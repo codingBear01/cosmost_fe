@@ -2,8 +2,8 @@
 import React from 'react';
 /* components */
 import * as S from './styled';
-import { CourseTag } from '..';
-import { Button, ProfilePic } from '../../../';
+import { CourseContent } from '..';
+import { Button, ProfilePic } from '../../..';
 /* icons */
 import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';
@@ -15,19 +15,24 @@ import * as AiIcons from 'react-icons/ai';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../../style';
 
-function CourseTagWrap({ justifyContent, height, courseData, dataCategory }) {
+function CourseContentWrap({
+  justifyContent,
+  height,
+  courseData,
+  dataCategory,
+}) {
   return (
     // dataCategory에 따라 다른 컴포넌트 렌더링됨
-    <S.StyledCourseTagWrap justifyContent={justifyContent} height={height}>
+    <S.StyledCourseContentWrap justifyContent={justifyContent} height={height}>
       {dataCategory === 'titleAndDate' ? (
         // 코스 제목, 평점, 작성일, 더보기 버튼
         <>
-          <S.StyledCourseTagWrap>
+          <S.StyledCourseContentWrap>
             <S.CourseTitle>{courseData.title}</S.CourseTitle>
             <S.CourseAverageRate>
               ⭐ {courseData.rate.average}
             </S.CourseAverageRate>
-          </S.StyledCourseTagWrap>
+          </S.StyledCourseContentWrap>
           <S.CourseCreatedDateAndMoreIconWrap>
             <S.CourseCreatedDate>{courseData.createdDate}</S.CourseCreatedDate>
             <GrIcons.GrMoreVertical />
@@ -36,14 +41,14 @@ function CourseTagWrap({ justifyContent, height, courseData, dataCategory }) {
       ) : dataCategory === 'likeAndReview' ? (
         // 좋아요, 리뷰 숫자
         <>
-          <CourseTag>
+          <CourseContent>
             <FaIcons.FaRegThumbsUp />
             <span>{courseData.likeCount}</span>
-          </CourseTag>
-          <CourseTag>
+          </CourseContent>
+          <CourseContent>
             <MdIcons.MdOutlineRateReview />
             <span>{courseData.reviewCount}</span>
-          </CourseTag>
+          </CourseContent>
         </>
       ) : dataCategory === 'authorProfile' ? (
         // 작성자 프로필
@@ -133,16 +138,16 @@ function CourseTagWrap({ justifyContent, height, courseData, dataCategory }) {
       ) : (
         courseData[`${dataCategory}`].map((item) => (
           // 카테고리 or 해시태그
-          <CourseTag key={item.id}>
+          <CourseContent key={item.id}>
             <span>
               {dataCategory === 'hashTags' && '#'}
               {item.name}
             </span>
-          </CourseTag>
+          </CourseContent>
         ))
       )}
-    </S.StyledCourseTagWrap>
+    </S.StyledCourseContentWrap>
   );
 }
 
-export default CourseTagWrap;
+export default CourseContentWrap;

@@ -10,7 +10,7 @@ import {
   mainTextFadeIn,
 } from '../../../../style';
 
-export const StyledCourseTagWrap = styled.div`
+export const StyledCourseContentWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: ${({ justifyContent }) => justifyContent};

@@ -6,8 +6,9 @@ export { isLoginAtom, isReportFormOpenedAtom } from './recoilStates';
 
 /* temporary array */
 export {
-  COURSE_DETAIL,
   CATEGORIES,
+  COURSE_DETAIL,
+  COURSE_REIVEWS,
   FOLLOWS,
   MAIN_COURSES,
   RANKERS,

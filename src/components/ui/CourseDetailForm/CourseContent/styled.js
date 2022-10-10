@@ -10,7 +10,7 @@ import {
   mainTextFadeIn,
 } from '../../../../style';
 
-export const StyledCourseTag = styled.div`
+export const StyledCourseContent = styled.div`
   display: flex;
   align-items: center;
   height: 3rem;

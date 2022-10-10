@@ -1,5 +1,6 @@
-export { COURSE_DETAIL } from './CourseDetail';
 export { CATEGORIES } from './Categories';
+export { COURSE_DETAIL } from './CourseDetail';
+export { COURSE_REIVEWS } from './CourseReviews';
 export { FOLLOWS } from './Follows';
 export { MAIN_COURSES } from './MainCourses';
 export { RANKERS } from './Rankers';

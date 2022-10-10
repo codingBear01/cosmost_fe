@@ -38,6 +38,9 @@ export const ReviewRegisterTitle = styled.span`
 export const ReviewRegisterRate = styled.div`
   font-size: ${fs.l};
   color: ${color.white};
+  svg {
+    cursor: pointer;
+  }
 `;
 
 export const ReviewRegisterTextarea = styled.textarea`
