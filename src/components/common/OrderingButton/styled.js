@@ -4,18 +4,22 @@ import styled from 'styled-components';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
+  BUTTON_SIZE_LIST as bs,
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
-  mainTextFadeIn,
 } from '../../../style';
 
-export const LocationMap = styled.img`
-  width: 100%;
-  height: 46rem;
-`;
-
-export const CourseDescription = styled.div`
-  padding: 4rem;
+export const StyledOrderingModalButton = styled.button`
+  display: flex;
+  align-items: center;
+  align-self: end;
+  padding: 1rem;
   font-size: ${fs.s};
+  font-weight: 600;
+  color: ${color.white};
+
+  svg {
+    font-size: 2.5rem;
+  }
 `;

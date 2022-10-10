@@ -2,12 +2,17 @@
 export { default as GoToTop } from './GoToTop';
 
 /* recoil states */
-export { isLoginAtom, isReportFormOpenedAtom } from './recoilStates';
+export {
+  isLoginAtom,
+  isReportFormOpenedAtom,
+  isOrderingModalOpenedAtom,
+} from './recoilStates';
 
 /* temporary array */
 export {
-  COURSE_DETAIL,
   CATEGORIES,
+  COURSE_DETAIL,
+  COURSE_REIVEWS,
   FOLLOWS,
   MAIN_COURSES,
   RANKERS,

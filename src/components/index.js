@@ -7,6 +7,8 @@ export {
   Icon,
   Input,
   NextBtn,
+  OrderingButton,
+  OrderingModal,
   PageContainer,
   ProfilePic,
   Section,
