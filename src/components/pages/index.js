@@ -7,5 +7,6 @@ export { default as InputAddress } from './InputAddress';
 export { default as InputDetailAddress } from './InputDetailAddress';
 export { default as Login } from './Login';
 export { default as Main } from './Main';
+export { default as SearchedCourses } from './SearchedCourses';
 export { default as SignUp } from './SignUp';
 export { default as User } from './User';

@@ -17,6 +17,7 @@ import {
   InputDetailAddress,
   Login,
   Main,
+  SearchedCourses,
   SignUp,
   User,
 } from './components';
@@ -55,6 +56,7 @@ function App() {
         <Route path="/" element={<WithHeaderAndFooter />}>
           <Route index element={<Main />} />
           <Route path="/course-detail/:id" element={<CourseDetail />} />
+          <Route path="/searched-courses" element={<SearchedCourses />} />
         </Route>
         <Route element={<WithoutHeaderAndFooter />}>
           {loginTokenState || (
