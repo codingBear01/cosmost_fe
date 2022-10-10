@@ -5,8 +5,10 @@ import { useRecoilState } from 'recoil';
 import { isOrderingModalOpenedAtom } from '../../../store';
 /* components */
 import * as S from './styled';
-import { SelectingCategoryArea } from '.';
+import { SearchedCourse, SelectingCategoryArea } from '.';
 import { OrderingButton, UtilDiv } from '../../';
+/* static data */
+import { COURSES } from '../../../store';
 
 function SearchedCoursesForm() {
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
@@ -23,6 +25,11 @@ function SearchedCoursesForm() {
       <SelectingCategoryArea />
       {/* 정렬 기준 버튼 */}
       <OrderingButton onClick={onClickOpenOrderingModal} />
+      {/* 코스 검색 결괏값 */}
+      <S.SearchedCourseContainer>
+        {COURSES &&
+          COURSES.map((item) => <SearchedCourse key={item.id} item={item} />)}
+      </S.SearchedCourseContainer>
     </UtilDiv>
   );
 }
