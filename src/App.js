@@ -6,6 +6,7 @@ import {
   Header,
   Footer,
   PageContainer,
+  OrderingModal,
   // pages
   CourseDetail,
   CourseRegistration,
@@ -20,14 +21,17 @@ import {
   User,
 } from './components';
 /* router */
-import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
+import { Routes, Route, Outlet, Navigate, useLocation } from 'react-router-dom';
 
 const WithHeaderAndFooter = () => {
+  const path = useLocation().pathname;
+
   return (
     <>
       <Header />
       <Outlet />
       <Footer />
+      <OrderingModal path={path} />
     </>
   );
 };

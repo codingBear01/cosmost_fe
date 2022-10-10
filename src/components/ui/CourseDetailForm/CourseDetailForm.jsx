@@ -1,5 +1,8 @@
 /* libraries */
 import React from 'react';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { isOrderingModalOpenedAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import {
@@ -8,19 +11,19 @@ import {
   CourseReviewRegisterForm,
   CourseContentWrap,
 } from '.';
-import {
-  Button,
-  Icon,
-  Input,
-  NextBtn,
-  UtilDiv,
-  UtilInputWrap,
-  UtilTitle,
-} from '../..';
+import { OrderingButton, UtilDiv } from '../..';
 /* static data */
 import { COURSE_DETAIL as courseData } from '../../../store';
 
 function CourseDetailForm() {
+  const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
+    isOrderingModalOpenedAtom
+  );
+
+  const onClickOpenOrderingModal = () => {
+    setIsOrderingModalOpened(!isOrderingModalOpened);
+  };
+
   return (
     <>
       {/* 코스 이미지 carousel */}
@@ -84,6 +87,8 @@ function CourseDetailForm() {
         />
         {/* 리뷰 작성 폼 */}
         <CourseReviewRegisterForm />
+        {/* 정렬 버튼 */}
+        <OrderingButton onClick={onClickOpenOrderingModal} />
         {/* 코스 리뷰 */}
         <CourseReview />
       </UtilDiv>

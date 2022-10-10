@@ -18,7 +18,7 @@ export const StyledCourseReviewRegisterForm = styled.form`
   align-items: flex-end;
   justify-content: center;
   flex-direction: column;
-  width: 76.8rem;
+  width: 100%;
   padding: 4rem;
   border-bottom: 1px solid ${color.white};
 `;
@@ -44,7 +44,7 @@ export const ReviewRegisterRate = styled.div`
 `;
 
 export const ReviewRegisterTextarea = styled.textarea`
-  width: 68.8rem;
+  width: 100%;
   height: 22rem;
   margin: 2rem 0;
   padding: 1rem;

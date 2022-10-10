@@ -27,7 +27,7 @@ function CourseContentWrap({
       {dataCategory === 'titleAndDate' ? (
         // 코스 제목, 평점, 작성일, 더보기 버튼
         <>
-          <S.StyledCourseContentWrap>
+          <S.StyledCourseContentWrap style={{ borderBottom: 'none' }}>
             <S.CourseTitle>{courseData.title}</S.CourseTitle>
             <S.CourseAverageRate>
               ⭐ {courseData.rate.average}
@@ -139,10 +139,10 @@ function CourseContentWrap({
         courseData[`${dataCategory}`].map((item) => (
           // 카테고리 or 해시태그
           <CourseContent key={item.id}>
-            <span>
+            <p>
               {dataCategory === 'hashTags' && '#'}
               {item.name}
-            </span>
+            </p>
           </CourseContent>
         ))
       )}

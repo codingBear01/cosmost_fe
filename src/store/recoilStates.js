@@ -6,8 +6,14 @@ export const isLoginAtom = atom({
   default: false,
 });
 
-/* ReportForm Open 여부 state*/
+/* ReportForm Open 여부 state */
 export const isReportFormOpenedAtom = atom({
   key: 'isReportFormOpenedAtom',
+  default: false,
+});
+
+/* OrderingModal Open 여부 state */
+export const isOrderingModalOpenedAtom = atom({
+  key: 'isOrderingModalOpenedAtom',
   default: false,
 });

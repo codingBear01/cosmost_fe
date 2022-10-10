@@ -13,9 +13,8 @@ import {
 export const StyledCourseContent = styled.div`
   display: flex;
   align-items: center;
-  height: 3rem;
   margin-right: 2rem;
-  padding: 0 2rem;
+  padding: 0.5rem 2rem;
   border-radius: ${br.default};
   background-color: ${color.darkBlue};
 

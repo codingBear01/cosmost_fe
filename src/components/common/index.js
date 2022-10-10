@@ -5,6 +5,8 @@ export { Header } from './Header/';
 export { Icon } from './Icon/';
 export { Input } from './Input/';
 export { NextBtn } from './NextBtn/';
+export { OrderingButton } from './OrderingButton/';
+export { OrderingModal } from './OrderingModal/';
 export { PageContainer } from './PageContainer/';
 export { ProfilePic } from './ProfilePic/';
 export { Section } from './Section/';

@@ -26,7 +26,7 @@ export const CarouselWrap = styled(Slider)`
   margin: auto;
 
   ${media.mobile} {
-    width: 65rem;
+    width: 60rem;
   }
 
   .slick-list {
@@ -36,6 +36,9 @@ export const CarouselWrap = styled(Slider)`
     width: 7rem;
     height: 7rem;
     z-index: 100;
+    ${media.mobile} {
+      display: none !important;
+    }
   }
   .slick-arrow:before {
     font-size: 7rem;
@@ -43,7 +46,7 @@ export const CarouselWrap = styled(Slider)`
     color: ${color.black};
     cursor: pointer;
     ${media.mobile} {
-      display: none;
+      display: none !important;
     }
   }
   .slick-dots {
@@ -55,4 +58,7 @@ export const CarouselImage = styled.img`
   width: 100%;
   height: 50rem;
   border-radius: 1.8rem;
+  ${media.mobile} {
+    width: 60rem !important;
+  }
 `;

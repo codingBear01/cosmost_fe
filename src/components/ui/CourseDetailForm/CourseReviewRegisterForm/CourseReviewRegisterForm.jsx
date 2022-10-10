@@ -22,7 +22,10 @@ function CourseReviewRegisterForm() {
           <AiIcons.AiOutlineStar />
         </S.ReviewRegisterRate>
       </S.ReviewRegisterTitleAndRateWrap>
-      <S.ReviewRegisterTextarea placeholder="리뷰를 입력하세요."></S.ReviewRegisterTextarea>
+      <S.ReviewRegisterTextarea
+        placeholder="리뷰를 입력하세요."
+        maxLength={500}
+      ></S.ReviewRegisterTextarea>
       <Button
         type={'submit'}
         width={'10rem'}
