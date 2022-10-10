@@ -19,7 +19,8 @@ export const StyledCourseContent = styled.div`
   background-color: ${color.darkBlue};
 
   svg,
-  span {
+  span,
+  p {
     font-size: ${fs.m};
   }
 

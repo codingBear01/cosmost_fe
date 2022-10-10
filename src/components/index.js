@@ -33,6 +33,7 @@ export {
   LoginForm,
   MainSection,
   ReportForm,
+  SearchedCoursesForm,
   SignUpForm,
   UserPageForm,
 } from './ui/';
@@ -48,6 +49,7 @@ export {
   InputDetailAddress,
   Login,
   Main,
+  SearchedCourses,
   SignUp,
   User,
 } from './pages/';

@@ -9,5 +9,6 @@ export { InputDetailAddressForm } from './InputDetailAddressForm/';
 export { LoginForm } from './LoginForm/';
 export { MainSection } from './MainSection/';
 export { ReportForm } from './ReportForm/';
+export { SearchedCoursesForm } from './SearchedCoursesForm/';
 export { SignUpForm } from './SignUpForm/';
 export { UserPageForm } from './UserPageForm/';
