@@ -3,7 +3,6 @@ export { default as GoToTop } from './GoToTop';
 
 /* recoil states */
 export {
-  isLoginAtom,
   isReportFormOpenedAtom,
   isOrderingModalOpenedAtom,
 } from './recoilStates';

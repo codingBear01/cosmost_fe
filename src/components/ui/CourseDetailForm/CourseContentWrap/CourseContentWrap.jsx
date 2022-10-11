@@ -1,9 +1,9 @@
 /* libraries */
-import React from 'react';
+import React, { useState } from 'react';
 /* components */
 import * as S from './styled';
 import { CourseContent } from '..';
-import { Button, ProfilePic } from '../../..';
+import { Button, CourseUtillityModal, ProfilePic } from '../../..';
 /* icons */
 import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';
@@ -21,6 +21,17 @@ function CourseContentWrap({
   courseData,
   dataCategory,
 }) {
+  /* States */
+  /* 코스 및 리뷰 수정, 삭제 Modal Open useState */
+  const [isCoureUtilityModalOpened, setIsCoureUtilityModalOpened] =
+    useState(false);
+
+  /* Handlers */
+  /* 코스 및 리뷰 수정, 삭제 Modal의 Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
+  const onClickOpenCourseUtilityModal = () => {
+    setIsCoureUtilityModalOpened(!isCoureUtilityModalOpened);
+  };
+
   return (
     // dataCategory에 따라 다른 컴포넌트 렌더링됨
     <S.StyledCourseContentWrap justifyContent={justifyContent} height={height}>
@@ -35,8 +46,11 @@ function CourseContentWrap({
           </S.StyledCourseContentWrap>
           <S.CourseCreatedDateAndMoreIconWrap>
             <S.CourseCreatedDate>{courseData.createdDate}</S.CourseCreatedDate>
-            <GrIcons.GrMoreVertical />
+            <GrIcons.GrMoreVertical onClick={onClickOpenCourseUtilityModal} />
           </S.CourseCreatedDateAndMoreIconWrap>
+          {isCoureUtilityModalOpened && (
+            <CourseUtillityModal top={'8rem'} right={'2rem'} />
+          )}
         </>
       ) : dataCategory === 'likeAndReview' ? (
         // 좋아요, 리뷰 숫자

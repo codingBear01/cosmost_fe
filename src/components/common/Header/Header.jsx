@@ -1,9 +1,6 @@
 /* hooks */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-/* recoil */
-import { useRecoilState } from 'recoil';
-import { isLoginAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { HeaderLogo, HeaderSearchBar, HeaderUtilBtn } from './';
@@ -14,12 +11,8 @@ import * as BsIcons from 'react-icons/bs';
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
 
 function Header() {
-  const [isLoggedin, setIsLoggedin] = useRecoilState(isLoginAtom);
+  /* 서치바 Open 여부 state */
   const [isSearchBarOpened, setIsSearchBarOpened] = useState(false);
-
-  const onClickOpenSearchBar = () => {
-    setIsSearchBarOpened(!isSearchBarOpened);
-  };
 
   return (
     <>
@@ -30,19 +23,16 @@ function Header() {
           </Link>
 
           <S.HeaderUtilWrap>
-            <Icon onClick={onClickOpenSearchBar}>
+            <Icon>
               <BsIcons.BsSearch />
             </Icon>
             <Link to="/login">
-              <HeaderUtilBtn isLogin={isLoggedin} />
+              <HeaderUtilBtn />
             </Link>
           </S.HeaderUtilWrap>
         </S.HeaderContainer>
 
-        <HeaderSearchBar
-          isSearchBarOpened={isSearchBarOpened}
-          onClick={onClickOpenSearchBar}
-        />
+        <HeaderSearchBar isSearchBarOpened={isSearchBarOpened} />
       </S.Header>
 
       <S.HeaderSearchBarOverlay isSearchBarOpened={isSearchBarOpened} />

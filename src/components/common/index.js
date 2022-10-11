@@ -1,5 +1,5 @@
 export { Button } from './Button/';
-export { FlexDiv } from './FlexDiv';
+export { CourseUtillityModal } from './CourseUtillityModal/';
 export { Footer } from './Footer/';
 export { Header } from './Header/';
 export { Icon } from './Icon/';

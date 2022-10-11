@@ -1,5 +1,7 @@
 /* libraries */
 import React, { useRef, useState, useEffect } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilForm, UtilInputWrap, UtilTitle } from '../..';
@@ -13,7 +15,7 @@ const RegExpNickName = /^[a-z0-9가-힣]{2,16}$/;
 const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
 
 function SignUpForm({ state }) {
-  // User가 입력한 정보를 나타내는 state
+  /* User가 입력한 정보를 나타내는 state */
   const [userInformation, setUserInformation] = useState({
     id: '',
     nickname: '',
@@ -24,7 +26,8 @@ function SignUpForm({ state }) {
     marriage: 'default',
     PROFILE_PIC_URL: PROFILE_PIC_DEFAULT_URL,
   });
-  // User가 입력한 정보의 유효성 여부를 나타내는 state
+
+  /* User가 입력한 정보의 유효성 여부를 나타내는 state */
   const [inputError, setInputError] = useState({
     idError: true,
     nicknameError: true,
@@ -35,7 +38,7 @@ function SignUpForm({ state }) {
     PROFILE_PIC_URL_ERROR: true,
   });
 
-  // User가 입력한 정보가 비어있는지를 나타내는 state
+  /* User가 입력한 정보 중 버이 있는 값이 있는지 나타내는 state */
   const [emptyInputError, setEmptyInputError] = useState({
     idEmpty: true,
     nicknameEmpty: true,
@@ -52,6 +55,7 @@ function SignUpForm({ state }) {
   /* 프로필 이미지 업로드에 쓰이는 useRef */
   const profileInputRef = useRef();
 
+  /* 패스워드 일치 여부를 확인하는 함수 */
   useEffect(() => {
     if (userInformation.password !== userInformation.passwordConfirm) {
       setInputError({ ...inputError, passwordConfirmError: true });
@@ -60,15 +64,13 @@ function SignUpForm({ state }) {
     }
   }, [userInformation.password]);
 
-  /*사용자가 프로파일 이미지 등록 버튼을 클릭한 경우 호출할 핸들러.
-    input[type=file]에 클릭 이벤트를 발생시킨다.*/
+  /*사용자가 프로파일 이미지 등록 버튼을 클릭한 경우 호출할 핸들러. input[type=file]에 클릭 이벤트를 발생시킨다.*/
   const onClickUploadProilePic = (e) => {
     e.preventDefault();
     profileInputRef.current.click();
   };
 
-  /* 사용자가 데이터를 입력할 때 호출할 핸들러
-     state를 전달한다. */
+  /* 사용자가 데이터를 입력할 때 호출할 핸들러. 입력값이 조건문을 통과하면 state에 저장한다. */
   const onChangeUserInformation = (e) => {
     if (e.target.name === 'id') {
       if (e.target.value === '') {
@@ -124,8 +126,7 @@ function SignUpForm({ state }) {
     setUserInformation({ ...userInformation, [e.target.name]: e.target.value });
   };
 
-  /* 사용자가 프로파일 이미지를 선택했을 때 호출할 핸들러
-     선택한 이미지의 URL 경로를 state로 전달한다. */
+  /* 사용자가 프로파일 이미지를 선택했을 때 호출할 핸들러. 선택한 이미지의 URL 경로를 state로 전달한다. */
   const onChangeProfileImg = (e) => {
     const FileReaderObject = new FileReader();
     FileReaderObject.onload = () => {
@@ -161,8 +162,7 @@ function SignUpForm({ state }) {
       };
       console.log(sendData);
     } else {
-      alert('유효하지 않은 데이터가 있습니다.');
-      return;
+      toast.error('유효하지 않은 데이터가 있습니다.');
     }
   };
 
@@ -172,12 +172,12 @@ function SignUpForm({ state }) {
       {/* 프사, 아이디, 닉네임 */}
       <S.UserProfileWrap marginBottom={gap.xl}>
         <div>
-          <S.UploadProfilePicBtn
+          <S.UploadProfilePicBox
             bgImgUrl={`url(${userInformation.PROFILE_PIC_URL})`}
             onClick={onClickUploadProilePic}
           >
             {profileChangeState || '프로필 이미지 업로드'}
-          </S.UploadProfilePicBtn>
+          </S.UploadProfilePicBox>
           <S.ProfilePicUploadInput
             ref={profileInputRef}
             type="file"
@@ -396,6 +396,16 @@ function SignUpForm({ state }) {
       >
         회원가입
       </Button>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
     </UtilForm>
   );
 }

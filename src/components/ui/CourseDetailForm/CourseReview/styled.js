@@ -57,6 +57,7 @@ export const CourseReviewStar = styled.div`
 `;
 
 export const CourseReviewCreatedDateWrap = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   span {

@@ -1,5 +1,5 @@
 /* libraries */
-import React from 'react';
+import React, { useState } from 'react';
 /* recoil */
 import { useRecoilState } from 'recoil';
 import { isOrderingModalOpenedAtom } from '../../../store';
@@ -16,10 +16,14 @@ import { OrderingButton, ToTopBtn, UtilDiv } from '../..';
 import { COURSE_DETAIL as courseData } from '../../../store';
 
 function CourseDetailForm() {
+  /* States */
+  /* 정렬 기준 모달 Open 여부 RecoilState */
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
   );
 
+  /* Handlers */
+  /* 정렬 기준 모달 Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
   const onClickOpenOrderingModal = () => {
     setIsOrderingModalOpened(!isOrderingModalOpened);
   };

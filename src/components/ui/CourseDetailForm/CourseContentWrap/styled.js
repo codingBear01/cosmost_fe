@@ -11,6 +11,7 @@ import {
 } from '../../../../style';
 
 export const StyledCourseContentWrap = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: ${({ justifyContent }) => justifyContent};

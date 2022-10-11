@@ -1,7 +1,7 @@
 /* 여러 페이지에 중복해서 쓰이는 components */
 export {
   Button,
-  FlexDiv,
+  CourseUtillityModal,
   Footer,
   Header,
   Icon,
