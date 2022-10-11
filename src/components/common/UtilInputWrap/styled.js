@@ -11,7 +11,8 @@ import {
 export const StyledUtilInputWrap = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
   align-self: ${({ alignSelf }) => alignSelf};
-  margin-bottom: ${({ marginBottom }) =>
-    marginBottom ? marginBottom : `${gap.xl}`};
+  margin: ${({ margin }) => (margin ? margin : '0 0 2rem 0')};
 `;

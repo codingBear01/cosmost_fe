@@ -11,7 +11,7 @@ import {
   CourseReviewRegisterForm,
   CourseContentWrap,
 } from '.';
-import { OrderingButton, UtilDiv } from '../..';
+import { OrderingButton, ToTopBtn, UtilDiv } from '../..';
 /* static data */
 import { COURSE_DETAIL as courseData } from '../../../store';
 
@@ -32,7 +32,7 @@ function CourseDetailForm() {
       <UtilDiv
         justifyContent={'center'}
         width={'76.8rem'}
-        padding={'7rem 0'}
+        padding={'0 0 7rem 0'}
         margin={'0 auto'}
       >
         {/* 코스 제목 및 날짜, 더보기 버튼 */}
@@ -92,6 +92,7 @@ function CourseDetailForm() {
         {/* 코스 리뷰 */}
         <CourseReview />
       </UtilDiv>
+      <ToTopBtn />
     </>
   );
 }

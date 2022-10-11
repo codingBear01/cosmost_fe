@@ -1,4 +1,7 @@
+/* libraries */
 import React, { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 /* components */
 import {
   Button,
@@ -31,29 +34,30 @@ function EmailValidForm() {
     });
   };
 
-  /* 인증 번호 발송 버튼 클릭시 호출할 핸들러
-     이메일 정보를 백엔드로 전송한다.*/
-  const onClickSendCertification = (e) => {
-    e.preventDefault();
+  /* 입력된 이메일의 유효성을 검증하는 함수 */
+  const CheckEmailAddress = () => {
     const regExpEmail = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
-    if (emailAndNumber.email === '') {
-      alert('이메일을 입력해주세요');
-      return;
-    }
 
-    if (regExpEmail.test(emailAndNumber.email) === false) {
-      alert('이메일 양식을 다시 입력해주세요');
-      return;
+    if (
+      emailAndNumber.email === '' ||
+      regExpEmail.test(emailAndNumber.email) === false
+    ) {
+      toast.error('이메일을 욜바르게 입력해주세요.');
     }
   };
 
-  /* 다음 버튼 클릭시 호출할 핸들러
-     인증번호를 검사한 후 다음 창으로 넘어간다.*/
-  const onClickNextButton = (e) => {
+  /* 인증 번호 발송 버튼 클릭시 호출할 핸들러. 입력된 이메일의 유효성을 검증한 후 이메일 정보를 백엔드로 전송한다.*/
+  const onClickSendCertification = (e) => {
+    e.preventDefault();
+    CheckEmailAddress();
+  };
+
+  /* 다음 버튼 클릭시 호출할 핸들러. 이메일 및 인증번호를 검사한 후 다음 창으로 넘어간다.*/
+  const onClickCheckValidationNumber = (e) => {
+    CheckEmailAddress();
     if (emailAndNumber.userCertificationNumber === '') {
-      alert('인증번호를 입력해주세요.');
       e.preventDefault();
-      return;
+      toast.error('인증번호를 입력해주세요.');
     }
   };
 
@@ -105,7 +109,17 @@ function EmailValidForm() {
       <NextBtn
         to={'/address'}
         state={{ email: emailAndNumber.email }}
-        onClick={onClickNextButton}
+        onClick={onClickCheckValidationNumber}
+      />
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        pauseOnHover={false}
+        theme="light"
       />
     </UtilForm>
   );

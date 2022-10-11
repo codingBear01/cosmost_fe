@@ -15,10 +15,11 @@ export const StyledCourseContentWrap = styled.div`
   align-items: center;
   justify-content: ${({ justifyContent }) => justifyContent};
   width: 100%;
-  padding: 1rem;
+  padding: 2rem 1rem;
   border-bottom: 1px solid ${color.white};
 `;
 
+// 코스 제목, 평점, 작성일, 더보기 버튼
 export const CourseTitleAndRateWrap = styled.div`
   display: flex;
   align-items: center;
@@ -78,6 +79,7 @@ export const AutorProfileVerticalWrap = styled.div`
 `;
 
 export const AutorNickname = styled.span`
+  margin-bottom: ${gap.s};
   font-size: ${fs.l};
   font-weight: 600;
 `;

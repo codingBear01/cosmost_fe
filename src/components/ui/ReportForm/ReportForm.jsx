@@ -26,15 +26,14 @@ function ReportForm({
       <S.ReportForm>
         <S.ReportFormTitleWrap>
           <UtilTitle>
+            {/* 신고 내역 페이지이면 신고 상세 조회, 신고하기 폼이면 내가 남긴 리뷰 */}
             {isReportHistoryPage ? '신고 상세 조회' : '내가 남긴 리뷰'}
           </UtilTitle>
           <AiIcons.AiOutlineClose onClick={onClick} />
         </S.ReportFormTitleWrap>
+        {/* 신고 내역 페이지면 해당 신고의 분류, 신고하기 폼이면 신고 유형 드랍다운 */}
         {isReportHistoryPage ? (
-          <S.ReportHistoryCat>
-            분류:
-            {item?.category}
-          </S.ReportHistoryCat>
+          <S.ReportHistoryCat>분류: {item?.category}</S.ReportHistoryCat>
         ) : (
           <S.ReportFormCats>
             <option value="default">신고 유형</option>
@@ -43,6 +42,7 @@ function ReportForm({
             <option value="review">리뷰</option>
           </S.ReportFormCats>
         )}
+        {/* 신고 내역 페이지면 해당 신고의 제목, 신고하기 폼이면 신고 제목 입력 인풋 */}
         {isReportHistoryPage ? (
           <S.ReportFormTitle>{item?.title}</S.ReportFormTitle>
         ) : (
@@ -58,11 +58,13 @@ function ReportForm({
         {/* 신고 내용 */}
         <S.ReportFormTextArea
           placeholder="신고 내용을 입력해주세요."
-          disabled
+          // 신고 내역 페이지면 입력 불가, 신고하기 폼이면 입력 가능
+          disabled={isReportHistoryPage}
           value={item?.content}
           maxLength={500}
         ></S.ReportFormTextArea>
         {/* 신고 버튼 */}
+        {/* 신고 내역 페이지면 안 보임, 신고하기 폼이면 보임 */}
         {!isReportHistoryPage && (
           <S.ReportFormBtnWrap>
             <Button

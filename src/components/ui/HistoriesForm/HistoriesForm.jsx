@@ -1,5 +1,6 @@
 /* libraries */
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 /* recoil */
 import { useRecoilState } from 'recoil';
 import { isReportFormOpenedAtom } from '../../../store';
@@ -72,10 +73,11 @@ function HistoriesForm({ isReportHistoryPage }) {
                   {/* 답변 여부 버튼 */}
                   <Button
                     type="button"
-                    widht={'80px'}
+                    width={'80px'}
                     height={'30px'}
                     fontSize={'12px'}
                     bgColor={item.isReplied ? color.darkGreen : color.darkRed}
+                    hoveredBgColor={item.isReplied && color.lightGreen}
                     onClick={() => onClickOpenReportReply(item.isReplied)}
                   >
                     {item.isReplied ? '답변 완료' : '답변 미완료'}
@@ -96,9 +98,11 @@ function HistoriesForm({ isReportHistoryPage }) {
                 {/* 리뷰 제목 및 답변 여부 버튼 */}
                 <S.HistoryTitleWrap>
                   {/* 리뷰 제목 */}
-                  <S.HistoryTitle>
-                    [<span>{item.title}</span>]에 남긴 리뷰
-                  </S.HistoryTitle>
+                  <Link to={`/course-detail/${item.id}`}>
+                    <S.HistoryTitle>
+                      [<span>{item.title}</span>]에 남긴 리뷰
+                    </S.HistoryTitle>
+                  </Link>
                 </S.HistoryTitleWrap>
                 {/* 리뷰 내용 */}
                 <S.HistoryContent>{item.content}</S.HistoryContent>

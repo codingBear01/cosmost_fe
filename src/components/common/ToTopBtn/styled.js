@@ -20,14 +20,14 @@ export const FloatingIcon = styled.div`
   margin: ${gap.xs} 0;
   border-radius: ${br.circle};
   background: none;
-  border: 0.2rem solid ${color.darkBlue};
+  border: 0.2rem solid ${color.lightBlue};
   font-size: ${fs.l};
-  color: ${color.darkBlue};
+  color: ${color.lightBlue};
   cursor: pointer;
   transition: all 0.15s ease-in;
 
   &: hover {
-    background-color: ${color.darkBlue};
+    background-color: ${color.lightBlue};
     color: ${color.white};
   }
 

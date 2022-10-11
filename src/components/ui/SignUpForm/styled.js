@@ -38,6 +38,28 @@ export const ProfilePicUploadInput = styled.input`
   display: none;
 `;
 
+export const MessageBox = styled.div`
+  width: 250px;
+  height: 10px;
+  margin: 5px 0;
+`;
+
+export const ErrorMessage = styled.p`
+  align-self: start;
+  margin-left: 10px;
+  color: ${color.darkRed};
+  word-break: break-all;
+  font-size: 11px;
+`;
+
+export const SuccessMessage = styled.p`
+  align-self: start;
+  margin-left: 10px;
+  color: ${color.skyBlue};
+  word-break: break-all;
+  font-size: 11px;
+`;
+
 export const UserInfoDropDown = styled.select`
   width: 160px;
   height: 40px;

@@ -1,4 +1,4 @@
-/* hooks */
+/* libraries */
 import React from 'react';
 /* components */
 import * as S from './styled';
@@ -17,7 +17,7 @@ function MainPageSection() {
           {/* 메인 텍스트 */}
           <MainTextWrap />
           {/* 코스 등록 버튼 */}
-          <S.CourseRegisterBtn to="/course/registration">
+          <S.CourseRegisterBtn to="/course-registration">
             나만의 코스 공유하기
             <FaIcons.FaChevronRight />
           </S.CourseRegisterBtn>

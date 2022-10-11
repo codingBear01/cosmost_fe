@@ -6,7 +6,7 @@ import { isOrderingModalOpenedAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { SearchedCourse, SelectingCategoryArea } from '.';
-import { OrderingButton, UtilDiv } from '../../';
+import { OrderingButton, ToTopBtn, UtilDiv } from '../../';
 /* static data */
 import { COURSES } from '../../../store';
 
@@ -30,6 +30,7 @@ function SearchedCoursesForm() {
         {COURSES &&
           COURSES.map((item) => <SearchedCourse key={item.id} item={item} />)}
       </S.SearchedCourseContainer>
+      <ToTopBtn />
     </UtilDiv>
   );
 }

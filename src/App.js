@@ -77,9 +77,10 @@ function App() {
               <Route path=":id/report-histories" element={<Histories />} />
               <Route path=":id/review-histories" element={<Histories />} />
             </Route>
-            <Route path="/course">
-              <Route path="registration" element={<CourseRegistration />} />
-            </Route>
+            <Route
+              path="/course-registration"
+              element={<CourseRegistration />}
+            />
           </>
 
           {/* )} */}
