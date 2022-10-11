@@ -1,6 +1,6 @@
 /* libraries */
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 /* static data */
 import {
   COLOR_LIST as color,
@@ -9,7 +9,7 @@ import {
   GAP_LIST as gap,
   BREAK_POINTS as media,
   mainTextFadeIn,
-} from '../../../style';
+} from "../../../style";
 
 export const UploadCourseImgArea = styled.div`
   display: flex;
@@ -32,7 +32,10 @@ export const CoursePreviewImg = styled.img`
   height: 9rem;
   margin-left: 3rem;
   border-radius: ${br.default};
-  background-color ${color.grey};
+  background-color: ${color.grey};
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: ${({ backgroundImage }) => backgroundImage || "none"};
 `;
 
 export const AddDetailCourseInfoArea = styled.div`
