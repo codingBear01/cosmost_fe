@@ -42,19 +42,25 @@ function EmailValidForm() {
       emailAndNumber.email === '' ||
       regExpEmail.test(emailAndNumber.email) === false
     ) {
-      toast.error('이메일을 욜바르게 입력해주세요.');
+      return false;
     }
+    return true;
   };
 
   /* 인증 번호 발송 버튼 클릭시 호출할 핸들러. 입력된 이메일의 유효성을 검증한 후 이메일 정보를 백엔드로 전송한다.*/
   const onClickSendCertification = (e) => {
-    e.preventDefault();
-    CheckEmailAddress();
+    if (!CheckEmailAddress()) {
+      e.preventDefault();
+      return toast.error('이메일을 욜바르게 입력해주세요.');
+    }
   };
 
   /* 다음 버튼 클릭시 호출할 핸들러. 이메일 및 인증번호를 검사한 후 다음 창으로 넘어간다.*/
   const onClickCheckValidationNumber = (e) => {
-    CheckEmailAddress();
+    if (!CheckEmailAddress()) {
+      e.preventDefault();
+      return toast.error('이메일을 욜바르게 입력해주세요.');
+    }
     if (emailAndNumber.userCertificationNumber === '') {
       e.preventDefault();
       toast.error('인증번호를 입력해주세요.');

@@ -53,14 +53,6 @@ export const ErrorMessage = styled.p`
   font-size: 11px;
 `;
 
-export const SuccessMessage = styled.p`
-  align-self: start;
-  margin-left: 10px;
-  color: ${color.skyBlue};
-  word-break: break-all;
-  font-size: 11px;
-`;
-
 export const UserInfoDropDown = styled.select`
   width: 160px;
   height: 40px;

@@ -3,10 +3,14 @@ import React from 'react';
 /* components */
 import * as S from './styled';
 
-function UtilInputWrap({ alignSelf, margin, children }) {
+function UtilInputWrap({ alignSelf, flexDirection, margin, children }) {
   return (
     <>
-      <S.StyledUtilInputWrap alignSelf={alignSelf} margin={margin}>
+      <S.StyledUtilInputWrap
+        alignSelf={alignSelf}
+        flexDirection={flexDirection}
+        margin={margin}
+      >
         {children}
       </S.StyledUtilInputWrap>
     </>

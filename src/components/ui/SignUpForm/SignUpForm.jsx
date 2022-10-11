@@ -185,7 +185,7 @@ function SignUpForm({ state }) {
           />
         </div>
         <S.UserProfileWrap flexDirection={'column'}>
-          <UtilInputWrap margin={'0'}>
+          <UtilInputWrap margin={'0'} flexDirection={'column'}>
             <div>
               <Input
                 type="text"
@@ -216,13 +216,10 @@ function SignUpForm({ state }) {
                     대소문자 및 숫자로 구성된 3자리 이상 16자리 이하여야 합니다.
                   </S.ErrorMessage>
                 ))}
-              {emptyInputError.idEmpty || inputError.idError || (
-                <S.SuccessMessage>사용 가능한 아이디입니다.</S.SuccessMessage>
-              )}
             </S.MessageBox>
           </UtilInputWrap>
 
-          <UtilInputWrap margin={'1rem 0 0 0'}>
+          <UtilInputWrap margin={'1rem 0 0 0'} flexDirection={'column'}>
             <div>
               <Input
                 type="text"
@@ -252,13 +249,11 @@ function SignUpForm({ state }) {
                     합니다.
                   </S.ErrorMessage>
                 ))}
-              {emptyInputError.nicknameEmpty || inputError.nicknameError || (
-                <S.SuccessMessage>사용 가능한 닉네임입니다.</S.SuccessMessage>
-              )}
             </S.MessageBox>
           </UtilInputWrap>
         </S.UserProfileWrap>
       </S.UserProfileWrap>
+
       {/* 앞서 입력한 이메일, 주소, 상세주소 */}
       <UtilInputWrap>
         <Input
@@ -290,6 +285,7 @@ function SignUpForm({ state }) {
           margin={'0 10px'}
         />
       </UtilInputWrap>
+
       {/* 비밀번호 */}
       <UtilInputWrap mb={'0'}>
         <Input
@@ -303,7 +299,6 @@ function SignUpForm({ state }) {
           onChange={onChangeUserInformation}
         />
       </UtilInputWrap>
-
       {emptyInputError.passwordEmpty ||
         (inputError.passwordError && (
           <S.ErrorMessage>
@@ -311,9 +306,6 @@ function SignUpForm({ state }) {
             합니다.
           </S.ErrorMessage>
         ))}
-      {emptyInputError.passwordEmpty || inputError.passwordError || (
-        <S.SuccessMessage>올바른 패스워드입니다.</S.SuccessMessage>
-      )}
 
       <UtilInputWrap mb={'0'}>
         <Input
@@ -327,19 +319,12 @@ function SignUpForm({ state }) {
           onChange={onChangeUserInformation}
         />
       </UtilInputWrap>
-
       {emptyInputError.passwordConfirmEmpty ||
         (inputError.passwordConfirmError && (
           <S.ErrorMessage>
             앞서 입력한 패스워드와 동일하지 않습니다.
           </S.ErrorMessage>
         ))}
-      {emptyInputError.passwordConfirmEmpty ||
-        inputError.passwordConfirmError || (
-          <S.SuccessMessage>
-            앞서 입력한 패스워드와 동일합니다.
-          </S.SuccessMessage>
-        )}
 
       {/* 연령대, 결혼 여부 드롭다운 */}
       <S.UserInfoDropDownWrap>
@@ -361,9 +346,6 @@ function SignUpForm({ state }) {
             (inputError.ageError && (
               <S.ErrorMessage>연령대를 선택해주세요</S.ErrorMessage>
             ))}
-          {emptyInputError.ageEmpty || inputError.ageError || (
-            <S.SuccessMessage>연령대를 선택하셨습니다.</S.SuccessMessage>
-          )}
         </div>
         <div>
           <S.UserInfoDropDown
@@ -379,9 +361,6 @@ function SignUpForm({ state }) {
             (inputError.marriageError && (
               <S.ErrorMessage>결혼 여부를 선택해주세요</S.ErrorMessage>
             ))}
-          {emptyInputError.marriageEmpty || inputError.marriageError || (
-            <S.SuccessMessage>결혼 여부를 선택했습니다.</S.SuccessMessage>
-          )}
         </div>
       </S.UserInfoDropDownWrap>
       {/* 회원가입 버튼 */}
