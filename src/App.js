@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 /* context */
 import { LoginStateContext } from './components/context';
 /* components */
@@ -23,6 +23,8 @@ import {
 } from './components';
 /* router */
 import { Routes, Route, Outlet, Navigate, useLocation } from 'react-router-dom';
+/* functions */
+import { initialize } from './store';
 
 const WithHeaderAndFooter = () => {
   const path = useLocation().pathname;
@@ -47,8 +49,16 @@ const WithoutHeaderAndFooter = () => {
   );
 };
 
+/* CONSTANTS */
+const { Kakao } = window;
+
 function App() {
   const loginTokenState = useContext(LoginStateContext);
+
+  /* 프로젝트 실행 시 Kakao API KEY 값 초기화하는 함수 */
+  useEffect(() => {
+    Kakao.init(process.env.REACT_APP_KAKAO_KEY);
+  }, []);
 
   return (
     <>

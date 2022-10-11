@@ -11,14 +11,12 @@ import { LoginStateContext } from './components/context';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <React.StrictMode>
-    <LoginStateContext.Provider value={sessionStorage.getItem('token')}>
-      <RecoilRoot>
-        <BrowserRouter>
-          <GoToTop />
-          <App />
-        </BrowserRouter>
-      </RecoilRoot>
-    </LoginStateContext.Provider>
-  </React.StrictMode>
+  <LoginStateContext.Provider value={sessionStorage.getItem('token')}>
+    <RecoilRoot>
+      <BrowserRouter>
+        <GoToTop />
+        <App />
+      </BrowserRouter>
+    </RecoilRoot>
+  </LoginStateContext.Provider>
 );

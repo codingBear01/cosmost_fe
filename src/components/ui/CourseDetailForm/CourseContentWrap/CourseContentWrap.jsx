@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 /* components */
 import * as S from './styled';
-import { CourseContent } from '..';
+import { CourseContent, SharingCourseModal } from '..';
 import { Button, CourseUtillityModal, ProfilePic } from '../../..';
 /* icons */
 import * as FaIcons from 'react-icons/fa';
@@ -25,11 +25,18 @@ function CourseContentWrap({
   /* 코스 및 리뷰 수정, 삭제 Modal Open useState */
   const [isCoureUtilityModalOpened, setIsCoureUtilityModalOpened] =
     useState(false);
+  /* 코스 공유하기 Modal Open useState */
+  const [isSharingCourseModalOpened, setIsSharingCourseModalOpened] =
+    useState(false);
 
   /* Handlers */
   /* 코스 및 리뷰 수정, 삭제 Modal의 Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
   const onClickOpenCourseUtilityModal = () => {
     setIsCoureUtilityModalOpened(!isCoureUtilityModalOpened);
+  };
+  /* 코스 공유하기 Modal Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
+  const onClickOpenSharingCourseModal = () => {
+    setIsSharingCourseModalOpened(!isSharingCourseModalOpened);
   };
 
   return (
@@ -117,8 +124,11 @@ function CourseContentWrap({
       ) : dataCategory === 'shareAndLikeButton' ? (
         // 공유, 좋아요 버튼
         <>
-          <S.ShareAndLikeButton>
-            <AiIcons.AiOutlineShareAlt />
+          {isSharingCourseModalOpened && (
+            <SharingCourseModal courseData={courseData} />
+          )}
+          <S.ShareAndLikeButton onClick={onClickOpenSharingCourseModal}>
+            <BiIcons.BiShare />
           </S.ShareAndLikeButton>
           <S.ShareAndLikeButton>
             <FaIcons.FaRegThumbsUp />

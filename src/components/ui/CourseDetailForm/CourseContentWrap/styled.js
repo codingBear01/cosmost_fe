@@ -104,14 +104,13 @@ export const ShareAndLikeButton = styled.button`
 export const AverageRate = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
   margin-right: ${gap.l};
   font-size: 2.5rem;
   font-weight: 600;
 
   span {
-    margin-bottom: ${gap.l};
+    margin: ${gap.xs};
   }
 `;
 
