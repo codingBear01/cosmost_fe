@@ -6,8 +6,7 @@ import { useRecoilState } from 'recoil';
 import { isReportFormOpenedAtom } from '../../../store';
 /* components */
 import * as S from './styled';
-import { ReportForm } from '..';
-import { Button, UtilDiv, UtilTitle } from '../..';
+import { Button, ReportForm, UtilDiv, UtilTitle } from '../..';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 import {
