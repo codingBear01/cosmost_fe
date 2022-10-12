@@ -1,8 +1,8 @@
 /* libraries */
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 /* components */
 import * as S from './styled';
-import { ProfilePic } from '../../../';
+import { CourseUtillityModal, ProfilePic } from '../../../';
 /* static data */
 import { COURSE_REIVEWS } from '../../../../store';
 /* icons */
@@ -11,10 +11,39 @@ import * as GrIcons from 'react-icons/gr';
 import * as FaIcons from 'react-icons/fa';
 
 function CourseReview() {
+  /* States */
+  /* 클릭된 review의 index를 저장하는 state */
+  const [reviewIndex, setReviewIndex] = useState(null);
+  /* reviewUtilityModal의 Open 여부 state */
+  const [isReviewUtilityModalOpened, setIsReviewUtilityModalOpened] =
+    useState(false);
+
+  /* Handlers */
+  /* 클릭된 review의 데이터를 저장하기 위한 핸들러. 클릭 시 해당 review의 index가 state에 저장되며, 리뷰 수정, 삭제 모달의 Open 여부가 반대로 변경되고, modalRef의 current값에 클릭된 타깃이 할당된다. */
+  const onClickSetClickedReview = (e, i) => {
+    setReviewIndex(i);
+    setIsReviewUtilityModalOpened(!isReviewUtilityModalOpened);
+    modalRef.current = e.target;
+  };
+
+  /* 모달 바깥 영역 클릭 시 모달 닫는 함수 */
+  const modalRef = useRef();
+  useEffect(() => {
+    const closeModal = (e) => {
+      if (!modalRef.current?.contains(e.target)) {
+        setIsReviewUtilityModalOpened(false);
+      }
+    };
+
+    document.addEventListener('click', closeModal);
+
+    return () => document.removeEventListener('click', closeModal);
+  }, [isReviewUtilityModalOpened]);
+
   return (
     <>
       {COURSE_REIVEWS &&
-        COURSE_REIVEWS.map((item) => (
+        COURSE_REIVEWS.map((item, i) => (
           <S.CourseReviewWrap key={item.id}>
             {/* 리뷰 작성자 프로필 */}
             <S.CourseReviewAuthorWrap>
@@ -64,7 +93,12 @@ function CourseReview() {
                 </S.CourseReviewStar>
                 <S.CourseReviewCreatedDateWrap>
                   <span>{item.createdDate}</span>
-                  <GrIcons.GrMoreVertical />
+                  <GrIcons.GrMoreVertical
+                    onClick={(e) => onClickSetClickedReview(e, i)}
+                  />
+                  {i === reviewIndex && isReviewUtilityModalOpened && (
+                    <CourseUtillityModal top={'2.5rem'} right={'0.1rem'} />
+                  )}
                 </S.CourseReviewCreatedDateWrap>
               </S.CourseReviewInnerContentWrap>
               {/* 좋아요 수, 좋아요 버튼 */}

@@ -1,9 +1,6 @@
 /* hooks */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-/* recoil */
-import { useRecoilState } from 'recoil';
-import { isLoginAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { HeaderLogo, HeaderSearchBar, HeaderUtilBtn } from './';
@@ -14,12 +11,23 @@ import * as BsIcons from 'react-icons/bs';
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
 
 function Header() {
-  const [isLoggedin, setIsLoggedin] = useRecoilState(isLoginAtom);
+  /* States */
+  /* 서치바 Open 여부 state */
   const [isSearchBarOpened, setIsSearchBarOpened] = useState(false);
 
+  /* Handlers */
+  /* 서치바 Open 여부 조작하는 핸들러. 클릭 시 Open state를 반대로 변경 */
   const onClickOpenSearchBar = () => {
     setIsSearchBarOpened(!isSearchBarOpened);
   };
+
+  /* Hooks */
+  /* 서치바 열렸을 때 바깥 영역 스크롤 방지하는 함수 */
+  useEffect(() => {
+    isSearchBarOpened
+      ? (document.body.style.overflow = 'hidden')
+      : (document.body.style.overflow = 'unset');
+  }, [isSearchBarOpened]);
 
   return (
     <>
@@ -34,7 +42,7 @@ function Header() {
               <BsIcons.BsSearch />
             </Icon>
             <Link to="/login">
-              <HeaderUtilBtn isLogin={isLoggedin} />
+              <HeaderUtilBtn />
             </Link>
           </S.HeaderUtilWrap>
         </S.HeaderContainer>

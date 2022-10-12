@@ -16,7 +16,7 @@ function FollowsForm({ isFollower }) {
         {FOLLOWS &&
           FOLLOWS.map((item) => (
             <S.FollowListItem key={item.id}>
-              <Link>
+              <Link to={`/user/${item.id}`}>
                 <ProfilePic
                   src={item.imgUrl}
                   alt={item.alt}

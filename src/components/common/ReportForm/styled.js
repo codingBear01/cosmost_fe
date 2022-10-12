@@ -21,9 +21,17 @@ export const ReportFormBg = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: ${color.black};
   transition: 0.5s;
+`;
+
+export const ReportForm = styled.form`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 45rem;
 `;
 
 export const ReportHistoryCat = styled.span`
@@ -52,14 +60,6 @@ export const ReportFormTitle = styled.span`
   border-bottom: 1px solid ${color.white};
   font-size: ${fs.s};
   color: ${color.white};
-`;
-
-export const ReportForm = styled.form`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 45rem;
 `;
 
 export const ReportFormCats = styled.select`

@@ -1,23 +1,23 @@
+/* libraries */
 import React, { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 /* components */
 import { Input, NextBtn, UtilForm, UtilInputWrap, UtilTitle } from '../..';
 
 function InputDetailAddressForm({ state }) {
   const [detailAddress, setDetailAddress] = useState('');
 
-  /* 상세주소 입력시 호출될 핸들러
-     state를 전달한다.*/
+  /* 상세주소 입력시 호출될 핸들러. state를 전달한다.*/
   const onChangeDetailAddress = (e) => {
     setDetailAddress(e.target.value);
   };
 
-  /* 다음 버튼 클릭시 호출할 핸들러
-     상세주소 유효성 검사후 다음 창으로 넘어간다.*/
+  /* 다음 버튼 클릭시 호출할 핸들러. 상세주소 유효성 검사 후 다음 창으로 넘어간다.*/
   const onClickNextButton = (e) => {
     if (detailAddress === '') {
-      alert('상세주소를 입력해주세요.');
       e.preventDefault();
-      return;
+      toast.error('상세주소를 입력해주세요.');
     }
   };
 
@@ -47,6 +47,16 @@ function InputDetailAddressForm({ state }) {
         to={'/sign-up'}
         state={{ ...state, detailAddress }}
         onClick={onClickNextButton}
+      />
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        pauseOnHover={false}
+        theme="light"
       />
     </UtilForm>
   );

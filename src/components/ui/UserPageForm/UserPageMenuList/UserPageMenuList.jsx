@@ -3,6 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
+/* static data */
+import { FONT_SIZE_LIST as fs } from '../../../../style';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 import * as TbIcons from 'react-icons/tb';
@@ -14,19 +16,19 @@ function UserPageMenuList({ onClickOpenReportForm }) {
   return (
     // 유저 페이지 메뉴들
     <S.UserPageMenuList>
-      <Link to="/course/registration">
+      <Link to="/course-registration">
         <S.UserPageMenuItem>
           <AiIcons.AiOutlineAppstoreAdd />
           <span>코스 등록하기</span>
         </S.UserPageMenuItem>
       </Link>
-      <Link to="/">
+      <Link to="/searched-courses">
         <S.UserPageMenuItem>
           <TbIcons.TbRoad />
           <span>내가 등록한 코스</span>
         </S.UserPageMenuItem>
       </Link>
-      <Link to="/">
+      <Link to="/searched-courses">
         <S.UserPageMenuItem>
           <FaIcons.FaRegThumbsUp />
           <span>좋아요 한 코스</span>
@@ -48,12 +50,10 @@ function UserPageMenuList({ onClickOpenReportForm }) {
           <span>신고내역</span>
         </S.UserPageMenuItem>
       </Link>
-      <Link to="/">
-        <S.UserPageMenuItem>
-          <AiIcons.AiOutlineLogout />
-          <span>로그아웃</span>
-        </S.UserPageMenuItem>
-      </Link>
+      <S.UserPageMenuItem style={{ fontSize: `${fs.m}` }}>
+        <AiIcons.AiOutlineLogout />
+        <span>로그아웃</span>
+      </S.UserPageMenuItem>
     </S.UserPageMenuList>
   );
 }
