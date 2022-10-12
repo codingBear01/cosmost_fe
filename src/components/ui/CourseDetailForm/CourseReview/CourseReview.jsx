@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 /* components */
 import * as S from './styled';
 import { CourseUtillityModal, ProfilePic } from '../../../';
@@ -19,11 +19,26 @@ function CourseReview() {
     useState(false);
 
   /* Handlers */
-  /* 클릭된 review의 index를 저장하고, reviewUtilityModal의 Open 여부를 변경하는 handler. 클릭 시 해당 review의 index가 state에 저장되며, reviewUtilityModal의 Open 여부가 반대로 변경된다. */
-  const onClickSetClickedReviewIndex = (i) => {
+  /* 클릭된 review의 index를 저장하고, reviewUtilityModal의 Open 여부를 변경하고, modalRef의 현재값을 설정하여 ReviewUtilityModal의 Open 여부를 조작하는 handler. 클릭 시 해당 review의 index가 state에 저장되며, reviewUtilityModal의 Open 여부가 반대로 변경되고, modalRef의 current값에 클릭된 타깃이 할당된다. */
+  const onClickSetClickedReviewIndex = (e, i) => {
     setReviewIndex(i);
     setIsReviewUtilityModalOpened(!isReviewUtilityModalOpened);
+    modalRef.current = e.target;
   };
+
+  /* 모달 바깥 영역 클릭 시 모달 닫는 함수 */
+  const modalRef = useRef();
+  useEffect(() => {
+    const closeModal = (e) => {
+      if (!modalRef.current?.contains(e.target)) {
+        setIsReviewUtilityModalOpened(false);
+      }
+    };
+
+    document.addEventListener('click', closeModal);
+
+    return () => document.removeEventListener('click', closeModal);
+  }, [isReviewUtilityModalOpened]);
 
   return (
     <>
@@ -79,7 +94,7 @@ function CourseReview() {
                 <S.CourseReviewCreatedDateWrap>
                   <span>{item.createdDate}</span>
                   <GrIcons.GrMoreVertical
-                    onClick={() => onClickSetClickedReviewIndex(i)}
+                    onClick={(e) => onClickSetClickedReviewIndex(e, i)}
                   />
                   {i === reviewIndex && isReviewUtilityModalOpened && (
                     <CourseUtillityModal top={'2.5rem'} right={'0.1rem'} />

@@ -1,5 +1,5 @@
 /* hooks */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
@@ -11,8 +11,23 @@ import * as BsIcons from 'react-icons/bs';
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
 
 function Header() {
+  /* States */
   /* 서치바 Open 여부 state */
   const [isSearchBarOpened, setIsSearchBarOpened] = useState(false);
+
+  /* Handlers */
+  /* 서치바 Open 여부 조작하는 핸들러. 클릭 시 Open state를 반대로 변경 */
+  const onClickOpenSearchBar = () => {
+    setIsSearchBarOpened(!isSearchBarOpened);
+  };
+
+  /* Hooks */
+  /* 서치바 열렸을 때 바깥 영역 스크롤 방지하는 함수 */
+  useEffect(() => {
+    isSearchBarOpened
+      ? (document.body.style.overflow = 'hidden')
+      : (document.body.style.overflow = 'unset');
+  }, [isSearchBarOpened]);
 
   return (
     <>
@@ -23,7 +38,7 @@ function Header() {
           </Link>
 
           <S.HeaderUtilWrap>
-            <Icon>
+            <Icon onClick={onClickOpenSearchBar}>
               <BsIcons.BsSearch />
             </Icon>
             <Link to="/login">
@@ -32,7 +47,10 @@ function Header() {
           </S.HeaderUtilWrap>
         </S.HeaderContainer>
 
-        <HeaderSearchBar isSearchBarOpened={isSearchBarOpened} />
+        <HeaderSearchBar
+          isSearchBarOpened={isSearchBarOpened}
+          onClick={onClickOpenSearchBar}
+        />
       </S.Header>
 
       <S.HeaderSearchBarOverlay isSearchBarOpened={isSearchBarOpened} />

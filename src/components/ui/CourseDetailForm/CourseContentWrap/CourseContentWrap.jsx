@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 /* components */
 import * as S from './styled';
 import { CourseContent, SharingCourseModal } from '..';
@@ -7,7 +7,6 @@ import { Button, CourseUtillityModal, ProfilePic } from '../../..';
 /* icons */
 import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';
-import * as GrIcons from 'react-icons/gr';
 import * as BiIcons from 'react-icons/bi';
 import * as FiIcons from 'react-icons/fi';
 import * as GiIcons from 'react-icons/gi';
@@ -21,45 +20,10 @@ function CourseContentWrap({
   courseData,
   dataCategory,
 }) {
-  /* States */
-  /* 코스 및 리뷰 수정, 삭제 Modal Open useState */
-  const [isCoureUtilityModalOpened, setIsCoureUtilityModalOpened] =
-    useState(false);
-  /* 코스 공유하기 Modal Open useState */
-  const [isSharingCourseModalOpened, setIsSharingCourseModalOpened] =
-    useState(false);
-
-  /* Handlers */
-  /* 코스 및 리뷰 수정, 삭제 Modal의 Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
-  const onClickOpenCourseUtilityModal = () => {
-    setIsCoureUtilityModalOpened(!isCoureUtilityModalOpened);
-  };
-  /* 코스 공유하기 Modal Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
-  const onClickOpenSharingCourseModal = () => {
-    setIsSharingCourseModalOpened(!isSharingCourseModalOpened);
-  };
-
   return (
     // dataCategory에 따라 다른 컴포넌트 렌더링됨
     <S.StyledCourseContentWrap justifyContent={justifyContent} height={height}>
-      {dataCategory === 'titleAndDate' ? (
-        // 코스 제목, 평점, 작성일, 더보기 버튼
-        <>
-          <S.StyledCourseContentWrap style={{ borderBottom: 'none' }}>
-            <S.CourseTitle>{courseData.title}</S.CourseTitle>
-            <S.CourseAverageRate>
-              ⭐ {courseData.rate.average}
-            </S.CourseAverageRate>
-          </S.StyledCourseContentWrap>
-          <S.CourseCreatedDateAndMoreIconWrap>
-            <S.CourseCreatedDate>{courseData.createdDate}</S.CourseCreatedDate>
-            <GrIcons.GrMoreVertical onClick={onClickOpenCourseUtilityModal} />
-          </S.CourseCreatedDateAndMoreIconWrap>
-          {isCoureUtilityModalOpened && (
-            <CourseUtillityModal top={'8rem'} right={'2rem'} />
-          )}
-        </>
-      ) : dataCategory === 'likeAndReview' ? (
+      {dataCategory === 'likeAndReview' ? (
         // 좋아요, 리뷰 숫자
         <>
           <CourseContent>
@@ -120,19 +84,6 @@ function CourseContentWrap({
               )}
             </div>
           ))}
-        </>
-      ) : dataCategory === 'shareAndLikeButton' ? (
-        // 공유, 좋아요 버튼
-        <>
-          {isSharingCourseModalOpened && (
-            <SharingCourseModal courseData={courseData} />
-          )}
-          <S.ShareAndLikeButton onClick={onClickOpenSharingCourseModal}>
-            <BiIcons.BiShare />
-          </S.ShareAndLikeButton>
-          <S.ShareAndLikeButton>
-            <FaIcons.FaRegThumbsUp />
-          </S.ShareAndLikeButton>
         </>
       ) : dataCategory === 'averageRate' ? (
         // 코스 평균 평점 및 별 개수별 퍼센테이지

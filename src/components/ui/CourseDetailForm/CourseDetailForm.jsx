@@ -6,17 +6,18 @@ import { isOrderingModalOpenedAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import {
+  CourseContentWrap,
   CourseImageCarousel,
   CourseReview,
   CourseReviewRegisterForm,
-  CourseContentWrap,
+  CourseSharingAndLikeButton,
+  CourseTitleAndDate,
 } from '.';
 import { OrderingButton, ToTopBtn, UtilDiv } from '../..';
 /* static data */
 import { COURSE_DETAIL as courseData } from '../../../store';
 
 function CourseDetailForm() {
-  /* States */
   /* 정렬 기준 모달 Open 여부 RecoilState */
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
@@ -40,11 +41,7 @@ function CourseDetailForm() {
         margin={'0 auto'}
       >
         {/* 코스 제목 및 날짜, 더보기 버튼 */}
-        <CourseContentWrap
-          justifyContent={'space-between'}
-          courseData={courseData}
-          dataCategory="titleAndDate"
-        />
+        <CourseTitleAndDate courseData={courseData} />
         {/* 좋아요, 리뷰 숫자 */}
         <CourseContentWrap
           courseData={courseData}
@@ -76,12 +73,7 @@ function CourseDetailForm() {
         {/* 코스 설명 */}
         <S.CourseDescription>{courseData.description}</S.CourseDescription>
         {/* 공유, 좋아요 버튼 */}
-        <CourseContentWrap
-          justifyContent={'flex-end'}
-          height={'10rem'}
-          courseData={courseData}
-          dataCategory="shareAndLikeButton"
-        />
+        <CourseSharingAndLikeButton courseData={courseData} />
         {/* 코스 평균 평점 및 별 개수별 퍼센테이지 */}
         <CourseContentWrap
           justifyContent={'center'}

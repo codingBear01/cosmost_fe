@@ -20,43 +20,6 @@ export const StyledCourseContentWrap = styled.div`
   border-bottom: 1px solid ${color.white};
 `;
 
-// 코스 제목, 평점, 작성일, 더보기 버튼
-export const CourseTitleAndRateWrap = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const CourseTitle = styled.span`
-  font-size: 2.5rem;
-  font-weight: 600;
-`;
-
-export const CourseAverageRate = styled.span`
-  margin-left: 1rem;
-  padding: 0.5rem 1rem;
-  border: 1px solid ${color.white};
-  border-radius: ${br.default};
-  font-size: ${fs.l};
-  font-weight: 600;
-`;
-
-export const CourseCreatedDateAndMoreIconWrap = styled.div`
-  display: flex;
-  align-items: flex-start;
-  height: 100%;
-
-  svg {
-    margin-left: ${gap.l};
-    font-size: ${fs.xl};
-    cursor: pointer;
-  }
-`;
-
-export const CourseCreatedDate = styled.div`
-  font-size: ${fs.m};
-  font-weight: 600;
-`;
-
 // 작성자 프로필
 export const AutorProfileVerticalWrap = styled.div`
   display: flex;
@@ -91,13 +54,6 @@ export const CourseName = styled.span`
   font-size: ${fs.s};
   font-weight: 600;
   cursor: pointer;
-`;
-
-// 공유, 좋아요 버튼
-export const ShareAndLikeButton = styled.button`
-  margin-left: ${gap.l};
-  font-size: ${fs.xl};
-  color: ${color.white};
 `;
 
 // 코스 평균 평점 및 별 개수별 퍼센테이지

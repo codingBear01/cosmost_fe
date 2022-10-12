@@ -22,7 +22,7 @@ function ReportForm({
   };
 
   return (
-    <S.ReportFormBg isReportFormOpened={isReportFormOpened} onClick={onClick}>
+    <S.ReportFormBg isReportFormOpened={isReportFormOpened}>
       <S.ReportForm>
         <S.ReportFormTitleWrap>
           <UtilTitle>

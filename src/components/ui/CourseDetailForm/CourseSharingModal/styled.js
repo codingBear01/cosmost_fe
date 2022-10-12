@@ -10,7 +10,7 @@ import {
   mainTextFadeIn,
 } from '../../../../style';
 
-export const StyledSharingCourseModal = styled.div`
+export const StyledCourseSharingModal = styled.div`
   width: 30rem;
   height: 7rem;
   background-color: ${color.white};
@@ -18,7 +18,7 @@ export const StyledSharingCourseModal = styled.div`
   color: ${color.black};
 `;
 
-export const SharingCourseButtonList = styled.ul`
+export const CourseSharingButtonList = styled.ul`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -26,7 +26,7 @@ export const SharingCourseButtonList = styled.ul`
   margin: auto 0;
 `;
 
-export const SharingCourseButton = styled.button`
+export const CourseSharingButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
