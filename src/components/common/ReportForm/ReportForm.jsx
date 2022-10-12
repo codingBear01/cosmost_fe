@@ -1,5 +1,5 @@
 /* libraries */
-import React from 'react';
+import React, { useEffect } from 'react';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilTitle } from '../..';
@@ -21,13 +21,24 @@ function ReportForm({
     setIsReportFormOpened(!isReportFormOpened);
   };
 
+  /* Hooks */
+  /* 신고 모달 열렸을 때 바깥 영역 스크롤 방지하고 스크롤 Y좌표 맨 위로 설정하는 함수 */
+  useEffect(() => {
+    if (isReportFormOpened) {
+      document.body.style.overflow = 'hidden';
+      window.scrollTo(0, 0);
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isReportFormOpened]);
+
   return (
     <S.ReportFormBg isReportFormOpened={isReportFormOpened}>
       <S.ReportForm>
         <S.ReportFormTitleWrap>
           <UtilTitle>
             {/* 신고 내역 페이지이면 신고 상세 조회, 신고하기 폼이면 내가 남긴 리뷰 */}
-            {isReportHistoryPage ? '신고 상세 조회' : '내가 남긴 리뷰'}
+            {isReportHistoryPage ? '신고 상세 조회' : '신고하기'}
           </UtilTitle>
           <AiIcons.AiOutlineClose onClick={onClick} />
         </S.ReportFormTitleWrap>

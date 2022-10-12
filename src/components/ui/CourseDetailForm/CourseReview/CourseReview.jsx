@@ -19,8 +19,8 @@ function CourseReview() {
     useState(false);
 
   /* Handlers */
-  /* 클릭된 review의 index를 저장하고, reviewUtilityModal의 Open 여부를 변경하고, modalRef의 현재값을 설정하여 ReviewUtilityModal의 Open 여부를 조작하는 handler. 클릭 시 해당 review의 index가 state에 저장되며, reviewUtilityModal의 Open 여부가 반대로 변경되고, modalRef의 current값에 클릭된 타깃이 할당된다. */
-  const onClickSetClickedReviewIndex = (e, i) => {
+  /* 클릭된 review의 데이터를 저장하기 위한 핸들러. 클릭 시 해당 review의 index가 state에 저장되며, 리뷰 수정, 삭제 모달의 Open 여부가 반대로 변경되고, modalRef의 current값에 클릭된 타깃이 할당된다. */
+  const onClickSetClickedReview = (e, i) => {
     setReviewIndex(i);
     setIsReviewUtilityModalOpened(!isReviewUtilityModalOpened);
     modalRef.current = e.target;
@@ -94,7 +94,7 @@ function CourseReview() {
                 <S.CourseReviewCreatedDateWrap>
                   <span>{item.createdDate}</span>
                   <GrIcons.GrMoreVertical
-                    onClick={(e) => onClickSetClickedReviewIndex(e, i)}
+                    onClick={(e) => onClickSetClickedReview(e, i)}
                   />
                   {i === reviewIndex && isReviewUtilityModalOpened && (
                     <CourseUtillityModal top={'2.5rem'} right={'0.1rem'} />

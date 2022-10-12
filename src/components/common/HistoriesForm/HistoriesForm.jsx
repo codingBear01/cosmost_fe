@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 /* recoil */
 import { useRecoilState } from 'recoil';
@@ -20,13 +20,14 @@ function HistoriesForm({ isReportHistoryPage }) {
     isReportFormOpenedAtom
   );
   const [isReportReplyCanOpen, setIsReportReplyCanOpen] = useState(false);
-  /* ReportForm에 넘겨줄 reportDetail state */
+  /* 신고 상세 조회 폼에 넘겨줄 reportDetail state */
   const [reportDetail, setReportDetail] = useState(null);
 
-  /* 신고 상세 조회 폼의 Open 여부를 조작하는 핸들러 */
-  const onClickOpenReportDetail = (item) => {
+  /* 신고 상세 조회 폼의 Open 여부를 조작하는 핸들러. 클릭 시 폼 Open 여부를 반대로 변경하고, 신고 데이터를 폼으로 props 전달하며 formRef.current에 클릭된 신고를 할당한다. */
+  const onClickOpenReportDetail = (e, item) => {
     setIsReportFormOpened(!isReportFormOpened);
     setReportDetail(item);
+    formRef.current = e.target;
   };
 
   const onClickOpenReportReply = (isReplied) => {
@@ -34,6 +35,21 @@ function HistoriesForm({ isReportHistoryPage }) {
       setIsReportReplyCanOpen(!isReportReplyCanOpen);
     }
   };
+
+  /* Hooks */
+  /* 신고 이외 영역 클릭 시 신고 상세 조회 폼을 닫는 함수 */
+  const formRef = useRef();
+  useEffect(() => {
+    const closeModal = (e) => {
+      if (!formRef.current?.contains(e.target)) {
+        setIsReportFormOpened(false);
+      }
+    };
+
+    document.addEventListener('click', closeModal);
+
+    return () => document.removeEventListener('click', closeModal);
+  }, [setIsReportFormOpened]);
 
   return (
     <UtilDiv padding={'5rem 12.9rem'}>
@@ -43,6 +59,7 @@ function HistoriesForm({ isReportHistoryPage }) {
       </UtilTitle>
       {/* 신고내역 목록 */}
       <S.HistoryList>
+        {/* 신고 상세 조회 폼 */}
         <ReportForm
           onClick={onClickOpenReportDetail}
           setIsReportFormOpened={setIsReportFormOpened}
@@ -57,7 +74,7 @@ function HistoriesForm({ isReportHistoryPage }) {
               <S.HistoryListItem key={item.id}>
                 {/* 신고 날짜 */}
                 <S.HistoryDateWrap
-                  onClick={() => onClickOpenReportDetail(item)}
+                  onClick={(e) => onClickOpenReportDetail(e, item)}
                 >
                   {item.date}
                 </S.HistoryDateWrap>
@@ -66,7 +83,9 @@ function HistoriesForm({ isReportHistoryPage }) {
                 {/* 신고 제목 및 답변 여부 버튼 */}
                 <S.HistoryTitleWrap>
                   {/* 신고 제목 */}
-                  <S.HistoryTitle onClick={() => onClickOpenReportDetail(item)}>
+                  <S.HistoryTitle
+                    onClick={(e) => onClickOpenReportDetail(e, item)}
+                  >
                     {item.title}
                   </S.HistoryTitle>
                   {/* 답변 여부 버튼 */}
@@ -83,7 +102,9 @@ function HistoriesForm({ isReportHistoryPage }) {
                   </Button>
                 </S.HistoryTitleWrap>
                 {/* 신고 내용 */}
-                <S.HistoryContent onClick={() => onClickOpenReportDetail(item)}>
+                <S.HistoryContent
+                  onClick={(e) => onClickOpenReportDetail(e, item)}
+                >
                   {item.content}
                 </S.HistoryContent>
               </S.HistoryListItem>
@@ -108,7 +129,6 @@ function HistoriesForm({ isReportHistoryPage }) {
               </S.HistoryListItem>
             ))}
       </S.HistoryList>
-      {/* 신고 상세 내역 조회 모달 */}
     </UtilDiv>
   );
 }
