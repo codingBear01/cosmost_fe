@@ -8,6 +8,8 @@ import { CourseSharingModal } from '../';
 import * as BiIcons from 'react-icons/bi';
 import * as FaIcons from 'react-icons/fa';
 
+const sharedUrl = window.location.href;
+
 function CourseSharingAndLikeButton({ courseData }) {
   /* States */
   /* 코스 공유하기 Modal Open useState */
