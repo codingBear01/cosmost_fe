@@ -6,15 +6,7 @@ import { useDrag, useDrop } from "react-dnd";
 
 /* components */
 import * as S from "./styled";
-import {
-  Button,
-  Icon,
-  Input,
-  NextBtn,
-  UtilDiv,
-  UtilInputWrap,
-  UtilTitle,
-} from "../..";
+import { Button, Input, UtilDiv } from "../..";
 /* icons */
 import * as AiIcons from "react-icons/ai";
 import * as BsIcons from "react-icons/bs";

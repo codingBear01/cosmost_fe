@@ -1,25 +1,26 @@
 /* libraries */
 
-import React, { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 /* context */
-
+import { LoginStateContext } from '../../context';
 /* components */
-import * as S from "./styled";
-import { Button, Icon, Input, UtilForm, UtilInputWrap } from "../../";
+import * as S from './styled';
+import { Button, Icon, Input, UtilForm, UtilInputWrap } from '../../';
 /* icons */
-import * as AiIcons from "react-icons/ai";
-import * as RiIcons from "react-icons/ri";
-import * as SiIcons from "react-icons/si";
-import * as FcIcons from "react-icons/fc";
+import * as AiIcons from 'react-icons/ai';
+import * as RiIcons from 'react-icons/ri';
+import * as SiIcons from 'react-icons/si';
+import * as FcIcons from 'react-icons/fc';
 /* static data */
-import { COLOR_LIST as color } from "../../../style";
-import { LoginStateContext } from "../../context";
+import { COLOR_LIST as color } from '../../../style';
 
-const LoginApiUrl = "http://10.10.10.21:8080/v1/signin";
+/* CONSTANTS */
+const LOGIN_API_URL = 'http://10.10.10.21:8080/v1/signin';
+const { Kakao } = window;
 
 function LoginForm() {
   //로그인 토큰
@@ -27,12 +28,13 @@ function LoginForm() {
 
   //아이디, 패스워드 state
   const [inputValue, setInputValue] = useState({
-    loginId: "",
-    loginPwd: "",
+    loginId: '',
+    loginPwd: '',
   });
 
   const navigate = useNavigate();
 
+  /* Handlers */
   /* 아이디와 패스워드를 입력할 때마다 호출될 핸들러 */
   const onChangeInput = (e) => {
     setInputValue({
@@ -45,13 +47,13 @@ function LoginForm() {
   const onSubmitForm = (e) => {
     e.preventDefault();
     axios
-      .put(LoginApiUrl, inputValue, { timeout: 1000 })
+      .put(LOGIN_API_URL, inputValue, { timeout: 1000 })
       .then((response) => {
         console.log(response);
         if (response.data.isSuccess) {
-          sessionStorage.setItem("token", response.data.result);
-          navigate("/");
-          toast.success("로그인에 성공하였습니다.");
+          sessionStorage.setItem('token', response.data.result);
+          navigate('/');
+          toast.success('로그인에 성공하였습니다.');
         } else {
           toast.warn(response.data.message);
         }
@@ -61,10 +63,17 @@ function LoginForm() {
       });
   };
 
+  /* 카카오 로그인 핸들러 */
+  const onClickLoginWithKakao = () => {
+    Kakao.Auth.authorize({
+      redirectUri: 'http://localhost:3000/',
+    });
+  };
+
   return (
     <UtilForm
-      justifyContent={"center"}
-      height={"100vh"}
+      justifyContent={'center'}
+      height={'100vh'}
       onSubmit={onSubmitForm}
     >
       {/* 아이디, 비밀번호 인풋 */}
@@ -77,9 +86,9 @@ function LoginForm() {
           name="loginId"
           value={inputValue.loginId}
           placeholder="아이디"
-          width={"305px"}
-          height={"40px"}
-          margin={"0 0 0 10px"}
+          width={'305px'}
+          height={'40px'}
+          margin={'0 0 0 10px'}
           onChange={onChangeInput}
         />
       </UtilInputWrap>
@@ -92,17 +101,17 @@ function LoginForm() {
           name="loginPwd"
           value={inputValue.loginPwd}
           placeholder="비밀번호"
-          width={"305px"}
-          height={"40px"}
-          margin={"0 0 0 10px"}
+          width={'305px'}
+          height={'40px'}
+          margin={'0 0 0 10px'}
           onChange={onChangeInput}
         />
       </UtilInputWrap>
       {/* 로그인 버튼 */}
       <Button
         type="submit"
-        width={"340px"}
-        height={"40px"}
+        width={'340px'}
+        height={'40px'}
         color={color.white}
         bgColor={color.darkBlue}
         hoveredBgColor={color.navy}
@@ -112,16 +121,16 @@ function LoginForm() {
       {/* 비밀번호, 아이디 찾기 */}
       <S.LoginFindWrap>
         <S.LoginServiceLink>비밀번호 찾기</S.LoginServiceLink>
-        <span style={{ color: "white" }}>|</span>
+        <span style={{ color: 'white' }}>|</span>
         <S.LoginServiceLink>아이디 찾기</S.LoginServiceLink>
       </S.LoginFindWrap>
       {/* 회원가입 및 SNS 로그인 버튼들 */}
       <Link to="/email-validation">
         <Button
           type="submit"
-          width={"340px"}
-          height={"40px"}
-          margin={"0 0 10px 0"}
+          width={'340px'}
+          height={'40px'}
+          margin={'0 0 10px 0'}
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
@@ -131,21 +140,22 @@ function LoginForm() {
       </Link>
       <Button
         type="submit"
-        width={"340px"}
-        height={"40px"}
-        margin={"0 0 10px 0"}
-        fontSize={"20px"}
+        width={'340px'}
+        height={'40px'}
+        margin={'0 0 10px 0'}
+        fontSize={'20px'}
         bgColor={color.yellow}
         hoveredBgColor={color.darkYellow}
+        onClick={onClickLoginWithKakao}
       >
         <RiIcons.RiKakaoTalkFill />
       </Button>
       <Button
         type="submit"
-        width={"340px"}
-        height={"40px"}
-        margin={"0 0 10px 0"}
-        fontSize={"20px"}
+        width={'340px'}
+        height={'40px'}
+        margin={'0 0 10px 0'}
+        fontSize={'20px'}
         color={color.white}
         bgColor={color.naverGreen}
         hoveredBgColor={color.naverDarkGreen}
@@ -154,10 +164,10 @@ function LoginForm() {
       </Button>
       <Button
         type="submit"
-        width={"340px"}
-        height={"40px"}
-        margin={"0 0 10px 0"}
-        fontSize={"20px"}
+        width={'340px'}
+        height={'40px'}
+        margin={'0 0 10px 0'}
+        fontSize={'20px'}
         bgColor={color.white}
         hoveredBgColor={color.lightGrey}
       >

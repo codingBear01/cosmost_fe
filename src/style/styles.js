@@ -1,7 +1,8 @@
 export const COLOR_LIST = {
   black: '#000',
   white: '#f5f5f7',
-  grey: '#7b7b7b',
+  darkGrey: '#7b7b7b',
+  grey: '#969696',
   lightGrey: '#dcdcdc',
   navy: '#01124f',
   darkBlue: '#001970',
