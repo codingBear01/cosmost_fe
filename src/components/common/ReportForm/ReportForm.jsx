@@ -1,5 +1,5 @@
 /* libraries */
-import React from 'react';
+import React, { useEffect } from 'react';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilTitle } from '../..';
@@ -21,20 +21,30 @@ function ReportForm({
     setIsReportFormOpened(!isReportFormOpened);
   };
 
+  /* Hooks */
+  /* 신고 모달 열렸을 때 바깥 영역 스크롤 방지하고 스크롤 Y좌표 맨 위로 설정하는 함수 */
+  useEffect(() => {
+    if (isReportFormOpened) {
+      document.body.style.overflow = 'hidden';
+      window.scrollTo(0, 0);
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isReportFormOpened]);
+
   return (
     <S.ReportFormBg isReportFormOpened={isReportFormOpened}>
       <S.ReportForm>
         <S.ReportFormTitleWrap>
           <UtilTitle>
-            {isReportHistoryPage ? '신고 상세 조회' : '내가 남긴 리뷰'}
+            {/* 신고 내역 페이지이면 신고 상세 조회, 신고하기 폼이면 내가 남긴 리뷰 */}
+            {isReportHistoryPage ? '신고 상세 조회' : '신고하기'}
           </UtilTitle>
           <AiIcons.AiOutlineClose onClick={onClick} />
         </S.ReportFormTitleWrap>
+        {/* 신고 내역 페이지면 해당 신고의 분류, 신고하기 폼이면 신고 유형 드랍다운 */}
         {isReportHistoryPage ? (
-          <S.ReportHistoryCat>
-            분류:
-            {item?.category}
-          </S.ReportHistoryCat>
+          <S.ReportHistoryCat>분류: {item?.category}</S.ReportHistoryCat>
         ) : (
           <S.ReportFormCats>
             <option value="default">신고 유형</option>
@@ -43,6 +53,7 @@ function ReportForm({
             <option value="review">리뷰</option>
           </S.ReportFormCats>
         )}
+        {/* 신고 내역 페이지면 해당 신고의 제목, 신고하기 폼이면 신고 제목 입력 인풋 */}
         {isReportHistoryPage ? (
           <S.ReportFormTitle>{item?.title}</S.ReportFormTitle>
         ) : (
@@ -58,11 +69,13 @@ function ReportForm({
         {/* 신고 내용 */}
         <S.ReportFormTextArea
           placeholder="신고 내용을 입력해주세요."
-          disabled
+          // 신고 내역 페이지면 입력 불가, 신고하기 폼이면 입력 가능
+          disabled={isReportHistoryPage}
           value={item?.content}
           maxLength={500}
         ></S.ReportFormTextArea>
         {/* 신고 버튼 */}
+        {/* 신고 내역 페이지면 안 보임, 신고하기 폼이면 보임 */}
         {!isReportHistoryPage && (
           <S.ReportFormBtnWrap>
             <Button

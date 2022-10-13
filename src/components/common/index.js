@@ -1,7 +1,8 @@
 export { Button } from './Button/';
-export { FlexDiv } from './FlexDiv';
+export { CourseUtillityModal } from './CourseUtillityModal/';
 export { Footer } from './Footer/';
 export { Header } from './Header/';
+export { HistoriesForm } from './HistoriesForm/';
 export { Icon } from './Icon/';
 export { Input } from './Input/';
 export { NextBtn } from './NextBtn/';
@@ -9,6 +10,7 @@ export { OrderingButton } from './OrderingButton/';
 export { OrderingModal } from './OrderingModal/';
 export { PageContainer } from './PageContainer/';
 export { ProfilePic } from './ProfilePic/';
+export { ReportForm } from './ReportForm/';
 export { Section } from './Section/';
 export { SmallProfilePic } from './SmallProfilePic/';
 export { ToTopBtn } from './ToTopBtn/';

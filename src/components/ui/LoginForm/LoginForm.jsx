@@ -1,6 +1,13 @@
 /* libraries */
+
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+/* context */
+import { LoginStateContext } from "../../context";
+
 /* components */
 import * as S from "./styled";
 import { Button, Icon, Input, UtilForm, UtilInputWrap } from "../../";
@@ -46,12 +53,13 @@ function LoginForm() {
         if (response.data.isSuccess) {
           sessionStorage.setItem("token", response.data.result);
           navigate("/");
+          toast.success("로그인에 성공하였습니다.");
         } else {
-          alert(response.data.message);
+          toast.warn(response.data.message);
         }
       })
       .catch((e) => {
-        alert("서버와 연결이 되지 않았습니다. 관리자에게 문의하세요.");
+        toast.error(`서버와 연결이 되지 않았습니다. 관리자에게 문의하세요.`);
       });
   };
 
@@ -157,6 +165,16 @@ function LoginForm() {
       >
         <FcIcons.FcGoogle />
       </Button>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
     </UtilForm>
   );
 }

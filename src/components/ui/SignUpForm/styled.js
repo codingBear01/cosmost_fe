@@ -23,7 +23,7 @@ export const UserInfoDropDownWrap = styled.div`
   margin-bottom: ${gap.xl};
 `;
 
-export const UploadProfilePicBtn = styled.button`
+export const UploadProfilePicBox = styled.div`
   width: 100px;
   height: 100px;
   border: 1px solid white;
@@ -32,10 +32,25 @@ export const UploadProfilePicBtn = styled.button`
   background-repeat: no-repeat;
   background-size: cover;
   color: ${color.white};
+  cursor: pointer;
 `;
 
 export const ProfilePicUploadInput = styled.input`
   display: none;
+`;
+
+export const MessageBox = styled.div`
+  width: 250px;
+  height: 10px;
+  margin: 5px 0;
+`;
+
+export const ErrorMessage = styled.p`
+  align-self: start;
+  margin-left: 10px;
+  color: ${color.darkRed};
+  word-break: break-all;
+  font-size: 11px;
 `;
 
 export const UserInfoDropDown = styled.select`

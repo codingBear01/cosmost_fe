@@ -36,7 +36,7 @@ function UserProfilArea() {
             <span>100</span>
           </Link>
         </S.UserInfoWrap>
-        <Link to="/">
+        <Link to="/sign-up">
           <Button
             type="button"
             width={'220px'}

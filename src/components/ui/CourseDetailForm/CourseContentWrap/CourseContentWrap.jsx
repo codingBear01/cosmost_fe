@@ -1,13 +1,12 @@
 /* libraries */
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 /* components */
 import * as S from './styled';
-import { CourseContent } from '..';
-import { Button, ProfilePic } from '../../..';
+import { CourseContent, SharingCourseModal } from '..';
+import { Button, CourseUtillityModal, ProfilePic } from '../../..';
 /* icons */
 import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';
-import * as GrIcons from 'react-icons/gr';
 import * as BiIcons from 'react-icons/bi';
 import * as FiIcons from 'react-icons/fi';
 import * as GiIcons from 'react-icons/gi';
@@ -24,21 +23,7 @@ function CourseContentWrap({
   return (
     // dataCategory에 따라 다른 컴포넌트 렌더링됨
     <S.StyledCourseContentWrap justifyContent={justifyContent} height={height}>
-      {dataCategory === 'titleAndDate' ? (
-        // 코스 제목, 평점, 작성일, 더보기 버튼
-        <>
-          <S.StyledCourseContentWrap style={{ borderBottom: 'none' }}>
-            <S.CourseTitle>{courseData.title}</S.CourseTitle>
-            <S.CourseAverageRate>
-              ⭐ {courseData.rate.average}
-            </S.CourseAverageRate>
-          </S.StyledCourseContentWrap>
-          <S.CourseCreatedDateAndMoreIconWrap>
-            <S.CourseCreatedDate>{courseData.createdDate}</S.CourseCreatedDate>
-            <GrIcons.GrMoreVertical />
-          </S.CourseCreatedDateAndMoreIconWrap>
-        </>
-      ) : dataCategory === 'likeAndReview' ? (
+      {dataCategory === 'likeAndReview' ? (
         // 좋아요, 리뷰 숫자
         <>
           <CourseContent>
@@ -99,16 +84,6 @@ function CourseContentWrap({
               )}
             </div>
           ))}
-        </>
-      ) : dataCategory === 'shareAndLikeButton' ? (
-        // 공유, 좋아요 버튼
-        <>
-          <S.ShareAndLikeButton>
-            <AiIcons.AiOutlineShareAlt />
-          </S.ShareAndLikeButton>
-          <S.ShareAndLikeButton>
-            <FaIcons.FaRegThumbsUp />
-          </S.ShareAndLikeButton>
         </>
       ) : dataCategory === 'averageRate' ? (
         // 코스 평균 평점 및 별 개수별 퍼센테이지
