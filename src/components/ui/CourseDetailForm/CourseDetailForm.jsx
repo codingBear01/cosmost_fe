@@ -82,7 +82,7 @@ function CourseDetailForm() {
           dataCategory="averageRate"
         />
         {/* 리뷰 작성 폼 */}
-        <CourseReviewRegisterForm />
+        <CourseReviewRegisterForm courseData={courseData} />
         {/* 정렬 버튼 */}
         <OrderingButton onClick={onClickOpenOrderingModal} />
         {/* 코스 리뷰 */}
