@@ -80,7 +80,7 @@ function CourseRegistrationForm() {
       isDragging4: monitor.isDragging(),
     }),
   }));
-
+  console.log("A");
   // 드랍 관련 state와 ref
   const [{ isOver0 }, drop0] = useDrop(
     () => ({
@@ -144,6 +144,7 @@ function CourseRegistrationForm() {
           monitor.internalMonitor.store.getState().dragOperation.sourceId;
         const targetId = monitor.targetId;
         console.log(targetId);
+        console.log(SourceID);
         DropCourseImg(targetId, SourceID, registeredCourseImgState);
         return undefined;
       },
@@ -204,32 +205,33 @@ function CourseRegistrationForm() {
        SourceID : 드래그한 아이템
        registeredCourseImgState : 현재 state*/
   const DropCourseImg = (targetId, SourceID, registeredCourseImgState) => {
-    switch (targetId) {
+    console.log(targetId[targetId.length - 1]);
+    switch (targetId[targetId.length - 1]) {
       //0번칸 드랍
-      case "T15":
-        switch (SourceID) {
-          case "S11":
+      case "5":
+        switch (SourceID[SourceID.length - 1]) {
+          case "1":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc0: registeredCourseImgState.imgSrc1,
               imgSrc1: registeredCourseImgState.imgSrc0,
             });
             break;
-          case "S12":
+          case "2":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc0: registeredCourseImgState.imgSrc2,
               imgSrc2: registeredCourseImgState.imgSrc0,
             });
             break;
-          case "S13":
+          case "3":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc0: registeredCourseImgState.imgSrc3,
               imgSrc3: registeredCourseImgState.imgSrc0,
             });
             break;
-          case "S14":
+          case "4":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc0: registeredCourseImgState.imgSrc4,
@@ -241,30 +243,30 @@ function CourseRegistrationForm() {
         }
         break;
       //1번칸 드랍
-      case "T16":
-        switch (SourceID) {
-          case "S10":
+      case "6":
+        switch (SourceID[SourceID.length - 1]) {
+          case "0":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc1: registeredCourseImgState.imgSrc0,
               imgSrc0: registeredCourseImgState.imgSrc1,
             });
             break;
-          case "S12":
+          case "2":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc1: registeredCourseImgState.imgSrc2,
               imgSrc2: registeredCourseImgState.imgSrc1,
             });
             break;
-          case "S13":
+          case "3":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc1: registeredCourseImgState.imgSrc3,
               imgSrc3: registeredCourseImgState.imgSrc1,
             });
             break;
-          case "S14":
+          case "4":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc1: registeredCourseImgState.imgSrc4,
@@ -276,30 +278,30 @@ function CourseRegistrationForm() {
         }
         break;
       //2번칸 드랍
-      case "T17":
-        switch (SourceID) {
-          case "S10":
+      case "7":
+        switch (SourceID[SourceID.length - 1]) {
+          case "0":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc2: registeredCourseImgState.imgSrc0,
               imgSrc0: registeredCourseImgState.imgSrc2,
             });
             break;
-          case "S11":
+          case "1":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc2: registeredCourseImgState.imgSrc1,
               imgSrc1: registeredCourseImgState.imgSrc2,
             });
             break;
-          case "S13":
+          case "3":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc2: registeredCourseImgState.imgSrc3,
               imgSrc3: registeredCourseImgState.imgSrc2,
             });
             break;
-          case "S14":
+          case "4":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc2: registeredCourseImgState.imgSrc4,
@@ -311,30 +313,30 @@ function CourseRegistrationForm() {
         }
         break;
       //3번칸 드랍
-      case "T18":
-        switch (SourceID) {
-          case "S10":
+      case "8":
+        switch (SourceID[SourceID.length - 1]) {
+          case "0":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc3: registeredCourseImgState.imgSrc0,
               imgSrc0: registeredCourseImgState.imgSrc3,
             });
             break;
-          case "S11":
+          case "1":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc3: registeredCourseImgState.imgSrc1,
               imgSrc1: registeredCourseImgState.imgSrc3,
             });
             break;
-          case "S12":
+          case "2":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc3: registeredCourseImgState.imgSrc2,
               imgSrc2: registeredCourseImgState.imgSrc3,
             });
             break;
-          case "S14":
+          case "4":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc3: registeredCourseImgState.imgSrc4,
@@ -346,30 +348,30 @@ function CourseRegistrationForm() {
         }
         break;
       //4번칸 드랍
-      case "T19":
-        switch (SourceID) {
-          case "S10":
+      case "9":
+        switch (SourceID[SourceID.length - 1]) {
+          case "0":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc4: registeredCourseImgState.imgSrc0,
               imgSrc0: registeredCourseImgState.imgSrc4,
             });
             break;
-          case "S11":
+          case "1":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc4: registeredCourseImgState.imgSrc1,
               imgSrc1: registeredCourseImgState.imgSrc4,
             });
             break;
-          case "S12":
+          case "2":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc4: registeredCourseImgState.imgSrc2,
               imgSrc2: registeredCourseImgState.imgSrc4,
             });
             break;
-          case "S13":
+          case "3":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc4: registeredCourseImgState.imgSrc3,
