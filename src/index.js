@@ -7,16 +7,19 @@ import './index.css';
 import { GoToTop } from './store';
 
 import { LoginStateContext } from './components/context';
-
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <LoginStateContext.Provider value={sessionStorage.getItem('token')}>
-    <RecoilRoot>
-      <BrowserRouter>
-        <GoToTop />
-        <App />
-      </BrowserRouter>
-    </RecoilRoot>
-  </LoginStateContext.Provider>
+  <DndProvider backend={HTML5Backend}>
+    <LoginStateContext.Provider value={sessionStorage.getItem('token')}>
+      <RecoilRoot>
+        <BrowserRouter>
+          <GoToTop />
+          <App />
+        </BrowserRouter>
+      </RecoilRoot>
+    </LoginStateContext.Provider>
+  </DndProvider>
 );
