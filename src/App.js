@@ -1,6 +1,6 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from "react";
 /* context */
-import { LoginStateContext } from './components/context';
+import { LoginStateContext } from "./components/context";
 /* components */
 import {
   Header,
@@ -20,11 +20,11 @@ import {
   SearchedCourses,
   SignUp,
   User,
-} from './components';
+} from "./components";
 /* router */
-import { Routes, Route, Outlet, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Outlet, Navigate, useLocation } from "react-router-dom";
 /* functions */
-import { initialize } from './store';
+import { initialize } from "./store";
 
 const WithHeaderAndFooter = () => {
   const path = useLocation().pathname;
@@ -57,7 +57,8 @@ function App() {
 
   /* 프로젝트 실행 시 Kakao API KEY 값 초기화하는 함수 */
   useEffect(() => {
-    Kakao.init(process.env.REACT_APP_KAKAO_KEY);
+    if (process.env.REACT_APP_KAKAO_KEY)
+      Kakao?.init(process.env.REACT_APP_KAKAO_KEY);
   }, []);
 
   return (
@@ -96,7 +97,7 @@ function App() {
           {/* )} */}
         </Route>
         {/* 잘못된 경로에 접근시 메인 페이지로 리다이렉트 시킴*/}
-        <Route path="*" element={<Navigate to={'/'} />} />
+        <Route path="*" element={<Navigate to={"/"} />} />
       </Routes>
     </>
   );
