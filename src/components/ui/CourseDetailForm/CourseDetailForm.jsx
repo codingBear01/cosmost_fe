@@ -86,7 +86,7 @@ function CourseDetailForm() {
         {/* 정렬 버튼 */}
         <OrderingButton onClick={onClickOpenOrderingModal} />
         {/* 코스 리뷰 */}
-        <CourseReview />
+        <CourseReview courseData={courseData} />
       </UtilDiv>
       <ToTopBtn />
     </>

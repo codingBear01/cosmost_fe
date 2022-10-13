@@ -50,13 +50,13 @@ function CourseReviewRegisterForm({ courseData }) {
   };
 
   /* APIs */
-  /* 코스 등록 */
-  const postCourseReviewUrl = 'http://10.10.10.189:8080/v1/comments';
+  /* 코스 리뷰 등록 */
   const onSubmitPostCourseReview = (e) => {
     e.preventDefault();
 
     if (!checkCourseReviewValues()) return;
 
+    const postCourseReviewUrl = 'http://10.10.10.189:8081/v1/comments';
     const temporaryData = {
       courseId: courseData.id,
       reviewerId: 1,

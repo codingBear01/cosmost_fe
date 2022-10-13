@@ -10,7 +10,7 @@ import {
   mainTextFadeIn,
 } from '../../../../style';
 
-export const CourseReviewWrap = styled.div`
+export const CourseReviewWrap = styled.form`
   display: flex;
   alignt-items: center;
   justify-content: flex-start;
@@ -43,17 +43,22 @@ export const CourseReviewContentWrap = styled.div`
   margin-left: ${gap.l};
 `;
 
-export const CourseReviewInnerContentWrap = styled.div`
+export const CourseReviewInnerContentWrap = styled.form`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   margin-bottom: ${gap.s};
+
+  div {
+    display: flex;
+  }
 `;
 
 export const CourseReviewStar = styled.div`
   font-size: ${fs.s};
   color: ${color.darkYellow};
+  cursor: pointer;
 `;
 
 export const CourseReviewCreatedDateWrap = styled.div`
@@ -89,5 +94,23 @@ export const CourseReviewLikeButton = styled.button`
 `;
 
 export const CourseReviewDescription = styled.p`
+  height: 22rem;
+  padding: 0.5rem;
   font-size: ${fs.s};
+`;
+
+export const CourseReviewEditTextarea = styled.textarea`
+  width: 100%;
+  height: 22rem;
+  padding: 0.5rem;
+  background: none;
+  border: 1px solid ${color.white};
+  border-radius: ${br.default};
+  font-size: ${fs.s};
+  color: ${color.white};
+`;
+
+export const CourseReviewEditButtons = styled.div`
+  margin-top: 1.5rem;
+  align-self: end;
 `;
