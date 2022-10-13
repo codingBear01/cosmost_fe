@@ -20,5 +20,4 @@ export {
   MAIN_COURSES,
   RANKERS,
   REPORT_HISTORIES,
-  REVIEW_HISTORIES,
 } from './temporaryArray/';

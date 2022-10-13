@@ -27,15 +27,22 @@ export const HistoryListItem = styled.li`
   margin-bottom: ${gap.l};
 `;
 
-export const HistoryDateWrap = styled.div`
+export const HistoryDateAndRateWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   margin-bottom: ${gap.s};
   padding: 0.5rem ${gap.s};
   border: 2px solid ${color.white};
   border-radius: ${br.default};
-  font-size: 16px;
-  cursor: pointer;
+
+  span {
+    font-size: 16px;
+  }
 `;
+
+export const HistoryDate = styled.span``;
 
 export const ReportHistoryCat = styled.span`
   align-self: start;
@@ -77,5 +84,4 @@ export const HistoryContent = styled.p`
   word-wrap: break-word;
   line-height: 1.2em;
   height: 3.6em;
-  cursor: pointer;
 `;
