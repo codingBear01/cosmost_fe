@@ -6,7 +6,6 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 /* context */
-import { LoginStateContext } from "../../context";
 
 /* components */
 import * as S from "./styled";
@@ -18,7 +17,6 @@ import * as SiIcons from "react-icons/si";
 import * as FcIcons from "react-icons/fc";
 /* static data */
 import { COLOR_LIST as color } from "../../../style";
-import axios from "axios";
 import { LoginStateContext } from "../../context";
 
 const LoginApiUrl = "http://10.10.10.21:8080/v1/signin";
