@@ -1,6 +1,9 @@
 /* libraries */
 import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { useDrag, useDrop } from "react-dnd";
+
 /* components */
 import * as S from "./styled";
 import {
@@ -22,6 +25,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { FaSleigh } from "react-icons/fa";
 import { GiConsoleController } from "react-icons/gi";
+import { MdOutlineNotInterested } from "react-icons/md";
 
 // 등록한 코스이미지 및 해시태그를 삭제하는 X 버튼을 나타내는 컴포넌트
 const ItemRemoveButton = styled(AiIcons.AiOutlineClose)`
@@ -31,6 +35,8 @@ const ItemRemoveButton = styled(AiIcons.AiOutlineClose)`
   width: 2rem;
   height: 2rem;
 `;
+const a = "AAA";
+const b = "CCC";
 
 function CourseRegistrationForm() {
   const navigate = useNavigate();
@@ -43,9 +49,137 @@ function CourseRegistrationForm() {
     imgSrc4: "none",
   });
 
+  // 드래그 관련 state와 ref
+  const [{ isDragging0 }, drag0] = useDrag(() => ({
+    type: "0",
+    collect: (monitor) => ({
+      isDragging0: monitor.isDragging(),
+    }),
+  }));
+  const [{ isDragging1 }, drag1] = useDrag(() => ({
+    type: "0",
+    collect: (monitor) => ({
+      isDragging1: monitor.isDragging(),
+    }),
+  }));
+  const [{ isDragging2 }, drag2] = useDrag(() => ({
+    type: "0",
+    collect: (monitor) => ({
+      isDragging2: monitor.isDragging(),
+    }),
+  }));
+  const [{ isDragging3 }, drag3] = useDrag(() => ({
+    type: "0",
+    collect: (monitor) => ({
+      isDragging3: monitor.isDragging(),
+    }),
+  }));
+  const [{ isDragging4 }, drag4] = useDrag(() => ({
+    type: "0",
+    collect: (monitor) => ({
+      isDragging4: monitor.isDragging(),
+    }),
+  }));
+
+  // 드랍 관련 state와 ref
+  const [{ isOver0 }, drop0] = useDrop(
+    () => ({
+      accept: "0",
+      drop: (item, monitor) => {
+        const SourceID =
+          monitor.internalMonitor.store.getState().dragOperation.sourceId;
+        const targetId = monitor.targetId;
+        DropCourseImg(targetId, SourceID, registeredCourseImgState);
+        return undefined;
+      },
+      collect: (monitor) => ({
+        isOver0: monitor.isOver(),
+      }),
+    }),
+    [registeredCourseImgState]
+  );
+
+  const [{ isOver1 }, drop1] = useDrop(
+    () => ({
+      accept: "0",
+      drop: (item, monitor) => {
+        const SourceID =
+          monitor.internalMonitor.store.getState().dragOperation.sourceId;
+        const targetId = monitor.targetId;
+        console.log(targetId);
+        DropCourseImg(targetId, SourceID, registeredCourseImgState);
+        return undefined;
+      },
+      collect: (monitor) => ({
+        isOver1: monitor.isOver(),
+      }),
+    }),
+    [registeredCourseImgState]
+  );
+
+  const [{ isOver2 }, drop2] = useDrop(
+    () => ({
+      accept: "0",
+      drop: (item, monitor) => {
+        const SourceID =
+          monitor.internalMonitor.store.getState().dragOperation.sourceId;
+        const targetId = monitor.targetId;
+        console.log(targetId);
+        DropCourseImg(targetId, SourceID, registeredCourseImgState);
+        return undefined;
+      },
+      collect: (monitor) => ({
+        isOver2: monitor.isOver(),
+        SourceID2:
+          monitor.internalMonitor.store.getState().dragOperation.sourceId,
+      }),
+    }),
+    [registeredCourseImgState]
+  );
+  const [{ isOver3 }, drop3] = useDrop(
+    () => ({
+      accept: "0",
+      drop: (item, monitor) => {
+        const SourceID =
+          monitor.internalMonitor.store.getState().dragOperation.sourceId;
+        const targetId = monitor.targetId;
+        console.log(targetId);
+        DropCourseImg(targetId, SourceID, registeredCourseImgState);
+        return undefined;
+      },
+      collect: (monitor) => ({
+        isOver3: monitor.isOver(),
+        SourceID3:
+          monitor.internalMonitor.store.getState().dragOperation.sourceId,
+      }),
+    }),
+    [registeredCourseImgState]
+  );
+  const [{ isOver4 }, drop4] = useDrop(
+    () => ({
+      accept: "0",
+      drop: (item, monitor) => {
+        const SourceID =
+          monitor.internalMonitor.store.getState().dragOperation.sourceId;
+        const targetId = monitor.targetId;
+        console.log(targetId);
+        DropCourseImg(targetId, SourceID, registeredCourseImgState);
+        return undefined;
+      },
+      collect: (monitor) => ({
+        isOver4: monitor.isOver(),
+        SourceID4:
+          monitor.internalMonitor.store.getState().dragOperation.sourceId,
+      }),
+    }),
+    [registeredCourseImgState]
+  );
+
   /* 코스 이미지 업로드에 쓰이는 useRef */
   const courseImgInputRef = useRef();
 
+  /* 등록된 코스 이미지들을 검사하여 중간에 빈 칸이 있을 경우 코스 이미지들을 왼쪽으로 당겨
+     중간의 빈 칸을 없애는 코드. */
   useEffect(() => {
     console.log("A");
     Object.values(registeredCourseImgState).every((item, index, Array) => {
@@ -64,6 +198,190 @@ function CourseRegistrationForm() {
       return true;
     });
   }, [registeredCourseImgState]);
+
+  /* 드래그 앤 드랍을 한 경우 state 값을 변경하는 함수
+       targetId : 드랍된 위치 
+       SourceID : 드래그한 아이템
+       registeredCourseImgState : 현재 state*/
+  const DropCourseImg = (targetId, SourceID, registeredCourseImgState) => {
+    switch (targetId) {
+      //0번칸 드랍
+      case "T15":
+        switch (SourceID) {
+          case "S11":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc0: registeredCourseImgState.imgSrc1,
+              imgSrc1: registeredCourseImgState.imgSrc0,
+            });
+            break;
+          case "S12":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc0: registeredCourseImgState.imgSrc2,
+              imgSrc2: registeredCourseImgState.imgSrc0,
+            });
+            break;
+          case "S13":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc0: registeredCourseImgState.imgSrc3,
+              imgSrc3: registeredCourseImgState.imgSrc0,
+            });
+            break;
+          case "S14":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc0: registeredCourseImgState.imgSrc4,
+              imgSrc4: registeredCourseImgState.imgSrc0,
+            });
+            break;
+          default:
+            break;
+        }
+        break;
+      //1번칸 드랍
+      case "T16":
+        switch (SourceID) {
+          case "S10":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc1: registeredCourseImgState.imgSrc0,
+              imgSrc0: registeredCourseImgState.imgSrc1,
+            });
+            break;
+          case "S12":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc1: registeredCourseImgState.imgSrc2,
+              imgSrc2: registeredCourseImgState.imgSrc1,
+            });
+            break;
+          case "S13":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc1: registeredCourseImgState.imgSrc3,
+              imgSrc3: registeredCourseImgState.imgSrc1,
+            });
+            break;
+          case "S14":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc1: registeredCourseImgState.imgSrc4,
+              imgSrc4: registeredCourseImgState.imgSrc1,
+            });
+            break;
+          default:
+            break;
+        }
+        break;
+      //2번칸 드랍
+      case "T17":
+        switch (SourceID) {
+          case "S10":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc2: registeredCourseImgState.imgSrc0,
+              imgSrc0: registeredCourseImgState.imgSrc2,
+            });
+            break;
+          case "S11":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc2: registeredCourseImgState.imgSrc1,
+              imgSrc1: registeredCourseImgState.imgSrc2,
+            });
+            break;
+          case "S13":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc2: registeredCourseImgState.imgSrc3,
+              imgSrc3: registeredCourseImgState.imgSrc2,
+            });
+            break;
+          case "S14":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc2: registeredCourseImgState.imgSrc4,
+              imgSrc4: registeredCourseImgState.imgSrc2,
+            });
+            break;
+          default:
+            break;
+        }
+        break;
+      //3번칸 드랍
+      case "T18":
+        switch (SourceID) {
+          case "S10":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc3: registeredCourseImgState.imgSrc0,
+              imgSrc0: registeredCourseImgState.imgSrc3,
+            });
+            break;
+          case "S11":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc3: registeredCourseImgState.imgSrc1,
+              imgSrc1: registeredCourseImgState.imgSrc3,
+            });
+            break;
+          case "S12":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc3: registeredCourseImgState.imgSrc2,
+              imgSrc2: registeredCourseImgState.imgSrc3,
+            });
+            break;
+          case "S14":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc3: registeredCourseImgState.imgSrc4,
+              imgSrc4: registeredCourseImgState.imgSrc3,
+            });
+            break;
+          default:
+            break;
+        }
+        break;
+      //4번칸 드랍
+      case "T19":
+        switch (SourceID) {
+          case "S10":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc4: registeredCourseImgState.imgSrc0,
+              imgSrc0: registeredCourseImgState.imgSrc4,
+            });
+            break;
+          case "S11":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc4: registeredCourseImgState.imgSrc1,
+              imgSrc1: registeredCourseImgState.imgSrc4,
+            });
+            break;
+          case "S12":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc4: registeredCourseImgState.imgSrc2,
+              imgSrc2: registeredCourseImgState.imgSrc4,
+            });
+            break;
+          case "S13":
+            setRegisteredCourseImgState({
+              ...registeredCourseImgState,
+              imgSrc4: registeredCourseImgState.imgSrc3,
+              imgSrc3: registeredCourseImgState.imgSrc4,
+            });
+            break;
+          default:
+            break;
+        }
+        break;
+    }
+  };
 
   /*사용자가 코스 이미지 등록 버튼을 클릭한 경우 호출할 핸들러.
     마지막 코스 이미지가 등록되지 않았다면 input[type=file]에 클릭 이벤트를 발생시킨다.*/
@@ -132,45 +450,100 @@ function CourseRegistrationForm() {
         </S.UploadImgButtonWrap>
         {/* 업로드된 코스 이미지들 */}
         <S.UploadedCourseImgsWrap>
-          <div style={{ display: "inline-block", position: "relative" }}>
+          <div ref={registeredCourseImgState.imgSrc0 === "none" ? null : drop0}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc0}
-            />
-            {registeredCourseImgState.imgSrc0 === "none" || (
-              <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 0)} />
-            )}
+              ref={registeredCourseImgState.imgSrc0 === "none" ? null : drag0}
+              opacity={isDragging0 ? "0" : "1"}
+            >
+              {registeredCourseImgState.imgSrc0 === "none" || (
+                <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 0)} />
+              )}
+              {isOver0 && (
+                <div
+                  style={{
+                    height: "100%",
+                    backgroundColor: "RGBA(255,255,0,.5)",
+                  }}
+                ></div>
+              )}
+            </S.CoursePreviewImg>
           </div>
-          <div style={{ display: "inline-block", position: "relative" }}>
+          <div ref={registeredCourseImgState.imgSrc1 === "none" ? null : drop1}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc1}
-            />
-            {registeredCourseImgState.imgSrc1 === "none" || (
-              <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 1)} />
-            )}
+              ref={registeredCourseImgState.imgSrc1 === "none" ? null : drag1}
+              opacity={isDragging1 ? "0" : "1"}
+            >
+              {registeredCourseImgState.imgSrc1 === "none" || (
+                <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 1)} />
+              )}
+              {isOver1 && (
+                <div
+                  style={{
+                    height: "100%",
+                    backgroundColor: "RGBA(255,255,0,.5)",
+                  }}
+                ></div>
+              )}
+            </S.CoursePreviewImg>
           </div>
-          <div style={{ display: "inline-block", position: "relative" }}>
+          <div ref={registeredCourseImgState.imgSrc2 === "none" ? null : drop2}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc2}
-            />
-            {registeredCourseImgState.imgSrc2 === "none" || (
-              <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 2)} />
-            )}
+              ref={registeredCourseImgState.imgSrc2 === "none" ? null : drag2}
+              opacity={isDragging2 ? "0" : "1"}
+            >
+              {registeredCourseImgState.imgSrc2 === "none" || (
+                <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 2)} />
+              )}
+              {isOver2 && (
+                <div
+                  style={{
+                    height: "100%",
+                    backgroundColor: "RGBA(255,255,0,.5)",
+                  }}
+                ></div>
+              )}
+            </S.CoursePreviewImg>
           </div>
-          <div style={{ display: "inline-block", position: "relative" }}>
+          <div ref={registeredCourseImgState.imgSrc3 === "none" ? null : drop3}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc3}
-            />
-            {registeredCourseImgState.imgSrc3 === "none" || (
-              <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 3)} />
-            )}
+              ref={registeredCourseImgState.imgSrc3 === "none" ? null : drag3}
+              opacity={isDragging3 ? "0" : "1"}
+            >
+              {registeredCourseImgState.imgSrc3 === "none" || (
+                <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 3)} />
+              )}
+              {isOver3 && (
+                <div
+                  style={{
+                    height: "100%",
+                    backgroundColor: "RGBA(255,255,0,.5)",
+                  }}
+                ></div>
+              )}
+            </S.CoursePreviewImg>
           </div>
-          <div style={{ display: "inline-block", position: "relative" }}>
+          <div ref={registeredCourseImgState.imgSrc4 === "none" ? null : drop4}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc4}
-            />
-            {registeredCourseImgState.imgSrc4 === "none" || (
-              <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 4)} />
-            )}
+              ref={registeredCourseImgState.imgSrc4 === "none" ? null : drag4}
+              opacity={isDragging4 ? "0" : "1"}
+            >
+              {registeredCourseImgState.imgSrc4 === "none" || (
+                <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 4)} />
+              )}
+              {isOver4 && (
+                <div
+                  style={{
+                    height: "100%",
+                    backgroundColor: "RGBA(255,255,0,.5)",
+                  }}
+                ></div>
+              )}
+            </S.CoursePreviewImg>
           </div>
         </S.UploadedCourseImgsWrap>
       </S.UploadCourseImgArea>

@@ -25,17 +25,23 @@ export const UploadImgInput = styled.input`
   display: none;
 `;
 
-export const UploadedCourseImgsWrap = styled.div``;
+export const UploadedCourseImgsWrap = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-left: 3rem;
+`;
 
-export const CoursePreviewImg = styled.img`
+export const CoursePreviewImg = styled.div`
   width: 9rem;
   height: 9rem;
-  margin-left: 3rem;
+  position: relative;
   border-radius: ${br.default};
   background-color: ${color.grey};
   background-size: cover;
   background-repeat: no-repeat;
   background-image: ${({ backgroundImage }) => backgroundImage || "none"};
+  opacity: ${({ opacity }) => opacity || "1"};
 `;
 
 export const AddDetailCourseInfoArea = styled.div`
