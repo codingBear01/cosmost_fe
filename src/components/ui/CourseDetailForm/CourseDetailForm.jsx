@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useState } from 'react';
+import React from 'react';
 /* recoil */
 import { useRecoilState } from 'recoil';
 import { isOrderingModalOpenedAtom } from '../../../store';
@@ -82,11 +82,11 @@ function CourseDetailForm() {
           dataCategory="averageRate"
         />
         {/* 리뷰 작성 폼 */}
-        <CourseReviewRegisterForm />
+        <CourseReviewRegisterForm courseData={courseData} />
         {/* 정렬 버튼 */}
         <OrderingButton onClick={onClickOpenOrderingModal} />
         {/* 코스 리뷰 */}
-        <CourseReview />
+        <CourseReview courseData={courseData} />
       </UtilDiv>
       <ToTopBtn />
     </>

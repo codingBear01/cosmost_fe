@@ -1,31 +1,23 @@
 /* libraries */
-import React, { useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useDrag, useDrop } from "react-dnd";
+import { useDrag, useDrop } from 'react-dnd';
 
 /* components */
-import * as S from "./styled";
-import {
-  Button,
-  Icon,
-  Input,
-  NextBtn,
-  UtilDiv,
-  UtilInputWrap,
-  UtilTitle,
-} from "../..";
+import * as S from './styled';
+import { Button, Input, UtilDiv } from '../..';
 /* icons */
-import * as AiIcons from "react-icons/ai";
-import * as BsIcons from "react-icons/bs";
+import * as AiIcons from 'react-icons/ai';
+import * as BsIcons from 'react-icons/bs';
 /* static data */
-import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from "../../../style";
-import { CATEGORIES } from "../../../store";
-import { useState } from "react";
-import styled from "styled-components";
-import { FaSleigh } from "react-icons/fa";
-import { GiConsoleController } from "react-icons/gi";
-import { MdOutlineNotInterested } from "react-icons/md";
+import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
+import { CATEGORIES } from '../../../store';
+import { useState } from 'react';
+import styled from 'styled-components';
+import { FaSleigh } from 'react-icons/fa';
+import { GiConsoleController } from 'react-icons/gi';
+import { MdOutlineNotInterested } from 'react-icons/md';
 
 // 등록한 코스이미지 및 해시태그를 삭제하는 X 버튼을 나타내는 컴포넌트
 const ItemRemoveButton = styled(AiIcons.AiOutlineClose)`
@@ -35,47 +27,47 @@ const ItemRemoveButton = styled(AiIcons.AiOutlineClose)`
   width: 2rem;
   height: 2rem;
 `;
-const a = "AAA";
-const b = "CCC";
+const a = 'AAA';
+const b = 'CCC';
 
 function CourseRegistrationForm() {
   const navigate = useNavigate();
 
   const [registeredCourseImgState, setRegisteredCourseImgState] = useState({
-    imgSrc0: "none",
-    imgSrc1: "none",
-    imgSrc2: "none",
-    imgSrc3: "none",
-    imgSrc4: "none",
+    imgSrc0: 'none',
+    imgSrc1: 'none',
+    imgSrc2: 'none',
+    imgSrc3: 'none',
+    imgSrc4: 'none',
   });
 
   // 드래그 관련 state와 ref
   const [{ isDragging0 }, drag0] = useDrag(() => ({
-    type: "0",
+    type: '0',
     collect: (monitor) => ({
       isDragging0: monitor.isDragging(),
     }),
   }));
   const [{ isDragging1 }, drag1] = useDrag(() => ({
-    type: "0",
+    type: '0',
     collect: (monitor) => ({
       isDragging1: monitor.isDragging(),
     }),
   }));
   const [{ isDragging2 }, drag2] = useDrag(() => ({
-    type: "0",
+    type: '0',
     collect: (monitor) => ({
       isDragging2: monitor.isDragging(),
     }),
   }));
   const [{ isDragging3 }, drag3] = useDrag(() => ({
-    type: "0",
+    type: '0',
     collect: (monitor) => ({
       isDragging3: monitor.isDragging(),
     }),
   }));
   const [{ isDragging4 }, drag4] = useDrag(() => ({
-    type: "0",
+    type: '0',
     collect: (monitor) => ({
       isDragging4: monitor.isDragging(),
     }),
@@ -84,7 +76,7 @@ function CourseRegistrationForm() {
   // 드랍 관련 state와 ref
   const [{ isOver0 }, drop0] = useDrop(
     () => ({
-      accept: "0",
+      accept: '0',
       drop: (item, monitor) => {
         const SourceID =
           monitor.internalMonitor.store.getState().dragOperation.sourceId;
@@ -101,7 +93,7 @@ function CourseRegistrationForm() {
 
   const [{ isOver1 }, drop1] = useDrop(
     () => ({
-      accept: "0",
+      accept: '0',
       drop: (item, monitor) => {
         const SourceID =
           monitor.internalMonitor.store.getState().dragOperation.sourceId;
@@ -119,7 +111,7 @@ function CourseRegistrationForm() {
 
   const [{ isOver2 }, drop2] = useDrop(
     () => ({
-      accept: "0",
+      accept: '0',
       drop: (item, monitor) => {
         const SourceID =
           monitor.internalMonitor.store.getState().dragOperation.sourceId;
@@ -138,7 +130,7 @@ function CourseRegistrationForm() {
   );
   const [{ isOver3 }, drop3] = useDrop(
     () => ({
-      accept: "0",
+      accept: '0',
       drop: (item, monitor) => {
         const SourceID =
           monitor.internalMonitor.store.getState().dragOperation.sourceId;
@@ -157,7 +149,7 @@ function CourseRegistrationForm() {
   );
   const [{ isOver4 }, drop4] = useDrop(
     () => ({
-      accept: "0",
+      accept: '0',
       drop: (item, monitor) => {
         const SourceID =
           monitor.internalMonitor.store.getState().dragOperation.sourceId;
@@ -181,16 +173,16 @@ function CourseRegistrationForm() {
   /* 등록된 코스 이미지들을 검사하여 중간에 빈 칸이 있을 경우 코스 이미지들을 왼쪽으로 당겨
      중간의 빈 칸을 없애는 코드. */
   useEffect(() => {
-    console.log("A");
+    console.log('A');
     Object.values(registeredCourseImgState).every((item, index, Array) => {
-      if (item === "none") {
+      if (item === 'none') {
         if (index === Array.length - 1) {
           return false;
-        } else if (Array[index + 1] !== "none") {
+        } else if (Array[index + 1] !== 'none') {
           setRegisteredCourseImgState({
             ...registeredCourseImgState,
-            ["imgSrc" + index]: Array[index + 1],
-            ["imgSrc" + (index + 1)]: Array[index],
+            ['imgSrc' + index]: Array[index + 1],
+            ['imgSrc' + (index + 1)]: Array[index],
           });
           return false;
         }
@@ -206,30 +198,30 @@ function CourseRegistrationForm() {
   const DropCourseImg = (targetId, SourceID, registeredCourseImgState) => {
     switch (targetId) {
       //0번칸 드랍
-      case "T15":
+      case 'T15':
         switch (SourceID) {
-          case "S11":
+          case 'S11':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc0: registeredCourseImgState.imgSrc1,
               imgSrc1: registeredCourseImgState.imgSrc0,
             });
             break;
-          case "S12":
+          case 'S12':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc0: registeredCourseImgState.imgSrc2,
               imgSrc2: registeredCourseImgState.imgSrc0,
             });
             break;
-          case "S13":
+          case 'S13':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc0: registeredCourseImgState.imgSrc3,
               imgSrc3: registeredCourseImgState.imgSrc0,
             });
             break;
-          case "S14":
+          case 'S14':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc0: registeredCourseImgState.imgSrc4,
@@ -241,30 +233,30 @@ function CourseRegistrationForm() {
         }
         break;
       //1번칸 드랍
-      case "T16":
+      case 'T16':
         switch (SourceID) {
-          case "S10":
+          case 'S10':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc1: registeredCourseImgState.imgSrc0,
               imgSrc0: registeredCourseImgState.imgSrc1,
             });
             break;
-          case "S12":
+          case 'S12':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc1: registeredCourseImgState.imgSrc2,
               imgSrc2: registeredCourseImgState.imgSrc1,
             });
             break;
-          case "S13":
+          case 'S13':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc1: registeredCourseImgState.imgSrc3,
               imgSrc3: registeredCourseImgState.imgSrc1,
             });
             break;
-          case "S14":
+          case 'S14':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc1: registeredCourseImgState.imgSrc4,
@@ -276,30 +268,30 @@ function CourseRegistrationForm() {
         }
         break;
       //2번칸 드랍
-      case "T17":
+      case 'T17':
         switch (SourceID) {
-          case "S10":
+          case 'S10':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc2: registeredCourseImgState.imgSrc0,
               imgSrc0: registeredCourseImgState.imgSrc2,
             });
             break;
-          case "S11":
+          case 'S11':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc2: registeredCourseImgState.imgSrc1,
               imgSrc1: registeredCourseImgState.imgSrc2,
             });
             break;
-          case "S13":
+          case 'S13':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc2: registeredCourseImgState.imgSrc3,
               imgSrc3: registeredCourseImgState.imgSrc2,
             });
             break;
-          case "S14":
+          case 'S14':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc2: registeredCourseImgState.imgSrc4,
@@ -311,30 +303,30 @@ function CourseRegistrationForm() {
         }
         break;
       //3번칸 드랍
-      case "T18":
+      case 'T18':
         switch (SourceID) {
-          case "S10":
+          case 'S10':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc3: registeredCourseImgState.imgSrc0,
               imgSrc0: registeredCourseImgState.imgSrc3,
             });
             break;
-          case "S11":
+          case 'S11':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc3: registeredCourseImgState.imgSrc1,
               imgSrc1: registeredCourseImgState.imgSrc3,
             });
             break;
-          case "S12":
+          case 'S12':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc3: registeredCourseImgState.imgSrc2,
               imgSrc2: registeredCourseImgState.imgSrc3,
             });
             break;
-          case "S14":
+          case 'S14':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc3: registeredCourseImgState.imgSrc4,
@@ -346,30 +338,30 @@ function CourseRegistrationForm() {
         }
         break;
       //4번칸 드랍
-      case "T19":
+      case 'T19':
         switch (SourceID) {
-          case "S10":
+          case 'S10':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc4: registeredCourseImgState.imgSrc0,
               imgSrc0: registeredCourseImgState.imgSrc4,
             });
             break;
-          case "S11":
+          case 'S11':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc4: registeredCourseImgState.imgSrc1,
               imgSrc1: registeredCourseImgState.imgSrc4,
             });
             break;
-          case "S12":
+          case 'S12':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc4: registeredCourseImgState.imgSrc2,
               imgSrc2: registeredCourseImgState.imgSrc4,
             });
             break;
-          case "S13":
+          case 'S13':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc4: registeredCourseImgState.imgSrc3,
@@ -387,10 +379,10 @@ function CourseRegistrationForm() {
     마지막 코스 이미지가 등록되지 않았다면 input[type=file]에 클릭 이벤트를 발생시킨다.*/
   const onClickUploadCourseImg = (e) => {
     e.preventDefault();
-    if (registeredCourseImgState.imgSrc4 === "none") {
+    if (registeredCourseImgState.imgSrc4 === 'none') {
       courseImgInputRef.current.click();
     } else {
-      alert("모든 코스 이미지가 등록되었습니다.");
+      alert('모든 코스 이미지가 등록되었습니다.');
     }
   };
 
@@ -398,15 +390,15 @@ function CourseRegistrationForm() {
      선택한 코스 이미지의 URL 경로를 state로 전달한다. */
   const onChangeCourseImg = (e) => {
     const FileReaderObject = new FileReader();
-    console.log("B");
+    console.log('B');
     FileReaderObject.onload = () => {
       Object.values(registeredCourseImgState).every((item, index) => {
-        if (item == "none") {
+        if (item == 'none') {
           setRegisteredCourseImgState({
             ...registeredCourseImgState,
-            ["imgSrc" + index]: `url(${FileReaderObject.result})`,
+            ['imgSrc' + index]: `url(${FileReaderObject.result})`,
           });
-          e.target.value = "";
+          e.target.value = '';
           return false;
         }
         return true;
@@ -420,21 +412,21 @@ function CourseRegistrationForm() {
   const onClickRemoveItem = (e, index) => {
     setRegisteredCourseImgState({
       ...registeredCourseImgState,
-      ["imgSrc" + index]: `none`,
+      ['imgSrc' + index]: `none`,
     });
   };
 
   return (
-    <UtilDiv width={"76.8rem"} padding={"7rem 0 0 0"}>
+    <UtilDiv width={'76.8rem'} padding={'7rem 0 0 0'}>
       <S.UploadCourseImgArea>
         {/* 코스 이미지 업로드 버튼 */}
         <S.UploadImgButtonWrap>
           <Button
             type="button"
-            width={"9rem"}
-            height={"9rem"}
-            margin={""}
-            fontSize={"3rem"}
+            width={'9rem'}
+            height={'9rem'}
+            margin={''}
+            fontSize={'3rem'}
             color={color.white}
             bgColor={color.darkBlue}
             hoveredBgColor={color.navy}
@@ -450,96 +442,96 @@ function CourseRegistrationForm() {
         </S.UploadImgButtonWrap>
         {/* 업로드된 코스 이미지들 */}
         <S.UploadedCourseImgsWrap>
-          <div ref={registeredCourseImgState.imgSrc0 === "none" ? null : drop0}>
+          <div ref={registeredCourseImgState.imgSrc0 === 'none' ? null : drop0}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc0}
-              ref={registeredCourseImgState.imgSrc0 === "none" ? null : drag0}
-              opacity={isDragging0 ? "0" : "1"}
+              ref={registeredCourseImgState.imgSrc0 === 'none' ? null : drag0}
+              opacity={isDragging0 ? '0' : '1'}
             >
-              {registeredCourseImgState.imgSrc0 === "none" || (
+              {registeredCourseImgState.imgSrc0 === 'none' || (
                 <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 0)} />
               )}
               {isOver0 && (
                 <div
                   style={{
-                    height: "100%",
-                    backgroundColor: "RGBA(255,255,0,.5)",
+                    height: '100%',
+                    backgroundColor: 'RGBA(255,255,0,.5)',
                   }}
                 ></div>
               )}
             </S.CoursePreviewImg>
           </div>
-          <div ref={registeredCourseImgState.imgSrc1 === "none" ? null : drop1}>
+          <div ref={registeredCourseImgState.imgSrc1 === 'none' ? null : drop1}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc1}
-              ref={registeredCourseImgState.imgSrc1 === "none" ? null : drag1}
-              opacity={isDragging1 ? "0" : "1"}
+              ref={registeredCourseImgState.imgSrc1 === 'none' ? null : drag1}
+              opacity={isDragging1 ? '0' : '1'}
             >
-              {registeredCourseImgState.imgSrc1 === "none" || (
+              {registeredCourseImgState.imgSrc1 === 'none' || (
                 <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 1)} />
               )}
               {isOver1 && (
                 <div
                   style={{
-                    height: "100%",
-                    backgroundColor: "RGBA(255,255,0,.5)",
+                    height: '100%',
+                    backgroundColor: 'RGBA(255,255,0,.5)',
                   }}
                 ></div>
               )}
             </S.CoursePreviewImg>
           </div>
-          <div ref={registeredCourseImgState.imgSrc2 === "none" ? null : drop2}>
+          <div ref={registeredCourseImgState.imgSrc2 === 'none' ? null : drop2}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc2}
-              ref={registeredCourseImgState.imgSrc2 === "none" ? null : drag2}
-              opacity={isDragging2 ? "0" : "1"}
+              ref={registeredCourseImgState.imgSrc2 === 'none' ? null : drag2}
+              opacity={isDragging2 ? '0' : '1'}
             >
-              {registeredCourseImgState.imgSrc2 === "none" || (
+              {registeredCourseImgState.imgSrc2 === 'none' || (
                 <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 2)} />
               )}
               {isOver2 && (
                 <div
                   style={{
-                    height: "100%",
-                    backgroundColor: "RGBA(255,255,0,.5)",
+                    height: '100%',
+                    backgroundColor: 'RGBA(255,255,0,.5)',
                   }}
                 ></div>
               )}
             </S.CoursePreviewImg>
           </div>
-          <div ref={registeredCourseImgState.imgSrc3 === "none" ? null : drop3}>
+          <div ref={registeredCourseImgState.imgSrc3 === 'none' ? null : drop3}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc3}
-              ref={registeredCourseImgState.imgSrc3 === "none" ? null : drag3}
-              opacity={isDragging3 ? "0" : "1"}
+              ref={registeredCourseImgState.imgSrc3 === 'none' ? null : drag3}
+              opacity={isDragging3 ? '0' : '1'}
             >
-              {registeredCourseImgState.imgSrc3 === "none" || (
+              {registeredCourseImgState.imgSrc3 === 'none' || (
                 <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 3)} />
               )}
               {isOver3 && (
                 <div
                   style={{
-                    height: "100%",
-                    backgroundColor: "RGBA(255,255,0,.5)",
+                    height: '100%',
+                    backgroundColor: 'RGBA(255,255,0,.5)',
                   }}
                 ></div>
               )}
             </S.CoursePreviewImg>
           </div>
-          <div ref={registeredCourseImgState.imgSrc4 === "none" ? null : drop4}>
+          <div ref={registeredCourseImgState.imgSrc4 === 'none' ? null : drop4}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc4}
-              ref={registeredCourseImgState.imgSrc4 === "none" ? null : drag4}
-              opacity={isDragging4 ? "0" : "1"}
+              ref={registeredCourseImgState.imgSrc4 === 'none' ? null : drag4}
+              opacity={isDragging4 ? '0' : '1'}
             >
-              {registeredCourseImgState.imgSrc4 === "none" || (
+              {registeredCourseImgState.imgSrc4 === 'none' || (
                 <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 4)} />
               )}
               {isOver4 && (
                 <div
                   style={{
-                    height: "100%",
-                    backgroundColor: "RGBA(255,255,0,.5)",
+                    height: '100%',
+                    backgroundColor: 'RGBA(255,255,0,.5)',
                   }}
                 ></div>
               )}
@@ -596,13 +588,13 @@ function CourseRegistrationForm() {
               name=""
               placeholder="해시태그"
               maxLength={20}
-              height={"3rem"}
-              margin={"0 2rem 0 0"}
+              height={'3rem'}
+              margin={'0 2rem 0 0'}
               fontSize={fs.m}
             />
             <Button
-              width={"3rem"}
-              height={"3rem"}
+              width={'3rem'}
+              height={'3rem'}
               color={color.white}
               type="button"
             >
@@ -627,9 +619,9 @@ function CourseRegistrationForm() {
       <S.CourseRegistrationButtonWrap>
         <Button
           type="button"
-          width={"12rem"}
-          height={"5rem"}
-          margin={"0 4rem 0 0"}
+          width={'12rem'}
+          height={'5rem'}
+          margin={'0 4rem 0 0'}
           fontSize={fs.m}
           color={color.black}
           bgColor={color.lightGrey}
@@ -640,15 +632,15 @@ function CourseRegistrationForm() {
         </Button>
         <Button
           type="submit"
-          width={"12rem"}
-          height={"5rem"}
-          margin={"0 0 0 4rem"}
+          width={'12rem'}
+          height={'5rem'}
+          margin={'0 0 0 4rem'}
           fontSize={fs.m}
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
           // 임시로 메인 페이지로 redirect되게 해놓음 추후 수정
-          onClick={() => navigate("/")}
+          onClick={() => navigate('/')}
         >
           등록
         </Button>
