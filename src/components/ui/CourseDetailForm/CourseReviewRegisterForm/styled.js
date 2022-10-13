@@ -36,6 +36,7 @@ export const ReviewRegisterTitle = styled.span`
 `;
 
 export const ReviewRegisterRate = styled.div`
+  display: flex;
   font-size: ${fs.l};
   color: ${color.white};
   svg {

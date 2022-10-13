@@ -17,7 +17,9 @@ import * as FcIcons from 'react-icons/fc';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 
-const LoginApiUrl = 'http://10.10.10.21:8080/v1/signin';
+/* CONSTANTS */
+const LOGIN_API_URL = 'http://10.10.10.21:8080/v1/signin';
+const { Kakao } = window;
 
 function LoginForm() {
   //로그인 토큰
@@ -31,6 +33,7 @@ function LoginForm() {
 
   const navigate = useNavigate();
 
+  /* Handlers */
   /* 아이디와 패스워드를 입력할 때마다 호출될 핸들러 */
   const onChangeInput = (e) => {
     setInputValue({
@@ -43,7 +46,7 @@ function LoginForm() {
   const onSubmitForm = (e) => {
     e.preventDefault();
     axios
-      .put(LoginApiUrl, inputValue, { timeout: 1000 })
+      .put(LOGIN_API_URL, inputValue, { timeout: 1000 })
       .then((response) => {
         console.log(response);
         if (response.data.isSuccess) {
@@ -57,6 +60,13 @@ function LoginForm() {
       .catch((e) => {
         toast.error(`서버와 연결이 되지 않았습니다. 관리자에게 문의하세요.`);
       });
+  };
+
+  /* 카카오 로그인 핸들러 */
+  const onClickLoginWithKakao = () => {
+    Kakao.Auth.authorize({
+      redirectUri: 'http://localhost:3000/',
+    });
   };
 
   return (
@@ -135,6 +145,7 @@ function LoginForm() {
         fontSize={'20px'}
         bgColor={color.yellow}
         hoveredBgColor={color.darkYellow}
+        onClick={onClickLoginWithKakao}
       >
         <RiIcons.RiKakaoTalkFill />
       </Button>

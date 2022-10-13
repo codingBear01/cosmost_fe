@@ -17,6 +17,8 @@ function CourseReview() {
   /* reviewUtilityModal의 Open 여부 state */
   const [isReviewUtilityModalOpened, setIsReviewUtilityModalOpened] =
     useState(false);
+  /* 평점 */
+  const [reviewRate, setReviewRate] = useState(1);
 
   /* Handlers */
   /* 클릭된 review의 데이터를 저장하기 위한 핸들러. 클릭 시 해당 review의 index가 state에 저장되며, 리뷰 수정, 삭제 모달의 Open 여부가 반대로 변경되고, modalRef의 current값에 클릭된 타깃이 할당된다. */

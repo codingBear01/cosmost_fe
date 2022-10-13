@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useState } from 'react';
+import React from 'react';
 /* recoil */
 import { useRecoilState } from 'recoil';
 import { isOrderingModalOpenedAtom } from '../../../store';

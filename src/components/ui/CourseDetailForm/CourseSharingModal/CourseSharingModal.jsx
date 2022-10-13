@@ -1,6 +1,5 @@
 /* libraries */
 import React from 'react';
-import { toast } from 'react-toastify';
 /* components */
 import * as S from './styled';
 /* icons */

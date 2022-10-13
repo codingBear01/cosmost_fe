@@ -1,5 +1,5 @@
 /* libraries */
-import React from 'react';
+import React, { useState } from 'react';
 /* components */
 import * as S from './styled';
 import { Button } from '../../../';
@@ -8,18 +8,50 @@ import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../../style';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 
+/* CONSTANTS */
+const REVIEW_RATE_INDEXES = [0, 1, 2, 3, 4];
+
 function CourseReviewRegisterForm() {
+  /* 평점에 쓰이는 states */
+  const [isYellowStar, setIsYellowStar] = useState([
+    true,
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [reviewRate, setReviewRate] = useState(1);
+
+  /* 평점을 설정하는 핸들러. 전달한 index 이하의 isYellowStar를 true로 만들고, index + 1을 평점으로 할당한다. */
+  const onClickSetReviewRate = (index) => {
+    let isYellowStarStates = [...isYellowStar];
+    for (let i = 0; i < REVIEW_RATE_INDEXES.length; i++) {
+      isYellowStarStates[i] = i <= index ? true : false;
+    }
+    setIsYellowStar(isYellowStarStates);
+    setReviewRate(index + 1);
+  };
+
   return (
     <S.StyledCourseReviewRegisterForm>
       <S.ReviewRegisterTitleAndRateWrap>
         <S.ReviewRegisterTitle>리뷰 작성</S.ReviewRegisterTitle>
-        {/* 처음에 빈 별 5개 주어지고 별 클릭하면 해당되는 평점 수만큼을 노란 별 개수로 바꾸어 보여주기 */}
+        {/* item의 boolean 여부에 따라 노랑, 하양 별이 다르게 rendering됨 */}
         <S.ReviewRegisterRate>
-          <AiIcons.AiFillStar style={{ color: 'yellow' }} />
-          <AiIcons.AiFillStar style={{ color: 'yellow' }} />
-          <AiIcons.AiFillStar style={{ color: 'yellow' }} />
-          <AiIcons.AiFillStar style={{ color: 'yellow' }} />
-          <AiIcons.AiOutlineStar />
+          {REVIEW_RATE_INDEXES.map((item) => (
+            <div key={item}>
+              {isYellowStar[item] ? (
+                <AiIcons.AiFillStar
+                  style={{ color: 'yellow' }}
+                  onClick={() => onClickSetReviewRate(item)}
+                />
+              ) : (
+                <AiIcons.AiOutlineStar
+                  onClick={() => onClickSetReviewRate(item)}
+                />
+              )}
+            </div>
+          ))}
         </S.ReviewRegisterRate>
       </S.ReviewRegisterTitleAndRateWrap>
       <S.ReviewRegisterTextarea
