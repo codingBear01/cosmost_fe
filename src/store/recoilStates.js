@@ -11,3 +11,9 @@ export const isOrderingModalOpenedAtom = atom({
   key: 'isOrderingModalOpenedAtom',
   default: false,
 });
+
+/* 코스 및 클릭된 코스 리뷰를 할당하는 state */
+export const clickedElementAtom = atom({
+  key: 'clickedElementAtom',
+  default: null,
+});

@@ -1,12 +1,8 @@
 /* libraries */
-
-import React, { useState, useContext } from 'react';
+import React, { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-/* context */
-import { LoginStateContext } from '../../context';
 /* components */
 import * as S from './styled';
 import { Button, Icon, Input, UtilForm, UtilInputWrap } from '../../';
@@ -19,35 +15,44 @@ import * as FcIcons from 'react-icons/fc';
 import { COLOR_LIST as color } from '../../../style';
 
 /* CONSTANTS */
-const LOGIN_API_URL = `${process.env.REACT_APP_AUTH_DOMAIN_IP}/v1/signin`;
 const { Kakao } = window;
 
 function LoginForm() {
-  //로그인 토큰
-  const loginTokenState = useContext(LoginStateContext);
-
-  //아이디, 패스워드 state
-  const [inputValue, setInputValue] = useState({
-    loginId: '',
-    loginPwd: '',
-  });
+  const idRef = useRef();
+  const passwordRef = useRef();
 
   const navigate = useNavigate();
 
   /* Handlers */
-  /* 아이디와 패스워드를 입력할 때마다 호출될 핸들러 */
-  const onChangeInput = (e) => {
-    setInputValue({
-      ...inputValue,
-      [e.target.name]: e.target.value,
-    });
+  /* 아이디 및 패스워드 입력값을 검증하는 핸들러 */
+  const checkIdAndPassword = () => {
+    if (!idRef.current.value) {
+      toast.error('아이디를 입력해주세요.');
+      return false;
+    }
+    if (!passwordRef.current.value) {
+      toast.error('비밀번호를 입력해주세요.');
+      return false;
+    }
+    return true;
   };
 
   /* 로그인을 눌렀을시 호출될 핸들러*/
-  const onSubmitForm = (e) => {
+  const onSubmitPutLogin = (e) => {
     e.preventDefault();
+    console.log(idRef.current.value);
+    console.log(passwordRef.current.value);
+
+    if (!checkIdAndPassword()) return;
+
+    const loginApiUrl = `${process.env.REACT_APP_AUTH_DOMAIN_IP}/v1/signin`;
+    const idAndPassword = {
+      loginId: idRef.current.value,
+      loginPw: passwordRef.current.value,
+    };
+
     axios
-      .put(LOGIN_API_URL, inputValue, { timeout: 1000 })
+      .put(loginApiUrl, idAndPassword, { timeout: 1000 })
       .then((response) => {
         if (response.data.isSuccess) {
           sessionStorage.setItem('token', response.data.result);
@@ -73,22 +78,31 @@ function LoginForm() {
     <UtilForm
       justifyContent={'center'}
       height={'100vh'}
-      onSubmit={onSubmitForm}
+      onSubmit={onSubmitPutLogin}
     >
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       {/* 아이디, 비밀번호 인풋 */}
       <UtilInputWrap>
         <Icon>
           <AiIcons.AiOutlineUser />
         </Icon>
         <Input
+          ref={idRef}
           type="text"
           name="loginId"
-          value={inputValue.loginId}
           placeholder="아이디"
           width={'305px'}
           height={'40px'}
           margin={'0 0 0 10px'}
-          onChange={onChangeInput}
         />
       </UtilInputWrap>
       <UtilInputWrap>
@@ -96,14 +110,13 @@ function LoginForm() {
           <AiIcons.AiOutlineLock />
         </Icon>
         <Input
+          ref={passwordRef}
           type="password"
           name="loginPwd"
-          value={inputValue.loginPwd}
           placeholder="비밀번호"
           width={'305px'}
           height={'40px'}
           margin={'0 0 0 10px'}
-          onChange={onChangeInput}
         />
       </UtilInputWrap>
       {/* 로그인 버튼 */}
@@ -126,7 +139,7 @@ function LoginForm() {
       {/* 회원가입 및 SNS 로그인 버튼들 */}
       <Link to="/email-validation">
         <Button
-          type="submit"
+          type="button"
           width={'340px'}
           height={'40px'}
           margin={'0 0 10px 0'}
@@ -138,7 +151,7 @@ function LoginForm() {
         </Button>
       </Link>
       <Button
-        type="submit"
+        type="button"
         width={'340px'}
         height={'40px'}
         margin={'0 0 10px 0'}
@@ -150,7 +163,7 @@ function LoginForm() {
         <RiIcons.RiKakaoTalkFill />
       </Button>
       <Button
-        type="submit"
+        type="button"
         width={'340px'}
         height={'40px'}
         margin={'0 0 10px 0'}
@@ -162,7 +175,7 @@ function LoginForm() {
         <SiIcons.SiNaver />
       </Button>
       <Button
-        type="submit"
+        type="button"
         width={'340px'}
         height={'40px'}
         margin={'0 0 10px 0'}
@@ -172,16 +185,6 @@ function LoginForm() {
       >
         <FcIcons.FcGoogle />
       </Button>
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
     </UtilForm>
   );
 }

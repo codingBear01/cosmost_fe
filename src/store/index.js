@@ -8,6 +8,7 @@ export { sharingByKakao } from './sharing';
 export {
   isReportFormOpenedAtom,
   isOrderingModalOpenedAtom,
+  clickedElementAtom,
 } from './recoilStates';
 
 /* temporary array */
