@@ -19,7 +19,7 @@ import * as FcIcons from 'react-icons/fc';
 import { COLOR_LIST as color } from '../../../style';
 
 /* CONSTANTS */
-const LOGIN_API_URL = 'http://10.10.10.21:8080/v1/signin';
+const LOGIN_API_URL = `${process.env.REACT_APP_AUTH_DOMAIN_IP}/v1/signin`;
 const { Kakao } = window;
 
 function LoginForm() {

@@ -55,8 +55,7 @@ function HistoriesForm({ isReportHistoryPage }) {
   /* APIs */
   /* 접속한 페이지가 신고 내역 페이지라면 나의 신고 내역을 불러오는 함수 */
   const getMyReviews = () => {
-    const getMyReviewsUrl =
-      'http://10.10.10.189:8081/v1/comments?filter=auth&type=review';
+    const getMyReviewsUrl = `${process.env.REACT_APP_COURSE_REVIEW_DOMAIN_IP}/v1/comments?filter=auth&type=review`;
     const getMyReviewsHeaders = {
       headers: {
         Authorization: 2, // 로그인한 사용자의 식별자
