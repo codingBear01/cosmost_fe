@@ -56,7 +56,7 @@ function CourseReviewRegisterForm({ courseData }) {
 
     if (!checkCourseReviewValues()) return;
 
-    const postCourseReviewUrl = 'http://10.10.10.189:8081/v1/comments';
+    const postCourseReviewUrl = `${process.env.REACT_APP_COURSE_REVIEW_DOMAIN_IP}/v1/comments`;
     const temporaryData = {
       courseId: courseData.id,
       reviewerId: 1,
@@ -66,12 +66,9 @@ function CourseReviewRegisterForm({ courseData }) {
     axios
       .post(postCourseReviewUrl, temporaryData)
       .then((response) => {
-        console.log(response);
         reviewContentRef.current.value = '';
-        toast.success('코스 리뷰가 등록되었습니다.');
       })
       .catch((error) => {
-        console.log(error);
         toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
       });
   };

@@ -160,7 +160,6 @@ function SignUpForm({ state }) {
         birthdate: userInformation.age,
         married: userInformation.marriage,
       };
-      console.log(sendData);
     } else {
       toast.error('유효하지 않은 데이터가 있습니다.');
     }

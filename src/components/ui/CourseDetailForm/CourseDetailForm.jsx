@@ -1,5 +1,5 @@
 /* libraries */
-import React from 'react';
+import React, { useState } from 'react';
 /* recoil */
 import { useRecoilState } from 'recoil';
 import { isOrderingModalOpenedAtom } from '../../../store';
@@ -13,20 +13,23 @@ import {
   CourseSharingAndLikeButton,
   CourseTitleAndDate,
 } from '.';
-import { OrderingButton, ToTopBtn, UtilDiv } from '../..';
+import { DeleteModal, OrderingButton, ToTopBtn, UtilDiv } from '../..';
 /* static data */
 import { COURSE_DETAIL as courseData } from '../../../store';
 
 function CourseDetailForm() {
-  /* 정렬 기준 모달 Open 여부 RecoilState */
+  /* States */
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
   );
+  const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
 
   /* Handlers */
-  /* 정렬 기준 모달 Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
   const onClickOpenOrderingModal = () => {
     setIsOrderingModalOpened(!isOrderingModalOpened);
+  };
+  const onClickOpenDeleteModal = () => {
+    setIsDeleteModalOpened(!isDeleteModalOpened);
   };
 
   return (
@@ -41,7 +44,11 @@ function CourseDetailForm() {
         margin={'0 auto'}
       >
         {/* 코스 제목 및 날짜, 더보기 버튼 */}
-        <CourseTitleAndDate courseData={courseData} />
+        <CourseTitleAndDate
+          courseData={courseData}
+          isDeleteModalOpened={isDeleteModalOpened}
+          onClickOpenDeleteModal={onClickOpenDeleteModal}
+        />
         {/* 좋아요, 리뷰 숫자 */}
         <CourseContentWrap
           courseData={courseData}
@@ -86,7 +93,12 @@ function CourseDetailForm() {
         {/* 정렬 버튼 */}
         <OrderingButton onClick={onClickOpenOrderingModal} />
         {/* 코스 리뷰 */}
-        <CourseReview courseData={courseData} />
+        <CourseReview
+          courseData={courseData}
+          isDeleteModalOpened={isDeleteModalOpened}
+          setIsDeleteModalOpened={setIsDeleteModalOpened}
+          onClickOpenDeleteModal={onClickOpenDeleteModal}
+        />
       </UtilDiv>
       <ToTopBtn />
     </>

@@ -2,6 +2,7 @@
 export {
   Button,
   CourseUtillityModal,
+  DeleteModal,
   Footer,
   Header,
   HistoriesForm,
