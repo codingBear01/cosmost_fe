@@ -49,7 +49,6 @@ function LoginForm() {
     axios
       .put(LOGIN_API_URL, inputValue, { timeout: 1000 })
       .then((response) => {
-        console.log(response);
         if (response.data.isSuccess) {
           sessionStorage.setItem('token', response.data.result);
           navigate('/');

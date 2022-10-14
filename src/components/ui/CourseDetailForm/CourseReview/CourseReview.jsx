@@ -109,13 +109,10 @@ function CourseReview({ courseData }) {
     axios
       .put(editCourseReviewUrl, temporaryData)
       .then((response) => {
-        console.log(response);
         edittedReviewContentRef.current.value = '';
         setIsCourseReviewEditTextareaOpened(false);
-        toast.success('코스 리뷰가 수정되었습니다.');
       })
       .catch((error) => {
-        console.log(error);
         toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
       });
   };
@@ -125,12 +122,8 @@ function CourseReview({ courseData }) {
     const deleteCourseReviewUrl = `http://10.10.10.189:8081/v1/comments/${courseReviewId}/review`;
     axios
       .delete(deleteCourseReviewUrl)
-      .then((response) => {
-        console.log(response);
-        toast.success('코스 리뷰가 삭제되었습니다.');
-      })
+      .then((response) => {})
       .catch((error) => {
-        console.log(error);
         toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
       });
   };

@@ -65,11 +65,10 @@ function HistoriesForm({ isReportHistoryPage }) {
     axios
       .get(getMyReviewsUrl, getMyReviewsHeaders)
       .then((response) => {
-        console.log(response);
         setMyReviews(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        new Error(error);
       });
   };
   useEffect(() => {
