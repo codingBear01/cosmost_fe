@@ -3,13 +3,17 @@ import React, { useState, useEffect, useRef } from 'react';
 /* components */
 import * as S from './styled';
 import { StyledCourseContentWrap } from './../CourseContentWrap/styled';
-import { CourseUtillityModal } from '../../../';
+import { CourseUtillityModal, DeleteModal } from '../../../';
 /* static data */
 import { COLOR_LIST as color } from '../../../../style';
 /* icons */
 import * as GrIcons from 'react-icons/gr';
 
-function CourseTitleAndDate({ courseData }) {
+function CourseTitleAndDate({
+  courseData,
+  isDeleteModalOpened,
+  onClickOpenDeleteModal,
+}) {
   /* States */
   /* 코스 및 리뷰 수정, 삭제 Modal Open useState */
   const [isCourseUtilityModalOpened, setIsCourseUtilityModalOpened] =
@@ -50,9 +54,20 @@ function CourseTitleAndDate({ courseData }) {
         <div ref={modalRef}>
           <GrIcons.GrMoreVertical onClick={onClickOpenCourseUtilityModal} />
         </div>
+        {isDeleteModalOpened && (
+          <DeleteModal
+            onClickOpenDeleteModal={onClickOpenDeleteModal}
+            courseId={courseData.id}
+            clickedElement={'course'}
+          />
+        )}
       </S.CourseCreatedDateAndMoreIconWrap>
       {isCourseUtilityModalOpened && (
-        <CourseUtillityModal top={'8rem'} right={'2rem'} />
+        <CourseUtillityModal
+          top={'8rem'}
+          right={'2rem'}
+          onClickOpenDeleteModal={onClickOpenDeleteModal}
+        />
       )}
     </StyledCourseContentWrap>
   );

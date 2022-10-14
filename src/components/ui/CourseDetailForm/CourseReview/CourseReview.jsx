@@ -4,9 +4,13 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 /* components */
 import * as S from './styled';
-import { Button, CourseUtillityModal, ProfilePic } from '../../../';
+import {
+  Button,
+  CourseUtillityModal,
+  DeleteModal,
+  ProfilePic,
+} from '../../../';
 /* static data */
-import { COURSE_REIVEWS } from '../../../../store';
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../../style';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
@@ -16,19 +20,23 @@ import * as FaIcons from 'react-icons/fa';
 /* CONSTANTS */
 const REVIEW_RATE_INDEXES = [0, 1, 2, 3, 4];
 
-function CourseReview({ courseData }) {
+function CourseReview({
+  courseData,
+  onClickOpenDeleteModal,
+  isDeleteModalOpened,
+  setIsDeleteModalOpened,
+}) {
   /* States and Refs */
   const [courseReviews, setCourseReviews] = useState([]);
-  /* 클릭된 review의 index를 저장하는 state */
-  const [reviewIndex, setReviewIndex] = useState(null);
-  /* reviewUtilityModal의 Open 여부 state */
+  const [clickedReviewIndex, setClickedRReviewIndex] = useState(null);
   const [isReviewUtilityModalOpened, setIsReviewUtilityModalOpened] =
     useState(false);
-  /* review update textarea Open 여부 state */
   const [
     isCourseReviewEditTextareaOpened,
     setIsCourseReviewEditTextareaOpened,
   ] = useState(false);
+  const [isClickedCourseReviewDeleted, setIsClickedCourseReviewDeleted] =
+    useState(false);
   /* 리뷰 수정에 쓰이는 states 및 ref */
   const [isYellowStar, setIsYellowStar] = useState([
     true,
@@ -43,7 +51,7 @@ function CourseReview({ courseData }) {
   /* Handlers */
   /* 클릭된 review의 데이터를 저장하기 위한 핸들러. 클릭 시 해당 review의 index가 state에 저장되며, 리뷰 수정, 삭제 모달의 Open 여부가 반대로 변경되고, modalRef의 current값에 클릭된 타깃이 할당되며 코스 리뷰 수정 textarea가 닫힘. */
   const onClickSetClickedReview = (e, i) => {
-    setReviewIndex(i);
+    setClickedRReviewIndex(i);
     setIsReviewUtilityModalOpened(!isReviewUtilityModalOpened);
     setIsCourseReviewEditTextareaOpened(false);
     modalRef.current = e.target;
@@ -52,7 +60,7 @@ function CourseReview({ courseData }) {
   /* 클릭 시 코스 리뷰 수정 textarea Open 여부를 변경하고, 코스 리뷰 버튼의 인덱스를 저장하는 핸들러. */
   const onClickSetClickedCourseReviewEditButton = (i) => {
     setIsCourseReviewEditTextareaOpened(!isCourseReviewEditTextareaOpened);
-    setReviewIndex(i);
+    setClickedRReviewIndex(i);
   };
 
   /* 모달 바깥 영역 클릭 시 모달 닫는 함수 */
@@ -81,7 +89,7 @@ function CourseReview({ courseData }) {
 
   /* 코스 리뷰 내용 및 평점 유효성 검증 */
   const checkEditCourseReviewValues = () => {
-    if (!edittedReviewContentRef.current.value) {
+    if (!edittedReviewContentRef.current?.value) {
       toast.error('내용을 입력해주세요.');
       return false;
     }
@@ -94,11 +102,12 @@ function CourseReview({ courseData }) {
 
   /* APIs */
   /* 해당 코스 전체 리뷰 받아오기 */
-  const getCourseReviews = (courseData) => {
+  const getCourseReviews = (courseId) => {
     const getCourseReviewsUrl = `${process.env.REACT_APP_COURSE_REVIEW_DOMAIN_IP}/v1/comments?type=review`;
     const getCourseReviewsHeaders = {
       headers: {
-        Authorization: courseData.id,
+        // Authorization: courseId,
+        Authorization: 4,
       },
     };
 
@@ -113,8 +122,8 @@ function CourseReview({ courseData }) {
       });
   };
   useEffect(() => {
-    getCourseReviews(courseData);
-  }, [courseData]);
+    getCourseReviews(courseData.id);
+  }, [isClickedCourseReviewDeleted]);
 
   /* 코스 리뷰 수정 */
   const onSubmitEditCourseReview = (e, courseReview) => {
@@ -140,19 +149,6 @@ function CourseReview({ courseData }) {
         new Error(error);
       });
   };
-
-  /* 코스 리뷰 삭제 */
-  const onClickDeleteCourseReview = (courseReviewId) => {
-    const deleteCourseReviewUrl = `${process.env.REACT_APP_COURSE_REVIEW_DOMAIN_IP}/v1/comments/${courseReviewId}/review`;
-    axios
-      .delete(deleteCourseReviewUrl)
-      .then((response) => {})
-      .catch((error) => {
-        toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
-      });
-  };
-
-  console.log(courseReviews);
 
   return (
     <>
@@ -190,7 +186,8 @@ function CourseReview({ courseData }) {
               <S.CourseReviewInnerContentWrap>
                 <S.CourseReviewStar>
                   {/* 수정 textarea 열렸을 시 보여줄 별들 */}
-                  {i === reviewIndex && isCourseReviewEditTextareaOpened ? (
+                  {i === clickedReviewIndex &&
+                  isCourseReviewEditTextareaOpened ? (
                     <>
                       {REVIEW_RATE_INDEXES.map((item) => (
                         <div key={item}>
@@ -248,17 +245,31 @@ function CourseReview({ courseData }) {
                   <GrIcons.GrMoreVertical
                     onClick={(e) => onClickSetClickedReview(e, i)}
                   />
+                  {i === clickedReviewIndex && isDeleteModalOpened && (
+                    <DeleteModal
+                      onClickOpenDeleteModal={onClickOpenDeleteModal}
+                      isDeleteModalOpened={isDeleteModalOpened}
+                      setIsDeleteModalOpened={setIsDeleteModalOpened}
+                      isClickedCourseReviewDeleted={
+                        isClickedCourseReviewDeleted
+                      }
+                      setIsClickedCourseReviewDeleted={
+                        setIsClickedCourseReviewDeleted
+                      }
+                      courseReviewId={item.id}
+                      clickedElement={'courseReview'}
+                    />
+                  )}
                   {/* 코스 리뷰 수정, 삭제 모달 */}
-                  {i === reviewIndex && isReviewUtilityModalOpened && (
+                  {i === clickedReviewIndex && isReviewUtilityModalOpened && (
                     <CourseUtillityModal
                       top={'2.5rem'}
                       right={'0.1rem'}
+                      onClickOpenDeleteModal={onClickOpenDeleteModal}
                       onClickSetClickedCourseReviewEditButton={
                         onClickSetClickedCourseReviewEditButton
                       }
-                      onClickDeleteCourseReview={onClickDeleteCourseReview}
                       i={i}
-                      courseReviewId={item.id}
                     />
                   )}
                 </S.CourseReviewCreatedDateWrap>
@@ -274,7 +285,7 @@ function CourseReview({ courseData }) {
                 </S.CourseReviewLikeButton>
               </S.CourseReviewInnerContentWrap>
               {/* 리뷰 내용 */}
-              {i === reviewIndex && isCourseReviewEditTextareaOpened ? (
+              {i === clickedReviewIndex && isCourseReviewEditTextareaOpened ? (
                 <S.CourseReviewEditTextarea
                   ref={edittedReviewContentRef}
                   maxLength={500}
@@ -286,7 +297,7 @@ function CourseReview({ courseData }) {
                 </S.CourseReviewDescription>
               )}
               {/* 리뷰 수정, 취소 버튼 */}
-              {i === reviewIndex && isCourseReviewEditTextareaOpened ? (
+              {i === clickedReviewIndex && isCourseReviewEditTextareaOpened ? (
                 <S.CourseReviewEditButtons>
                   <Button
                     type={'button'}
