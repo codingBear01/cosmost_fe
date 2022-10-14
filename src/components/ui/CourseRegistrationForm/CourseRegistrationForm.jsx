@@ -1,7 +1,6 @@
 /* libraries */
 import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { useDrag, useDrop } from "react-dnd";
 
 /* components */
@@ -18,6 +17,8 @@ import styled from "styled-components";
 import { FaSleigh } from "react-icons/fa";
 import { GiConsoleController } from "react-icons/gi";
 import { MdOutlineNotInterested } from "react-icons/md";
+import axios from "axios";
+import { RiCreativeCommonsZeroLine } from "react-icons/ri";
 
 // 등록한 코스이미지 및 해시태그를 삭제하는 X 버튼을 나타내는 컴포넌트
 const ItemRemoveButton = styled(AiIcons.AiOutlineClose)`
@@ -168,6 +169,84 @@ function CourseRegistrationForm() {
     [registeredCourseImgState]
   );
 
+  const aaaaa = (address) => {
+    let { naver } = window;
+    naver?.maps?.Service?.geocode(
+      {
+        address,
+      },
+      function (status, response) {
+        if (status !== naver.maps.Service.Status.OK) {
+          return alert("Something wrong!");
+        }
+
+        let result = response.result, // 검색 결과의 컨테이너
+          items = result.items; // 검색 결과의 배열
+
+        console.log(result);
+        var map = new naver.maps.Map("map", {
+          center: new naver.maps.LatLng(35.179816, 129.0750223),
+          zoom: 11,
+        });
+
+        items?.forEach((item) => {
+          var marker = new naver.maps.Marker({
+            position: new naver.maps.LatLng(item.point.y, item.point.x),
+            map: map,
+          });
+        });
+
+        // naver.maps.Event.addListener(marker, "click", function (e) {
+        //   console.log("AAAAA");
+        // });
+      }
+    );
+  };
+
+  const bbbbb = (query) => {
+    const { naver } = window;
+    const URL = "/v1/search/local.json";
+    axios
+      .get(URL, {
+        // withCredentials: true,
+        headers: {
+          "X-Naver-Client-Id": "d20aED2k0XofCt53kLMJ",
+          "X-Naver-Client-Secret": "q4XoJJlknq",
+        },
+        params: {
+          query,
+          display: 5,
+          start: 1,
+          sort: "comment",
+        },
+      })
+      .then(({ data }) => {
+        const items = data.items;
+
+        console.log(items);
+        var map = new naver.maps.Map("map", {
+          center: new naver.maps.LatLng(36.179816, 128.0750223),
+          zoom: 7,
+        });
+
+        items?.forEach((item) => {
+          const x = item.mapx;
+          const y = item.mapy;
+          const tm128 = new naver.maps.Point(x, y);
+          var latLng = naver.maps.TransCoord.fromTM128ToLatLng(tm128);
+
+          var marker = new naver.maps.Marker({
+            position: new naver.maps.LatLng(latLng),
+            map: map,
+          });
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  bbbbb("수영구 김승후");
+  // aaaaa("부산광역시 남구");
   /* 코스 이미지 업로드에 쓰이는 useRef */
   const courseImgInputRef = useRef();
 
@@ -571,6 +650,8 @@ function CourseRegistrationForm() {
             <BsIcons.BsMap />
             <S.CourseDetailInfoText>지도에서 장소 추가</S.CourseDetailInfoText>
           </S.AddLocationButton>
+          <div id="map" style={{ width: "100%", height: "400px" }}></div>
+
           <S.AddedLocationOrHashTagsWrap>
             <S.CourseDetailInfoText>1번 장소</S.CourseDetailInfoText>
             <S.CourseDetailInfoText>2번 장소</S.CourseDetailInfoText>
