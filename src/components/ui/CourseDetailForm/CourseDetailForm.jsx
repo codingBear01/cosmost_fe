@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { isOrderingModalOpenedAtom, clickedElementAtom } from '../../../store';
+import { isOrderingModalOpenedAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import {
@@ -23,8 +23,7 @@ function CourseDetailForm() {
     isOrderingModalOpenedAtom
   );
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
-  const [clickedElement, setClickedElement] =
-    useRecoilState(clickedElementAtom);
+  const [clickedElement, setClickedElement] = useState(null);
   const [clickedCourseReviewIndex, setClickedCourseReviewIndex] =
     useState(null);
   const [isClickedCourseReviewChanged, setIsClickedCourseReviewChanged] =

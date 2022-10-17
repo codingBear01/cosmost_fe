@@ -1,6 +1,8 @@
-import React, { useEffect, useContext } from 'react';
-/* context */
-import { LoginStateContext } from './components/context';
+/* libraries */
+import React, { useEffect } from 'react';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { loginStateAtom } from './store';
 /* components */
 import {
   Header,
@@ -23,8 +25,6 @@ import {
 } from './components';
 /* router */
 import { Routes, Route, Outlet, Navigate, useLocation } from 'react-router-dom';
-/* functions */
-import { initialize } from './store';
 
 const WithHeaderAndFooter = () => {
   const path = useLocation().pathname;
@@ -53,7 +53,7 @@ const WithoutHeaderAndFooter = () => {
 const { Kakao } = window;
 
 function App() {
-  const loginTokenState = useContext(LoginStateContext);
+  const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   /* 프로젝트 실행 시 Kakao API KEY 값 초기화하는 함수 */
   useEffect(() => {
@@ -70,33 +70,33 @@ function App() {
           <Route path="/searched-courses" element={<SearchedCourses />} />
         </Route>
         <Route element={<WithoutHeaderAndFooter />}>
-          {/* {loginTokenState || ( */}
-          <>
-            <Route path="login" element={<Login />} />
-            <Route path="email-validation" element={<EmailValidation />} />
-            <Route path="address" element={<InputAddress />} />
-            <Route path="detail-address" element={<InputDetailAddress />} />
-            <Route path="sign-up" element={<SignUp />} />
-          </>
-          {/* )} */}
-          {/* {loginTokenState && ( */}
-          <>
-            <Route path="user">
-              <Route path=":id" element={<User />} />
-              <Route path=":id/followers" element={<Follows />} />
-              <Route path=":id/followings" element={<Follows />} />
-              <Route path=":id/report-histories" element={<Histories />} />
-              <Route path=":id/review-histories" element={<Histories />} />
-            </Route>
-            <Route
-              path="/course-registration"
-              element={<CourseRegistration />}
-            />
-          </>
-          {/* )} */}
+          {!isLoggedIn && (
+            <>
+              <Route path="login" element={<Login />} />
+              <Route path="email-validation" element={<EmailValidation />} />
+              <Route path="address" element={<InputAddress />} />
+              <Route path="detail-address" element={<InputDetailAddress />} />
+              <Route path="sign-up" element={<SignUp />} />
+            </>
+          )}
+          {isLoggedIn && (
+            <>
+              <Route path="user">
+                <Route path=":id" element={<User />} />
+                <Route path=":id/followers" element={<Follows />} />
+                <Route path=":id/followings" element={<Follows />} />
+                <Route path=":id/report-histories" element={<Histories />} />
+                <Route path=":id/review-histories" element={<Histories />} />
+              </Route>
+              <Route
+                path="/course-registration"
+                element={<CourseRegistration />}
+              />
+            </>
+          )}
         </Route>
         {/* 잘못된 경로에 접근시 메인 페이지로 리다이렉트 시킴*/}
-        <Route path="*" element={<Navigate to={'/'} />} />
+        {/* <Route path="*" element={<Navigate to={'/'} />} /> */}
       </Routes>
     </>
   );
