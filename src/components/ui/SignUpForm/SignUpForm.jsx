@@ -1,7 +1,9 @@
 /* libraries */
 import React, { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilForm, UtilInputWrap, UtilTitle } from '../..';
@@ -24,7 +26,7 @@ function SignUpForm({ state }) {
     passwordConfirm: '',
     age: 'default',
     marriage: 'default',
-    PROFILE_PIC_URL: PROFILE_PIC_DEFAULT_URL,
+    profilePictureUrl: PROFILE_PIC_DEFAULT_URL,
   });
 
   /* User가 입력한 정보의 유효성 여부를 나타내는 state */
@@ -35,7 +37,7 @@ function SignUpForm({ state }) {
     passwordConfirmError: true,
     ageError: true,
     marriageError: true,
-    PROFILE_PIC_URL_ERROR: true,
+    profilePictureUrlError: true,
   });
 
   /* User가 입력한 정보 중 버이 있는 값이 있는지 나타내는 state */
@@ -46,15 +48,20 @@ function SignUpForm({ state }) {
     passwordConfirmEmpty: true,
     ageEmpty: true,
     marriageEmpty: true,
-    PROFILE_PIC_URL_Empty: true,
+    profilePictureUrlEmpty: true,
   });
 
-  /* 프로필 이미지 업로드 여부를 나타내는 state */
-  const [profileChangeState, setProfileChangeState] = useState(false);
+  /* 프로필 이미지 관련 state */
+  const [uploadedProfilePicture, setUploadedProfilePicture] = useState(null);
+  const [isProfilePictureUploaded, setIsProfilePictureUploaded] =
+    useState(false);
 
   /* 프로필 이미지 업로드에 쓰이는 useRef */
   const profileInputRef = useRef();
 
+  const navigate = useNavigate();
+
+  /* Handlers */
   /* 패스워드 일치 여부를 확인하는 함수 */
   useEffect(() => {
     if (userInformation.password !== userInformation.passwordConfirm) {
@@ -110,7 +117,7 @@ function SignUpForm({ state }) {
         setEmptyInputError({ ...emptyInputError, ageEmpty: true });
       } else setEmptyInputError({ ...emptyInputError, ageEmpty: false });
 
-      if (e.target.value == 'default') {
+      if (e.target.value === 'default') {
         setInputError({ ...inputError, ageError: true });
       } else setInputError({ ...inputError, ageError: false });
     } else if (e.target.name === 'marriage') {
@@ -118,7 +125,7 @@ function SignUpForm({ state }) {
         setEmptyInputError({ ...emptyInputError, marriageEmpty: true });
       } else setEmptyInputError({ ...emptyInputError, marriageEmpty: false });
 
-      if (e.target.value == 'default') {
+      if (e.target.value === 'default') {
         setInputError({ ...inputError, marriageError: true });
       } else setInputError({ ...inputError, marriageError: false });
     }
@@ -128,19 +135,46 @@ function SignUpForm({ state }) {
 
   /* 사용자가 프로파일 이미지를 선택했을 때 호출할 핸들러. 선택한 이미지의 URL 경로를 state로 전달한다. */
   const onChangeProfileImg = (e) => {
-    const FileReaderObject = new FileReader();
-    FileReaderObject.onload = () => {
+    if (e.target.files[0]) {
       setUserInformation({
         ...userInformation,
-        PROFILE_PIC_URL: FileReaderObject.result,
+        profilePictureUrl: e.target.files[0],
       });
-      setProfileChangeState(true);
-      setInputError({ ...inputError, PROFILE_PIC_URL_ERROR: false });
+      setIsProfilePictureUploaded(true);
+      setInputError({ ...inputError, profilePictureUrlError: false });
+    } else {
+      setUploadedProfilePicture(PROFILE_PIC_DEFAULT_URL);
+    }
+
+    // 화면에 프로필 사진 표시
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      if (fileReader.readyState === 2) {
+        setUploadedProfilePicture(fileReader.result);
+      }
     };
-    FileReaderObject.readAsDataURL(e.target.files.item(0));
+    fileReader.readAsDataURL(e.target.files[0]);
   };
 
-  /* 회원가입 버튼을 클릭할 때 호출할 핸들러*/
+  /* 입력된 id의 중복 여부를 확인하는 핸들러 */
+  const checkIsDuplicatedId = (id) => {
+    const checkIsDuplicatedIdUrl = `${process.env.REACT_APP_AUTH_DOMAIN_IP}/v1/validation/duplicate?id=${id}`;
+
+    axios
+      .get(checkIsDuplicatedIdUrl)
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success('사용 가능한 아이디입니다.');
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          toast.error('이미 존재하는 아이디입니다.');
+        }
+      });
+  };
+
+  /* 회원가입 버튼 클릭 시 사용자를 등록하는 핸들러 */
   const onSubmitRegisterUser = (e) => {
     e.preventDefault();
 
@@ -149,37 +183,65 @@ function SignUpForm({ state }) {
     });
 
     if (ErrorCheck) {
-      const sendData = {
+      const registerUserUrl = `${process.env.REACT_APP_AUTH_DOMAIN_IP}/v1/auths`;
+
+      const userInput = {
         loginId: userInformation.id,
         loginPwd: userInformation.password,
         email: userInformation.email,
-        status: 1,
-        role: 0,
-        nickname: userInformation.nickname,
-        address: `${userInformation.address} ${userInformation.detailAddress}`,
-        birthdate: userInformation.age,
         married: userInformation.marriage,
+        nickname: userInformation.nickname,
+        sns: 'NO',
+        status: 'ACTIVE',
+        role: 'USER',
+        address: `${userInformation.address} ${userInformation.detailAddress}`,
+        agegroup: userInformation.age,
+        // profileImgSaveUrl: userInformation.profilePictureUrl,
+        profileImgSaveUrl:
+          'https://pokemon.fandom.com/ko/wiki/%ED%94%BC%EC%B9%B4%EC%B8%84_(%EC%9C%A0%EB%82%98%EC%9D%B4%ED%8A%B8)',
       };
+
+      axios
+        .post(registerUserUrl, userInput)
+        .then((response) => {
+          navigate('/login');
+        })
+        .catch((error) => console.log(error));
     } else {
-      toast.error('유효하지 않은 데이터가 있습니다.');
+      toast.warn('모든 값을 입력해주세요.');
     }
   };
 
   return (
     <UtilForm padding={'10rem 0'} onSubmit={onSubmitRegisterUser}>
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       <UtilTitle>회원 정보를 입력해주세요.</UtilTitle>
       {/* 프사, 아이디, 닉네임 */}
       <S.UserProfileWrap marginBottom={gap.xl}>
         <div>
           <S.UploadProfilePicBox
-            bgImgUrl={`url(${userInformation.PROFILE_PIC_URL})`}
+            bgImgUrl={`url(${
+              uploadedProfilePicture
+                ? uploadedProfilePicture
+                : PROFILE_PIC_DEFAULT_URL
+            })`}
             onClick={onClickUploadProilePic}
           >
-            {profileChangeState || '프로필 이미지 업로드'}
+            {isProfilePictureUploaded || '프로필 이미지 업로드'}
           </S.UploadProfilePicBox>
           <S.ProfilePicUploadInput
             ref={profileInputRef}
             type="file"
+            accept="image/jpg,impge/png,image/jpeg"
             onChange={onChangeProfileImg}
           />
         </div>
@@ -204,6 +266,7 @@ function SignUpForm({ state }) {
                 color={color.white}
                 bgColor={color.darkBlue}
                 hoveredBgColor={color.navy}
+                onClick={() => checkIsDuplicatedId(userInformation.id)}
               >
                 중복확인
               </Button>
@@ -353,8 +416,8 @@ function SignUpForm({ state }) {
             onChange={onChangeUserInformation}
           >
             <option value="default">결혼 여부</option>
-            <option value={'미혼'}>미혼</option>
-            <option value={'기혼'}>기혼</option>
+            <option value="SINGLE">미혼</option>
+            <option value="DOUBLE">기혼</option>
           </S.UserInfoDropDown>
           {emptyInputError.marriageEmpty ||
             (inputError.marriageError && (
@@ -374,16 +437,6 @@ function SignUpForm({ state }) {
       >
         회원가입
       </Button>
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
     </UtilForm>
   );
 }

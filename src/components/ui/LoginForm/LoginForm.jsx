@@ -38,29 +38,24 @@ function LoginForm() {
   };
 
   /* 로그인을 눌렀을시 호출될 핸들러*/
-  const onSubmitPutLogin = (e) => {
+  const onSubmitLogin = (e) => {
     e.preventDefault();
-    console.log(idRef.current.value);
-    console.log(passwordRef.current.value);
 
     if (!checkIdAndPassword()) return;
 
     const loginApiUrl = `${process.env.REACT_APP_AUTH_DOMAIN_IP}/v1/signin`;
     const idAndPassword = {
       loginId: idRef.current.value,
-      loginPw: passwordRef.current.value,
+      loginPwd: passwordRef.current.value,
     };
 
     axios
-      .put(loginApiUrl, idAndPassword, { timeout: 1000 })
+      .put(loginApiUrl, idAndPassword)
       .then((response) => {
-        if (response.data.isSuccess) {
-          sessionStorage.setItem('token', response.data.result);
-          navigate('/');
-          toast.success('로그인에 성공하였습니다.');
-        } else {
-          toast.warn(response.data.message);
-        }
+        console.log(response);
+        sessionStorage.setItem('token', response.data);
+        navigate('/');
+        toast.success('로그인에 성공하였습니다.');
       })
       .catch((e) => {
         toast.error(`서버와 연결이 되지 않았습니다. 관리자에게 문의하세요.`);
@@ -78,7 +73,7 @@ function LoginForm() {
     <UtilForm
       justifyContent={'center'}
       height={'100vh'}
-      onSubmit={onSubmitPutLogin}
+      onSubmit={onSubmitLogin}
     >
       <ToastContainer
         position="top-center"
