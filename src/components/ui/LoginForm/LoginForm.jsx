@@ -52,13 +52,12 @@ function LoginForm() {
     axios
       .put(loginApiUrl, idAndPassword)
       .then((response) => {
-        console.log(response);
         sessionStorage.setItem('token', response.data);
         navigate('/');
         toast.success('로그인에 성공하였습니다.');
       })
       .catch((e) => {
-        toast.error(`서버와 연결이 되지 않았습니다. 관리자에게 문의하세요.`);
+        toast.error('서버와 연결이 되지 않았습니다. 관리자에게 문의하세요.');
       });
   };
 

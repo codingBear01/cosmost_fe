@@ -13,7 +13,6 @@ import './style.css';
 
 function DaumAddressApiModal({ state }) {
   const navigate = useNavigate();
-  console.log(state);
 
   /* 사용자가 주소창에서 주소를 선택했을 시 호출할 핸들러 
      주소 상세 페이지로 리다이렉트하며 이 때 사용자가 선택한 주소값을 다음 페이지로 전달한다. */

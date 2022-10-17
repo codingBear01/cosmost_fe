@@ -204,9 +204,12 @@ function SignUpForm({ state }) {
       axios
         .post(registerUserUrl, userInput)
         .then((response) => {
+          toast.success('성공적으로 회원가입을 하였습니다.');
           navigate('/login');
         })
-        .catch((error) => console.log(error));
+        .catch((error) =>
+          toast.error('회원가입에 실패하였습니다. 관리자에게 문의하세요.')
+        );
     } else {
       toast.warn('모든 값을 입력해주세요.');
     }

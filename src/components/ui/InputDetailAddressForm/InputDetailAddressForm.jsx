@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 /* components */
@@ -14,8 +14,8 @@ function InputDetailAddressForm({ state }) {
   };
 
   /* 다음 버튼 클릭시 호출할 핸들러. 상세주소 유효성 검사 후 다음 창으로 넘어간다.*/
-  const onClickNextButton = (e) => {
-    if (detailAddress === '') {
+  const onClickCheckInput = (e) => {
+    if (!detailAddress) {
       e.preventDefault();
       toast.error('상세주소를 입력해주세요.');
     }
@@ -46,7 +46,7 @@ function InputDetailAddressForm({ state }) {
       <NextBtn
         to={'/sign-up'}
         state={{ ...state, detailAddress }}
-        onClick={onClickNextButton}
+        onClick={onClickCheckInput}
       />
       <ToastContainer
         position="top-center"
