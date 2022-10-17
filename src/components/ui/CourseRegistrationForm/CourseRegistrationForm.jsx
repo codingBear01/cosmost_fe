@@ -9,6 +9,7 @@ import { Button, Input, UtilDiv } from "../..";
 /* icons */
 import * as AiIcons from "react-icons/ai";
 import * as BsIcons from "react-icons/bs";
+import { Icon } from "../..";
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from "../../../style";
 import { CATEGORIES } from "../../../store";
@@ -19,6 +20,7 @@ import { GiConsoleController } from "react-icons/gi";
 import { MdOutlineNotInterested } from "react-icons/md";
 import axios from "axios";
 import { RiCreativeCommonsZeroLine } from "react-icons/ri";
+import { HeaderSearchBar } from "../../common/Header";
 
 // 등록한 코스이미지 및 해시태그를 삭제하는 X 버튼을 나타내는 컴포넌트
 const ItemRemoveButton = styled(AiIcons.AiOutlineClose)`
@@ -28,18 +30,33 @@ const ItemRemoveButton = styled(AiIcons.AiOutlineClose)`
   width: 2rem;
   height: 2rem;
 `;
+
 const a = "AAA";
 const b = "CCC";
 
 function CourseRegistrationForm() {
   const navigate = useNavigate();
 
+  //등록된 코스 이미지 경로를 나타내는 state
   const [registeredCourseImgState, setRegisteredCourseImgState] = useState({
     imgSrc0: "none",
     imgSrc1: "none",
     imgSrc2: "none",
     imgSrc3: "none",
     imgSrc4: "none",
+  });
+
+  //네이버 지도 관련 state
+  const [naverMapState, SetNaverMapState] = useState({
+    naverMapEnable: false,
+    naverMapHandle: null,
+    naverMapMarker: [],
+  });
+
+  //네이버 검색 API에 전달할 쿼리(지역구, 키워드)를 나타내는 state
+  const [naverMapQuery, SetNaverMapQuery] = useState({
+    addressGu: "중구",
+    keyword: "",
   });
 
   // 드래그 관련 state와 ref
@@ -73,7 +90,7 @@ function CourseRegistrationForm() {
       isDragging4: monitor.isDragging(),
     }),
   }));
-  console.log("A");
+
   // 드랍 관련 state와 ref
   const [{ isOver0 }, drop0] = useDrop(
     () => ({
@@ -203,15 +220,25 @@ function CourseRegistrationForm() {
     );
   };
 
-  const bbbbb = (query) => {
+  /* 지정한 쿼리와 지도, 지도에 등록된 마크를 입력받아 쿼리를 검색한 결과를 지도에 찍어주는 함수*/
+  const NaverMapSearch = (map, query, mapMarker) => {
+    //map copy 하기
+    let mapMarkerCopy = Array.from(mapMarker);
     const { naver } = window;
     const URL = "/v1/search/local.json";
+
+    //기존에 지도에 등록된 마커 초기화
+    mapMarkerCopy.forEach((Marker) => {
+      Marker.setMap(null);
+    });
+    mapMarkerCopy = [];
+
     axios
       .get(URL, {
         // withCredentials: true,
         headers: {
-          "X-Naver-Client-Id": "d20aED2k0XofCt53kLMJ",
-          "X-Naver-Client-Secret": "q4XoJJlknq",
+          "X-Naver-Client-Id": process.env.REACT_APP_X_Naver_Client_Id,
+          "X-Naver-Client-Secret": process.env.REACT_APP_X_Naver_Client_Secret,
         },
         params: {
           query,
@@ -224,11 +251,6 @@ function CourseRegistrationForm() {
         const items = data.items;
 
         console.log(items);
-        var map = new naver.maps.Map("map", {
-          center: new naver.maps.LatLng(36.179816, 128.0750223),
-          zoom: 7,
-        });
-
         items?.forEach((item) => {
           const x = item.mapx;
           const y = item.mapy;
@@ -239,13 +261,16 @@ function CourseRegistrationForm() {
             position: new naver.maps.LatLng(latLng),
             map: map,
           });
+
+          mapMarkerCopy.push(marker);
         });
+        SetNaverMapState({ ...naverMapState, naverMapMarker: mapMarkerCopy });
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  bbbbb("수영구 김승후");
+
   // aaaaa("부산광역시 남구");
   /* 코스 이미지 업로드에 쓰이는 useRef */
   const courseImgInputRef = useRef();
@@ -270,6 +295,18 @@ function CourseRegistrationForm() {
       return true;
     });
   }, [registeredCourseImgState]);
+
+  /* naverMapEnable의 enable state가 true인 경우에만 호출되는 Effect*/
+  useEffect(() => {
+    if (naverMapState.naverMapEnable) {
+      const { naver } = window;
+      const map = new naver.maps.Map("map", {
+        center: new naver.maps.LatLng(36.179816, 128.0750223),
+        zoom: 7,
+      });
+      SetNaverMapState({ ...naverMapState, naverMapHandle: map });
+    }
+  }, [naverMapState.naverMapEnable]);
 
   /* 드래그 앤 드랍을 한 경우 state 값을 변경하는 함수
        targetId : 드랍된 위치 
@@ -497,6 +534,34 @@ function CourseRegistrationForm() {
     });
   };
 
+  /* 새로운 장소 추가에서 지도에서 장소 추가 버튼 클릭 시 호출할 이벤트 핸들러 */
+  const onClickAddPlace = (e) => {
+    e.preventDefault();
+    SetNaverMapState({ ...naverMapState, naverMapEnable: true });
+    document.querySelector("body").style.overflow = "hidden";
+  };
+  /* 네이버 지도에서 닫기 버튼 클릭 시 호출할 이벤트 핸들러 */
+  const onClickNaverMapClose = (e) => {
+    e.preventDefault();
+    SetNaverMapState({ ...naverMapState, naverMapEnable: false });
+    document.querySelector("body").style.overflow = "visible";
+  };
+
+  /* 네이버 지도에서 지역구 또는 키워드가 변경되었을 시 호출할 이벤트 핸들러*/
+  const onChangeNaverMapQuery = (e) => {
+    SetNaverMapQuery({ ...naverMapQuery, [e.target.name]: e.target.value });
+  };
+
+  /* 네이버 지도에서 검색버튼을 클릭할 경우 호출할 이벤트 핸들러*/
+  const onClickNaverMapSearch = (e) => {
+    e.preventDefault();
+    const query = `${naverMapQuery.addressGu} ${naverMapQuery.keyword}`;
+    NaverMapSearch(
+      naverMapState.naverMapHandle,
+      query,
+      naverMapState.naverMapMarker
+    );
+  };
   return (
     <UtilDiv width={"76.8rem"} padding={"7rem 0 0 0"}>
       <S.UploadCourseImgArea>
@@ -646,11 +711,73 @@ function CourseRegistrationForm() {
       <S.AddDetailCourseInfoArea>
         <S.CourseDetailInfoTitle>새로운 장소 추가 0/5</S.CourseDetailInfoTitle>
         <S.AddDetailCourseInfoWrap>
-          <S.AddLocationButton type="button">
+          <S.AddLocationButton type="button" onClick={onClickAddPlace}>
             <BsIcons.BsMap />
             <S.CourseDetailInfoText>지도에서 장소 추가</S.CourseDetailInfoText>
           </S.AddLocationButton>
-          <div id="map" style={{ width: "100%", height: "400px" }}></div>
+          {/* 네이버 지도 */}
+          {naverMapState.naverMapEnable && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-around",
+                alignItems: "center",
+                position: "absolute",
+                top: window.visualViewport.pageTop,
+                left: 0,
+                width: "100vw",
+                height: "100vh",
+                backgroundColor: "RGBA(0,0,0,.7)",
+              }}
+            >
+              <div style={{ width: "50%", backgroundColor: "black" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div style={{ display: "flex" }}>
+                    <S.CourseCategorySelect
+                      marginRight="0"
+                      borderBottom="0"
+                      name="addressGu"
+                      value={naverMapQuery.addressGu}
+                      onChange={onChangeNaverMapQuery}
+                    >
+                      {CATEGORIES &&
+                        CATEGORIES[0].gu.map((item) => (
+                          <option key={item.id} value={item.value}>
+                            {item.name}
+                          </option>
+                        ))}
+                    </S.CourseCategorySelect>
+                    <input
+                      name="keyword"
+                      value={naverMapQuery.keyword}
+                      onChange={onChangeNaverMapQuery}
+                      style={{ width: "10rem", height: "100%" }}
+                    ></input>
+                  </div>
+                  <div
+                    style={{
+                      width: "6rem",
+                      justifyContent: "space-between",
+                      display: "flex",
+                    }}
+                  >
+                    <Icon onClick={onClickNaverMapSearch}>
+                      <BsIcons.BsSearch />
+                    </Icon>
+                    <Icon onClick={onClickNaverMapClose}>
+                      <AiIcons.AiOutlineClose />
+                    </Icon>
+                  </div>
+                </div>
+                <div id="map" style={{ height: "400px" }}></div>
+              </div>
+            </div>
+          )}
 
           <S.AddedLocationOrHashTagsWrap>
             <S.CourseDetailInfoText>1번 장소</S.CourseDetailInfoText>
