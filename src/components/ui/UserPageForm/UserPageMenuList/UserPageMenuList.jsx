@@ -2,6 +2,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { loginStateAtom } from '../../../../store';
 /* components */
 import * as S from './styled';
 /* static data */
@@ -16,9 +19,12 @@ import * as RiIcons from 'react-icons/ri';
 function UserPageMenuList({ onClickOpenReportForm }) {
   const navigate = useNavigate();
 
+  const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
+
   /* Handlers */
   const onClickLogOut = () => {
     sessionStorage.removeItem('token');
+    setIsLoggedIn(false);
     navigate('/');
   };
 

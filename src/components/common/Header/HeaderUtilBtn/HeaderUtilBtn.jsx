@@ -1,17 +1,20 @@
 /* librarie */
 import React from 'react';
 import { Link } from 'react-router-dom';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { loginStateAtom } from '../../../../store';
 /* components */
 import { SmallProfilePic, Icon } from '../../../';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
-
 function HeaderUtilBtn() {
   const loginToken = sessionStorage.getItem('token');
+  const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   return (
     <>
-      {loginToken ? (
+      {loginToken && isLoggedIn ? (
         <Link to={`/user/${loginToken}`}>
           <SmallProfilePic
             src={
