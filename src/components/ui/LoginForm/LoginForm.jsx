@@ -3,9 +3,6 @@ import React, { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-/* recoil */
-import { useRecoilState } from 'recoil';
-import { loginStateAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Button, Icon, Input, UtilForm, UtilInputWrap } from '../../';
@@ -21,8 +18,6 @@ import { COLOR_LIST as color } from '../../../style';
 const { Kakao } = window;
 
 function LoginForm() {
-  const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
-
   const idRef = useRef();
   const passwordRef = useRef();
 
@@ -58,12 +53,13 @@ function LoginForm() {
       .put(loginApiUrl, idAndPassword)
       .then((response) => {
         sessionStorage.setItem('token', response.data);
-        setIsLoggedIn(true);
         navigate('/');
         toast.success('로그인에 성공하였습니다.');
       })
       .catch((e) => {
-        toast.error('서버와 연결이 되지 않았습니다. 관리자에게 문의하세요.');
+        toast.error(
+          '로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요.'
+        );
       });
   };
 

@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 /* components */
 import * as S from './styled';
-/* recoil */
-import { useRecoilState } from 'recoil';
-import { loginStateAtom } from '../../../../store';
 /* static data */
 import { FONT_SIZE_LIST as fs } from '../../../../style';
 /* icons */
@@ -19,13 +16,9 @@ import * as RiIcons from 'react-icons/ri';
 function UserPageMenuList({ onClickOpenReportForm }) {
   const navigate = useNavigate();
 
-  /* States */
-  const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
-
   /* Handlers */
   const onClickLogOut = () => {
     sessionStorage.removeItem('token');
-    setIsLoggedIn(false);
     navigate('/');
   };
 

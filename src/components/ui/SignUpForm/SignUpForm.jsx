@@ -204,7 +204,6 @@ function SignUpForm({ state }) {
       axios
         .post(registerUserUrl, userInput)
         .then((response) => {
-          toast.success('성공적으로 회원가입을 하였습니다.');
           navigate('/login');
         })
         .catch((error) =>
