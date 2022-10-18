@@ -9,7 +9,7 @@ import { SmallProfilePic, Icon } from '../../../';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 function HeaderUtilBtn() {
-  const loginToken = sessionStorage.getItem('token');
+  const loginToken = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   return (

@@ -13,7 +13,7 @@ import * as FaIcons from 'react-icons/fa';
 import { MAIN_COURSES } from '../../../store/temporaryArray';
 
 function MainPageSection() {
-  const loginToken = sessionStorage.getItem('token');
+  const loginToken = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   return (

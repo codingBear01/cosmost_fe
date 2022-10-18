@@ -23,7 +23,7 @@ function UserPageMenuList({ onClickOpenReportForm }) {
 
   /* Handlers */
   const onClickLogOut = () => {
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
     setIsLoggedIn(false);
     navigate('/');
   };

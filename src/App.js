@@ -53,7 +53,7 @@ const WithoutHeaderAndFooter = () => {
 const { Kakao } = window;
 
 function App() {
-  const loginToken = sessionStorage.getItem('token');
+  const loginToken = localStorage.getItem('token');
 
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 

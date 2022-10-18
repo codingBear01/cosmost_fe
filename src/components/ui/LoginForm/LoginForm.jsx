@@ -56,7 +56,7 @@ function LoginForm() {
     axios
       .put(loginApiUrl, idAndPassword)
       .then((response) => {
-        sessionStorage.setItem('token', response.data);
+        localStorage.setItem('token', response.data);
         setIsLoggedIn(true);
         navigate('/');
         toast.success('로그인에 성공하였습니다.');
