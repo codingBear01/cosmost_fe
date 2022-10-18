@@ -24,7 +24,7 @@ import {
   User,
 } from './components';
 /* router */
-import { Routes, Route, Outlet, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 
 const WithHeaderAndFooter = () => {
   const path = useLocation().pathname;

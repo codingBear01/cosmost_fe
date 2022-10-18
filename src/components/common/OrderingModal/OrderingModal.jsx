@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 /* recoil */
 import { useRecoilState } from 'recoil';
 import { isOrderingModalOpenedAtom } from '../../../store';

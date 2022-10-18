@@ -3,9 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 /* components */
 import * as S from './styled';
 import { StyledCourseContentWrap } from './../CourseContentWrap/styled';
-import { CourseUtillityModal, DeleteModal } from '../../../';
-/* static data */
-import { COLOR_LIST as color } from '../../../../style';
+import { CourseUtillityModal } from '../../../';
 /* icons */
 import * as GrIcons from 'react-icons/gr';
 

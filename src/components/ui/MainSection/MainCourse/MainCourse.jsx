@@ -1,6 +1,5 @@
 /* libraries */
 import React from 'react';
-import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
 /* icons */

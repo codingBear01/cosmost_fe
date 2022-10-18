@@ -69,7 +69,7 @@ function SignUpForm({ state }) {
     } else {
       setInputError({ ...inputError, passwordConfirmError: false });
     }
-  }, [userInformation.password]);
+  }, [userInformation.password, inputError, userInformation.passwordConfirm]);
 
   /*사용자가 프로파일 이미지 등록 버튼을 클릭한 경우 호출할 핸들러. input[type=file]에 클릭 이벤트를 발생시킨다.*/
   const onClickUploadProilePic = (e) => {

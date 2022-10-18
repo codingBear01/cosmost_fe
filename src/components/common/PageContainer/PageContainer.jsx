@@ -3,7 +3,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 /* components */
 import * as S from './styled';
-import { Icon } from '../..';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 

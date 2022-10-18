@@ -1,9 +1,9 @@
 /* libraries */
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 /* components */
 import * as S from './styled';
-import { CourseContent, SharingCourseModal } from '..';
-import { Button, CourseUtillityModal, ProfilePic } from '../../..';
+import { CourseContent } from '..';
+import { Button, ProfilePic } from '../../..';
 /* icons */
 import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';

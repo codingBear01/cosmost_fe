@@ -114,7 +114,7 @@ function CourseReview({
   };
   useEffect(() => {
     getCourseReviews(courseDetail.id);
-  }, [isClickedCourseReviewChanged]);
+  }, [isClickedCourseReviewChanged, courseDetail.id]);
 
   /* 코스 리뷰 수정 */
   const onSubmitEditCourseReview = (e, courseReviewId, courseId) => {

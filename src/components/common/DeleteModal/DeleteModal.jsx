@@ -7,9 +7,6 @@ import { Button } from '../../';
 import * as S from './styled';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
-/* icons */
-import * as BsIcons from 'react-icons/bs';
-import * as AiIcons from 'react-icons/ai';
 
 function DeleteModal({
   onClickOpenDeleteModal,

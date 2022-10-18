@@ -7,8 +7,6 @@ import { HeaderLogo, HeaderSearchBar, HeaderUtilBtn } from './';
 import { Icon } from '../../';
 /* icons */
 import * as BsIcons from 'react-icons/bs';
-/* static data */
-import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
 
 function Header() {
   /* States */
