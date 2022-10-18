@@ -13,7 +13,7 @@ import * as AiIcons from 'react-icons/ai';
 /* CONSTANTS */
 const REVIEW_RATE_INDEXES = [0, 1, 2, 3, 4];
 
-function CourseReviewRegisterForm({ courseData }) {
+function CourseReviewRegisterForm({ courseDetail }) {
   /* 리뷰 등록에 쓰이는 states 및 ref */
   const [isYellowStar, setIsYellowStar] = useState([
     true,
@@ -58,7 +58,7 @@ function CourseReviewRegisterForm({ courseData }) {
 
     const postCourseReviewUrl = `${process.env.REACT_APP_COURSE_REVIEW_DOMAIN_IP}/v1/comments`;
     const temporaryData = {
-      courseId: courseData.id,
+      courseId: courseDetail.id,
       reviewerId: 1,
       courseReviewContent: reviewContentRef.current.value,
       rate: rateRef.current,

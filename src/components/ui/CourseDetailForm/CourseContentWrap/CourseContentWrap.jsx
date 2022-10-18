@@ -17,7 +17,7 @@ import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../../style';
 function CourseContentWrap({
   justifyContent,
   height,
-  courseData,
+  courseDetail,
   dataCategory,
 }) {
   return (
@@ -28,24 +28,24 @@ function CourseContentWrap({
         <>
           <CourseContent>
             <FaIcons.FaRegThumbsUp />
-            <span>{courseData.likeCount}</span>
+            <span>{courseDetail.likeCount}</span>
           </CourseContent>
           <CourseContent>
             <MdIcons.MdOutlineRateReview />
-            <span>{courseData.reviewCount}</span>
+            <span>{courseDetail.reviewCount}</span>
           </CourseContent>
         </>
       ) : dataCategory === 'authorProfile' ? (
         // 작성자 프로필
         <>
           <ProfilePic
-            src={courseData.author.profilePictureUrl}
-            alt={courseData.author.nickname}
+            src={courseDetail.author.profilePictureUrl}
+            alt={courseDetail.author.nickname}
             width={'8rem'}
             height={'8rem'}
           />
           <S.AutorProfileVerticalWrap marginRight={'3rem'}>
-            <S.AutorNickname>{courseData.author.nickname}</S.AutorNickname>
+            <S.AutorNickname>{courseDetail.author.nickname}</S.AutorNickname>
             <Button
               type={'button'}
               width={'6rem'}
@@ -60,26 +60,26 @@ function CourseContentWrap({
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <BiIcons.BiCrown />
-            <span>{courseData.author.ranking}</span>
+            <span>{courseDetail.author.ranking}</span>
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <FiIcons.FiUsers />
-            <span>{courseData.author.followers}</span>
+            <span>{courseDetail.author.followers}</span>
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <GiIcons.GiRoad />
-            <span>{courseData.author.courses}</span>
+            <span>{courseDetail.author.courses}</span>
           </S.AutorProfileVerticalWrap>
         </>
       ) : dataCategory === 'courses' ? (
         // 코스 순서
         <>
-          {courseData.uploadedLocations.map((item) => (
+          {courseDetail.uploadedLocations.map((item) => (
             <div key={item.id}>
               <S.CourseName>
                 {item.id}. {item.name}
               </S.CourseName>
-              {item.id !== courseData.uploadedLocations.length && (
+              {item.id !== courseDetail.uploadedLocations.length && (
                 <AiIcons.AiOutlineArrowRight style={{ fontSize: `${fs.s}` }} />
               )}
             </div>
@@ -91,11 +91,11 @@ function CourseContentWrap({
           {/* 코스 평균 평점 */}
           <S.AverageRate>
             <span>평균 평점</span>
-            <span>{courseData.rate.average}</span>
+            <span>{courseDetail.rate.average}</span>
           </S.AverageRate>
           <ul>
             {/* 별 개수별 퍼센테이지 */}
-            {courseData.rate.stars.map((item) => (
+            {courseDetail.rate.stars.map((item) => (
               <S.CourseRateStarWrap key={item.id}>
                 <S.CourseRateStar>{item.star}</S.CourseRateStar>
                 <S.CourseRateStarPercentGaugeWrap>
@@ -111,7 +111,7 @@ function CourseContentWrap({
           </ul>
         </>
       ) : (
-        courseData[`${dataCategory}`].map((item) => (
+        courseDetail[`${dataCategory}`].map((item) => (
           // 카테고리 or 해시태그
           <CourseContent key={item.id}>
             <p>

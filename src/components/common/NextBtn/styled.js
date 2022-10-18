@@ -26,4 +26,8 @@ export const StyledNextBtn = styled(Link)`
   span {
     margin-right: ${gap.xs};
   }
+
+  svg {
+    align-self: center;
+  }
 `;

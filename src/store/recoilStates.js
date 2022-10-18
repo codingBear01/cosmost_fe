@@ -1,4 +1,7 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist();
 
 /* 신고하기 폼 Open 여부 state */
 export const isReportFormOpenedAtom = atom({
@@ -10,4 +13,10 @@ export const isReportFormOpenedAtom = atom({
 export const isOrderingModalOpenedAtom = atom({
   key: 'isOrderingModalOpenedAtom',
   default: false,
+});
+
+export const loginStateAtom = atom({
+  key: 'loginStateAtom',
+  default: false,
+  effects_UNSTABLE: [persistAtom],
 });

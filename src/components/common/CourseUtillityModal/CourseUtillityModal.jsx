@@ -11,20 +11,21 @@ function CourseUtillityModal({
   right,
   onClickOpenDeleteModal,
   onClickSetClickedCourseReviewEditButton,
-  i,
+  clickedElement,
+  index,
 }) {
   return (
     <S.StyledCourseUtillityModal top={top} right={right}>
       <S.CourseUtilityModalButton
         type="button"
-        onClick={() => onClickSetClickedCourseReviewEditButton(i)}
+        onClick={() => onClickSetClickedCourseReviewEditButton(index)}
       >
         <AiIcons.AiOutlineEdit />
         수정
       </S.CourseUtilityModalButton>
       <S.CourseUtilityModalButton
         type="button"
-        onClick={onClickOpenDeleteModal}
+        onClick={() => onClickOpenDeleteModal(clickedElement, index)}
       >
         <BsIcons.BsTrash />
         삭제

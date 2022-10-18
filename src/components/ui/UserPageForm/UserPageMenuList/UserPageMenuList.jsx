@@ -1,6 +1,10 @@
 /* libraries */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { loginStateAtom } from '../../../../store';
 /* components */
 import * as S from './styled';
 /* static data */
@@ -13,6 +17,17 @@ import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
 
 function UserPageMenuList({ onClickOpenReportForm }) {
+  const navigate = useNavigate();
+
+  const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
+
+  /* Handlers */
+  const onClickLogOut = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    navigate('/');
+  };
+
   return (
     // 유저 페이지 메뉴들
     <S.UserPageMenuList>
@@ -50,8 +65,11 @@ function UserPageMenuList({ onClickOpenReportForm }) {
           <span>신고내역</span>
         </S.UserPageMenuItem>
       </Link>
-      <S.UserPageMenuItem style={{ fontSize: `${fs.m}` }}>
-        <AiIcons.AiOutlineLogout />
+      <S.UserPageMenuItem
+        style={{ fontSize: `${fs.m}` }}
+        onClick={onClickLogOut}
+      >
+        <AiIcons.AiOutlineLogout style={{ fontSize: `${fs.m}` }} />
         <span>로그아웃</span>
       </S.UserPageMenuItem>
     </S.UserPageMenuList>

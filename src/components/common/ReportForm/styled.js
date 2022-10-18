@@ -78,7 +78,7 @@ export const ReportFormCats = styled.select`
 
 export const ReportFormTextArea = styled.textarea`
   width: 45rem;
-  height: 50rem;
+  height: 35rem;
   margin: 3rem 0;
   padding: ${gap.s};
   border: 1px solid ${color.white};

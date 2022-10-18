@@ -41,9 +41,7 @@ function Header() {
             <Icon onClick={onClickOpenSearchBar}>
               <BsIcons.BsSearch />
             </Icon>
-            <Link to="/login">
-              <HeaderUtilBtn />
-            </Link>
+            <HeaderUtilBtn />
           </S.HeaderUtilWrap>
         </S.HeaderContainer>
 
@@ -54,12 +52,6 @@ function Header() {
       </S.Header>
 
       <S.HeaderSearchBarOverlay isSearchBarOpened={isSearchBarOpened} />
-      {/* <button
-          onClick={() => setIsLogin(!isLogin)}
-          style={{ color: `${color.white}` }}
-        >
-          로긴ㅋ
-        </button> */}
     </>
   );
 }

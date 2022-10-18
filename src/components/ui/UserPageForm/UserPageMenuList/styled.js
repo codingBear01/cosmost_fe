@@ -23,6 +23,7 @@ export const UserPageMenuItem = styled.li`
   }
 
   svg {
+    align-self: center;
     margin-right: 10px;
   }
 `;

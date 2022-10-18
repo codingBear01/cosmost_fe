@@ -13,8 +13,8 @@ import * as AiIcons from 'react-icons/ai';
 
 function DeleteModal({
   onClickOpenDeleteModal,
-  isClickedCourseReviewDeleted,
-  setIsClickedCourseReviewDeleted,
+  isClickedCourseReviewChanged,
+  setIsClickedCourseReviewChanged,
   courseId,
   courseReviewId,
   clickedElement,
@@ -34,7 +34,7 @@ function DeleteModal({
         .delete(deleteCourseReviewUrl)
         .then((response) => {
           onClickOpenDeleteModal();
-          setIsClickedCourseReviewDeleted(!isClickedCourseReviewDeleted);
+          setIsClickedCourseReviewChanged(!isClickedCourseReviewChanged);
         })
         .catch((error) => {
           toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
