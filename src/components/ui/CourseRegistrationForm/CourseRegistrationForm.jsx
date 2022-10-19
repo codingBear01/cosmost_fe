@@ -25,8 +25,8 @@ import { HeaderSearchBar } from "../../common/Header";
 // 등록한 코스이미지 및 해시태그를 삭제하는 X 버튼을 나타내는 컴포넌트
 const ItemRemoveButton = styled(AiIcons.AiOutlineClose)`
   position: absolute;
-  top: 0;
-  right: 0;
+  top: ${({ top }) => top || "0"};
+  right: ${({ right }) => right || "0"};
   width: 2rem;
   height: 2rem;
 `;
@@ -36,6 +36,9 @@ const b = "CCC";
 
 function CourseRegistrationForm() {
   const navigate = useNavigate();
+
+  /* 코스 이미지 업로드에 쓰이는 useRef */
+  const courseImgInputRef = useRef();
 
   //등록된 코스 이미지 경로를 나타내는 state
   const [registeredCourseImgState, setRegisteredCourseImgState] = useState({
@@ -57,6 +60,30 @@ function CourseRegistrationForm() {
   const [naverMapQuery, SetNaverMapQuery] = useState({
     addressGu: "중구",
     keyword: "",
+  });
+
+  //지도에서 장소추가 에서 추가한 장소 5개를 나타내는 state
+  const [placeAdd, setPlaceAdd] = useState({
+    choicePlace0: "",
+    choicePlace1: "",
+    choicePlace2: "",
+    choicePlace3: "",
+    choicePlace4: "",
+  });
+
+  //지도에서 장소추가 에서 추가한 장소 5개를 나타내는 state
+  const [hashTagAdd, setHashTagAdd] = useState({
+    inputHashTag: "",
+    addHashTags: Array.from(Array(5)),
+  });
+
+  //사용자가 입력한 코스 상세정보를 나타내는 state
+  const [courseText, setCourseText] = useState("");
+
+  //사용자가 선택한 카테고리를 나타내는 state
+  const [selectCategory, setSelectCategory] = useState({
+    local: "중구",
+    datailText: "조용히 보내고 싶은 날",
   });
 
   // 드래그 관련 state와 ref
@@ -186,94 +213,39 @@ function CourseRegistrationForm() {
     [registeredCourseImgState]
   );
 
-  const aaaaa = (address) => {
-    let { naver } = window;
-    naver?.maps?.Service?.geocode(
-      {
-        address,
-      },
-      function (status, response) {
-        if (status !== naver.maps.Service.Status.OK) {
-          return alert("Something wrong!");
-        }
+  // const aaaaa = (address) => {
+  //   let { naver } = window;
+  //   naver?.maps?.Service?.geocode(
+  //     {
+  //       address,
+  //     },
+  //     function (status, response) {
+  //       if (status !== naver.maps.Service.Status.OK) {
+  //         return alert("Something wrong!");
+  //       }
 
-        let result = response.result, // 검색 결과의 컨테이너
-          items = result.items; // 검색 결과의 배열
+  //       let result = response.result, // 검색 결과의 컨테이너
+  //         items = result.items; // 검색 결과의 배열
 
-        console.log(result);
-        var map = new naver.maps.Map("map", {
-          center: new naver.maps.LatLng(35.179816, 129.0750223),
-          zoom: 11,
-        });
+  //       console.log(result);
+  //       var map = new naver.maps.Map("map", {
+  //         center: new naver.maps.LatLng(35.179816, 129.0750223),
+  //         zoom: 11,
+  //       });
 
-        items?.forEach((item) => {
-          var marker = new naver.maps.Marker({
-            position: new naver.maps.LatLng(item.point.y, item.point.x),
-            map: map,
-          });
-        });
+  //       items?.forEach((item) => {
+  //         var marker = new naver.maps.Marker({
+  //           position: new naver.maps.LatLng(item.point.y, item.point.x),
+  //           map: map,
+  //         });
+  //       });
 
-        // naver.maps.Event.addListener(marker, "click", function (e) {
-        //   console.log("AAAAA");
-        // });
-      }
-    );
-  };
-
-  /* 지정한 쿼리와 지도, 지도에 등록된 마크를 입력받아 쿼리를 검색한 결과를 지도에 찍어주는 함수*/
-  const NaverMapSearch = (map, query, mapMarker) => {
-    //map copy 하기
-    let mapMarkerCopy = Array.from(mapMarker);
-    const { naver } = window;
-    const URL = "/v1/search/local.json";
-
-    //기존에 지도에 등록된 마커 초기화
-    mapMarkerCopy.forEach((Marker) => {
-      Marker.setMap(null);
-    });
-    mapMarkerCopy = [];
-
-    axios
-      .get(URL, {
-        // withCredentials: true,
-        headers: {
-          "X-Naver-Client-Id": process.env.REACT_APP_X_Naver_Client_Id,
-          "X-Naver-Client-Secret": process.env.REACT_APP_X_Naver_Client_Secret,
-        },
-        params: {
-          query,
-          display: 5,
-          start: 1,
-          sort: "comment",
-        },
-      })
-      .then(({ data }) => {
-        const items = data.items;
-
-        console.log(items);
-        items?.forEach((item) => {
-          const x = item.mapx;
-          const y = item.mapy;
-          const tm128 = new naver.maps.Point(x, y);
-          var latLng = naver.maps.TransCoord.fromTM128ToLatLng(tm128);
-
-          var marker = new naver.maps.Marker({
-            position: new naver.maps.LatLng(latLng),
-            map: map,
-          });
-
-          mapMarkerCopy.push(marker);
-        });
-        SetNaverMapState({ ...naverMapState, naverMapMarker: mapMarkerCopy });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  // aaaaa("부산광역시 남구");
-  /* 코스 이미지 업로드에 쓰이는 useRef */
-  const courseImgInputRef = useRef();
+  //       // naver.maps.Event.addListener(marker, "click", function (e) {
+  //       //   console.log("AAAAA");
+  //       // });
+  //     }
+  //   );
+  // };
 
   /* 등록된 코스 이미지들을 검사하여 중간에 빈 칸이 있을 경우 코스 이미지들을 왼쪽으로 당겨
      중간의 빈 칸을 없애는 코드. */
@@ -296,15 +268,18 @@ function CourseRegistrationForm() {
     });
   }, [registeredCourseImgState]);
 
-  /* naverMapEnable의 enable state가 true인 경우에만 호출되는 Effect*/
+  /* naverMapEnable state값이 변경될때마다 호출되는 Effect*/
   useEffect(() => {
     if (naverMapState.naverMapEnable) {
       const { naver } = window;
       const map = new naver.maps.Map("map", {
-        center: new naver.maps.LatLng(36.179816, 128.0750223),
-        zoom: 7,
+        center: new naver.maps.LatLng(35.179816, 129.0750223),
+        zoom: 10,
       });
       SetNaverMapState({ ...naverMapState, naverMapHandle: map });
+      document.querySelector("body").style.overflow = "hidden";
+    } else {
+      document.querySelector("body").style.overflow = "visible";
     }
   }, [naverMapState.naverMapEnable]);
 
@@ -493,6 +468,87 @@ function CourseRegistrationForm() {
     }
   };
 
+  /* 지정한 쿼리와 지도, 지도에 등록된 마크를 입력받아 쿼리를 검색한 결과를 지도에 찍어주는 함수*/
+  const NaverMapSearch = (map, query, mapMarker) => {
+    //map copy 하기
+    let mapMarkerCopy = Array.from(mapMarker);
+    const { naver } = window;
+    const URL = "/v1/search/local.json";
+
+    //기존에 지도에 등록된 마커 초기화
+    mapMarkerCopy.forEach((Marker) => {
+      Marker.setMap(null);
+    });
+    mapMarkerCopy = [];
+
+    axios
+      .get(URL, {
+        headers: {
+          "X-Naver-Client-Id": process.env.REACT_APP_X_Naver_Client_Id,
+          "X-Naver-Client-Secret": process.env.REACT_APP_X_Naver_Client_Secret,
+        },
+        params: {
+          query,
+          display: 5,
+          start: 1,
+          sort: "comment",
+        },
+      })
+      .then(({ data }) => {
+        const items = data.items;
+
+        items?.forEach((item) => {
+          const x = item.mapx;
+          const y = item.mapy;
+          const tm128 = new naver.maps.Point(x, y);
+          var latLng = naver.maps.TransCoord.fromTM128ToLatLng(tm128);
+
+          var marker = new naver.maps.Marker({
+            position: new naver.maps.LatLng(latLng),
+            map: map,
+          });
+
+          console.log(item);
+
+          naver.maps.Event.addListener(marker, "mouseover", function (e) {
+            const title = `${item.address} ${item.title}`.replaceAll(
+              /<[/]*b>/g,
+              ""
+            );
+            e.pointerEvent.target.title = title;
+          });
+
+          naver.maps.Event.addListener(marker, "click", (e) => {
+            onClickMarker(e, item);
+          });
+
+          mapMarkerCopy.push(marker);
+        });
+        SetNaverMapState({ ...naverMapState, naverMapMarker: mapMarkerCopy });
+      })
+      .catch((error) => {
+        alert(
+          "네이버 검색 API와의 통신이 실패했습니다. 관리자에게 문의해주세요"
+        );
+      });
+  };
+
+  //네이버 지도에 등록된 마커를 클릭했을 때 호출할 이벤트 핸들러.
+  const onClickMarker = (e, markerItem) => {
+    const title = `${markerItem.title}`.replaceAll(/<[/]*b>/g, "");
+    Object.values(placeAdd).every((item, index) => {
+      if (item == "") {
+        setPlaceAdd({
+          ...placeAdd,
+          [`choicePlace${index}`]: title,
+        });
+        SetNaverMapState({ ...naverMapState, naverMapEnable: false });
+        return false;
+      }
+      return true;
+    });
+  };
+
   /*사용자가 코스 이미지 등록 버튼을 클릭한 경우 호출할 핸들러.
     마지막 코스 이미지가 등록되지 않았다면 input[type=file]에 클릭 이벤트를 발생시킨다.*/
   const onClickUploadCourseImg = (e) => {
@@ -527,10 +583,30 @@ function CourseRegistrationForm() {
 
   /* 사용자가 코스 이미지 또는 해시태그 삭제 버튼을 클릭했을 때 호출할 핸들러
      인덱스에 해당하는 아이템의 state를 초기값으로 전달한다. */
-  const onClickRemoveItem = (e, index) => {
+  const onClickRemoveCourseItem = (e, index) => {
     setRegisteredCourseImgState({
       ...registeredCourseImgState,
       ["imgSrc" + index]: `none`,
+    });
+  };
+
+  const onClickRemoveHasTagItem = (e, index) => {
+    let tempAddHashTags = Array.from(hashTagAdd.addHashTags);
+
+    tempAddHashTags.splice(index, 1);
+    tempAddHashTags.push(null);
+    console.log(tempAddHashTags);
+    // tempAddHashTags = tempAddHashTags.map((item, mapIndex) => {
+    //   if (mapIndex == index) {
+    //     return "A";
+    //   }
+    //   return item;
+    // });
+    // console.log(tempAddHashTags);
+
+    setHashTagAdd({
+      ...hashTagAdd,
+      addHashTags: tempAddHashTags,
     });
   };
 
@@ -538,13 +614,11 @@ function CourseRegistrationForm() {
   const onClickAddPlace = (e) => {
     e.preventDefault();
     SetNaverMapState({ ...naverMapState, naverMapEnable: true });
-    document.querySelector("body").style.overflow = "hidden";
   };
   /* 네이버 지도에서 닫기 버튼 클릭 시 호출할 이벤트 핸들러 */
   const onClickNaverMapClose = (e) => {
     e.preventDefault();
     SetNaverMapState({ ...naverMapState, naverMapEnable: false });
-    document.querySelector("body").style.overflow = "visible";
   };
 
   /* 네이버 지도에서 지역구 또는 키워드가 변경되었을 시 호출할 이벤트 핸들러*/
@@ -552,16 +626,85 @@ function CourseRegistrationForm() {
     SetNaverMapQuery({ ...naverMapQuery, [e.target.name]: e.target.value });
   };
 
+  const onKeyDownNaverMapQueryEnter = (e) => {
+    if (e.key === "Enter") onClickNaverMapSearch(e);
+  };
+
   /* 네이버 지도에서 검색버튼을 클릭할 경우 호출할 이벤트 핸들러*/
   const onClickNaverMapSearch = (e) => {
     e.preventDefault();
-    const query = `${naverMapQuery.addressGu} ${naverMapQuery.keyword}`;
+    const query = `부산광역시 ${naverMapQuery.addressGu} ${naverMapQuery.keyword}`;
     NaverMapSearch(
       naverMapState.naverMapHandle,
       query,
       naverMapState.naverMapMarker
     );
   };
+
+  // 등록된 장소 개수를 계산하는 변수
+  const placeCount = Object.values(placeAdd).reduce((count, item) => {
+    if (item) {
+      return count + 1;
+    }
+    return count + 0;
+  }, 0);
+
+  // 해시태그 입력시 호출할 핸들러
+  const onChangeHashTag = (e) => {
+    setHashTagAdd({
+      inputHashTag: e.target.value,
+      addHashTags: hashTagAdd.addHashTags,
+    });
+  };
+
+  // 해시태그 추가 버튼 클릭시 호출할 핸들러
+  const onClickAddHashTagButton = (e) => {
+    e.preventDefault();
+    if (hashTagAdd.inputHashTag === "") {
+      alert("빈 값은 등록할 수 없습니다.");
+      return;
+    }
+    const tempAddHashTags = Array.from(hashTagAdd.addHashTags);
+
+    const result = tempAddHashTags.every((item, index, array) => {
+      if (item) return true;
+      array[index] = hashTagAdd.inputHashTag;
+      return false;
+    });
+
+    if (result) {
+      alert("해시태그를 전부 등록하였습니다.");
+      return;
+    }
+
+    setHashTagAdd({
+      inputHashTag: hashTagAdd.inputHashTag,
+      addHashTags: tempAddHashTags,
+    });
+  };
+
+  // 사용자가 카테고리 및 카테고리 text를 선택했을 때 호출되는 핸들러
+  const onChangeCategory = (e) => {
+    setSelectCategory({
+      ...selectCategory,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // 사용자가 코스 설명글을 입력할 때마다 호출되는 핸들러
+  const onChangeCourseText = (e) => {
+    setCourseText(e.target.value);
+  };
+
+  // 사용자가 코스 등록 버튼을 클릭할 때 호출되는 핸들러
+  const onClickRegisterCourse = (e) => {
+    const sendData = {};
+    const url = "";
+
+    e.preventDefault();
+    console.log("send");
+  };
+
   return (
     <UtilDiv width={"76.8rem"} padding={"7rem 0 0 0"}>
       <S.UploadCourseImgArea>
@@ -595,7 +738,9 @@ function CourseRegistrationForm() {
               opacity={isDragging0 ? "0" : "1"}
             >
               {registeredCourseImgState.imgSrc0 === "none" || (
-                <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 0)} />
+                <ItemRemoveButton
+                  onClick={(e) => onClickRemoveCourseItem(e, 0)}
+                />
               )}
               {isOver0 && (
                 <div
@@ -614,7 +759,9 @@ function CourseRegistrationForm() {
               opacity={isDragging1 ? "0" : "1"}
             >
               {registeredCourseImgState.imgSrc1 === "none" || (
-                <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 1)} />
+                <ItemRemoveButton
+                  onClick={(e) => onClickRemoveCourseItem(e, 1)}
+                />
               )}
               {isOver1 && (
                 <div
@@ -633,7 +780,9 @@ function CourseRegistrationForm() {
               opacity={isDragging2 ? "0" : "1"}
             >
               {registeredCourseImgState.imgSrc2 === "none" || (
-                <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 2)} />
+                <ItemRemoveButton
+                  onClick={(e) => onClickRemoveCourseItem(e, 2)}
+                />
               )}
               {isOver2 && (
                 <div
@@ -652,7 +801,9 @@ function CourseRegistrationForm() {
               opacity={isDragging3 ? "0" : "1"}
             >
               {registeredCourseImgState.imgSrc3 === "none" || (
-                <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 3)} />
+                <ItemRemoveButton
+                  onClick={(e) => onClickRemoveCourseItem(e, 3)}
+                />
               )}
               {isOver3 && (
                 <div
@@ -671,7 +822,9 @@ function CourseRegistrationForm() {
               opacity={isDragging4 ? "0" : "1"}
             >
               {registeredCourseImgState.imgSrc4 === "none" || (
-                <ItemRemoveButton onClick={(e) => onClickRemoveItem(e, 4)} />
+                <ItemRemoveButton
+                  onClick={(e) => onClickRemoveCourseItem(e, 4)}
+                />
               )}
               {isOver4 && (
                 <div
@@ -689,7 +842,11 @@ function CourseRegistrationForm() {
       <S.AddDetailCourseInfoArea>
         <S.CourseDetailInfoTitle>카테고리 선택</S.CourseDetailInfoTitle>
         <S.CourseCategoryWrap>
-          <S.CourseCategorySelect>
+          <S.CourseCategorySelect
+            name="local"
+            value={selectCategory.local}
+            onChange={onChangeCategory}
+          >
             {CATEGORIES &&
               CATEGORIES[0].gu.map((item) => (
                 <option key={item.id} value={item.value}>
@@ -697,7 +854,11 @@ function CourseRegistrationForm() {
                 </option>
               ))}
           </S.CourseCategorySelect>
-          <S.CourseCategorySelect>
+          <S.CourseCategorySelect
+            name="datailText"
+            value={selectCategory.datailText}
+            onChange={onChangeCategory}
+          >
             {CATEGORIES &&
               CATEGORIES[1].theme.map((item) => (
                 <option key={item.id} value={item.value}>
@@ -709,7 +870,7 @@ function CourseRegistrationForm() {
       </S.AddDetailCourseInfoArea>
       {/* 새로운 장소 추가 영역 */}
       <S.AddDetailCourseInfoArea>
-        <S.CourseDetailInfoTitle>새로운 장소 추가 0/5</S.CourseDetailInfoTitle>
+        <S.CourseDetailInfoTitle>{`새로운 장소 추가 ${placeCount}/5`}</S.CourseDetailInfoTitle>
         <S.AddDetailCourseInfoWrap>
           <S.AddLocationButton type="button" onClick={onClickAddPlace}>
             <BsIcons.BsMap />
@@ -756,7 +917,8 @@ function CourseRegistrationForm() {
                       name="keyword"
                       value={naverMapQuery.keyword}
                       onChange={onChangeNaverMapQuery}
-                      style={{ width: "10rem", height: "100%" }}
+                      onKeyDown={onKeyDownNaverMapQueryEnter}
+                      style={{ width: "30rem", height: "100%" }}
                     ></input>
                   </div>
                   <div
@@ -780,11 +942,41 @@ function CourseRegistrationForm() {
           )}
 
           <S.AddedLocationOrHashTagsWrap>
-            <S.CourseDetailInfoText>1번 장소</S.CourseDetailInfoText>
-            <S.CourseDetailInfoText>2번 장소</S.CourseDetailInfoText>
-            <S.CourseDetailInfoText>3번 장소</S.CourseDetailInfoText>
-            <S.CourseDetailInfoText>4번 장소</S.CourseDetailInfoText>
-            <S.CourseDetailInfoText>5번 장소</S.CourseDetailInfoText>
+            {placeAdd.choicePlace0 ? (
+              <S.CourseDetailInfoText>
+                {placeAdd.choicePlace0}
+              </S.CourseDetailInfoText>
+            ) : (
+              <S.CourseDetailInfoText>1번 장소</S.CourseDetailInfoText>
+            )}
+            {placeAdd.choicePlace1 ? (
+              <S.CourseDetailInfoText>
+                {placeAdd.choicePlace1}
+              </S.CourseDetailInfoText>
+            ) : (
+              <S.CourseDetailInfoText>2번 장소</S.CourseDetailInfoText>
+            )}
+            {placeAdd.choicePlace2 ? (
+              <S.CourseDetailInfoText>
+                {placeAdd.choicePlace2}
+              </S.CourseDetailInfoText>
+            ) : (
+              <S.CourseDetailInfoText>3번 장소</S.CourseDetailInfoText>
+            )}
+            {placeAdd.choicePlace3 ? (
+              <S.CourseDetailInfoText>
+                {placeAdd.choicePlace3}
+              </S.CourseDetailInfoText>
+            ) : (
+              <S.CourseDetailInfoText>4번 장소</S.CourseDetailInfoText>
+            )}
+            {placeAdd.choicePlace4 ? (
+              <S.CourseDetailInfoText>
+                {placeAdd.choicePlace4}
+              </S.CourseDetailInfoText>
+            ) : (
+              <S.CourseDetailInfoText>5번 장소</S.CourseDetailInfoText>
+            )}
           </S.AddedLocationOrHashTagsWrap>
         </S.AddDetailCourseInfoWrap>
       </S.AddDetailCourseInfoArea>
@@ -801,22 +993,35 @@ function CourseRegistrationForm() {
               height={"3rem"}
               margin={"0 2rem 0 0"}
               fontSize={fs.m}
+              onChange={onChangeHashTag}
             />
             <Button
               width={"3rem"}
               height={"3rem"}
               color={color.white}
               type="button"
+              onClick={onClickAddHashTagButton}
             >
               <AiIcons.AiOutlinePlus />
             </Button>
           </S.InputHashTagWrap>
           <S.AddedLocationOrHashTagsWrap>
-            <S.CourseDetailInfoText>#해시태그</S.CourseDetailInfoText>
-            <S.CourseDetailInfoText>#해시태그</S.CourseDetailInfoText>
-            <S.CourseDetailInfoText>#해시태그</S.CourseDetailInfoText>
-            <S.CourseDetailInfoText>#해시태그</S.CourseDetailInfoText>
-            <S.CourseDetailInfoText>#해시태그</S.CourseDetailInfoText>
+            {hashTagAdd.addHashTags.map((item, index) => {
+              return item ? (
+                <div key={index} style={{ position: "relative" }}>
+                  <S.CourseDetailInfoText>#{item}</S.CourseDetailInfoText>
+                  <ItemRemoveButton
+                    top="-1rem"
+                    right="-2rem"
+                    onClick={(e) => onClickRemoveHasTagItem(e, index)}
+                  />
+                </div>
+              ) : (
+                <S.CourseDetailInfoText key={index}>
+                  #해시태그
+                </S.CourseDetailInfoText>
+              );
+            })}
           </S.AddedLocationOrHashTagsWrap>
         </S.AddDetailCourseInfoWrap>
       </S.AddDetailCourseInfoArea>
@@ -824,6 +1029,8 @@ function CourseRegistrationForm() {
       <S.CourseDescription
         placeholder="코스에 대해 설명해주세요."
         maxLength={1000}
+        onChange={onChangeCourseText}
+        value={courseText}
       ></S.CourseDescription>
       {/* 코스 등록, 취소 버튼 */}
       <S.CourseRegistrationButtonWrap>
@@ -849,8 +1056,7 @@ function CourseRegistrationForm() {
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
-          // 임시로 메인 페이지로 redirect되게 해놓음 추후 수정
-          onClick={() => navigate("/")}
+          onClick={onClickRegisterCourse}
         >
           등록
         </Button>
