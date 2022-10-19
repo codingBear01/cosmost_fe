@@ -1,5 +1,7 @@
 /* libraries */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilTitle } from '../..';
@@ -15,10 +17,54 @@ function ReportForm({
   isReportHistoryPage,
   item,
 }) {
+  const reportTitle = useRef();
+  const reportContent = useRef();
+  const reportCategory = useRef();
+
+  /* Handlers */
+  const checkReportInput = () => {
+    if (reportCategory.current.value === 'default') {
+      toast.error('카테고리를 입력해주세요.');
+      return false;
+    }
+    if (!reportTitle.current.value) {
+      toast.error('제목을 입력해주세요.');
+      return false;
+    }
+    if (!reportContent.current.value) {
+      toast.error('내용을 입력해주세요.');
+      return false;
+    }
+    return true;
+  };
+
   const onClickReport = (e) => {
     e.preventDefault();
-    alert('👮‍♂️신고를 해버렸읍니다!');
-    setIsReportFormOpened(!isReportFormOpened);
+
+    if (!checkReportInput()) return;
+
+    const reportUrl = `${process.env.REACT_APP_REPORT_IP}/v1/boards`;
+    const reportBody = {
+      reporterId: 2,
+      reportTitle: reportTitle.current.value,
+      reportContent: reportContent.current.value,
+      createReportCategoryListRequestList: [
+        {
+          reportCategory: +reportCategory.current.value,
+        },
+      ],
+    };
+
+    axios
+      .post(reportUrl, reportBody)
+      .then((response) => {
+        setIsReportFormOpened(!isReportFormOpened);
+      })
+      .catch((error) =>
+        toast.error('오류가 발생했습니다. 관리자에게 문의하세요.')
+      );
+
+    setIsReportFormOpened(false);
   };
 
   /* Hooks */
@@ -34,6 +80,16 @@ function ReportForm({
 
   return (
     <S.ReportFormBg isReportFormOpened={isReportFormOpened}>
+      <ToastContainer
+        position="top-center"
+        autoClose={500}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       <S.ReportForm>
         <S.ReportFormTitleWrap>
           <UtilTitle>
@@ -46,11 +102,11 @@ function ReportForm({
         {isReportHistoryPage ? (
           <S.ReportHistoryCat>분류: {item?.category}</S.ReportHistoryCat>
         ) : (
-          <S.ReportFormCats>
+          <S.ReportFormCats ref={reportCategory}>
             <option value="default">신고 유형</option>
-            <option value="user">유저</option>
-            <option value="course">코스</option>
-            <option value="review">리뷰</option>
+            <option value={1}>사용자</option>
+            <option value={2}>리뷰</option>
+            <option value={3}>코스</option>
           </S.ReportFormCats>
         )}
         {/* 신고 내역 페이지면 해당 신고의 제목, 신고하기 폼이면 신고 제목 입력 인풋 */}
@@ -59,15 +115,16 @@ function ReportForm({
         ) : (
           // 신고 제목
           <Input
+            ref={reportTitle}
             type="text"
             placeholder="제목"
             width={'45rem'}
             height={'4rem'}
-            disabled
           />
         )}
         {/* 신고 내용 */}
         <S.ReportFormTextArea
+          ref={reportContent}
           placeholder="신고 내용을 입력해주세요."
           // 신고 내역 페이지면 입력 불가, 신고하기 폼이면 입력 가능
           disabled={isReportHistoryPage}
