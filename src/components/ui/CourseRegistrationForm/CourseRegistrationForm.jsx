@@ -507,9 +507,6 @@ function CourseRegistrationForm() {
             position: new naver.maps.LatLng(latLng),
             map: map,
           });
-
-          console.log(item);
-
           naver.maps.Event.addListener(marker, "mouseover", function (e) {
             const title = `${item.address} ${item.title}`.replaceAll(
               /<[/]*b>/g,
@@ -581,7 +578,7 @@ function CourseRegistrationForm() {
     FileReaderObject.readAsDataURL(e.target.files.item(0));
   };
 
-  /* 사용자가 코스 이미지 또는 해시태그 삭제 버튼을 클릭했을 때 호출할 핸들러
+  /* 사용자가 코스 이미지 삭제 버튼을 클릭했을 때 호출할 핸들러
      인덱스에 해당하는 아이템의 state를 초기값으로 전달한다. */
   const onClickRemoveCourseItem = (e, index) => {
     setRegisteredCourseImgState({
@@ -590,19 +587,30 @@ function CourseRegistrationForm() {
     });
   };
 
+  /* 사용자가 장소 삭제 버튼을 클릭했을 때 호출할 핸들러
+  인덱스에 해당하는 아이템의 state를 초기값으로 전달한다. */
+  const onClickRemovePlaceItem = (e, index) => {
+    let tempPlaceAddArr = Object.values(placeAdd);
+    let tempPlaceAddObject = {};
+
+    tempPlaceAddArr.splice(index, 1);
+    tempPlaceAddArr.push("");
+
+    tempPlaceAddArr.forEach((item, index) => {
+      tempPlaceAddObject["choicePlace" + index] = item;
+    });
+
+    setPlaceAdd(tempPlaceAddObject);
+  };
+
+  /* 사용자가 해시태그 삭제 버튼을 클릭했을 때 호출할 핸들러
+  인덱스에 해당하는 아이템의 state를 초기값으로 전달한다. */
   const onClickRemoveHasTagItem = (e, index) => {
     let tempAddHashTags = Array.from(hashTagAdd.addHashTags);
 
     tempAddHashTags.splice(index, 1);
     tempAddHashTags.push(null);
     console.log(tempAddHashTags);
-    // tempAddHashTags = tempAddHashTags.map((item, mapIndex) => {
-    //   if (mapIndex == index) {
-    //     return "A";
-    //   }
-    //   return item;
-    // });
-    // console.log(tempAddHashTags);
 
     setHashTagAdd({
       ...hashTagAdd,
@@ -643,6 +651,14 @@ function CourseRegistrationForm() {
 
   // 등록된 장소 개수를 계산하는 변수
   const placeCount = Object.values(placeAdd).reduce((count, item) => {
+    if (item) {
+      return count + 1;
+    }
+    return count + 0;
+  }, 0);
+
+  // 등록된 해시태그 개수를 계산하는 변수
+  const hashTagCount = hashTagAdd.addHashTags.reduce((count, item) => {
     if (item) {
       return count + 1;
     }
@@ -943,37 +959,82 @@ function CourseRegistrationForm() {
 
           <S.AddedLocationOrHashTagsWrap>
             {placeAdd.choicePlace0 ? (
-              <S.CourseDetailInfoText>
-                {placeAdd.choicePlace0}
-              </S.CourseDetailInfoText>
+              <div style={{ position: "relative" }}>
+                <S.CourseDetailInfoText>
+                  {placeAdd.choicePlace0}
+                </S.CourseDetailInfoText>
+                <ItemRemoveButton
+                  top="-1rem"
+                  right="-2rem"
+                  onClick={(e) => {
+                    onClickRemovePlaceItem(e, 0);
+                  }}
+                />
+              </div>
             ) : (
               <S.CourseDetailInfoText>1번 장소</S.CourseDetailInfoText>
             )}
             {placeAdd.choicePlace1 ? (
-              <S.CourseDetailInfoText>
-                {placeAdd.choicePlace1}
-              </S.CourseDetailInfoText>
+              <div style={{ position: "relative" }}>
+                <S.CourseDetailInfoText>
+                  {placeAdd.choicePlace1}
+                </S.CourseDetailInfoText>
+                <ItemRemoveButton
+                  top="-1rem"
+                  right="-2rem"
+                  onClick={(e) => {
+                    onClickRemovePlaceItem(e, 1);
+                  }}
+                />
+              </div>
             ) : (
               <S.CourseDetailInfoText>2번 장소</S.CourseDetailInfoText>
             )}
             {placeAdd.choicePlace2 ? (
-              <S.CourseDetailInfoText>
-                {placeAdd.choicePlace2}
-              </S.CourseDetailInfoText>
+              <div style={{ position: "relative" }}>
+                <S.CourseDetailInfoText>
+                  {placeAdd.choicePlace2}
+                </S.CourseDetailInfoText>
+                <ItemRemoveButton
+                  top="-1rem"
+                  right="-2rem"
+                  onClick={(e) => {
+                    onClickRemovePlaceItem(e, 2);
+                  }}
+                />
+              </div>
             ) : (
               <S.CourseDetailInfoText>3번 장소</S.CourseDetailInfoText>
             )}
             {placeAdd.choicePlace3 ? (
-              <S.CourseDetailInfoText>
-                {placeAdd.choicePlace3}
-              </S.CourseDetailInfoText>
+              <div style={{ position: "relative" }}>
+                <S.CourseDetailInfoText>
+                  {placeAdd.choicePlace3}
+                </S.CourseDetailInfoText>
+                <ItemRemoveButton
+                  top="-1rem"
+                  right="-2rem"
+                  onClick={(e) => {
+                    onClickRemovePlaceItem(e, 3);
+                  }}
+                />
+              </div>
             ) : (
               <S.CourseDetailInfoText>4번 장소</S.CourseDetailInfoText>
             )}
             {placeAdd.choicePlace4 ? (
-              <S.CourseDetailInfoText>
-                {placeAdd.choicePlace4}
-              </S.CourseDetailInfoText>
+              <div style={{ position: "relative" }}>
+                <S.CourseDetailInfoText>
+                  {placeAdd.choicePlace4}
+                </S.CourseDetailInfoText>
+                <ItemRemoveButton
+                  top="-1rem"
+                  right="-2rem"
+                  onClick={(e) => {
+                    onClickRemovePlaceItem(e, 4);
+                  }}
+                />
+              </div>
             ) : (
               <S.CourseDetailInfoText>5번 장소</S.CourseDetailInfoText>
             )}
@@ -982,7 +1043,7 @@ function CourseRegistrationForm() {
       </S.AddDetailCourseInfoArea>
       {/* 해시태그 추가 영역 */}
       <S.AddDetailCourseInfoArea>
-        <S.CourseDetailInfoTitle>해시태그 추가 0/5</S.CourseDetailInfoTitle>
+        <S.CourseDetailInfoTitle>{`해시태그 추가 ${hashTagCount}/5`}</S.CourseDetailInfoTitle>
         <S.AddDetailCourseInfoWrap>
           <S.InputHashTagWrap>
             <Input
