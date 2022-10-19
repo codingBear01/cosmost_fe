@@ -38,6 +38,7 @@ function ReportForm({
     return true;
   };
 
+  /* APIs */
   const onClickReport = (e) => {
     e.preventDefault();
 
@@ -100,7 +101,9 @@ function ReportForm({
         </S.ReportFormTitleWrap>
         {/* 신고 내역 페이지면 해당 신고의 분류, 신고하기 폼이면 신고 유형 드랍다운 */}
         {isReportHistoryPage ? (
-          <S.ReportHistoryCat>분류: {item?.category}</S.ReportHistoryCat>
+          <S.ReportHistoryCat>
+            분류: {item?.reportCategoryList[0].reportCategoryName}
+          </S.ReportHistoryCat>
         ) : (
           <S.ReportFormCats ref={reportCategory}>
             <option value="default">신고 유형</option>
@@ -111,7 +114,7 @@ function ReportForm({
         )}
         {/* 신고 내역 페이지면 해당 신고의 제목, 신고하기 폼이면 신고 제목 입력 인풋 */}
         {isReportHistoryPage ? (
-          <S.ReportFormTitle>{item?.title}</S.ReportFormTitle>
+          <S.ReportFormTitle>{item?.reportTitle}</S.ReportFormTitle>
         ) : (
           // 신고 제목
           <Input
@@ -128,7 +131,7 @@ function ReportForm({
           placeholder="신고 내용을 입력해주세요."
           // 신고 내역 페이지면 입력 불가, 신고하기 폼이면 입력 가능
           disabled={isReportHistoryPage}
-          value={item?.content}
+          value={item?.reportContent}
           maxLength={500}
         ></S.ReportFormTextArea>
         {/* 신고 버튼 */}

@@ -10,7 +10,9 @@ import * as S from './styled';
 import { Button, ReportForm, UtilDiv, UtilTitle } from '../..';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
-import { REPORT_HISTORIES as reports } from '../../../store/temporaryArray';
+/* icons */
+import * as BsIcons from 'react-icons/bs';
+import * as AiIcons from 'react-icons/ai';
 
 function HistoriesForm({ isReportHistoryPage }) {
   /* ReportForm 및 ReportReply Open 여부 관련 state */
@@ -18,10 +20,11 @@ function HistoriesForm({ isReportHistoryPage }) {
     isReportFormOpenedAtom
   );
   const [isReportReplyCanOpen, setIsReportReplyCanOpen] = useState(false);
+  const [isHitoriesChanged, setIsHitoriesChanged] = useState(false);
   /* 신고 상세 조회 폼에 넘겨줄 reportDetail state */
   const [reportDetail, setReportDetail] = useState(null);
-  /* 내가 작성한 reviews를 할당할 state */
-  const [myReviews, setMyReviews] = useState([]);
+  const [reports, setReports] = useState([]);
+  const [reviews, setReviews] = useState([]);
 
   /* Handlers */
   /* 신고 상세 조회 폼의 Open 여부를 조작하는 핸들러. 클릭 시 폼 Open 여부를 반대로 변경하고, 신고 데이터를 폼으로 props 전달하며 formRef.current에 클릭된 신고를 할당한다. */
@@ -53,18 +56,37 @@ function HistoriesForm({ isReportHistoryPage }) {
   }, [setIsReportFormOpened]);
 
   /* APIs */
-  /* 접속한 페이지가 신고 내역 페이지라면 나의 신고 내역을 불러오는 함수 */
-  const getMyReviews = () => {
-    const getMyReviewsUrl = `${process.env.REACT_APP_COURSE_REVIEW_DOMAIN_IP}/v1/comments?filter=auth&type=review`;
-    const getMyReviewsHeaders = {
+  /* 접속한 페이지가 신고 내역 페이지라면 나의 신고 내역을 불러오고 아니라면 내가 남긴 리뷰를 불러오는 함수 */
+  const getReports = () => {
+    const getReportsUrl = `${process.env.REACT_APP_REPORT_IP}/v1/boards?filter=auth`;
+    const getReportsHeaders = {
       headers: {
         Authorization: 2, // 로그인한 사용자의 식별자
       },
     };
+
     axios
-      .get(getMyReviewsUrl, getMyReviewsHeaders)
+      .get(getReportsUrl, getReportsHeaders)
       .then((response) => {
-        setMyReviews(response.data);
+        setReports(response.data);
+      })
+      .catch((error) => {
+        new Error(error);
+      });
+  };
+
+  const getReviews = () => {
+    const getReviewsUrl = `${process.env.REACT_APP_COURSE_REVIEW_DOMAIN_IP}/v1/comments?filter=auth&type=review`;
+    const getReviewsHeaders = {
+      headers: {
+        Authorization: 2, // 로그인한 사용자의 식별자
+      },
+    };
+
+    axios
+      .get(getReviewsUrl, getReviewsHeaders)
+      .then((response) => {
+        setReviews(response.data);
       })
       .catch((error) => {
         new Error(error);
@@ -72,12 +94,27 @@ function HistoriesForm({ isReportHistoryPage }) {
   };
   useEffect(() => {
     if (!isReportHistoryPage) {
-      getMyReviews();
+      getReports();
+    } else {
+      getReviews();
     }
-  }, [isReportHistoryPage]);
+  }, [isReportHistoryPage, isHitoriesChanged]);
+
+  /* 삭제 버튼 클릭 시 해당 신고 내역을 삭제하는 함수 */
+  const deleteReportHistory = (id) => {
+    const deleteReportHistoryUrl = `${process.env.REACT_APP_REPORT_IP}/v1/boards/${id}`;
+
+    axios
+      .delete(deleteReportHistoryUrl)
+      .then((response) => {
+        console.log(response);
+        setIsHitoriesChanged(!isHitoriesChanged);
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
-    <UtilDiv padding={'5rem 12.9rem'}>
+    <UtilDiv width={'45rem'} padding={'5rem 0'}>
       {/* 페이지 이름 */}
       <UtilTitle>
         {isReportHistoryPage ? '신고내역' : '내가 남긴 리뷰'}
@@ -94,24 +131,32 @@ function HistoriesForm({ isReportHistoryPage }) {
         />
         {isReportHistoryPage
           ? reports &&
-            reports.map((item) => (
+            reports.map((report) => (
               // 신고 내역 아이템
-              <S.HistoryListItem key={item.id}>
+              <S.HistoryListItem key={report.id}>
                 {/* 신고 날짜 */}
-                <S.HistoryDateAndRateWrap
-                  onClick={(e) => onClickOpenReportDetail(e, item)}
-                >
-                  {item.date}
+                <S.HistoryDateAndRateWrap>
+                  <S.HistoryDate>{report.createdAt}</S.HistoryDate>
                 </S.HistoryDateAndRateWrap>
-                {/* 신고 분류 */}
-                <S.ReportHistoryCat>분류: {item.category}</S.ReportHistoryCat>
+                {/* 신고 분류 및 수정, 삭제 버튼 */}
+                <S.ReportHistoryCategoryAndUtilButtonWrap>
+                  <S.ReportHistoryCategory>
+                    분류: {report.reportCategoryList[0].reportCategoryName}
+                  </S.ReportHistoryCategory>
+                  <S.ReportHistoryUtilButtonWrap>
+                    <AiIcons.AiOutlineEdit />
+                    <BsIcons.BsTrash
+                      onClick={() => deleteReportHistory(report.id)}
+                    />
+                  </S.ReportHistoryUtilButtonWrap>
+                </S.ReportHistoryCategoryAndUtilButtonWrap>
                 {/* 신고 제목 및 답변 여부 버튼 */}
                 <S.HistoryTitleWrap>
                   {/* 신고 제목 */}
                   <S.HistoryTitle
-                    onClick={(e) => onClickOpenReportDetail(e, item)}
+                    onClick={(e) => onClickOpenReportDetail(e, report)}
                   >
-                    {item.title}
+                    <span>{report.reportTitle}</span>
                   </S.HistoryTitle>
                   {/* 답변 여부 버튼 */}
                   <Button
@@ -119,38 +164,34 @@ function HistoriesForm({ isReportHistoryPage }) {
                     width={'80px'}
                     height={'30px'}
                     fontSize={'12px'}
-                    bgColor={item.isReplied ? color.darkGreen : color.darkRed}
-                    hoveredBgColor={item.isReplied && color.lightGreen}
-                    onClick={() => onClickOpenReportReply(item.isReplied)}
+                    bgColor={report.isReplied ? color.darkGreen : color.darkRed}
+                    hoveredBgColor={report.isReplied && color.lightGreen}
+                    onClick={() => onClickOpenReportReply(report.isReplied)}
                   >
-                    {item.isReplied ? '답변 완료' : '답변 미완료'}
+                    {report.isReplied ? '답변 완료' : '답변 미완료'}
                   </Button>
                 </S.HistoryTitleWrap>
                 {/* 신고 내용 */}
-                <S.HistoryContent
-                  onClick={(e) => onClickOpenReportDetail(e, item)}
-                >
-                  {item.content}
-                </S.HistoryContent>
+                <S.HistoryContent>{report.reportContent}</S.HistoryContent>
               </S.HistoryListItem>
             ))
-          : myReviews &&
-            myReviews.map((item) => (
+          : reviews &&
+            reviews.map((review) => (
               // 리뷰 조회 아이템
-              <S.HistoryListItem key={item.id}>
+              <S.HistoryListItem key={review.id}>
                 {/* 리뷰 날짜 */}
                 <S.HistoryDateAndRateWrap>
-                  <span>{item.createdAt}</span>
-                  <span>⭐ {item.rate}</span>
+                  <span>{review.createdAt}</span>
+                  <span>⭐ {review.rate}</span>
                 </S.HistoryDateAndRateWrap>
                 {/* 리뷰 제목 및 답변 여부 버튼 */}
                 <S.HistoryTitleWrap>
                   {/* 리뷰 제목 */}
-                  <Link to={`/course-detail/${item.id}`}>
+                  <Link to={`/course-detail/${review.id}`}>
                     <S.HistoryTitle>
                       [
                       <span>
-                        {/* {item.title} */}
+                        {/* {review.title} */}
                         리뷰를 남긴 코스 제목
                       </span>
                       ]에 남긴 리뷰
@@ -158,7 +199,9 @@ function HistoriesForm({ isReportHistoryPage }) {
                   </Link>
                 </S.HistoryTitleWrap>
                 {/* 리뷰 내용 */}
-                <S.HistoryContent>{item.courseReviewContent}</S.HistoryContent>
+                <S.HistoryContent>
+                  {review.courseReviewContent}
+                </S.HistoryContent>
               </S.HistoryListItem>
             ))}
       </S.HistoryList>
