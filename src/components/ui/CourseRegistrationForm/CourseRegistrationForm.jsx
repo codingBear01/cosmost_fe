@@ -31,9 +31,6 @@ const ItemRemoveButton = styled(AiIcons.AiOutlineClose)`
   height: 2rem;
 `;
 
-const a = "AAA";
-const b = "CCC";
-
 function CourseRegistrationForm() {
   const navigate = useNavigate();
 
@@ -80,10 +77,14 @@ function CourseRegistrationForm() {
   //사용자가 입력한 코스 상세정보를 나타내는 state
   const [courseText, setCourseText] = useState("");
 
+  //백엔드로부터 가져온 카테고리 목록를 나타내는 state
+  const [categoryLocalList, setCategoryLocalList] = useState([]);
+  const [categoryThemeList, setCategoryThemeList] = useState([]);
+
   //사용자가 선택한 카테고리를 나타내는 state
   const [selectCategory, setSelectCategory] = useState({
-    local: "중구",
-    datailText: "조용히 보내고 싶은 날",
+    local: 1,
+    theme: 1,
   });
 
   // 드래그 관련 state와 ref
@@ -213,39 +214,44 @@ function CourseRegistrationForm() {
     [registeredCourseImgState]
   );
 
-  // const aaaaa = (address) => {
-  //   let { naver } = window;
-  //   naver?.maps?.Service?.geocode(
-  //     {
-  //       address,
-  //     },
-  //     function (status, response) {
-  //       if (status !== naver.maps.Service.Status.OK) {
-  //         return alert("Something wrong!");
-  //       }
+  /*백엔드와의 API 통신을 위한 함수
+    코스 카테고리의 지역값을 가져오는 API */
+  const getCategroyLocal = () => {
+    const url =
+      "http://10.10.10.58:9002/v1/cosmosts?filter=all&category=location";
+    const config = { timeout: 3000 };
+    axios
+      .get(url, config)
+      .then((data) => {
+        const CategoryLocalArr = data.data;
+        setCategoryLocalList(CategoryLocalArr);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  /*백엔드와의 API 통신을 위한 함수
+    코스 카테고리의 테마값을 가져오는 API */
+  const getCategroyTheme = () => {
+    const url = "http://10.10.10.58:9002/v1/cosmosts?filter=all&category=theme";
+    const config = { timeout: 3000 };
+    axios
+      .get(url, config)
+      .then((data) => {
+        const CategoryThemeArr = data.data;
+        setCategoryThemeList(CategoryThemeArr);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
-  //       let result = response.result, // 검색 결과의 컨테이너
-  //         items = result.items; // 검색 결과의 배열
-
-  //       console.log(result);
-  //       var map = new naver.maps.Map("map", {
-  //         center: new naver.maps.LatLng(35.179816, 129.0750223),
-  //         zoom: 11,
-  //       });
-
-  //       items?.forEach((item) => {
-  //         var marker = new naver.maps.Marker({
-  //           position: new naver.maps.LatLng(item.point.y, item.point.x),
-  //           map: map,
-  //         });
-  //       });
-
-  //       // naver.maps.Event.addListener(marker, "click", function (e) {
-  //       //   console.log("AAAAA");
-  //       // });
-  //     }
-  //   );
-  // };
+  /* 컴포넌트 생성시 한번만 호출되는 useEffect
+     카테고리 지역 목록과 카테고리 테마 목록을 가져오는 API 함수를 호출한다. */
+  useEffect(() => {
+    getCategroyLocal();
+    getCategroyTheme();
+  }, []);
 
   /* 등록된 코스 이미지들을 검사하여 중간에 빈 칸이 있을 경우 코스 이미지들을 왼쪽으로 당겨
      중간의 빈 칸을 없애는 코드. */
@@ -507,6 +513,9 @@ function CourseRegistrationForm() {
             position: new naver.maps.LatLng(latLng),
             map: map,
           });
+
+          console.log(item);
+
           naver.maps.Event.addListener(marker, "mouseover", function (e) {
             const title = `${item.address} ${item.title}`.replaceAll(
               /<[/]*b>/g,
@@ -703,7 +712,7 @@ function CourseRegistrationForm() {
   const onChangeCategory = (e) => {
     setSelectCategory({
       ...selectCategory,
-      [e.target.name]: e.target.value,
+      [e.target.name]: Number(e.target.value),
     });
   };
 
@@ -714,11 +723,113 @@ function CourseRegistrationForm() {
 
   // 사용자가 코스 등록 버튼을 클릭할 때 호출되는 핸들러
   const onClickRegisterCourse = (e) => {
-    const sendData = {};
-    const url = "";
+    const formData = new FormData();
+    const createPlaceDetailRequestList = [];
+    const createHashtagRequestList = [];
+    const createCategoryListRequestList = [];
 
     e.preventDefault();
-    console.log("send");
+
+    Object.values(placeAdd).forEach((item, index) => {
+      if (item) {
+        createPlaceDetailRequestList.push({
+          placeName: item,
+          placeXCoordinate: 2.3,
+          placeYCoordinate: 2.2,
+          placeOrder: index,
+          placeComment: "장소 코멘트",
+        });
+      }
+    });
+
+    hashTagAdd.addHashTags.forEach((item, index) => {
+      if (item) {
+        createHashtagRequestList.push({
+          keyword: item,
+        });
+      }
+    });
+
+    createCategoryListRequestList.push({
+      locationCategory: selectCategory.local,
+      themeCategory: selectCategory.theme,
+    });
+
+    if (createPlaceDetailRequestList.length === 0) {
+      alert("1개 이상의 장소를 등록해주세요");
+      return;
+    }
+
+    if (createHashtagRequestList.length === 0) {
+      alert("1개 이상의 해시태그를 등록해주세요");
+      return;
+    }
+
+    const url = "http://10.10.10.58:9002/v1/cosmosts";
+    const config = {
+      headers: {
+        Authorization: "token",
+        "Content-Type": "multipart/form-data",
+      },
+      timeout: 3000,
+    };
+    const sendData = {
+      courseTitle: "코스제목",
+      courseComment: courseText,
+      createPlaceDetailRequestList,
+      createHashtagRequestList,
+      createCategoryListRequestList,
+    };
+
+    console.log(sendData);
+    const sendJson = JSON.stringify(sendData);
+    const jsonblob = new Blob([sendJson], { type: "application/json" });
+    const imageblobs = [];
+
+    Object.values(registeredCourseImgState).forEach((item, index) => {
+      // const regImg = /^[url][.*],$/;
+      // const regImg = /^[.*],$/;
+      const commaIndex = item.indexOf(",");
+      const mimeTypeReg = /data:(.*);/;
+      const Base64DataReg = /,(.*)\)$/;
+
+      const itemMimeType = item.match(mimeTypeReg)
+        ? item.match(mimeTypeReg)[1]
+        : null;
+
+      const itemBase64Data = item.match(Base64DataReg)
+        ? item.match(Base64DataReg)[1]
+        : null;
+
+      const itemBinaryData = atob(itemBase64Data);
+      console.log(typeof itemBinaryData);
+      let itemBinaryDataLength = itemBinaryData.length;
+      let itemUnicodeBinaryData = new Uint8Array(itemBinaryDataLength);
+
+      while (itemBinaryDataLength--) {
+        itemUnicodeBinaryData[itemBinaryDataLength] =
+          itemBinaryData.charCodeAt(itemBinaryDataLength);
+      }
+      imageblobs.push(
+        new Blob([itemUnicodeBinaryData], {
+          type: itemMimeType,
+        })
+      );
+    });
+
+    formData.append("createCourseRequest", jsonblob);
+    imageblobs.forEach((item, index) => {
+      formData.append("file", item);
+    });
+
+    axios
+      .post(url, formData, config)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
@@ -863,24 +974,40 @@ function CourseRegistrationForm() {
             value={selectCategory.local}
             onChange={onChangeCategory}
           >
-            {CATEGORIES &&
+            {categoryLocalList.length &&
+              categoryLocalList.map((item) => {
+                return (
+                  <option key={item.id} value={item.id}>
+                    {item.locationCategoryName}
+                  </option>
+                );
+              })}
+            {/* {CATEGORIES &&
               CATEGORIES[0].gu.map((item) => (
                 <option key={item.id} value={item.value}>
                   {item.name}
                 </option>
-              ))}
+              ))} */}
           </S.CourseCategorySelect>
           <S.CourseCategorySelect
-            name="datailText"
-            value={selectCategory.datailText}
+            name="theme"
+            value={selectCategory.theme}
             onChange={onChangeCategory}
           >
-            {CATEGORIES &&
+            {categoryThemeList.length &&
+              categoryThemeList.map((item) => {
+                return (
+                  <option key={item.id} value={item.id}>
+                    {item.themeCategoryName}
+                  </option>
+                );
+              })}
+            {/* {CATEGORIES &&
               CATEGORIES[1].theme.map((item) => (
                 <option key={item.id} value={item.value}>
                   {item.name}
                 </option>
-              ))}
+              ))} */}
           </S.CourseCategorySelect>
         </S.CourseCategoryWrap>
       </S.AddDetailCourseInfoArea>
@@ -922,12 +1049,23 @@ function CourseRegistrationForm() {
                       value={naverMapQuery.addressGu}
                       onChange={onChangeNaverMapQuery}
                     >
-                      {CATEGORIES &&
+                      {categoryLocalList.length &&
+                        categoryLocalList.map((item) => {
+                          return (
+                            <option
+                              key={item.id}
+                              value={item.locationCategoryName}
+                            >
+                              {item.locationCategoryName}
+                            </option>
+                          );
+                        })}
+                      {/* {CATEGORIES &&
                         CATEGORIES[0].gu.map((item) => (
                           <option key={item.id} value={item.value}>
                             {item.name}
                           </option>
-                        ))}
+                        ))} */}
                     </S.CourseCategorySelect>
                     <input
                       name="keyword"
