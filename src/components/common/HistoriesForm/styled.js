@@ -16,6 +16,17 @@ export const HistoryList = styled.ul`
   width: 100%;
 `;
 
+export const ReportHistoryUtilButtonWrap = styled.div`
+  display: none;
+  align-items: center;
+
+  svg {
+    margin-left: ${gap.s};
+    font-size: ${fs.m} !important;
+    cursor: pointer;
+  }
+`;
+
 export const HistoryListItem = styled.li`
   display: flex;
   align-items: center;
@@ -24,7 +35,7 @@ export const HistoryListItem = styled.li`
   width: 100%;
   margin-bottom: ${gap.l};
 
-  &:hover div {
+  &:hover ${ReportHistoryUtilButtonWrap} {
     display: flex;
   }
 `;
@@ -58,14 +69,18 @@ export const ReportHistoryCategory = styled.span`
   font-size: 14px;
 `;
 
-export const ReportHistoryUtilButtonWrap = styled.div`
-  display: none;
+export const WarningDeleteIconWrap = styled.div`
+  display: flex;
   align-items: center;
-  gap: 1.5rem;
+  color: ${color.red};
+  cursor: pointer;
 
   svg {
-    font-size: ${fs.s} !important;
-    cursor: pointer;
+    align-self: center;
+  }
+  span {
+    margin-left: 0.2rem;
+    font-size: ${fs.xs} !important;
   }
 `;
 

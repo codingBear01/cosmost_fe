@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { isReportFormOpenedAtom } from '../../../store';
+import {
+  isReportFormOpenedAtom,
+  // REPORT_HISTORIES as reports,
+} from '../../../store';
 /* components */
 import * as S from './styled';
 import { Button, ReportForm, UtilDiv, UtilTitle } from '../..';
@@ -12,6 +15,7 @@ import { Button, ReportForm, UtilDiv, UtilTitle } from '../..';
 import { COLOR_LIST as color } from '../../../style';
 /* icons */
 import * as BsIcons from 'react-icons/bs';
+import * as BiIcons from 'react-icons/bi';
 import * as AiIcons from 'react-icons/ai';
 
 function HistoriesForm({ isReportHistoryPage }) {
@@ -19,41 +23,53 @@ function HistoriesForm({ isReportHistoryPage }) {
   const [isReportFormOpened, setIsReportFormOpened] = useRecoilState(
     isReportFormOpenedAtom
   );
-  const [isReportReplyCanOpen, setIsReportReplyCanOpen] = useState(false);
-  const [isHitoriesChanged, setIsHitoriesChanged] = useState(false);
-  /* 신고 상세 조회 폼에 넘겨줄 reportDetail state */
-  const [reportDetail, setReportDetail] = useState(null);
+  const [isHistoriesChanged, setIsHistoriesChanged] = useState(false);
+  const [openingReportFormType, setOpeningReportFormType] = useState(null);
+  const [report, setReport] = useState(null);
   const [reports, setReports] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [warningDeleteIconIndex, setWarningDeleteIconIndex] = useState(null);
 
   /* Handlers */
   /* 신고 상세 조회 폼의 Open 여부를 조작하는 핸들러. 클릭 시 폼 Open 여부를 반대로 변경하고, 신고 데이터를 폼으로 props 전달하며 formRef.current에 클릭된 신고를 할당한다. */
-  const onClickOpenReportDetail = (e, item) => {
+  const onClickOpenReportForm = (e, item, type) => {
     setIsReportFormOpened(!isReportFormOpened);
-    setReportDetail(item);
+    setReport(item);
+    setOpeningReportFormType(type);
     formRef.current = e.target;
   };
 
-  const onClickOpenReportReply = (isReplied) => {
-    if (isReplied) {
-      setIsReportReplyCanOpen(!isReportReplyCanOpen);
-    }
+  const onClickDisplayWarningDelteIcon = (i) => {
+    setWarningDeleteIconIndex(i);
   };
+
+  /* 일정 시간 경과 후 index를 null로 만들어 삭제 확인 아이콘을 닫는 함수 */
+  useEffect(() => {
+    if (typeof warningDeleteIconIndex === 'number') {
+      const timer = setTimeout(() => {
+        setWarningDeleteIconIndex(null);
+      }, 1200);
+
+      return () => clearTimeout(timer);
+    }
+  }, [warningDeleteIconIndex]);
 
   /* Hooks */
   /* 신고 이외 영역 클릭 시 신고 상세 조회 폼을 닫는 함수 */
   const formRef = useRef();
   useEffect(() => {
-    const closeModal = (e) => {
-      if (!formRef.current?.contains(e.target)) {
-        setIsReportFormOpened(false);
-      }
-    };
+    if (openingReportFormType === 'detail') {
+      const closeModal = (e) => {
+        if (!formRef.current?.contains(e.target)) {
+          setIsReportFormOpened(false);
+        }
+      };
 
-    document.addEventListener('click', closeModal);
+      document.addEventListener('click', closeModal);
 
-    return () => document.removeEventListener('click', closeModal);
-  }, [setIsReportFormOpened]);
+      return () => document.removeEventListener('click', closeModal);
+    }
+  }, [setIsReportFormOpened, openingReportFormType]);
 
   /* APIs */
   /* 접속한 페이지가 신고 내역 페이지라면 나의 신고 내역을 불러오고 아니라면 내가 남긴 리뷰를 불러오는 함수 */
@@ -61,7 +77,7 @@ function HistoriesForm({ isReportHistoryPage }) {
     const getReportsUrl = `${process.env.REACT_APP_BOARD_IP}/v1/boards?filter=auth`;
     const getReportsHeaders = {
       headers: {
-        Authorization: 2, // 로그인한 사용자의 식별자
+        Authorization: 1, // 로그인한 사용자의 식별자
       },
     };
 
@@ -74,7 +90,6 @@ function HistoriesForm({ isReportHistoryPage }) {
         new Error(error);
       });
   };
-
   const getReviews = () => {
     const getReviewsUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?filter=auth&type=review`;
     const getReviewsHeaders = {
@@ -93,24 +108,24 @@ function HistoriesForm({ isReportHistoryPage }) {
       });
   };
   useEffect(() => {
-    if (!isReportHistoryPage) {
+    if (isReportHistoryPage) {
       getReports();
     } else {
       getReviews();
     }
-  }, [isReportHistoryPage, isHitoriesChanged]);
+  }, [isReportHistoryPage, isHistoriesChanged]);
 
   /* 삭제 버튼 클릭 시 해당 신고 내역을 삭제하는 함수 */
-  const deleteReportHistory = (id) => {
-    const deleteReportHistoryUrl = `${process.env.REACT_APP_BOARD_IP}/v1/boards/${id}`;
+  const deleteReport = (id) => {
+    const deleteReportUrl = `${process.env.REACT_APP_BOARD_IP}/v1/boards/${id}`;
 
     axios
-      .delete(deleteReportHistoryUrl)
+      .delete(deleteReportUrl)
       .then((response) => {
-        console.log(response);
-        setIsHitoriesChanged(!isHitoriesChanged);
+        setIsHistoriesChanged(!isHistoriesChanged);
+        setWarningDeleteIconIndex(null);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => new Error(error));
   };
 
   return (
@@ -123,15 +138,17 @@ function HistoriesForm({ isReportHistoryPage }) {
       <S.HistoryList>
         {/* 신고 상세 조회 폼 */}
         <ReportForm
-          onClick={onClickOpenReportDetail}
+          onClick={onClickOpenReportForm}
           setIsReportFormOpened={setIsReportFormOpened}
           isReportFormOpened={isReportFormOpened}
-          isReportHistoryPage={isReportHistoryPage}
-          item={reportDetail}
+          type={openingReportFormType}
+          report={report}
+          isHistoriesChanged={isHistoriesChanged}
+          setIsHistoriesChanged={setIsHistoriesChanged}
         />
         {isReportHistoryPage
           ? reports &&
-            reports.map((report) => (
+            reports.map((report, i) => (
               // 신고 내역 아이템
               <S.HistoryListItem key={report.id}>
                 {/* 신고 날짜 */}
@@ -141,20 +158,37 @@ function HistoriesForm({ isReportHistoryPage }) {
                 {/* 신고 분류 및 수정, 삭제 버튼 */}
                 <S.ReportHistoryCategoryAndUtilButtonWrap>
                   <S.ReportHistoryCategory>
-                    분류: {report.reportCategoryList[0].reportCategoryName}
+                    분류:{' '}
+                    {report.reportCategoryList.map((item) => (
+                      <span key={item.id}>{item.reportCategoryName}</span>
+                    ))}
                   </S.ReportHistoryCategory>
                   <S.ReportHistoryUtilButtonWrap>
-                    <AiIcons.AiOutlineEdit />
-                    <BsIcons.BsTrash
-                      onClick={() => deleteReportHistory(report.id)}
+                    <AiIcons.AiOutlineEdit
+                      onClick={(e) =>
+                        onClickOpenReportForm(e, report, 'update')
+                      }
                     />
+                    {warningDeleteIconIndex === i && (
+                      <S.WarningDeleteIconWrap
+                        onClick={() => deleteReport(report.id)}
+                      >
+                        <BiIcons.BiErrorAlt style={{ color: `${color.red}` }} />
+                        <span>삭제</span>
+                      </S.WarningDeleteIconWrap>
+                    )}
+                    {warningDeleteIconIndex !== i && (
+                      <BsIcons.BsTrash
+                        onClick={() => onClickDisplayWarningDelteIcon(i)}
+                      />
+                    )}
                   </S.ReportHistoryUtilButtonWrap>
                 </S.ReportHistoryCategoryAndUtilButtonWrap>
                 {/* 신고 제목 및 답변 여부 버튼 */}
                 <S.HistoryTitleWrap>
                   {/* 신고 제목 */}
                   <S.HistoryTitle
-                    onClick={(e) => onClickOpenReportDetail(e, report)}
+                    onClick={(e) => onClickOpenReportForm(e, report, 'detail')}
                   >
                     <span>{report.reportTitle}</span>
                   </S.HistoryTitle>
@@ -166,7 +200,6 @@ function HistoriesForm({ isReportHistoryPage }) {
                     fontSize={'12px'}
                     bgColor={report.isReplied ? color.darkGreen : color.darkRed}
                     hoveredBgColor={report.isReplied && color.lightGreen}
-                    onClick={() => onClickOpenReportReply(report.isReplied)}
                   >
                     {report.isReplied ? '답변 완료' : '답변 미완료'}
                   </Button>
