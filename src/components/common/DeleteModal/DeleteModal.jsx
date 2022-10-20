@@ -7,14 +7,11 @@ import { Button } from '../../';
 import * as S from './styled';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
-/* icons */
-import * as BsIcons from 'react-icons/bs';
-import * as AiIcons from 'react-icons/ai';
 
 function DeleteModal({
   onClickOpenDeleteModal,
-  isClickedCourseReviewDeleted,
-  setIsClickedCourseReviewDeleted,
+  isClickedCourseReviewChanged,
+  setIsClickedCourseReviewChanged,
   courseId,
   courseReviewId,
   clickedElement,
@@ -29,12 +26,12 @@ function DeleteModal({
       toast.success(`${courseId}번 코스가 삭제되었읍니다!`);
     } else {
       id = courseReviewId;
-      const deleteCourseReviewUrl = `${process.env.REACT_APP_COURSE_REVIEW_DOMAIN_IP}/v1/comments/${id}/review`;
+      const deleteCourseReviewUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments/${id}/review`;
       axios
         .delete(deleteCourseReviewUrl)
         .then((response) => {
           onClickOpenDeleteModal();
-          setIsClickedCourseReviewDeleted(!isClickedCourseReviewDeleted);
+          setIsClickedCourseReviewChanged(!isClickedCourseReviewChanged);
         })
         .catch((error) => {
           toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');

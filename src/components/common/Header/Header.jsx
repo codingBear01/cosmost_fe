@@ -7,8 +7,6 @@ import { HeaderLogo, HeaderSearchBar, HeaderUtilBtn } from './';
 import { Icon } from '../../';
 /* icons */
 import * as BsIcons from 'react-icons/bs';
-/* static data */
-import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
 
 function Header() {
   /* States */
@@ -41,9 +39,7 @@ function Header() {
             <Icon onClick={onClickOpenSearchBar}>
               <BsIcons.BsSearch />
             </Icon>
-            <Link to="/login">
-              <HeaderUtilBtn />
-            </Link>
+            <HeaderUtilBtn />
           </S.HeaderUtilWrap>
         </S.HeaderContainer>
 
@@ -54,12 +50,6 @@ function Header() {
       </S.Header>
 
       <S.HeaderSearchBarOverlay isSearchBarOpened={isSearchBarOpened} />
-      {/* <button
-          onClick={() => setIsLogin(!isLogin)}
-          style={{ color: `${color.white}` }}
-        >
-          로긴ㅋ
-        </button> */}
     </>
   );
 }

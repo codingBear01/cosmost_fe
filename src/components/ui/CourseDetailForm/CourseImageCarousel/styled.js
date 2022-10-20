@@ -4,14 +4,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 /* static data */
-import {
-  COLOR_LIST as color,
-  BORDER_RADIUS_LIST as br,
-  FONT_SIZE_LIST as fs,
-  GAP_LIST as gap,
-  BREAK_POINTS as media,
-  mainTextFadeIn,
-} from '../../../../style';
+import { COLOR_LIST as color, BREAK_POINTS as media } from '../../../../style';
 
 export const CarouselArea = styled.div`
   width: 100%;

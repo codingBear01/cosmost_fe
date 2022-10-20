@@ -6,8 +6,6 @@ import {
   BORDER_RADIUS_LIST as br,
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
-  BREAK_POINTS as media,
-  mainTextFadeIn,
 } from '../../../../style';
 
 // 코스 제목, 평점, 작성일, 더보기 버튼

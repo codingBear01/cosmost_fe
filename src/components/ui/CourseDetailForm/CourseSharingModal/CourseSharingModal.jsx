@@ -14,13 +14,13 @@ import { sharingByKakao } from '../../../../store';
 /* 현재 접속한 페이지 url */
 const currentUrl = window.location.href;
 
-function CourseSharingModal({ courseData, onClickCopyCurrentPageUrl }) {
+function CourseSharingModal({ courseDetail, onClickCopyCurrentPageUrl }) {
   /* Line 공유 기능에 쓰이는 url */
   const lineSharingUrl = `https://line.me/R/msg/text/${encodeURIComponent(
-    courseData.title
+    courseDetail.title
   )}${currentUrl}`;
   const twitterSharingUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    courseData.title
+    courseDetail.title
   )}&url=${currentUrl}`;
   const facebookSharingUrl = `http://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:3000/course-detail/1`; // 배포 후 ?u= 뒤를 배포한 url로 변경
 
@@ -43,7 +43,7 @@ function CourseSharingModal({ courseData, onClickCopyCurrentPageUrl }) {
           <S.CourseSharingButton
             bgColor={color.yellow}
             color={color.black}
-            onClick={() => sharingByKakao(courseData)}
+            onClick={() => sharingByKakao(courseDetail)}
           >
             <RiIcons.RiKakaoTalkFill />
           </S.CourseSharingButton>

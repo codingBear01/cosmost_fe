@@ -15,7 +15,7 @@ import {
 } from '.';
 import { DeleteModal, OrderingButton, ToTopBtn, UtilDiv } from '../..';
 /* static data */
-import { COURSE_DETAIL as courseData } from '../../../store';
+import { COURSE_DETAIL as courseDetail } from '../../../store';
 
 function CourseDetailForm() {
   /* States */
@@ -23,20 +23,37 @@ function CourseDetailForm() {
     isOrderingModalOpenedAtom
   );
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
+  const [clickedElement, setClickedElement] = useState(null);
+  const [clickedCourseReviewIndex, setClickedCourseReviewIndex] =
+    useState(null);
+  const [isClickedCourseReviewChanged, setIsClickedCourseReviewChanged] =
+    useState(false);
 
   /* Handlers */
   const onClickOpenOrderingModal = () => {
     setIsOrderingModalOpened(!isOrderingModalOpened);
   };
-  const onClickOpenDeleteModal = () => {
+  const onClickOpenDeleteModal = (clicked, i) => {
     setIsDeleteModalOpened(!isDeleteModalOpened);
+    setClickedElement(clicked);
+    setClickedCourseReviewIndex(i);
   };
 
   return (
     <>
       {/* 코스 이미지 carousel */}
-      <CourseImageCarousel courseData={courseData} />
+      <CourseImageCarousel courseDetail={courseDetail} />
       {/* 본문 */}
+      {isDeleteModalOpened && (
+        <DeleteModal
+          onClickOpenDeleteModal={onClickOpenDeleteModal}
+          isClickedCourseReviewChanged={isClickedCourseReviewChanged}
+          setIsClickedCourseReviewChanged={setIsClickedCourseReviewChanged}
+          clickedElement={clickedElement}
+          courseId={courseDetail.id}
+          courseReviewId={clickedCourseReviewIndex}
+        />
+      )}
       <UtilDiv
         justifyContent={'center'}
         width={'76.8rem'}
@@ -45,24 +62,29 @@ function CourseDetailForm() {
       >
         {/* 코스 제목 및 날짜, 더보기 버튼 */}
         <CourseTitleAndDate
-          courseData={courseData}
-          isDeleteModalOpened={isDeleteModalOpened}
+          courseDetail={courseDetail}
           onClickOpenDeleteModal={onClickOpenDeleteModal}
         />
         {/* 좋아요, 리뷰 숫자 */}
         <CourseContentWrap
-          courseData={courseData}
+          courseDetail={courseDetail}
           dataCategory="likeAndReview"
         />
         {/* 카테고리 */}
-        <CourseContentWrap courseData={courseData} dataCategory="categories" />
+        <CourseContentWrap
+          courseDetail={courseDetail}
+          dataCategory="categories"
+        />
         {/* 해시태그 */}
-        <CourseContentWrap courseData={courseData} dataCategory="hashTags" />
+        <CourseContentWrap
+          courseDetail={courseDetail}
+          dataCategory="hashTags"
+        />
         {/* 작성자 정보 */}
         <CourseContentWrap
           justifyContent={'center'}
           height={'10rem'}
-          courseData={courseData}
+          courseDetail={courseDetail}
           dataCategory="authorProfile"
         />
         {/* 코스에 등록된 장소를 표시하는 지도 */}
@@ -74,30 +96,30 @@ function CourseDetailForm() {
         <CourseContentWrap
           justifyContent={'center'}
           height={'10rem'}
-          courseData={courseData}
+          courseDetail={courseDetail}
           dataCategory="courses"
         />
         {/* 코스 설명 */}
-        <S.CourseDescription>{courseData.description}</S.CourseDescription>
+        <S.CourseDescription>{courseDetail.description}</S.CourseDescription>
         {/* 공유, 좋아요 버튼 */}
-        <CourseSharingAndLikeButton courseData={courseData} />
+        <CourseSharingAndLikeButton courseDetail={courseDetail} />
         {/* 코스 평균 평점 및 별 개수별 퍼센테이지 */}
         <CourseContentWrap
           justifyContent={'center'}
           height={'30rem'}
-          courseData={courseData}
+          courseDetail={courseDetail}
           dataCategory="averageRate"
         />
         {/* 리뷰 작성 폼 */}
-        <CourseReviewRegisterForm courseData={courseData} />
+        <CourseReviewRegisterForm courseDetail={courseDetail} />
         {/* 정렬 버튼 */}
         <OrderingButton onClick={onClickOpenOrderingModal} />
         {/* 코스 리뷰 */}
         <CourseReview
-          courseData={courseData}
-          isDeleteModalOpened={isDeleteModalOpened}
-          setIsDeleteModalOpened={setIsDeleteModalOpened}
+          courseDetail={courseDetail}
           onClickOpenDeleteModal={onClickOpenDeleteModal}
+          isClickedCourseReviewChanged={isClickedCourseReviewChanged}
+          setIsClickedCourseReviewChanged={setIsClickedCourseReviewChanged}
         />
       </UtilDiv>
       <ToTopBtn />
