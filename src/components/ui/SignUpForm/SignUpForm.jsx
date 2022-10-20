@@ -158,7 +158,7 @@ function SignUpForm({ state }) {
 
   /* 입력된 id의 중복 여부를 확인하는 핸들러 */
   const checkIsDuplicatedId = (id) => {
-    const checkIsDuplicatedIdUrl = `${process.env.REACT_APP_AUTH_DOMAIN_IP}/v1/validation/duplicate?id=${id}`;
+    const checkIsDuplicatedIdUrl = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=${id}`;
 
     axios
       .get(checkIsDuplicatedIdUrl)
@@ -183,7 +183,7 @@ function SignUpForm({ state }) {
     });
 
     if (ErrorCheck) {
-      const registerUserUrl = `${process.env.REACT_APP_AUTH_DOMAIN_IP}/v1/auths`;
+      const registerUserUrl = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
 
       const userInput = {
         loginId: userInformation.id,

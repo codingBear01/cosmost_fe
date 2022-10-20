@@ -96,7 +96,7 @@ function CourseReview({
   /* APIs */
   /* 해당 코스 전체 리뷰 받아오기 */
   const getCourseReviews = (courseId) => {
-    const getCourseReviewsUrl = `${process.env.REACT_APP_COURSE_REVIEW_DOMAIN_IP}/v1/comments?type=review`;
+    const getCourseReviewsUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?type=review`;
     const getCourseReviewsHeaders = {
       headers: {
         Authorization: courseId,
@@ -122,7 +122,7 @@ function CourseReview({
 
     if (!checkEditCourseReviewValues()) return;
 
-    const editCourseReviewUrl = `${process.env.REACT_APP_COURSE_REVIEW_DOMAIN_IP}/v1/comments/${courseReviewId}`;
+    const editCourseReviewUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments/${courseReviewId}`;
     const temporaryData = {
       courseId: courseId,
       reviewerId: 1,

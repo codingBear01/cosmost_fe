@@ -56,7 +56,7 @@ function CourseReviewRegisterForm({ courseDetail }) {
 
     if (!checkCourseReviewValues()) return;
 
-    const postCourseReviewUrl = `${process.env.REACT_APP_COURSE_REVIEW_DOMAIN_IP}/v1/comments`;
+    const postCourseReviewUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments`;
     const temporaryData = {
       courseId: courseDetail.id,
       reviewerId: 1,

@@ -47,7 +47,7 @@ function LoginForm() {
 
     if (!checkIdAndPassword()) return;
 
-    const loginApiUrl = `${process.env.REACT_APP_AUTH_DOMAIN_IP}/v1/signin`;
+    const loginApiUrl = `${process.env.REACT_APP_AUTH_IP}/v1/signin`;
     const idAndPassword = {
       loginId: idRef.current.value,
       loginPwd: passwordRef.current.value,

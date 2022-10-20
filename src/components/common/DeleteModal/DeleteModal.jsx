@@ -26,7 +26,7 @@ function DeleteModal({
       toast.success(`${courseId}번 코스가 삭제되었읍니다!`);
     } else {
       id = courseReviewId;
-      const deleteCourseReviewUrl = `${process.env.REACT_APP_COURSE_REVIEW_DOMAIN_IP}/v1/comments/${id}/review`;
+      const deleteCourseReviewUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments/${id}/review`;
       axios
         .delete(deleteCourseReviewUrl)
         .then((response) => {

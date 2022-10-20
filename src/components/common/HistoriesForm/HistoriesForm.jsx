@@ -58,7 +58,7 @@ function HistoriesForm({ isReportHistoryPage }) {
   /* APIs */
   /* 접속한 페이지가 신고 내역 페이지라면 나의 신고 내역을 불러오고 아니라면 내가 남긴 리뷰를 불러오는 함수 */
   const getReports = () => {
-    const getReportsUrl = `${process.env.REACT_APP_REPORT_IP}/v1/boards?filter=auth`;
+    const getReportsUrl = `${process.env.REACT_APP_BOARD_IP}/v1/boards?filter=auth`;
     const getReportsHeaders = {
       headers: {
         Authorization: 2, // 로그인한 사용자의 식별자
@@ -76,7 +76,7 @@ function HistoriesForm({ isReportHistoryPage }) {
   };
 
   const getReviews = () => {
-    const getReviewsUrl = `${process.env.REACT_APP_COURSE_REVIEW_DOMAIN_IP}/v1/comments?filter=auth&type=review`;
+    const getReviewsUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?filter=auth&type=review`;
     const getReviewsHeaders = {
       headers: {
         Authorization: 2, // 로그인한 사용자의 식별자
@@ -102,7 +102,7 @@ function HistoriesForm({ isReportHistoryPage }) {
 
   /* 삭제 버튼 클릭 시 해당 신고 내역을 삭제하는 함수 */
   const deleteReportHistory = (id) => {
-    const deleteReportHistoryUrl = `${process.env.REACT_APP_REPORT_IP}/v1/boards/${id}`;
+    const deleteReportHistoryUrl = `${process.env.REACT_APP_BOARD_IP}/v1/boards/${id}`;
 
     axios
       .delete(deleteReportHistoryUrl)

@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 /* components */
@@ -17,6 +17,7 @@ function ReportForm({
   isReportHistoryPage,
   item,
 }) {
+  const [reportCategories, setReportCategories] = useState([]);
   const reportTitle = useRef();
   const reportContent = useRef();
   const reportCategory = useRef();
@@ -39,12 +40,13 @@ function ReportForm({
   };
 
   /* APIs */
+  /* 신고 버튼 클릭 시 작성된 신고 내용을 서버로 전송하는 함수 */
   const onClickReport = (e) => {
     e.preventDefault();
 
     if (!checkReportInput()) return;
 
-    const reportUrl = `${process.env.REACT_APP_REPORT_IP}/v1/boards`;
+    const reportUrl = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
     const reportBody = {
       reporterId: 2,
       reportTitle: reportTitle.current.value,
@@ -67,6 +69,23 @@ function ReportForm({
 
     setIsReportFormOpened(false);
   };
+
+  /* 리뷰 작성에 쓰일 신고 카테고리를 불러오는 함수 */
+  const getReportCategories = () => {
+    const reportCategoriesUrl = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
+
+    axios
+      .get(reportCategoriesUrl)
+      .then((response) => {
+        setReportCategories(response.data);
+      })
+      .catch((error) => {
+        new Error(error);
+      });
+  };
+  useEffect(() => {
+    getReportCategories();
+  }, []);
 
   /* Hooks */
   /* 신고 모달 열렸을 때 바깥 영역 스크롤 방지하고 스크롤 Y좌표 맨 위로 설정하는 함수 */
@@ -107,9 +126,12 @@ function ReportForm({
         ) : (
           <S.ReportFormCats ref={reportCategory}>
             <option value="default">신고 유형</option>
-            <option value={1}>사용자</option>
-            <option value={2}>리뷰</option>
-            <option value={3}>코스</option>
+            {reportCategories &&
+              reportCategories.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.reportCategoryName}
+                </option>
+              ))}
           </S.ReportFormCats>
         )}
         {/* 신고 내역 페이지면 해당 신고의 제목, 신고하기 폼이면 신고 제목 입력 인풋 */}
