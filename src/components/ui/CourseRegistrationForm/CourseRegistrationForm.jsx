@@ -68,7 +68,19 @@ function CourseRegistrationForm() {
     choicePlace4: "",
   });
 
-  //지도에서 장소추가 에서 추가한 장소 5개를 나타내는 state
+  //지도에서 장소추가 에서 추가한 장소 5개의 좌표를 나타내는 state
+  const [placeAddCoordinate, setPlaceAddCoordinate] = useState([
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+  ]);
+
+  //지도에서 장소추가 에서 추가한 장소 5개의 코멘트를 나타내는 state
+  const [placeAddComment, setPlaceAddComment] = useState(["", "", "", "", ""]);
+
+  //해시태그에서 사용자가 입력한 해시태그와 등록된 해시태그 5개를 나타내는 state
   const [hashTagAdd, setHashTagAdd] = useState({
     inputHashTag: "",
     addHashTags: Array.from(Array(5)),
@@ -76,6 +88,9 @@ function CourseRegistrationForm() {
 
   //사용자가 입력한 코스 상세정보를 나타내는 state
   const [courseText, setCourseText] = useState("");
+
+  //사용자가 입력한 코스 타이틀을 나타내는 state
+  const [courseTitle, setCourseTitle] = useState("");
 
   //백엔드로부터 가져온 카테고리 목록를 나타내는 state
   const [categoryLocalList, setCategoryLocalList] = useState([]);
@@ -503,18 +518,16 @@ function CourseRegistrationForm() {
       .then(({ data }) => {
         const items = data.items;
 
-        items?.forEach((item) => {
+        items?.forEach((item, index) => {
           const x = item.mapx;
           const y = item.mapy;
           const tm128 = new naver.maps.Point(x, y);
           var latLng = naver.maps.TransCoord.fromTM128ToLatLng(tm128);
 
           var marker = new naver.maps.Marker({
-            position: new naver.maps.LatLng(latLng),
+            position: new naver.maps.LatLng(latLng.y, latLng.x),
             map: map,
           });
-
-          console.log(item);
 
           naver.maps.Event.addListener(marker, "mouseover", function (e) {
             const title = `${item.address} ${item.title}`.replaceAll(
@@ -549,6 +562,23 @@ function CourseRegistrationForm() {
           [`choicePlace${index}`]: title,
         });
         SetNaverMapState({ ...naverMapState, naverMapEnable: false });
+        return false;
+      }
+      return true;
+    });
+
+    const { naver } = window;
+    const tm128 = new naver.maps.Point(markerItem.mapx, markerItem.mapy);
+    const latLng = naver.maps.TransCoord.fromTM128ToLatLng(tm128);
+    const x = latLng.x;
+    const y = latLng.y;
+
+    placeAddCoordinate.every((item, index) => {
+      if (item.x === 0) {
+        const tempPlaceAddCoordinate = Array.from(placeAddCoordinate);
+        tempPlaceAddCoordinate[index].x = x;
+        tempPlaceAddCoordinate[index].y = y;
+        setPlaceAddCoordinate(tempPlaceAddCoordinate);
         return false;
       }
       return true;
@@ -597,7 +627,7 @@ function CourseRegistrationForm() {
   };
 
   /* 사용자가 장소 삭제 버튼을 클릭했을 때 호출할 핸들러
-  인덱스에 해당하는 아이템의 state를 초기값으로 전달한다. */
+  인덱스에 해당하는 장소명, 좌표, 코멘트 state를 삭제한 후 빈 state를 추가하여 전달한다. */
   const onClickRemovePlaceItem = (e, index) => {
     let tempPlaceAddArr = Object.values(placeAdd);
     let tempPlaceAddObject = {};
@@ -610,6 +640,18 @@ function CourseRegistrationForm() {
     });
 
     setPlaceAdd(tempPlaceAddObject);
+
+    let tempPlaceAddCoordinate = Array.from(placeAddCoordinate);
+
+    tempPlaceAddCoordinate.splice(index, 1);
+    tempPlaceAddCoordinate.push({ x: 0, y: 0 });
+
+    setPlaceAddCoordinate(tempPlaceAddCoordinate);
+
+    let tempPlaceAddComment = Array.from(placeAddComment);
+    tempPlaceAddComment.splice(index, 1);
+    tempPlaceAddComment.push("");
+    setPlaceAddComment(tempPlaceAddComment);
   };
 
   /* 사용자가 해시태그 삭제 버튼을 클릭했을 때 호출할 핸들러
@@ -643,6 +685,7 @@ function CourseRegistrationForm() {
     SetNaverMapQuery({ ...naverMapQuery, [e.target.name]: e.target.value });
   };
 
+  // 네이버 맵 검색창에서 Enter를 입력시 호출할 핸들러
   const onKeyDownNaverMapQueryEnter = (e) => {
     if (e.key === "Enter") onClickNaverMapSearch(e);
   };
@@ -716,9 +759,20 @@ function CourseRegistrationForm() {
     });
   };
 
+  // 사용자가 장소에 대한 코멘트를 입력했을 때 호출되는 핸들러
+  const onChangePlaceAddComment = (e, index) => {
+    const tempPlaceAddComment = Array.from(placeAddComment);
+    tempPlaceAddComment[index] = e.target.value;
+    setPlaceAddComment(tempPlaceAddComment);
+  };
   // 사용자가 코스 설명글을 입력할 때마다 호출되는 핸들러
   const onChangeCourseText = (e) => {
     setCourseText(e.target.value);
+  };
+
+  // 사용자가 코스 타이틀을 입력할 때마다 호출되는 핸들러
+  const onChangeCourseTitle = (e) => {
+    setCourseTitle(e.target.value);
   };
 
   // 사용자가 코스 등록 버튼을 클릭할 때 호출되는 핸들러
@@ -727,17 +781,35 @@ function CourseRegistrationForm() {
     const createPlaceDetailRequestList = [];
     const createHashtagRequestList = [];
     const createCategoryListRequestList = [];
+    const url = "http://10.10.10.58:9002/v1/cosmosts";
+    const config = {
+      headers: {
+        Authorization: "token",
+        "Content-Type": "multipart/form-data",
+      },
+      timeout: 3000,
+    };
 
     e.preventDefault();
+
+    if (courseTitle == false) {
+      alert("코스 제목을 작성해주세요");
+      return;
+    }
+
+    if (courseText == false) {
+      alert("코스 설명을 작성해주세요");
+      return;
+    }
 
     Object.values(placeAdd).forEach((item, index) => {
       if (item) {
         createPlaceDetailRequestList.push({
           placeName: item,
-          placeXCoordinate: 2.3,
-          placeYCoordinate: 2.2,
+          placeXCoordinate: placeAddCoordinate[index].x,
+          placeYCoordinate: placeAddCoordinate[index].y,
           placeOrder: index,
-          placeComment: "장소 코멘트",
+          placeComment: placeAddComment[index],
         });
       }
     });
@@ -760,21 +832,25 @@ function CourseRegistrationForm() {
       return;
     }
 
+    const placeCommentCheck = createPlaceDetailRequestList.every(
+      (item, index) => {
+        if (item.placeComment === "") return false;
+        return true;
+      }
+    );
+
+    if (placeCommentCheck == false) {
+      alert("등록한 장소 설명을 작성해주세요");
+      return;
+    }
+
     if (createHashtagRequestList.length === 0) {
       alert("1개 이상의 해시태그를 등록해주세요");
       return;
     }
 
-    const url = "http://10.10.10.58:9002/v1/cosmosts";
-    const config = {
-      headers: {
-        Authorization: "token",
-        "Content-Type": "multipart/form-data",
-      },
-      timeout: 3000,
-    };
     const sendData = {
-      courseTitle: "코스제목",
+      courseTitle: courseTitle,
       courseComment: courseText,
       createPlaceDetailRequestList,
       createHashtagRequestList,
@@ -787,34 +863,32 @@ function CourseRegistrationForm() {
     const imageblobs = [];
 
     Object.values(registeredCourseImgState).forEach((item, index) => {
-      // const regImg = /^[url][.*],$/;
-      // const regImg = /^[.*],$/;
-      const commaIndex = item.indexOf(",");
       const mimeTypeReg = /data:(.*);/;
       const Base64DataReg = /,(.*)\)$/;
 
-      const itemMimeType = item.match(mimeTypeReg)
-        ? item.match(mimeTypeReg)[1]
-        : null;
+      if (item !== "none") {
+        const itemMimeType = item.match(mimeTypeReg)
+          ? item.match(mimeTypeReg)[1]
+          : null;
+        const itemBase64Data = item.match(Base64DataReg)
+          ? item.match(Base64DataReg)[1]
+          : null;
+        const itemBinaryData = atob(itemBase64Data);
 
-      const itemBase64Data = item.match(Base64DataReg)
-        ? item.match(Base64DataReg)[1]
-        : null;
+        let itemBinaryDataLength = itemBinaryData.length;
+        let itemUnicodeBinaryData = new Uint8Array(itemBinaryDataLength);
+        while (itemBinaryDataLength--) {
+          itemUnicodeBinaryData[itemBinaryDataLength] =
+            itemBinaryData.charCodeAt(itemBinaryDataLength);
+        }
 
-      const itemBinaryData = atob(itemBase64Data);
-      console.log(typeof itemBinaryData);
-      let itemBinaryDataLength = itemBinaryData.length;
-      let itemUnicodeBinaryData = new Uint8Array(itemBinaryDataLength);
-
-      while (itemBinaryDataLength--) {
-        itemUnicodeBinaryData[itemBinaryDataLength] =
-          itemBinaryData.charCodeAt(itemBinaryDataLength);
+        imageblobs.push(
+          itemUnicodeBinaryData &&
+            new Blob([itemUnicodeBinaryData], {
+              type: itemMimeType,
+            })
+        );
       }
-      imageblobs.push(
-        new Blob([itemUnicodeBinaryData], {
-          type: itemMimeType,
-        })
-      );
     });
 
     formData.append("createCourseRequest", jsonblob);
@@ -822,14 +896,19 @@ function CourseRegistrationForm() {
       formData.append("file", item);
     });
 
-    axios
-      .post(url, formData, config)
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (imageblobs.length == 0) {
+      alert("하나 이상의 코스 이미지를 등록해주세요");
+      return;
+    }
+
+    // axios
+    //   .post(url, formData, config)
+    //   .then((data) => {
+    //     console.log(data);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //   });
   };
 
   return (
@@ -965,6 +1044,10 @@ function CourseRegistrationForm() {
           </div>
         </S.UploadedCourseImgsWrap>
       </S.UploadCourseImgArea>
+      {/* 코스 제목 */}
+      <div style={{ width: "100%", padding: "0 3rem" }}>
+        <input value={courseTitle} onChange={onChangeCourseTitle}></input>
+      </div>
       {/* 코스 카테고리 선택 드랍다운 */}
       <S.AddDetailCourseInfoArea>
         <S.CourseDetailInfoTitle>카테고리 선택</S.CourseDetailInfoTitle>
@@ -1028,6 +1111,7 @@ function CourseRegistrationForm() {
                 alignItems: "center",
                 position: "absolute",
                 top: window.visualViewport.pageTop,
+                zIndex: "1",
                 left: 0,
                 width: "100vw",
                 height: "100vh",
@@ -1178,6 +1262,26 @@ function CourseRegistrationForm() {
             )}
           </S.AddedLocationOrHashTagsWrap>
         </S.AddDetailCourseInfoWrap>
+        {/* 추가한 장소에 대한 코멘트 */}
+        <div
+          style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
+          {Object.values(placeAdd).map((item, index) => {
+            if (item) {
+              return (
+                <input
+                  key={index}
+                  placeholder={`${index + 1}번 장소에 대한 설명`}
+                  style={{ marginBottom: "1rem" }}
+                  value={placeAddComment[index]}
+                  onChange={(e) => {
+                    onChangePlaceAddComment(e, index);
+                  }}
+                ></input>
+              );
+            }
+          })}
+        </div>
       </S.AddDetailCourseInfoArea>
       {/* 해시태그 추가 영역 */}
       <S.AddDetailCourseInfoArea>
