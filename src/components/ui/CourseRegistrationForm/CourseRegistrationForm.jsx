@@ -901,14 +901,14 @@ function CourseRegistrationForm() {
       return;
     }
 
-    // axios
-    //   .post(url, formData, config)
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //   });
+    axios
+      .post(url, formData, config)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
