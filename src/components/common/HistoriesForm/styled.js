@@ -4,10 +4,8 @@ import styled from 'styled-components';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
-  FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
-  BREAK_POINTS as media,
-  mainTextFadeIn,
+  FONT_SIZE_LIST as fs,
 } from '../../../style';
 
 export const HistoryList = styled.ul`
@@ -18,6 +16,17 @@ export const HistoryList = styled.ul`
   width: 100%;
 `;
 
+export const ReportHistoryUtilButtonWrap = styled.div`
+  display: none;
+  align-items: center;
+
+  svg {
+    margin-left: ${gap.s};
+    font-size: ${fs.m} !important;
+    cursor: pointer;
+  }
+`;
+
 export const HistoryListItem = styled.li`
   display: flex;
   align-items: center;
@@ -25,22 +34,54 @@ export const HistoryListItem = styled.li`
   flex-direction: column;
   width: 100%;
   margin-bottom: ${gap.l};
+
+  &:hover ${ReportHistoryUtilButtonWrap} {
+    display: flex;
+  }
 `;
 
-export const HistoryDateWrap = styled.div`
+export const HistoryDateAndRateWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   margin-bottom: ${gap.s};
   padding: 0.5rem ${gap.s};
   border: 2px solid ${color.white};
   border-radius: ${br.default};
-  font-size: 16px;
-  cursor: pointer;
 `;
 
-export const ReportHistoryCat = styled.span`
+export const HistoryDate = styled.span`
+  font-size: 16px;
+`;
+
+export const ReportHistoryCategoryAndUtilButtonWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: ${gap.s};
+  padding: 0 ${gap.l};
+`;
+
+export const ReportHistoryCategory = styled.span`
   align-self: start;
-  margin-left: ${gap.l};
   font-size: 14px;
+`;
+
+export const WarningDeleteIconWrap = styled.div`
+  display: flex;
+  align-items: center;
+  color: ${color.red};
+  cursor: pointer;
+
+  svg {
+    align-self: center;
+  }
+  span {
+    margin-left: 0.2rem;
+    font-size: ${fs.xs} !important;
+  }
 `;
 
 export const HistoryTitleWrap = styled.div`
@@ -77,5 +118,4 @@ export const HistoryContent = styled.p`
   word-wrap: break-word;
   line-height: 1.2em;
   height: 3.6em;
-  cursor: pointer;
 `;

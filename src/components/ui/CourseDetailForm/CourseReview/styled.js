@@ -6,8 +6,6 @@ import {
   BORDER_RADIUS_LIST as br,
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
-  BREAK_POINTS as media,
-  mainTextFadeIn,
 } from '../../../../style';
 
 export const CourseReviewWrap = styled.form`
@@ -43,7 +41,7 @@ export const CourseReviewContentWrap = styled.div`
   margin-left: ${gap.l};
 `;
 
-export const CourseReviewInnerContentWrap = styled.form`
+export const CourseReviewInnerContentWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;

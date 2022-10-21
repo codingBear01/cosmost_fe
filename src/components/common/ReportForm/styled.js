@@ -4,11 +4,8 @@ import styled from 'styled-components';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
-  BUTTON_SIZE_LIST as bs,
   FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
-  BREAK_POINTS as media,
-  mainTextFadeIn,
 } from '../../../style';
 
 export const ReportFormBg = styled.div`
@@ -78,7 +75,7 @@ export const ReportFormCats = styled.select`
 
 export const ReportFormTextArea = styled.textarea`
   width: 45rem;
-  height: 50rem;
+  height: 35rem;
   margin: 3rem 0;
   padding: ${gap.s};
   border: 1px solid ${color.white};

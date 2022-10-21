@@ -13,7 +13,7 @@ import * as FaIcons from 'react-icons/fa';
 /* 현재 접속한 페이지 url */
 const currentUrl = window.location.href;
 
-function CourseSharingAndLikeButton({ courseData }) {
+function CourseSharingAndLikeButton({ courseDetail }) {
   /* States */
   /* 코스 공유하기 Modal Open useState */
   const [isSharingCourseModalOpened, setIsSharingCourseModalOpened] =
@@ -50,11 +50,11 @@ function CourseSharingAndLikeButton({ courseData }) {
     <StyledCourseContentWrap
       justifyContent={'flex-end'}
       height={'10rem'}
-      courseData={courseData}
+      courseDetail={courseDetail}
     >
       {isSharingCourseModalOpened && (
         <CourseSharingModal
-          courseData={courseData}
+          courseDetail={courseDetail}
           onClickCopyCurrentPageUrl={onClickCopyCurrentPageUrl}
         />
       )}

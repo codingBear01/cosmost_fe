@@ -1,7 +1,5 @@
 /* libraries */
 import React from 'react';
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
 /* components */
 import * as S from './styled';
 /* icons */
@@ -11,21 +9,23 @@ import * as AiIcons from 'react-icons/ai';
 function CourseUtillityModal({
   top,
   right,
+  onClickOpenDeleteModal,
   onClickSetClickedCourseReviewEditButton,
-  onClickDeleteCourseReview,
-  i,
-  courseReviewId,
+  clickedElement,
+  index,
 }) {
   return (
     <S.StyledCourseUtillityModal top={top} right={right}>
       <S.CourseUtilityModalButton
-        onClick={() => onClickSetClickedCourseReviewEditButton(i)}
+        type="button"
+        onClick={() => onClickSetClickedCourseReviewEditButton(index)}
       >
         <AiIcons.AiOutlineEdit />
         수정
       </S.CourseUtilityModalButton>
       <S.CourseUtilityModalButton
-        onClick={() => onClickDeleteCourseReview(courseReviewId)}
+        type="button"
+        onClick={() => onClickOpenDeleteModal(clickedElement, index)}
       >
         <BsIcons.BsTrash />
         삭제

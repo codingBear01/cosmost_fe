@@ -4,12 +4,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import * as S from './styled';
 import { StyledCourseContentWrap } from './../CourseContentWrap/styled';
 import { CourseUtillityModal } from '../../../';
-/* static data */
-import { COLOR_LIST as color } from '../../../../style';
 /* icons */
 import * as GrIcons from 'react-icons/gr';
 
-function CourseTitleAndDate({ courseData }) {
+function CourseTitleAndDate({ courseDetail, onClickOpenDeleteModal }) {
   /* States */
   /* 코스 및 리뷰 수정, 삭제 Modal Open useState */
   const [isCourseUtilityModalOpened, setIsCourseUtilityModalOpened] =
@@ -38,21 +36,28 @@ function CourseTitleAndDate({ courseData }) {
   return (
     <StyledCourseContentWrap
       justifyContent={'space-between'}
-      courseData={courseData}
+      courseDetail={courseDetail}
       dataCategory="titleAndDate"
     >
       <StyledCourseContentWrap style={{ borderBottom: 'none' }}>
-        <S.CourseTitle>{courseData.title}</S.CourseTitle>
-        <S.CourseAverageRate>⭐ {courseData.rate.average}</S.CourseAverageRate>
+        <S.CourseTitle>{courseDetail.title}</S.CourseTitle>
+        <S.CourseAverageRate>
+          ⭐ {courseDetail.rate.average}
+        </S.CourseAverageRate>
       </StyledCourseContentWrap>
       <S.CourseCreatedDateAndMoreIconWrap>
-        <S.CourseCreatedDate>{courseData.createdDate}</S.CourseCreatedDate>
+        <S.CourseCreatedDate>{courseDetail.createdDate}</S.CourseCreatedDate>
         <div ref={modalRef}>
           <GrIcons.GrMoreVertical onClick={onClickOpenCourseUtilityModal} />
         </div>
       </S.CourseCreatedDateAndMoreIconWrap>
       {isCourseUtilityModalOpened && (
-        <CourseUtillityModal top={'8rem'} right={'2rem'} />
+        <CourseUtillityModal
+          top={'8rem'}
+          right={'2rem'}
+          onClickOpenDeleteModal={onClickOpenDeleteModal}
+          clickedElement={'course'}
+        />
       )}
     </StyledCourseContentWrap>
   );

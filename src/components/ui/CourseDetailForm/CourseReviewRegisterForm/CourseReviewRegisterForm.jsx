@@ -13,7 +13,7 @@ import * as AiIcons from 'react-icons/ai';
 /* CONSTANTS */
 const REVIEW_RATE_INDEXES = [0, 1, 2, 3, 4];
 
-function CourseReviewRegisterForm({ courseData }) {
+function CourseReviewRegisterForm({ courseDetail }) {
   /* 리뷰 등록에 쓰이는 states 및 ref */
   const [isYellowStar, setIsYellowStar] = useState([
     true,
@@ -56,9 +56,9 @@ function CourseReviewRegisterForm({ courseData }) {
 
     if (!checkCourseReviewValues()) return;
 
-    const postCourseReviewUrl = 'http://10.10.10.189:8081/v1/comments';
+    const postCourseReviewUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments`;
     const temporaryData = {
-      courseId: courseData.id,
+      courseId: courseDetail.id,
       reviewerId: 1,
       courseReviewContent: reviewContentRef.current.value,
       rate: rateRef.current,
@@ -66,12 +66,9 @@ function CourseReviewRegisterForm({ courseData }) {
     axios
       .post(postCourseReviewUrl, temporaryData)
       .then((response) => {
-        console.log(response);
         reviewContentRef.current.value = '';
-        toast.success('코스 리뷰가 등록되었습니다.');
       })
       .catch((error) => {
-        console.log(error);
         toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
       });
   };

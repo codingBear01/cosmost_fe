@@ -133,7 +133,6 @@ function CourseRegistrationForm() {
       isDragging4: monitor.isDragging(),
     }),
   }));
-
   // 드랍 관련 state와 ref
   const [{ isOver0 }, drop0] = useDrop(
     () => ({
@@ -196,8 +195,6 @@ function CourseRegistrationForm() {
         const SourceID =
           monitor.internalMonitor.store.getState().dragOperation.sourceId;
         const targetId = monitor.targetId;
-        console.log(targetId);
-        console.log(SourceID);
         DropCourseImg(targetId, SourceID, registeredCourseImgState);
         return undefined;
       },
@@ -271,7 +268,6 @@ function CourseRegistrationForm() {
   /* 등록된 코스 이미지들을 검사하여 중간에 빈 칸이 있을 경우 코스 이미지들을 왼쪽으로 당겨
      중간의 빈 칸을 없애는 코드. */
   useEffect(() => {
-    console.log("A");
     Object.values(registeredCourseImgState).every((item, index, Array) => {
       if (item === "none") {
         if (index === Array.length - 1) {
@@ -486,6 +482,8 @@ function CourseRegistrationForm() {
             break;
         }
         break;
+      default:
+        return;
     }
   };
 
@@ -603,7 +601,7 @@ function CourseRegistrationForm() {
     console.log("B");
     FileReaderObject.onload = () => {
       Object.values(registeredCourseImgState).every((item, index) => {
-        if (item == "none") {
+        if (item === "none") {
           setRegisteredCourseImgState({
             ...registeredCourseImgState,
             ["imgSrc" + index]: `url(${FileReaderObject.result})`,
