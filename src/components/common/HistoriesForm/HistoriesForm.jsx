@@ -174,7 +174,7 @@ function HistoriesForm({ isReportHistoryPage }) {
                         onClick={() => deleteReport(report.id)}
                       >
                         <BiIcons.BiErrorAlt style={{ color: `${color.red}` }} />
-                        <span>삭제</span>
+                        <span>삭제하기</span>
                       </S.WarningDeleteIconWrap>
                     )}
                     {warningDeleteIconIndex !== i && (
