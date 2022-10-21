@@ -64,10 +64,11 @@ export const CourseCategoryWrap = styled.div`
 `;
 
 export const CourseCategorySelect = styled.select`
-  margin-right: 15rem;
+  margin-right: ${({ marginRight }) => marginRight || "15rem"};
   padding-bottom: 1rem;
   border: none;
-  border-bottom: 1px solid ${color.white};
+  border-bottom: ${({ borderBottom }) =>
+    borderBottom || `1px solid ${color.white}`};
   outline: none;
   background: transparent;
   font-size: ${fs.m};
