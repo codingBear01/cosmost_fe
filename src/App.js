@@ -13,12 +13,14 @@ import {
   CourseDetail,
   CourseRegistration,
   EmailValidation,
+  ErrorPage,
   Follows,
   Histories,
   InputAddress,
   InputDetailAddress,
   Login,
   Main,
+  NotFoundPage,
   SearchedCourses,
   SignUp,
   User,
@@ -97,8 +99,10 @@ function App() {
           </>
           {/* )} */}
         </Route>
+        {/* Error Page */}
+        <Route path="error" element={<ErrorPage />} />
         {/* 잘못된 경로에 접근시 메인 페이지로 리다이렉트 시킴*/}
-        {/* <Route path="*" element={<Navigate to={'/'} />} /> */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

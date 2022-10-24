@@ -8,8 +8,7 @@ import { Button, ProfilePic } from '../../../';
 /* static data */
 import { COLOR_LIST as color } from '../../../../style';
 
-function UserProfilArea() {
-  const loginToken = localStorage.getItem('token');
+function UserProfilArea({ loginToken }) {
   /* States */
   const [user, setUser] = useState([]);
 
