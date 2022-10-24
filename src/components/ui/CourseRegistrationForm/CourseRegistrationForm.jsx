@@ -210,6 +210,7 @@ function CourseRegistrationForm() {
   const getCategroyLocal = () => {
     const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=location`;
     const config = { timeout: 3000 };
+
     axios
       .get(url, config)
       .then((data) => {
@@ -224,8 +225,8 @@ function CourseRegistrationForm() {
     코스 카테고리의 테마값을 가져오는 API */
   const getCategroyTheme = () => {
     const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=theme`;
-
     const config = { timeout: 3000 };
+
     axios
       .get(url, config)
       .then((data) => {
@@ -852,12 +853,8 @@ function CourseRegistrationForm() {
 
     axios
       .post(url, formData, config)
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+      .then((response) => {})
+      .catch((error) => new Error(error));
   };
 
   return (

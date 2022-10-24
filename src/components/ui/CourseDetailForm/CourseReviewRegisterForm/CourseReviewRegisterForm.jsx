@@ -56,15 +56,17 @@ function CourseReviewRegisterForm({ courseDetail }) {
 
     if (!checkCourseReviewValues()) return;
 
-    const postCourseReviewUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments`;
-    const temporaryData = {
+    const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments`;
+    const temporaryBody = {
       courseId: courseDetail.id,
       reviewerId: 1,
       courseReviewContent: reviewContentRef.current.value,
       rate: rateRef.current,
     };
+    const config = { timeout: 3000 };
+
     axios
-      .post(postCourseReviewUrl, temporaryData)
+      .post(url, temporaryBody, config)
       .then((response) => {
         reviewContentRef.current.value = '';
       })

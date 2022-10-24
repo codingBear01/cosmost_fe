@@ -47,14 +47,15 @@ function LoginForm() {
 
     if (!checkIdAndPassword()) return;
 
-    const loginApiUrl = `${process.env.REACT_APP_AUTH_IP}/v1/signin`;
-    const idAndPassword = {
+    const url = `${process.env.REACT_APP_AUTH_IP}/v1/signin`;
+    const body = {
       loginId: idRef.current.value,
       loginPwd: passwordRef.current.value,
     };
+    const config = { timeout: 3000 };
 
     axios
-      .put(loginApiUrl, idAndPassword)
+      .put(url, body, config)
       .then((response) => {
         localStorage.setItem('token', response.data);
         setIsLoggedIn(true);

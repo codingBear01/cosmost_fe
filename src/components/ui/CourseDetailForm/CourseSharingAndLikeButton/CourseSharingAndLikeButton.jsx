@@ -49,15 +49,16 @@ function CourseSharingAndLikeButton({ courseDetail }) {
   const likeCourse = () => {
     setIsCourseLiked(!isCourseLiked);
 
-    const likeCourseUrl = `${process.env.REACT_APP_POPULARITY_IP}/v1/popularities`;
-    const likeCourseBody = {
+    const url = `${process.env.REACT_APP_POPULARITY_IP}/v1/popularities`;
+    const body = {
       // authId: 1,
       courseId: courseDetail.id,
       type: 'course',
     };
+    const config = { timeout: 3000 };
 
     axios
-      .post(likeCourseUrl, likeCourseBody)
+      .post(url, body, config)
       .then((response) => {
         console.log(response);
       })

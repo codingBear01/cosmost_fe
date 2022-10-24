@@ -14,7 +14,7 @@ import { base64ImgSrcToImgBinaryData } from '../../../store';
 const PROFILE_PIC_DEFAULT_URL = '/assets/images/ProfileDefaultImage.png';
 
 const RegExpId = /^[A-Za-z][A-Za-z0-9]{2,15}$/;
-const RegExpNickName = /^[a-zA-Z0-9가-힣]{2,16}$/;
+const RegExpNickName = /^[a-zA-Z0-9]{2,16}$/;
 const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
 
 function SignUpForm({ state }) {
@@ -157,22 +157,50 @@ function SignUpForm({ state }) {
     fileReader.readAsDataURL(e.target.files[0]);
   };
 
-  /* 입력된 id의 중복 여부를 확인하는 핸들러 */
+  /* 입력된 아이디의 중복 여부를 확인하는 핸들러 */
   const checkIsDuplicatedId = (id) => {
-    const checkIsDuplicatedIdUrl = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=${id}`;
+    const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=login-id`;
+    const config = {
+      headers: {
+        Authorization: id,
+      },
+      timeout: 3000,
+    };
 
     axios
-      .get(checkIsDuplicatedIdUrl)
+      .get(url, config)
       .then((response) => {
-        console.log('res', response);
         if (response.status === 200) {
           toast.success('사용 가능한 아이디입니다.');
         }
       })
       .catch((error) => {
-        console.log('err', error);
         if (error.response.status === 400) {
           toast.error('이미 존재하는 아이디입니다.');
+        }
+      });
+  };
+
+  /* 입력된 닉네임의 중복 여부를 확인하는 핸들러 */
+  const checkIsDuplicatedNickname = (nickname) => {
+    const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=nickname`;
+    const config = {
+      headers: {
+        Authorization: nickname,
+      },
+      timeout: 3000,
+    };
+
+    axios
+      .get(url, config)
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success('사용 가능한 닉네임입니다.');
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          toast.error('이미 존재하는 닉네임입니다.');
         }
       });
   };
@@ -186,12 +214,11 @@ function SignUpForm({ state }) {
     });
 
     if (ErrorCheck) {
-      const registerUserUrl = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+      const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
       const [profileImgSaveUrl] = base64ImgSrcToImgBinaryData(
         uploadedProfilePicture
       );
-
-      const userInput = {
+      const body = {
         loginId: userInformation.id,
         loginPwd: userInformation.password,
         email: userInformation.email,
@@ -205,9 +232,10 @@ function SignUpForm({ state }) {
         // profileImgSaveUrl,
         profilePictureUrl: 'dtd',
       };
+      const config = { timeout: 3000 };
 
       axios
-        .post(registerUserUrl, userInput)
+        .post(url, body, config)
         .then((response) => {
           navigate('/login');
         })
@@ -307,6 +335,9 @@ function SignUpForm({ state }) {
                 color={color.white}
                 bgColor={color.darkBlue}
                 hoveredBgColor={color.navy}
+                onClick={() =>
+                  checkIsDuplicatedNickname(userInformation.nickname)
+                }
               >
                 중복확인
               </Button>
@@ -315,8 +346,7 @@ function SignUpForm({ state }) {
               {emptyInputError.nicknameEmpty ||
                 (inputError.nicknameError && (
                   <S.ErrorMessage>
-                    대소문자, 숫자, 한글로 구성된 2자리 이상 16자리 이하여야
-                    합니다.
+                    대소문자, 숫자로 구성된 2자리 이상 16자리 이하여야 합니다.
                   </S.ErrorMessage>
                 ))}
             </S.MessageBox>

@@ -96,15 +96,16 @@ function CourseReview({
   /* APIs */
   /* 해당 코스 전체 리뷰 받아오기 */
   const getCourseReviews = (courseId) => {
-    const getCourseReviewsUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?type=review`;
-    const getCourseReviewsHeaders = {
+    const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?type=review`;
+    const config = {
       headers: {
         Authorization: courseId,
       },
+      timeout: 3000,
     };
 
     axios
-      .get(getCourseReviewsUrl, getCourseReviewsHeaders)
+      .get(url, config)
       .then((response) => {
         setCourseReviews(response.data);
       })
@@ -122,16 +123,17 @@ function CourseReview({
 
     if (!checkEditCourseReviewValues()) return;
 
-    const editCourseReviewUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments/${courseReviewId}`;
-    const temporaryData = {
+    const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments/${courseReviewId}`;
+    const temporaryBody = {
       courseId: courseId,
       reviewerId: 1,
       courseReviewContent: edittedReviewContentRef.current.value,
       rate: edittedReviewRateRef.current,
     };
+    const config = { timeout: 3000 };
 
     axios
-      .put(editCourseReviewUrl, temporaryData)
+      .put(url, temporaryBody, config)
       .then((response) => {
         edittedReviewContentRef.current.value = '';
         setIsCourseReviewEditTextareaOpened(false);

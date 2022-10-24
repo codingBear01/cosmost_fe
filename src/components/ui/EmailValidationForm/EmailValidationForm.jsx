@@ -88,10 +88,11 @@ function EmailValidForm() {
     if (!checkInput(e, 'email')) return;
     if (!validateEmailByRegExp(e)) return;
 
-    const sendCertificationNumberUrl = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/email/confirm/${emailRef.current.value}`;
+    const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/email/confirm/${emailRef.current.value}`;
+    const config = { timeout: 3000 };
 
     axios
-      .get(sendCertificationNumberUrl)
+      .get(url, config)
       .then((response) => {
         toast.success(
           `${emailRef.current.value}로 인증번호를 발송했습니다. 이메일을 확인해주세요.`
