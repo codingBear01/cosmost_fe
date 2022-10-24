@@ -142,6 +142,9 @@ function CourseReview({
       });
   };
 
+  /* 코스 리뷰 좋아요 */
+  const onClickLikeCourseReview = () => {};
+
   return (
     <>
       <ToastContainer
@@ -260,7 +263,10 @@ function CourseReview({
                   <FaIcons.FaRegThumbsUp />
                   <span>{item.likeCount}</span>
                 </S.CourseReviewLikeCountWrap>
-                <S.CourseReviewLikeButton type="submit">
+                <S.CourseReviewLikeButton
+                  type="button"
+                  onClick={onClickLikeCourseReview}
+                >
                   <FaIcons.FaRegThumbsUp />
                 </S.CourseReviewLikeButton>
               </S.CourseReviewInnerContentWrap>

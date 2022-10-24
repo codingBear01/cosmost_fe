@@ -1,7 +1,7 @@
 /* libraries */
 import React, { useState, useEffect, useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-
+import axios from 'axios';
 /* components */
 import * as S from './styled';
 import { StyledCourseContentWrap } from '../CourseContentWrap/styled';
@@ -15,9 +15,9 @@ const currentUrl = window.location.href;
 
 function CourseSharingAndLikeButton({ courseDetail }) {
   /* States */
-  /* 코스 공유하기 Modal Open useState */
   const [isSharingCourseModalOpened, setIsSharingCourseModalOpened] =
     useState(false);
+  const [isCourseLiked, setIsCourseLiked] = useState(false);
 
   /* Handlers */
   /* 코스 공유하기 Modal Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
@@ -45,6 +45,30 @@ function CourseSharingAndLikeButton({ courseDetail }) {
     return () => document.removeEventListener('click', closeModal);
   }, [isSharingCourseModalOpened]);
 
+  /* APIs */
+  const likeCourse = () => {
+    setIsCourseLiked(!isCourseLiked);
+
+    const likeCourseUrl = `${process.env.REACT_APP_POPULARITY_IP}/v1/popularities`;
+    const likeCourseBody = {
+      // authId: 1,
+      courseId: courseDetail.id,
+      type: 'course',
+    };
+
+    axios
+      .post(likeCourseUrl, likeCourseBody)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => new Error(error));
+  };
+
+  const unLikeCourse = () => {
+    setIsCourseLiked(!isCourseLiked);
+    console.log('좋아요 취소');
+  };
+
   return (
     // 공유, 좋아요 버튼
     <StyledCourseContentWrap
@@ -64,9 +88,17 @@ function CourseSharingAndLikeButton({ courseDetail }) {
       >
         <BiIcons.BiShare />
       </S.ShareAndLikeButton>
-      <S.ShareAndLikeButton>
-        <FaIcons.FaRegThumbsUp />
-      </S.ShareAndLikeButton>
+      {/* 좋아요 버튼 */}
+      {!isCourseLiked && (
+        <S.ShareAndLikeButton onClick={likeCourse}>
+          <FaIcons.FaRegThumbsUp />
+        </S.ShareAndLikeButton>
+      )}
+      {isCourseLiked && (
+        <S.ShareAndLikeButton onClick={unLikeCourse}>
+          <FaIcons.FaThumbsUp style={{ color: 'white' }} />
+        </S.ShareAndLikeButton>
+      )}
       <ToastContainer
         position="top-center"
         autoClose={500}
