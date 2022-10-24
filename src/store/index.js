@@ -1,15 +1,15 @@
 /* page 이동 시 scrollY 최상단으로 만드는 custom component */
-export { default as GoToTop } from './GoToTop';
+export { default as GoToTop } from "./GoToTop";
 
 /* functions */
-export { sharingByKakao } from './sharing';
+export { sharingByKakao } from "./sharing";
 
 /* recoil states */
 export {
   isReportFormOpenedAtom,
   isOrderingModalOpenedAtom,
   loginStateAtom,
-} from './recoilStates';
+} from "./recoilStates";
 
 /* temporary array */
 export {
@@ -21,4 +21,7 @@ export {
   MAIN_COURSES,
   RANKERS,
   REPORT_HISTORIES,
-} from './temporaryArray/';
+} from "./temporaryArray/";
+
+/* other Function */
+export { base64ImgSrcToImgBinaryData } from "./function";

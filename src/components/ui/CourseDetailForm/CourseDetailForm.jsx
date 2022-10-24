@@ -1,10 +1,10 @@
 /* libraries */
-import React, { useState } from 'react';
+import React, { useState } from "react";
 /* recoil */
-import { useRecoilState } from 'recoil';
-import { isOrderingModalOpenedAtom } from '../../../store';
+import { useRecoilState } from "recoil";
+import { isOrderingModalOpenedAtom } from "../../../store";
 /* components */
-import * as S from './styled';
+import * as S from "./styled";
 import {
   CourseContentWrap,
   CourseImageCarousel,
@@ -12,10 +12,10 @@ import {
   CourseReviewRegisterForm,
   CourseSharingAndLikeButton,
   CourseTitleAndDate,
-} from '.';
-import { DeleteModal, OrderingButton, ToTopBtn, UtilDiv } from '../..';
+} from ".";
+import { DeleteModal, OrderingButton, ToTopBtn, UtilDiv } from "../..";
 /* static data */
-import { COURSE_DETAIL as courseDetail } from '../../../store';
+import { COURSE_DETAIL as courseDetail } from "../../../store";
 
 function CourseDetailForm() {
   /* States */
@@ -55,10 +55,10 @@ function CourseDetailForm() {
         />
       )}
       <UtilDiv
-        justifyContent={'center'}
-        width={'76.8rem'}
-        padding={'0 0 7rem 0'}
-        margin={'0 auto'}
+        justifyContent={"center"}
+        width={"76.8rem"}
+        padding={"0 0 7rem 0"}
+        margin={"0 auto"}
       >
         {/* 코스 제목 및 날짜, 더보기 버튼 */}
         <CourseTitleAndDate
@@ -82,8 +82,8 @@ function CourseDetailForm() {
         />
         {/* 작성자 정보 */}
         <CourseContentWrap
-          justifyContent={'center'}
-          height={'10rem'}
+          justifyContent={"center"}
+          height={"10rem"}
           courseDetail={courseDetail}
           dataCategory="authorProfile"
         />
@@ -94,8 +94,8 @@ function CourseDetailForm() {
         />
         {/* 코스에 등록된 장소 순서 */}
         <CourseContentWrap
-          justifyContent={'center'}
-          height={'10rem'}
+          justifyContent={"center"}
+          height={"10rem"}
           courseDetail={courseDetail}
           dataCategory="courses"
         />
@@ -105,8 +105,8 @@ function CourseDetailForm() {
         <CourseSharingAndLikeButton courseDetail={courseDetail} />
         {/* 코스 평균 평점 및 별 개수별 퍼센테이지 */}
         <CourseContentWrap
-          justifyContent={'center'}
-          height={'30rem'}
+          justifyContent={"center"}
+          height={"30rem"}
           courseDetail={courseDetail}
           dataCategory="averageRate"
         />

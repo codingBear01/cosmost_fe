@@ -12,7 +12,7 @@ import * as BsIcons from "react-icons/bs";
 import { Icon } from "../..";
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from "../../../style";
-import { CATEGORIES } from "../../../store";
+import { base64ImgSrcToImgBinaryData, CATEGORIES } from "../../../store";
 import { useState } from "react";
 import styled from "styled-components";
 import { FaSleigh } from "react-icons/fa";
@@ -861,32 +861,33 @@ function CourseRegistrationForm() {
     const imageblobs = [];
 
     Object.values(registeredCourseImgState).forEach((item, index) => {
-      const mimeTypeReg = /data:(.*);/;
-      const Base64DataReg = /,(.*)\)$/;
+      const [itemUnicodeBinaryData, itemMimeType] =
+        base64ImgSrcToImgBinaryData(item);
+      // const mimeTypeReg = /data:(.*);/;
+      // const Base64DataReg = /,(.*)\)$/;
 
-      if (item !== "none") {
-        const itemMimeType = item.match(mimeTypeReg)
-          ? item.match(mimeTypeReg)[1]
-          : null;
-        const itemBase64Data = item.match(Base64DataReg)
-          ? item.match(Base64DataReg)[1]
-          : null;
-        const itemBinaryData = atob(itemBase64Data);
+      // if (item !== "none") {
+      //   const itemMimeType = item.match(mimeTypeReg)
+      //     ? item.match(mimeTypeReg)[1]
+      //     : null;
+      //   const itemBase64Data = item.match(Base64DataReg)
+      //     ? item.match(Base64DataReg)[1]
+      //     : null;
+      //   const itemBinaryData = atob(itemBase64Data);
 
-        let itemBinaryDataLength = itemBinaryData.length;
-        let itemUnicodeBinaryData = new Uint8Array(itemBinaryDataLength);
-        while (itemBinaryDataLength--) {
-          itemUnicodeBinaryData[itemBinaryDataLength] =
-            itemBinaryData.charCodeAt(itemBinaryDataLength);
-        }
+      //   let itemBinaryDataLength = itemBinaryData.length;
+      //   let itemUnicodeBinaryData = new Uint8Array(itemBinaryDataLength);
+      //   while (itemBinaryDataLength--) {
+      //     itemUnicodeBinaryData[itemBinaryDataLength] =
+      //       itemBinaryData.charCodeAt(itemBinaryDataLength);
+      //   }
 
-        imageblobs.push(
-          itemUnicodeBinaryData &&
-            new Blob([itemUnicodeBinaryData], {
-              type: itemMimeType,
-            })
-        );
-      }
+      imageblobs.push(
+        itemUnicodeBinaryData &&
+          new Blob([itemUnicodeBinaryData], {
+            type: itemMimeType,
+          })
+      );
     });
 
     formData.append("createCourseRequest", jsonblob);
