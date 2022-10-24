@@ -1,8 +1,8 @@
 /* libraries */
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 /* recoil */
-import { useRecoilState } from 'recoil';
-import { loginStateAtom } from './store';
+import { useRecoilState } from "recoil";
+import { loginStateAtom } from "./store";
 /* components */
 import {
   Header,
@@ -22,9 +22,9 @@ import {
   SearchedCourses,
   SignUp,
   User,
-} from './components';
+} from "./components";
 /* router */
-import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
+import { Routes, Route, Outlet, useLocation } from "react-router-dom";
 
 const WithHeaderAndFooter = () => {
   const path = useLocation().pathname;
@@ -53,7 +53,7 @@ const WithoutHeaderAndFooter = () => {
 const { Kakao } = window;
 
 function App() {
-  const loginToken = localStorage.getItem('token');
+  const loginToken = localStorage.getItem("token");
 
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
