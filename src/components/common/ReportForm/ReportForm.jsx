@@ -19,8 +19,6 @@ function ReportForm({
   isHistoriesChanged,
   setIsHistoriesChanged,
 }) {
-  console.log(report);
-
   const [reportCategories, setReportCategories] = useState([]);
   /* 신고 작성 관련 ref */
   const reportTitle = useRef();
