@@ -834,32 +834,13 @@ function CourseRegistrationForm() {
     Object.values(registeredCourseImgState).forEach((item, index) => {
       const [itemUnicodeBinaryData, itemMimeType] =
         base64ImgSrcToImgBinaryData(item);
-      const mimeTypeReg = /data:(.*);/;
-      const Base64DataReg = /,(.*)\)$/;
 
-      if (item !== 'none') {
-        const itemMimeType = item.match(mimeTypeReg)
-          ? item.match(mimeTypeReg)[1]
-          : null;
-        const itemBase64Data = item.match(Base64DataReg)
-          ? item.match(Base64DataReg)[1]
-          : null;
-        const itemBinaryData = atob(itemBase64Data);
-
-        let itemBinaryDataLength = itemBinaryData.length;
-        let itemUnicodeBinaryData = new Uint8Array(itemBinaryDataLength);
-        while (itemBinaryDataLength--) {
-          itemUnicodeBinaryData[itemBinaryDataLength] =
-            itemBinaryData.charCodeAt(itemBinaryDataLength);
-        }
-
-        imageblobs.push(
-          itemUnicodeBinaryData &&
-            new Blob([itemUnicodeBinaryData], {
-              type: itemMimeType,
-            })
-        );
-      }
+      imageblobs.push(
+        itemUnicodeBinaryData &&
+          new Blob([itemUnicodeBinaryData], {
+            type: itemMimeType,
+          })
+      );
     });
 
     formData.append('createCourseRequest', jsonblob);

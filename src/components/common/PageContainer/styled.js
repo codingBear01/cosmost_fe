@@ -8,10 +8,10 @@ export const StyledUtilPageContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 76.8rem;
+  width: 36rem;
   height: 100%;
   margin: 0 auto;
-  padding: 3rem;
+  padding: 3rem 0;
   color: ${color.white};
 
   svg {

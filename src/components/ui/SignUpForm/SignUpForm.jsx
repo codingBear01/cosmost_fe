@@ -1,17 +1,17 @@
 /* libraries */
-import React, { useRef, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import React, { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 /* components */
-import * as S from "./styled";
-import { Button, Input, UtilForm, UtilInputWrap, UtilTitle } from "../..";
+import * as S from './styled';
+import { Button, Input, UtilForm, UtilInputWrap, UtilTitle } from '../..';
 /* static data */
-import { COLOR_LIST as color, GAP_LIST as gap } from "../../../style";
-import { base64ImgSrcToImgBinaryData } from "../../../store";
+import { COLOR_LIST as color, GAP_LIST as gap } from '../../../style';
+import { base64ImgSrcToImgBinaryData } from '../../../store';
 
-const PROFILE_PIC_DEFAULT_URL = "/assets/images/ProfileDefaultImage.png";
+const PROFILE_PIC_DEFAULT_URL = '/assets/images/ProfileDefaultImage.png';
 
 const RegExpId = /^[A-Za-z][A-Za-z0-9]{2,15}$/;
 const RegExpNickName = /^[a-z0-9가-힣]{2,16}$/;
@@ -20,13 +20,13 @@ const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
 function SignUpForm({ state }) {
   /* User가 입력한 정보를 나타내는 state */
   const [userInformation, setUserInformation] = useState({
-    id: "",
-    nickname: "",
+    id: '',
+    nickname: '',
     ...state,
-    password: "",
-    passwordConfirm: "",
-    age: "default",
-    marriage: "default",
+    password: '',
+    passwordConfirm: '',
+    age: 'default',
+    marriage: 'default',
     profilePictureUrl: PROFILE_PIC_DEFAULT_URL,
   });
 
@@ -80,32 +80,32 @@ function SignUpForm({ state }) {
 
   /* 사용자가 데이터를 입력할 때 호출할 핸들러. 입력값이 조건문을 통과하면 state에 저장한다. */
   const onChangeUserInformation = (e) => {
-    if (e.target.name === "id") {
-      if (e.target.value === "") {
+    if (e.target.name === 'id') {
+      if (e.target.value === '') {
         setEmptyInputError({ ...emptyInputError, idEmpty: true });
       } else setEmptyInputError({ ...emptyInputError, idEmpty: false });
 
       if (RegExpId.test(e.target.value) === false) {
         setInputError({ ...inputError, idError: true });
       } else setInputError({ ...inputError, idError: false });
-    } else if (e.target.name === "nickname") {
-      if (e.target.value === "") {
+    } else if (e.target.name === 'nickname') {
+      if (e.target.value === '') {
         setEmptyInputError({ ...emptyInputError, nicknameEmpty: true });
       } else setEmptyInputError({ ...emptyInputError, nicknameEmpty: false });
 
       if (RegExpNickName.test(e.target.value) === false) {
         setInputError({ ...inputError, nicknameError: true });
       } else setInputError({ ...inputError, nicknameError: false });
-    } else if (e.target.name === "password") {
-      if (e.target.value === "") {
+    } else if (e.target.name === 'password') {
+      if (e.target.value === '') {
         setEmptyInputError({ ...emptyInputError, passwordEmpty: true });
       } else setEmptyInputError({ ...emptyInputError, passwordEmpty: false });
 
       if (RegExpPassword.test(e.target.value) === false) {
         setInputError({ ...inputError, passwordError: true });
       } else setInputError({ ...inputError, passwordError: false });
-    } else if (e.target.name === "passwordConfirm") {
-      if (e.target.value === "") {
+    } else if (e.target.name === 'passwordConfirm') {
+      if (e.target.value === '') {
         setEmptyInputError({ ...emptyInputError, passwordConfirmEmpty: true });
       } else
         setEmptyInputError({ ...emptyInputError, passwordConfirmEmpty: false });
@@ -113,20 +113,20 @@ function SignUpForm({ state }) {
       if (userInformation.password !== e.target.value) {
         setInputError({ ...inputError, passwordConfirmError: true });
       } else setInputError({ ...inputError, passwordConfirmError: false });
-    } else if (e.target.name === "age") {
-      if (e.target.value === "") {
+    } else if (e.target.name === 'age') {
+      if (e.target.value === '') {
         setEmptyInputError({ ...emptyInputError, ageEmpty: true });
       } else setEmptyInputError({ ...emptyInputError, ageEmpty: false });
 
-      if (e.target.value === "default") {
+      if (e.target.value === 'default') {
         setInputError({ ...inputError, ageError: true });
       } else setInputError({ ...inputError, ageError: false });
-    } else if (e.target.name === "marriage") {
-      if (e.target.value === "") {
+    } else if (e.target.name === 'marriage') {
+      if (e.target.value === '') {
         setEmptyInputError({ ...emptyInputError, marriageEmpty: true });
       } else setEmptyInputError({ ...emptyInputError, marriageEmpty: false });
 
-      if (e.target.value === "default") {
+      if (e.target.value === 'default') {
         setInputError({ ...inputError, marriageError: true });
       } else setInputError({ ...inputError, marriageError: false });
     }
@@ -165,12 +165,12 @@ function SignUpForm({ state }) {
       .get(checkIsDuplicatedIdUrl)
       .then((response) => {
         if (response.status === 200) {
-          toast.success("사용 가능한 아이디입니다.");
+          toast.success('사용 가능한 아이디입니다.');
         }
       })
       .catch((error) => {
         if (error.response.status === 400) {
-          toast.error("이미 존재하는 아이디입니다.");
+          toast.error('이미 존재하는 아이디입니다.');
         }
       });
   };
@@ -195,35 +195,29 @@ function SignUpForm({ state }) {
         email: userInformation.email,
         married: userInformation.marriage,
         nickname: userInformation.nickname,
-        sns: "NO",
-        status: "ACTIVE",
-        role: "USER",
+        sns: 'NO',
+        status: 'ACTIVE',
+        role: 'USER',
         address: `${userInformation.address} ${userInformation.detailAddress}`,
         agegroup: userInformation.age,
-        // profileImgSaveUrl: userInformation.profilePictureUrl,
-        // profileImgSaveUrl:
-        //   "https://pokemon.fandom.com/ko/wiki/%ED%94%BC%EC%B9%B4%EC%B8%84_(%EC%9C%A0%EB%82%98%EC%9D%B4%ED%8A%B8)",
         profileImgSaveUrl,
       };
 
-      console.log(userInput);
       axios
         .post(registerUserUrl, userInput)
         .then((response) => {
-          console.log(response);
-          navigate("/login");
+          navigate('/login');
         })
         .catch((error) => {
-          console.log(error);
-          toast.error("회원가입에 실패하였습니다. 관리자에게 문의하세요.");
+          toast.error('회원가입에 실패하였습니다. 관리자에게 문의하세요.');
         });
     } else {
-      toast.warn("모든 값을 입력해주세요.");
+      toast.warn('모든 값을 입력해주세요.');
     }
   };
 
   return (
-    <UtilForm padding={"10rem 0"} onSubmit={onSubmitRegisterUser}>
+    <UtilForm padding={'10rem 0'} onSubmit={onSubmitRegisterUser}>
       <ToastContainer
         position="top-center"
         autoClose={1000}
@@ -246,33 +240,33 @@ function SignUpForm({ state }) {
             })`}
             onClick={onClickUploadProilePic}
           >
-            {isProfilePictureUploaded || "프로필 이미지 업로드"}
+            {isProfilePictureUploaded || '프로필 이미지 업로드'}
           </S.UploadProfilePicBox>
           <S.ProfilePicUploadInput
             ref={profileInputRef}
             type="file"
-            value=""
+            value={''}
             onChange={onChangeProfileImg}
           />
         </div>
-        <S.UserProfileWrap flexDirection={"column"}>
-          <UtilInputWrap margin={"0"} flexDirection={"column"}>
+        <S.UserProfileWrap flexDirection={'column'}>
+          <UtilInputWrap margin={'0'} flexDirection={'column'}>
             <div>
               <Input
                 type="text"
                 name="id"
                 value={userInformation.id}
                 placeholder="아이디"
-                width={"150px"}
-                height={"40px"}
-                margin={"0 10px"}
+                width={'150px'}
+                height={'40px'}
+                margin={'0 10px'}
                 onChange={onChangeUserInformation}
               />
 
               <Button
                 type="button"
-                width={"80px"}
-                height={"40px"}
+                width={'80px'}
+                height={'40px'}
                 color={color.white}
                 bgColor={color.darkBlue}
                 hoveredBgColor={color.navy}
@@ -291,22 +285,22 @@ function SignUpForm({ state }) {
             </S.MessageBox>
           </UtilInputWrap>
 
-          <UtilInputWrap margin={"1rem 0 0 0"} flexDirection={"column"}>
+          <UtilInputWrap margin={'1rem 0 0 0'} flexDirection={'column'}>
             <div>
               <Input
                 type="text"
                 name="nickname"
                 value={userInformation.nickname}
                 placeholder="닉네임"
-                width={"150px"}
-                height={"40px"}
-                margin={"0 10px"}
+                width={'150px'}
+                height={'40px'}
+                margin={'0 10px'}
                 onChange={onChangeUserInformation}
               />
               <Button
                 type="button"
-                width={"80px"}
-                height={"40px"}
+                width={'80px'}
+                height={'40px'}
                 color={color.white}
                 bgColor={color.darkBlue}
                 hoveredBgColor={color.navy}
@@ -333,9 +327,9 @@ function SignUpForm({ state }) {
           type="text"
           value={userInformation.email}
           disabled={true}
-          width={"340px"}
-          height={"40px"}
-          margin={"0 10px"}
+          width={'340px'}
+          height={'40px'}
+          margin={'0 10px'}
         />
       </UtilInputWrap>
       <UtilInputWrap>
@@ -343,9 +337,9 @@ function SignUpForm({ state }) {
           type="text"
           value={userInformation.address}
           disabled={true}
-          width={"340px"}
-          height={"40px"}
-          margin={"0 10px"}
+          width={'340px'}
+          height={'40px'}
+          margin={'0 10px'}
         />
       </UtilInputWrap>
       <UtilInputWrap>
@@ -353,22 +347,22 @@ function SignUpForm({ state }) {
           type="text"
           value={userInformation.detailAddress}
           disabled={true}
-          width={"340px"}
-          height={"40px"}
-          margin={"0 10px"}
+          width={'340px'}
+          height={'40px'}
+          margin={'0 10px'}
         />
       </UtilInputWrap>
 
       {/* 비밀번호 */}
-      <UtilInputWrap mb={"0"}>
+      <UtilInputWrap mb={'0'}>
         <Input
           type="password"
           name="password"
           value={userInformation.password}
           placeholder="비밀번호"
-          width={"340px"}
-          height={"40px"}
-          margin={"0 10px"}
+          width={'340px'}
+          height={'40px'}
+          margin={'0 10px'}
           onChange={onChangeUserInformation}
         />
       </UtilInputWrap>
@@ -380,15 +374,15 @@ function SignUpForm({ state }) {
           </S.ErrorMessage>
         ))}
 
-      <UtilInputWrap mb={"0"}>
+      <UtilInputWrap mb={'0'}>
         <Input
           type="password"
           name="passwordConfirm"
           value={userInformation.passwordConfirm}
           placeholder="비밀번호 재확인"
-          width={"340px"}
-          height={"40px"}
-          margin={"0 10px"}
+          width={'340px'}
+          height={'40px'}
+          margin={'0 10px'}
           onChange={onChangeUserInformation}
         />
       </UtilInputWrap>
@@ -438,10 +432,10 @@ function SignUpForm({ state }) {
       </S.UserInfoDropDownWrap>
       {/* 회원가입 버튼 */}
       <Button
-        type={"submit"}
-        width={"340px"}
-        height={"40px"}
-        margin={"20px 0 0 0"}
+        type={'submit'}
+        width={'340px'}
+        height={'40px'}
+        margin={'20px 0 0 0'}
         bgColor={color.darkBlue}
         color={color.white}
         hoveredBgColor={color.navy}

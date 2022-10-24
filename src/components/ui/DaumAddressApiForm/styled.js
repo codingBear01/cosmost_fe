@@ -7,14 +7,13 @@ export const AddressApiWrap = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 55rem;
+  width: 100%;
 `;
 
 export const GettingCurrentLocationButtonWrap = styled.div`
   display: flex;
   align-items: center;
   align-self: end;
-  width: 20rem;
 
   svg {
     margin: auto 0;
