@@ -1,14 +1,14 @@
 /* libraries */
-import React from 'react';
+import React from "react";
 /* recoil */
-import { useRecoilState } from 'recoil';
-import { isOrderingModalOpenedAtom } from '../../../store';
+import { useRecoilState } from "recoil";
+import { isOrderingModalOpenedAtom } from "../../../store";
 /* components */
-import * as S from './styled';
-import { SearchedCourse, SelectingCategoryArea } from '.';
-import { OrderingButton, ToTopBtn, UtilDiv } from '../../';
+import * as S from "./styled";
+import { SearchedCourse, SelectingCategoryArea } from ".";
+import { OrderingButton, ToTopBtn, UtilDiv } from "../../";
 /* static data */
-import { COURSES } from '../../../store';
+import { COURSES } from "../../../store";
 
 function SearchedCoursesForm() {
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
@@ -20,7 +20,7 @@ function SearchedCoursesForm() {
   };
 
   return (
-    <UtilDiv width={'76.8rem'} padding={'7rem 0'} margin={'0 auto'}>
+    <UtilDiv width={"76.8rem"} padding={"7rem 0"} margin={"0 auto"}>
       {/* 카테고리 선택 영역 */}
       <SelectingCategoryArea />
       {/* 정렬 기준 버튼 */}

@@ -17,6 +17,7 @@ import {
   FONT_SIZE_LIST as fs,
   BORDER_RADIUS_LIST as br,
 } from '../../../style';
+import { base64ImgSrcToImgBinaryData } from '../../../store';
 
 function CourseRegistrationForm() {
   const navigate = useNavigate();
@@ -831,6 +832,8 @@ function CourseRegistrationForm() {
     const imageblobs = [];
 
     Object.values(registeredCourseImgState).forEach((item, index) => {
+      const [itemUnicodeBinaryData, itemMimeType] =
+        base64ImgSrcToImgBinaryData(item);
       const mimeTypeReg = /data:(.*);/;
       const Base64DataReg = /,(.*)\)$/;
 
