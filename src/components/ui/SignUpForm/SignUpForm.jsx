@@ -157,8 +157,22 @@ function SignUpForm({ state }) {
     fileReader.readAsDataURL(e.target.files[0]);
   };
 
+  /* 아이디 및 닉네임 중 빈 값이 있는지 확인하는 핸들러 */
+  const checkIsIdOrNicknameEmpty = (input, type) => {
+    if (type === 'id' && !input) {
+      toast.error('먼저 아이디를 입력해주세요.');
+      return false;
+    } else if (type === 'nickname' && !input) {
+      toast.error('먼저 닉네임을 입력해주세요.');
+      return false;
+    }
+    return true;
+  };
+
   /* 입력된 아이디의 중복 여부를 확인하는 핸들러 */
   const checkIsDuplicatedId = (id) => {
+    if (!checkIsIdOrNicknameEmpty(id, 'id')) return;
+
     const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=login-id`;
     const config = {
       headers: {
@@ -183,6 +197,8 @@ function SignUpForm({ state }) {
 
   /* 입력된 닉네임의 중복 여부를 확인하는 핸들러 */
   const checkIsDuplicatedNickname = (nickname) => {
+    if (!checkIsIdOrNicknameEmpty(nickname, 'nickname')) return;
+
     const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=nickname`;
     const config = {
       headers: {
