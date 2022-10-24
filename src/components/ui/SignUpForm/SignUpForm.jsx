@@ -29,7 +29,6 @@ function SignUpForm({ state }) {
     marriage: 'default',
     profilePictureUrl: PROFILE_PIC_DEFAULT_URL,
   });
-
   /* User가 입력한 정보의 유효성 여부를 나타내는 state */
   const [inputError, setInputError] = useState({
     idError: true,
@@ -40,7 +39,6 @@ function SignUpForm({ state }) {
     marriageError: true,
     profilePictureUrlError: true,
   });
-
   /* User가 입력한 정보 중 버이 있는 값이 있는지 나타내는 state */
   const [emptyInputError, setEmptyInputError] = useState({
     idEmpty: true,
@@ -51,10 +49,13 @@ function SignUpForm({ state }) {
     marriageEmpty: true,
     profilePictureUrlEmpty: true,
   });
-
   /* 프로필 이미지 관련 state */
   const [uploadedProfilePicture, setUploadedProfilePicture] = useState(null);
   const [isProfilePictureUploaded, setIsProfilePictureUploaded] =
+    useState(false);
+  /* 아이디 및 닉네임 중복 확인 여부 관련 state */
+  const [isDuplicatedIdChecked, setIsDuplicatedIdChecked] = useState(false);
+  const [isDuplicatedNicknameChecked, setIsDuplicatedNicknameChecked] =
     useState(false);
 
   /* 프로필 이미지 업로드에 쓰이는 useRef */
@@ -158,11 +159,12 @@ function SignUpForm({ state }) {
   };
 
   /* 아이디 및 닉네임 중 빈 값이 있는지 확인하는 핸들러 */
-  const checkIsIdOrNicknameEmpty = (input, type) => {
-    if (type === 'id' && !input) {
+  const checkIsIdOrNicknameEmpty = (type) => {
+    if (type === 'id' && emptyInputError.idEmpty) {
       toast.error('먼저 아이디를 입력해주세요.');
       return false;
-    } else if (type === 'nickname' && !input) {
+    }
+    if (type === 'nickname' && emptyInputError.nicknameEmpty) {
       toast.error('먼저 닉네임을 입력해주세요.');
       return false;
     }
@@ -171,7 +173,7 @@ function SignUpForm({ state }) {
 
   /* 입력된 아이디의 중복 여부를 확인하는 핸들러 */
   const checkIsDuplicatedId = (id) => {
-    if (!checkIsIdOrNicknameEmpty(id, 'id')) return;
+    if (!checkIsIdOrNicknameEmpty('id')) return;
 
     const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=login-id`;
     const config = {
@@ -186,6 +188,7 @@ function SignUpForm({ state }) {
       .then((response) => {
         if (response.status === 200) {
           toast.success('사용 가능한 아이디입니다.');
+          setIsDuplicatedIdChecked(!isDuplicatedIdChecked);
         }
       })
       .catch((error) => {
@@ -197,7 +200,7 @@ function SignUpForm({ state }) {
 
   /* 입력된 닉네임의 중복 여부를 확인하는 핸들러 */
   const checkIsDuplicatedNickname = (nickname) => {
-    if (!checkIsIdOrNicknameEmpty(nickname, 'nickname')) return;
+    if (!checkIsIdOrNicknameEmpty('nickname')) return;
 
     const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=nickname`;
     const config = {
@@ -212,6 +215,7 @@ function SignUpForm({ state }) {
       .then((response) => {
         if (response.status === 200) {
           toast.success('사용 가능한 닉네임입니다.');
+          setIsDuplicatedNicknameChecked(!isDuplicatedNicknameChecked);
         }
       })
       .catch((error) => {
@@ -221,9 +225,24 @@ function SignUpForm({ state }) {
       });
   };
 
+  /* 아이디 및 닉네임의 중복확인 버튼을 클릭했는지 확인하는 핸들러 */
+  const checkIsDuplicationButtonClicked = () => {
+    if (!isDuplicatedIdChecked) {
+      toast.error('아이디 중복 여부를 확인해주세요.');
+      return false;
+    }
+    if (!isDuplicatedNicknameChecked) {
+      toast.error('닉네임 중복 여부를 확인해주세요.');
+      return false;
+    }
+    return true;
+  };
+
   /* 회원가입 수행하는 핸들러 */
   const onSubmitRegisterUser = (e) => {
     e.preventDefault();
+
+    if (!checkIsDuplicationButtonClicked()) return;
 
     const ErrorCheck = Object.values(inputError).every((element) => {
       return !element;
@@ -246,7 +265,8 @@ function SignUpForm({ state }) {
         address: `${userInformation.address} ${userInformation.detailAddress}`,
         agegroup: userInformation.age,
         // profileImgSaveUrl,
-        profilePictureUrl: 'dtd',
+        profilePictureUrl:
+          'https://mblogthumb-phinf.pstatic.net/MjAyMDAzMTNfMjM1/MDAxNTg0MDcyNjY2MTA1.SzzKs1HkYI59Yw-92phFQQqJjm0vGacEQ6YqWl674eYg.fhVBJIFxJxIBmkiOArJqg5eplcD9Cm_NkXTs1DtpOAog.JPEG.kw9k/1584072665212.jpg?type=w800',
       };
       const config = { timeout: 3000 };
 
