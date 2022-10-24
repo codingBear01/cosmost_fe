@@ -724,7 +724,7 @@ function CourseRegistrationForm() {
     });
 
     if (result) {
-      alert('해시태그를 전부 등록하였습니다.');
+      alert('해시태그를 전부 등록했습니다.');
       return;
     }
 

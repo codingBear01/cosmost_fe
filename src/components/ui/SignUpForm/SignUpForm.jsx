@@ -14,7 +14,7 @@ import { base64ImgSrcToImgBinaryData } from '../../../store';
 const PROFILE_PIC_DEFAULT_URL = '/assets/images/ProfileDefaultImage.png';
 
 const RegExpId = /^[A-Za-z][A-Za-z0-9]{2,15}$/;
-const RegExpNickName = /^[a-z0-9가-힣]{2,16}$/;
+const RegExpNickName = /^[a-zA-Z0-9가-힣]{2,16}$/;
 const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
 
 function SignUpForm({ state }) {
@@ -164,18 +164,20 @@ function SignUpForm({ state }) {
     axios
       .get(checkIsDuplicatedIdUrl)
       .then((response) => {
+        console.log('res', response);
         if (response.status === 200) {
           toast.success('사용 가능한 아이디입니다.');
         }
       })
       .catch((error) => {
+        console.log('err', error);
         if (error.response.status === 400) {
           toast.error('이미 존재하는 아이디입니다.');
         }
       });
   };
 
-  /* 회원가입 버튼 클릭 시 사용자를 등록하는 핸들러 */
+  /* 회원가입 수행하는 핸들러 */
   const onSubmitRegisterUser = (e) => {
     e.preventDefault();
 
@@ -200,7 +202,8 @@ function SignUpForm({ state }) {
         role: 'USER',
         address: `${userInformation.address} ${userInformation.detailAddress}`,
         agegroup: userInformation.age,
-        profileImgSaveUrl,
+        // profileImgSaveUrl,
+        profilePictureUrl: 'dtd',
       };
 
       axios
@@ -209,7 +212,7 @@ function SignUpForm({ state }) {
           navigate('/login');
         })
         .catch((error) => {
-          toast.error('회원가입에 실패하였습니다. 관리자에게 문의하세요.');
+          toast.error('회원가입에 실패했습니다. 관리자에게 문의하세요.');
         });
     } else {
       toast.warn('모든 값을 입력해주세요.');

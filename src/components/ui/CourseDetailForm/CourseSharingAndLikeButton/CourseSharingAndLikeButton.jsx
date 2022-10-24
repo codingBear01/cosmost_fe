@@ -27,7 +27,7 @@ function CourseSharingAndLikeButton({ courseDetail }) {
   /* 현재 페이지의 url을 복사하는 핸들러 */
   const onClickCopyCurrentPageUrl = () => {
     window.navigator.clipboard.writeText(currentUrl);
-    toast.success('url을 복사하였습니다.');
+    toast.success('url을 복사했습니다.');
   };
 
   /* Hooks */
