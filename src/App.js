@@ -54,7 +54,6 @@ const { Kakao } = window;
 
 function App() {
   const loginToken = localStorage.getItem('token');
-
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   /* 프로젝트 실행 시 Kakao API KEY 값 초기화하는 함수 */
@@ -72,31 +71,31 @@ function App() {
           <Route path="/searched-courses" element={<SearchedCourses />} />
         </Route>
         <Route element={<WithoutHeaderAndFooter />}>
-          {!loginToken && !isLoggedIn && (
-            <>
-              <Route path="login" element={<Login />} />
-              <Route path="email-validation" element={<EmailValidation />} />
-              <Route path="address" element={<InputAddress />} />
-              <Route path="detail-address" element={<InputDetailAddress />} />
-              <Route path="sign-up" element={<SignUp />} />
-            </>
-          )}
-          {loginToken && isLoggedIn && (
-            <>
-              <Route path="user">
-                <Route path=":id" element={<User />} />
-                <Route path=":id/followers" element={<Follows />} />
-                <Route path=":id/followings" element={<Follows />} />
-                <Route path=":id/report-histories" element={<Histories />} />
-                <Route path=":id/review-histories" element={<Histories />} />
-              </Route>
+          {/* {!loginToken && !isLoggedIn && ( */}
+          <>
+            <Route path="login" element={<Login />} />
+            <Route path="email-validation" element={<EmailValidation />} />
+            <Route path="address" element={<InputAddress />} />
+            <Route path="detail-address" element={<InputDetailAddress />} />
+            <Route path="sign-up" element={<SignUp />} />
+          </>
+          {/* )} */}
+          {/* {loginToken && isLoggedIn && ( */}
+          <>
+            <Route path="user">
+              <Route path=":id" element={<User />} />
+              <Route path=":id/followers" element={<Follows />} />
+              <Route path=":id/followings" element={<Follows />} />
+              <Route path=":id/report-histories" element={<Histories />} />
+              <Route path=":id/review-histories" element={<Histories />} />
+            </Route>
 
-              <Route
-                path="/course-registration"
-                element={<CourseRegistration />}
-              />
-            </>
-          )}
+            <Route
+              path="/course-registration"
+              element={<CourseRegistration />}
+            />
+          </>
+          {/* )} */}
         </Route>
         {/* 잘못된 경로에 접근시 메인 페이지로 리다이렉트 시킴*/}
         {/* <Route path="*" element={<Navigate to={'/'} />} /> */}

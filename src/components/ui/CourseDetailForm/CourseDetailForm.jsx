@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { isOrderingModalOpenedAtom } from '../../../store';
+import { isOrderingModalOpenedAtom, loginStateAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import {
@@ -28,6 +28,8 @@ function CourseDetailForm() {
     useState(null);
   const [isClickedCourseReviewChanged, setIsClickedCourseReviewChanged] =
     useState(false);
+  const [isLoggedIn] = useRecoilState(loginStateAtom);
+  const loginToken = localStorage.getItem('token');
 
   /* Handlers */
   const onClickOpenOrderingModal = () => {
@@ -111,7 +113,9 @@ function CourseDetailForm() {
           dataCategory="averageRate"
         />
         {/* 리뷰 작성 폼 */}
-        <CourseReviewRegisterForm courseDetail={courseDetail} />
+        {loginToken && isLoggedIn && (
+          <CourseReviewRegisterForm courseDetail={courseDetail} />
+        )}
         {/* 정렬 버튼 */}
         <OrderingButton onClick={onClickOpenOrderingModal} />
         {/* 코스 리뷰 */}

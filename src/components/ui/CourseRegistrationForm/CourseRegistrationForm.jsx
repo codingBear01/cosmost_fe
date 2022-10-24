@@ -267,10 +267,24 @@ function CourseRegistrationForm() {
   useEffect(() => {
     if (naverMapState.naverMapEnable) {
       const { naver } = window;
-      const map = new naver.maps.Map('map', {
+      const naverMapOptions = {
         center: new naver.maps.LatLng(35.179816, 129.0750223),
         zoom: 10,
-      });
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+          style: naver.maps.MapTypeControlStyle.BUTTON,
+          position: naver.maps.Position.TOP_LEFT,
+        },
+        zoomControl: true,
+        zoomControlOptions: {
+          style: naver.maps.ZoomControlStyle.SMALL,
+          position: naver.maps.Position.TOP_RIGHT,
+        },
+        scaleControl: false,
+        logoControl: false,
+        mapDataControl: false,
+      };
+      const map = new naver.maps.Map('map', naverMapOptions);
       SetNaverMapState({ ...naverMapState, naverMapHandle: map });
       document.querySelector('body').style.overflow = 'hidden';
     } else {
@@ -728,41 +742,38 @@ function CourseRegistrationForm() {
 
   // 사용자가 코스 등록 시 입력한 값들의 유효성을 검증하는 핸들러
   const validateCourseRegistrationInput = (input, imgs) => {
-    console.log('valid input', input);
-    console.log('valid imgs', imgs);
+    if (imgs.length === 0) {
+      toast.error('이미지를 1개 이상 추가해주세요');
+      return false;
+    }
 
-    // if (imgs.length === 0) {
-    //   toast.error('이미지를 1개 이상 추가해주세요');
-    //   return false;
-    // }
+    if (input.createPlaceDetailRequestList.length === 0) {
+      toast.error('장소를 1곳 이상 추가해주세요');
+      return false;
+    }
 
-    // if (input.createPlaceDetailRequestList.length === 0) {
-    //   toast.error('장소를 1곳 이상 추가해주세요');
-    //   return false;
-    // }
+    for (let i = 0; i < input.createPlaceDetailRequestList.length; i++) {
+      const item = input.createPlaceDetailRequestList[i];
+      if (!item.placeComment) {
+        toast.error('장소에 대한 한줄평을 1개 이상 입력해주세요');
+        return false;
+      }
+    }
 
-    // for (let i = 0; i < input.createPlaceDetailRequestList.length; i++) {
-    //   const item = input.createPlaceDetailRequestList[i];
-    //   if (!item.placeComment) {
-    //     toast.error('장소에 대한 한줄평을 1개 이상 입력해주세요');
-    //     return false;
-    //   }
-    // }
+    if (input.createHashtagRequestList.length === 0) {
+      toast.error('해시태그를 1개 이상 추가해주세요');
+      return false;
+    }
 
-    // if (input.createHashtagRequestList.length === 0) {
-    //   toast.error('해시태그를 1개 이상 추가해주세요');
-    //   return false;
-    // }
+    if (!courseTitleRef.current.value) {
+      toast.error('코스 제목을 작성해주세요');
+      return false;
+    }
 
-    // if (!courseTitleRef.current.value) {
-    //   toast.error('코스 제목을 작성해주세요');
-    //   return false;
-    // }
-
-    // if (!courseDescriptonRef.current.value) {
-    //   toast.error('코스 설명을 작성해주세요');
-    //   return false;
-    // }
+    if (!courseDescriptonRef.current.value) {
+      toast.error('코스 설명을 작성해주세요');
+      return false;
+    }
   };
 
   // 사용자가 코스 등록 버튼을 클릭할 때 호출되는 핸들러
