@@ -1,14 +1,14 @@
 /* libraries */
 import styled from 'styled-components';
 /* static data */
-import { COLOR_LIST as color } from '../../../../style';
+import { COLOR_LIST as color } from '../../../style';
 
-export const UserPageMenuList = styled.ul`
+export const MenuList = styled.ul`
   width: 340px;
   padding: 20px;
 `;
 
-export const UserPageMenuItem = styled.li`
+export const MenuItem = styled.li`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
@@ -25,18 +25,5 @@ export const UserPageMenuItem = styled.li`
   svg {
     align-self: center;
     margin-right: 10px;
-  }
-`;
-
-export const UserInfoWrap = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-
-  div {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
   }
 `;

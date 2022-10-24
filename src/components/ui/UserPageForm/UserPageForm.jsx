@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { isReportFormOpenedAtom } from '../../../store';
 /* components */
-import { UserPageMenuList, UserProfilArea } from '.';
-import { ReportForm, UtilDiv, UtilTitle } from '../..';
+import { UserProfilArea } from '.';
+import { ReportForm, UtilDiv, UtilTitle, MenuListForm } from '../..';
 
 function UserInfoForm() {
   const loginToken = localStorage.getItem('token');
@@ -36,7 +36,7 @@ function UserInfoForm() {
       {/* 유저 프로필 및 유저 정보, 프로필 편집 버튼 */}
       <UserProfilArea loginToken={loginToken} />
       {/* 유저 페이지 메뉴 목록 */}
-      <UserPageMenuList onClickOpenReportForm={onClickOpenReportForm} />
+      <MenuListForm onClickOpenReportForm={onClickOpenReportForm} />
       {/* 신고하기 모달창 */}
       <ReportForm
         onClick={onClickOpenReportForm}
