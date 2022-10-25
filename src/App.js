@@ -25,6 +25,7 @@ import {
   NotFoundPage,
   SignUp,
   User,
+  WithdrawalMessage,
   WithdrawUser,
 } from './components';
 /* router */
@@ -105,6 +106,8 @@ function App() {
           </>
           {/* )} */}
         </Route>
+
+        <Route path="withdrawal-message" element={<WithdrawalMessage />} />
         {/* Error Page */}
         <Route path="error" element={<ErrorPage />} />
         {/* 잘못된 경로에 접근시 메인 페이지로 리다이렉트 시킴*/}

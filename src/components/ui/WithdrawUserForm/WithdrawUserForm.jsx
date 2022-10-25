@@ -27,7 +27,23 @@ function WithdrawUserForm() {
   const passwordRef = useRef();
 
   /* Handlers */
+  /* 비밀번호 유효성 검증하는 핸들러 */
+  const dummyPwd = 'testPwd14';
+  const checkPassword = () => {
+    if (!passwordRef.current.value) {
+      toast.error('비밀번호를 입력해주세요.');
+      return false;
+    }
+    if (passwordRef.current.value !== dummyPwd) {
+      toast.error('비밀번호가 일치하지 않습니다.');
+      return false;
+    }
+    return true;
+  };
+
   const onClickDisplayDeleteConfirmationMessage = () => {
+    if (!checkPassword()) return;
+
     setIsDeleteConfirmationMessageDisplayed(true);
   };
 
@@ -42,23 +58,8 @@ function WithdrawUserForm() {
     }
   }, [isDeleteConfirmationMessageDisplayed]);
 
-  const dummyPwd = 'testPwd13';
-  const checkPassword = () => {
-    if (!passwordRef.current.value) {
-      toast.error('비밀번호를 입력해주세요.');
-      return false;
-    }
-    if (passwordRef.current.value !== dummyPwd) {
-      toast.error('비밀번호가 일치하지 않습니다.');
-      return false;
-    }
-    return true;
-  };
-
   /* APIs */
   const deleteUser = (e) => {
-    if (!checkPassword()) return;
-
     const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
     const body = {
       loginId: '111',
@@ -88,7 +89,7 @@ function WithdrawUserForm() {
       .then((response) => {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
-        navigate('/');
+        navigate('/withdrawal-message');
       })
       .catch((error) => {
         new Error(error);
