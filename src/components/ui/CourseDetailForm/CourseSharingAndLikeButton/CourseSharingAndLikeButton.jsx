@@ -1,7 +1,10 @@
 /* libraries */
 import React, { useState, useEffect, useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+/* recoil */
+import { loginStateAtom } from '../../../../store';
 /* components */
 import * as S from './styled';
 import { StyledCourseContentWrap } from '../CourseContentWrap/styled';
@@ -9,11 +12,15 @@ import { CourseSharingModal } from '../';
 /* icons */
 import * as BiIcons from 'react-icons/bi';
 import * as FaIcons from 'react-icons/fa';
+import { useRecoilState } from 'recoil';
 
 /* 현재 접속한 페이지 url */
 const currentUrl = window.location.href;
 
 function CourseSharingAndLikeButton({ courseDetail }) {
+  const [isLoggedIn] = useRecoilState(loginStateAtom);
+  const navigate = useNavigate();
+
   /* States */
   const [isSharingCourseModalOpened, setIsSharingCourseModalOpened] =
     useState(false);

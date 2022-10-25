@@ -1,11 +1,11 @@
 /* libraries */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 /* components */
-import * as S from './styled';
-import { StyledCourseContentWrap } from './../CourseContentWrap/styled';
-import { CourseUtillityModal } from '../../../';
+import * as S from "./styled";
+import { StyledCourseContentWrap } from "./../CourseContentWrap/styled";
+import { CourseUtillityModal } from "../../../";
 /* icons */
-import * as GrIcons from 'react-icons/gr';
+import * as GrIcons from "react-icons/gr";
 
 function CourseTitleAndDate({ courseDetail, onClickOpenDeleteModal }) {
   /* States */
@@ -28,35 +28,35 @@ function CourseTitleAndDate({ courseDetail, onClickOpenDeleteModal }) {
       }
     };
 
-    document.addEventListener('click', closeModal);
+    document.addEventListener("click", closeModal);
 
-    return () => document.removeEventListener('click', closeModal);
+    return () => document.removeEventListener("click", closeModal);
   }, [isCourseUtilityModalOpened]);
 
   return (
     <StyledCourseContentWrap
-      justifyContent={'space-between'}
+      justifyContent={"space-between"}
       courseDetail={courseDetail}
       dataCategory="titleAndDate"
     >
-      <StyledCourseContentWrap style={{ borderBottom: 'none' }}>
-        <S.CourseTitle>{courseDetail.title}</S.CourseTitle>
+      <StyledCourseContentWrap style={{ borderBottom: "none" }}>
+        <S.CourseTitle>{courseDetail.courseTitle}</S.CourseTitle>
         <S.CourseAverageRate>
-          ⭐ {courseDetail.rate.average}
+          ⭐ {courseDetail.rate?.average}
         </S.CourseAverageRate>
       </StyledCourseContentWrap>
       <S.CourseCreatedDateAndMoreIconWrap>
-        <S.CourseCreatedDate>{courseDetail.createdDate}</S.CourseCreatedDate>
+        <S.CourseCreatedDate>{courseDetail.createAt}</S.CourseCreatedDate>
         <div ref={modalRef}>
           <GrIcons.GrMoreVertical onClick={onClickOpenCourseUtilityModal} />
         </div>
       </S.CourseCreatedDateAndMoreIconWrap>
       {isCourseUtilityModalOpened && (
         <CourseUtillityModal
-          top={'8rem'}
-          right={'2rem'}
+          top={"8rem"}
+          right={"2rem"}
           onClickOpenDeleteModal={onClickOpenDeleteModal}
-          clickedElement={'course'}
+          clickedElement={"course"}
         />
       )}
     </StyledCourseContentWrap>
