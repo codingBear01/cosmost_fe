@@ -9,11 +9,17 @@ import { CourseSharingModal } from "../";
 /* icons */
 import * as BiIcons from "react-icons/bi";
 import * as FaIcons from "react-icons/fa";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { loginStateAtom } from "../../../../store";
+import { useNavigate } from "react-router-dom";
 
 /* 현재 접속한 페이지 url */
 const currentUrl = window.location.href;
 
 function CourseSharingAndLikeButton({ courseDetail }) {
+  const [isLoggedIn] = useRecoilState(loginStateAtom);
+  const navigate = useNavigate();
   /* States */
   /* 코스 공유하기 Modal Open useState */
   const [isSharingCourseModalOpened, setIsSharingCourseModalOpened] =
@@ -45,6 +51,33 @@ function CourseSharingAndLikeButton({ courseDetail }) {
     return () => document.removeEventListener("click", closeModal);
   }, [isSharingCourseModalOpened]);
 
+  // 좋아요 버튼을 클릭했을 시 호출할 핸들러
+  const onClickLikeButton = (e) => {
+    if (isLoggedIn) {
+      const url = `${process.env.REACT_APP_SERVER3_IP}/v1/popularities`;
+      const loginToken = localStorage.getItem("token");
+      const config = {
+        header: {
+          Authorization: loginToken,
+        },
+        timeout: 3000,
+      };
+
+      axios
+        .post(url, {}, config)
+        .then((reponse) => {
+          console.log(reponse);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      navigate("/login");
+    }
+
+    // axios.post
+  };
+
   return (
     // 공유, 좋아요 버튼
     <StyledCourseContentWrap
@@ -64,7 +97,7 @@ function CourseSharingAndLikeButton({ courseDetail }) {
       >
         <BiIcons.BiShare />
       </S.ShareAndLikeButton>
-      <S.ShareAndLikeButton>
+      <S.ShareAndLikeButton onClick={onClickLikeButton}>
         <FaIcons.FaRegThumbsUp />
       </S.ShareAndLikeButton>
       <ToastContainer
