@@ -19,8 +19,6 @@ function ReportForm({
   isHistoriesChanged,
   setIsHistoriesChanged,
 }) {
-  console.log(report);
-
   const [reportCategories, setReportCategories] = useState([]);
   /* 신고 작성 관련 ref */
   const reportTitle = useRef();
@@ -56,10 +54,11 @@ function ReportForm({
   /* APIs */
   /* 리뷰 작성에 쓰일 신고 카테고리를 불러오는 함수 */
   // const getReportCategories = () => {
-  //   const reportCategoriesUrl = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
+  //   const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
+  // const config = { timeout: 3000 };
 
   //   axios
-  //     .get(reportCategoriesUrl)
+  //     .get(url, config)
   //     .then((response) => {
   //       setReportCategories(response.data);
   //     })
@@ -77,8 +76,8 @@ function ReportForm({
 
     if (!checkReportInput()) return;
 
-    const postReportUrl = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
-    const postReportBody = {
+    const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
+    const body = {
       reporterId: 2,
       reportTitle: reportTitle.current.value,
       reportContent: reportContent.current.value,
@@ -88,9 +87,10 @@ function ReportForm({
         },
       ],
     };
+    const config = { timeout: 3000 };
 
     axios
-      .post(postReportUrl, postReportBody)
+      .post(url, body, config)
       .then((response) => {
         setIsReportFormOpened(!isReportFormOpened);
       })
@@ -105,8 +105,8 @@ function ReportForm({
 
     if (!checkReportInput()) return;
 
-    const updateReportUrl = `${process.env.REACT_APP_BOARD_IP}/v1/boards/${id}`;
-    const updateReportBody = {
+    const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards/${id}`;
+    const body = {
       reportTitle: reportTitle.current.value,
       reportContent: reportContent.current.value,
       updateReportCategoryListRequestList: [
@@ -116,9 +116,10 @@ function ReportForm({
         },
       ],
     };
+    const config = { timeout: 3000 };
 
     axios
-      .put(updateReportUrl, updateReportBody)
+      .put(url, body, config)
       .then((response) => {
         setIsHistoriesChanged(!isHistoriesChanged);
         setIsReportFormOpened(!isReportFormOpened);

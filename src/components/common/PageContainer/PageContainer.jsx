@@ -10,10 +10,12 @@ function UtilPageContainer({ children }) {
   const navigate = useNavigate();
 
   return (
-    <S.StyledUtilPageContainer>
-      <AiIcons.AiOutlineArrowLeft onClick={() => navigate(-1)} />
-      {children}
-    </S.StyledUtilPageContainer>
+    <>
+      <S.UtilPageContainerHeader>
+        <AiIcons.AiOutlineArrowLeft onClick={() => navigate(-1)} />
+      </S.UtilPageContainerHeader>
+      <S.StyledUtilPageContainer>{children}</S.StyledUtilPageContainer>
+    </>
   );
 }
 

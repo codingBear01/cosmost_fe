@@ -27,8 +27,10 @@ function DeleteModal({
     } else {
       id = courseReviewId;
       const deleteCourseReviewUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments/${id}/review`;
+      const config = { timeout: 3000 };
+
       axios
-        .delete(deleteCourseReviewUrl)
+        .delete(deleteCourseReviewUrl, config)
         .then((response) => {
           onClickOpenDeleteModal();
           setIsClickedCourseReviewChanged(!isClickedCourseReviewChanged);

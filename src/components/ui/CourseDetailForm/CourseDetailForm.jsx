@@ -1,11 +1,18 @@
 /* libraries */
-import React, { useState, useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+/* custom functions */
+import { addNaverMapMarker } from '../../../store/function';
 /* recoil */
-import { useRecoilState } from "recoil";
-import { createNaverMap, isOrderingModalOpenedAtom } from "../../../store";
+import { useRecoilState } from 'recoil';
+import {
+  createNaverMap,
+  isOrderingModalOpenedAtom,
+  loginStateAtom,
+} from '../../../store';
 /* components */
-import * as S from "./styled";
+import * as S from './styled';
 import {
   CourseContentWrap,
   CourseImageCarousel,
@@ -13,12 +20,10 @@ import {
   CourseReviewRegisterForm,
   CourseSharingAndLikeButton,
   CourseTitleAndDate,
-} from ".";
-import { DeleteModal, OrderingButton, ToTopBtn, UtilDiv } from "../..";
+} from '.';
+import { DeleteModal, OrderingButton, ToTopBtn, UtilDiv } from '../..';
 /* static data */
-import { COURSE_DETAIL as courseDetail } from "../../../store";
-import axios from "axios";
-import { addNaverMapMarker } from "../../../store/function";
+import { COURSE_DETAIL as courseDetail } from '../../../store';
 
 function CourseDetailForm() {
   /* States */
@@ -40,6 +45,8 @@ function CourseDetailForm() {
     useState(null);
   const [isClickedCourseReviewChanged, setIsClickedCourseReviewChanged] =
     useState(false);
+  const [isLoggedIn] = useRecoilState(loginStateAtom);
+  const loginToken = localStorage.getItem('token');
 
   /* Handlers */
   const onClickOpenOrderingModal = () => {
@@ -64,8 +71,8 @@ function CourseDetailForm() {
       })
       .catch((error) => {
         console.log(error);
-        alert("백엔드 통신 실패");
-        navigate("/");
+        alert('백엔드 통신 실패');
+        navigate('/');
       });
   }, []);
 
@@ -80,7 +87,7 @@ function CourseDetailForm() {
           longitude: item.placeXCoordinate,
           eventList: [
             {
-              eventName: "mouseover",
+              eventName: 'mouseover',
               eventListener: (e) => {
                 e.pointerEvent.target.title = item.placeName;
               },
@@ -101,18 +108,18 @@ function CourseDetailForm() {
         .get(authorInfoUrl, authorInfoUConfig)
         .then((response) => {
           const data = response.data;
-          console.log("authorInfoUrl", data);
+          console.log('authorInfoUrl', data);
           setAuthorInfo(data);
         })
         .catch((error) => {
           console.log(error);
-          alert("백엔드 통신 실패");
-          navigate("/");
+          alert('백엔드 통신 실패');
+          navigate('/');
         });
     }
   }, [couresInfo]);
 
-  console.log("courseDetail", courseDetail);
+  console.log('courseDetail', courseDetail);
   return (
     couresInfo && (
       <>
@@ -130,10 +137,10 @@ function CourseDetailForm() {
           />
         )}
         <UtilDiv
-          justifyContent={"center"}
-          width={"76.8rem"}
-          padding={"0 0 7rem 0"}
-          margin={"0 auto"}
+          justifyContent={'center'}
+          width={'76.8rem'}
+          padding={'0 0 7rem 0'}
+          margin={'0 auto'}
         >
           {/* 코스 제목 및 날짜, 더보기 버튼 */}
           <CourseTitleAndDate
@@ -158,8 +165,8 @@ function CourseDetailForm() {
           {/* 작성자 정보 */}
           {authorInfo && (
             <CourseContentWrap
-              justifyContent={"center"}
-              height={"10rem"}
+              justifyContent={'center'}
+              height={'10rem'}
               courseDetail={authorInfo}
               dataCategory="authorProfile"
             />
@@ -167,7 +174,7 @@ function CourseDetailForm() {
 
           {/* 코스에 등록된 장소를 표시하는 지도 */}
           <div
-            style={{ width: "100%", height: "46rem" }}
+            style={{ width: '100%', height: '46rem' }}
             // src="https://file.mk.co.kr/meet/neds/2020/11/image_readtop_2020_1206310_16061899354442297.jpg"
             // alt="locations"
             id="map"
@@ -179,8 +186,8 @@ function CourseDetailForm() {
           } */}
           {/* 코스에 등록된 장소 순서 */}
           <CourseContentWrap
-            justifyContent={"center"}
-            height={"10rem"}
+            justifyContent={'center'}
+            height={'10rem'}
             courseDetail={couresInfo}
             dataCategory="courses"
           />
@@ -190,8 +197,8 @@ function CourseDetailForm() {
           <CourseSharingAndLikeButton courseDetail={courseDetail} />
           {/* 코스 평균 평점 및 별 개수별 퍼센테이지 */}
           <CourseContentWrap
-            justifyContent={"center"}
-            height={"30rem"}
+            justifyContent={'center'}
+            height={'30rem'}
             courseDetail={courseDetail}
             dataCategory="averageRate"
           />

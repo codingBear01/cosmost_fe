@@ -6,6 +6,7 @@ export { Header } from './Header/';
 export { HistoriesForm } from './HistoriesForm/';
 export { Icon } from './Icon/';
 export { Input } from './Input/';
+export { MenuListForm } from './MenuListForm/';
 export { NextBtn } from './NextBtn/';
 export { OrderingButton } from './OrderingButton/';
 export { OrderingModal } from './OrderingModal/';
