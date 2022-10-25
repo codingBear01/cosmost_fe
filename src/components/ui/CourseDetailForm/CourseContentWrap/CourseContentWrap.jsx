@@ -39,13 +39,13 @@ function CourseContentWrap({
         // 작성자 프로필
         <>
           <ProfilePic
-            src={courseDetail.author.profilePictureUrl}
-            alt={courseDetail.author.nickname}
+            src={courseDetail.profileImgSaveUrl}
+            alt={courseDetail.nickname}
             width={"8rem"}
             height={"8rem"}
           />
           <S.AutorProfileVerticalWrap marginRight={"3rem"}>
-            <S.AutorNickname>{courseDetail.author.nickname}</S.AutorNickname>
+            <S.AutorNickname>{courseDetail.nickname}</S.AutorNickname>
             <Button
               type={"button"}
               width={"6rem"}
@@ -60,15 +60,15 @@ function CourseContentWrap({
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <BiIcons.BiCrown />
-            <span>{courseDetail.author.ranking}</span>
+            <span>{courseDetail?.author?.ranking}</span>
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <FiIcons.FiUsers />
-            <span>{courseDetail.author.followers}</span>
+            <span>{courseDetail?.author?.followers}</span>
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <GiIcons.GiRoad />
-            <span>{courseDetail.author.courses}</span>
+            <span>{courseDetail?.author?.courses}</span>
           </S.AutorProfileVerticalWrap>
         </>
       ) : dataCategory === "courses" ? (

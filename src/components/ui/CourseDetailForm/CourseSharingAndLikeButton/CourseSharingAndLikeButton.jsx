@@ -1,14 +1,14 @@
 /* libraries */
-import React, { useState, useEffect, useRef } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import React, { useState, useEffect, useRef } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 /* components */
-import * as S from './styled';
-import { StyledCourseContentWrap } from '../CourseContentWrap/styled';
-import { CourseSharingModal } from '../';
+import * as S from "./styled";
+import { StyledCourseContentWrap } from "../CourseContentWrap/styled";
+import { CourseSharingModal } from "../";
 /* icons */
-import * as BiIcons from 'react-icons/bi';
-import * as FaIcons from 'react-icons/fa';
+import * as BiIcons from "react-icons/bi";
+import * as FaIcons from "react-icons/fa";
 
 /* 현재 접속한 페이지 url */
 const currentUrl = window.location.href;
@@ -27,7 +27,7 @@ function CourseSharingAndLikeButton({ courseDetail }) {
   /* 현재 페이지의 url을 복사하는 핸들러 */
   const onClickCopyCurrentPageUrl = () => {
     window.navigator.clipboard.writeText(currentUrl);
-    toast.success('url을 복사하였습니다.');
+    toast.success("url을 복사하였습니다.");
   };
 
   /* Hooks */
@@ -40,16 +40,16 @@ function CourseSharingAndLikeButton({ courseDetail }) {
       }
     };
 
-    document.addEventListener('click', closeModal);
+    document.addEventListener("click", closeModal);
 
-    return () => document.removeEventListener('click', closeModal);
+    return () => document.removeEventListener("click", closeModal);
   }, [isSharingCourseModalOpened]);
 
   return (
     // 공유, 좋아요 버튼
     <StyledCourseContentWrap
-      justifyContent={'flex-end'}
-      height={'10rem'}
+      justifyContent={"flex-end"}
+      height={"10rem"}
       courseDetail={courseDetail}
     >
       {isSharingCourseModalOpened && (
