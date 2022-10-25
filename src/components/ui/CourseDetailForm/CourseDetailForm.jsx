@@ -3,11 +3,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 /* custom functions */
-import { addNaverMapMarker } from "../../../store/function";
+
 /* recoil */
 import { useRecoilState } from "recoil";
 import {
   createNaverMap,
+  addNaverMapMarker,
   isOrderingModalOpenedAtom,
   loginStateAtom,
 } from "../../../store";
@@ -24,8 +25,6 @@ import {
 import { DeleteModal, OrderingButton, ToTopBtn, UtilDiv } from "../..";
 /* static data */
 import { COURSE_DETAIL as courseDetail } from "../../../store";
-import axios from "axios";
-import { addNaverMapMarker } from "../../../store";
 
 function CourseDetailForm() {
   /* States */

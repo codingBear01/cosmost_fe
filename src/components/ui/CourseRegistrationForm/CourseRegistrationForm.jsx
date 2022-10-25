@@ -25,12 +25,10 @@ import {
   createNaverMap,
 } from "../../../store";
 
-import { useState } from "react";
 import styled from "styled-components";
 import { FaSleigh } from "react-icons/fa";
 import { GiConsoleController } from "react-icons/gi";
 import { MdOutlineNotInterested } from "react-icons/md";
-import axios from "axios";
 import { RiCreativeCommonsZeroLine } from "react-icons/ri";
 import { HeaderSearchBar } from "../../common/Header";
 
