@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { loginStateAtom } from './store';
+import { loginStateAtom, loginToken } from './store';
 /* components */
 import {
   Header,
@@ -53,8 +53,8 @@ const WithoutHeaderAndFooter = () => {
 const { Kakao } = window;
 
 function App() {
-  const loginToken = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
+  const [token] = useRecoilState(loginToken);
 
   /* 프로젝트 실행 시 Kakao API KEY 값 초기화하는 함수 */
   useEffect(() => {
@@ -71,7 +71,7 @@ function App() {
           <Route path="/searched-courses" element={<SearchedCourses />} />
         </Route>
         <Route element={<WithoutHeaderAndFooter />}>
-          {/* {!loginToken && !isLoggedIn && ( */}
+          {/* {!token && !isLoggedIn && ( */}
           <>
             <Route path="login" element={<Login />} />
             <Route path="email-validation" element={<EmailValidation />} />
@@ -80,7 +80,7 @@ function App() {
             <Route path="sign-up" element={<SignUp />} />
           </>
           {/* )} */}
-          {/* {loginToken && isLoggedIn && ( */}
+          {/* {token && isLoggedIn && ( */}
           <>
             <Route path="user">
               <Route path=":id" element={<User />} />

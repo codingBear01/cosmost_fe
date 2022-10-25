@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { loginStateAtom } from '../../../store';
+import { loginStateAtom, pathnameAtom, loginToken } from '../../../store';
 /* components */
 import * as S from './styled';
 /* static data */
@@ -20,6 +20,12 @@ function MenuListForm({ onClickOpenReportForm }) {
   const navigate = useNavigate();
 
   const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
+  const [path] = useRecoilState(pathnameAtom);
+  const [token] = useRecoilState(loginToken);
+
+  const isUserEditPage = path.includes('edit');
+
+  console.log(token);
 
   /* Handlers */
   const onClickLogOut = () => {
@@ -27,6 +33,8 @@ function MenuListForm({ onClickOpenReportForm }) {
     setIsLoggedIn(false);
     navigate('/');
   };
+
+  /* APIs */
 
   return (
     // 유저 페이지 메뉴들
@@ -37,12 +45,10 @@ function MenuListForm({ onClickOpenReportForm }) {
           <span>코스 등록하기</span>
         </S.MenuItem>
       </Link>
-      <Link to="/searched-courses">
-        <S.MenuItem>
-          <TbIcons.TbRoad />
-          <span>내가 등록한 코스</span>
-        </S.MenuItem>
-      </Link>
+      <S.MenuItem>
+        <TbIcons.TbRoad />
+        <span>내가 등록한 코스</span>
+      </S.MenuItem>
       <Link to="/searched-courses">
         <S.MenuItem>
           <FaIcons.FaRegThumbsUp />
