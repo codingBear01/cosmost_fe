@@ -12,7 +12,11 @@ import * as BsIcons from "react-icons/bs";
 import { Icon } from "../..";
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from "../../../style";
-import { base64ImgSrcToImgBinaryData, CATEGORIES } from "../../../store";
+import {
+  base64ImgSrcToImgBinaryData,
+  CATEGORIES,
+  createNaverMap,
+} from "../../../store";
 import { useState } from "react";
 import styled from "styled-components";
 import { FaSleigh } from "react-icons/fa";
@@ -21,6 +25,7 @@ import { MdOutlineNotInterested } from "react-icons/md";
 import axios from "axios";
 import { RiCreativeCommonsZeroLine } from "react-icons/ri";
 import { HeaderSearchBar } from "../../common/Header";
+import { addNaverMapMarker } from "../../../store/function";
 
 // 등록한 코스이미지 및 해시태그를 삭제하는 X 버튼을 나타내는 컴포넌트
 const ItemRemoveButton = styled(AiIcons.AiOutlineClose)`
@@ -285,14 +290,11 @@ function CourseRegistrationForm() {
     });
   }, [registeredCourseImgState]);
 
-  /* naverMapEnable state값이 변경될때마다 호출되는 Effect*/
+  /* naverMapEnable state값이 변경될때마다 호출되는 Effect
+     naverMapEnable이 활성화되면 네이버 지도를 생성한다. */
   useEffect(() => {
     if (naverMapState.naverMapEnable) {
-      const { naver } = window;
-      const map = new naver.maps.Map("map", {
-        center: new naver.maps.LatLng(35.179816, 129.0750223),
-        zoom: 10,
-      });
+      const map = createNaverMap();
       SetNaverMapState({ ...naverMapState, naverMapHandle: map });
       document.querySelector("body").style.overflow = "hidden";
     } else {
@@ -490,6 +492,7 @@ function CourseRegistrationForm() {
   /* 지정한 쿼리와 지도, 지도에 등록된 마크를 입력받아 쿼리를 검색한 결과를 지도에 찍어주는 함수*/
   const NaverMapSearch = (map, query, mapMarker) => {
     //map copy 하기
+    console.log("mapMarker", mapMarker);
     let mapMarkerCopy = Array.from(mapMarker);
     const { naver } = window;
     const URL = "/v1/search/local.json";
@@ -498,6 +501,7 @@ function CourseRegistrationForm() {
     mapMarkerCopy.forEach((Marker) => {
       Marker.setMap(null);
     });
+
     mapMarkerCopy = [];
 
     axios
@@ -522,28 +526,53 @@ function CourseRegistrationForm() {
           const tm128 = new naver.maps.Point(x, y);
           var latLng = naver.maps.TransCoord.fromTM128ToLatLng(tm128);
 
-          var marker = new naver.maps.Marker({
-            position: new naver.maps.LatLng(latLng.y, latLng.x),
-            map: map,
+          const eventList = [
+            {
+              eventName: "mouseover",
+              eventListener: (e) => {
+                const title = `${item.address} ${item.title}`
+                  .replaceAll(/<[/]*b>/g, "")
+                  .replaceAll(/&amp;/g, "&");
+                e.pointerEvent.target.title = title;
+              },
+            },
+            {
+              eventName: "click",
+              eventListener: (e) => {
+                onClickMarker(e, item);
+              },
+            },
+          ];
+
+          const registeredMarker = addNaverMapMarker(map, {
+            latitude: latLng.y,
+            longitude: latLng.x,
+            eventList,
           });
 
-          naver.maps.Event.addListener(marker, "mouseover", function (e) {
-            const title = `${item.address} ${item.title}`.replaceAll(
-              /<[/]*b>/g,
-              ""
-            );
-            e.pointerEvent.target.title = title;
-          });
+          // var marker = new naver.maps.Marker({
+          //   position: new naver.maps.LatLng(latLng.y, latLng.x),
+          //   map: map,
+          // });
 
-          naver.maps.Event.addListener(marker, "click", (e) => {
-            onClickMarker(e, item);
-          });
+          // naver.maps.Event.addListener(marker, "mouseover", function (e) {
+          //   const title = `${item.address} ${item.title}`.replaceAll(
+          //     /<[/]*b>/g,
+          //     ""
+          //   );
+          //   e.pointerEvent.target.title = title;
+          // });
 
-          mapMarkerCopy.push(marker);
+          // naver.maps.Event.addListener(marker, "click", (e) => {
+          //   onClickMarker(e, item);
+          // });
+
+          mapMarkerCopy.push(registeredMarker);
         });
         SetNaverMapState({ ...naverMapState, naverMapMarker: mapMarkerCopy });
       })
       .catch((error) => {
+        console.log(error);
         alert(
           "네이버 검색 API와의 통신이 실패했습니다. 관리자에게 문의해주세요"
         );
@@ -552,7 +581,9 @@ function CourseRegistrationForm() {
 
   //네이버 지도에 등록된 마커를 클릭했을 때 호출할 이벤트 핸들러.
   const onClickMarker = (e, markerItem) => {
-    const title = `${markerItem.title}`.replaceAll(/<[/]*b>/g, "");
+    const title = `${markerItem.title}`
+      .replaceAll(/<[/]*b>/g, "")
+      .replaceAll(/&amp;/g, "&");
     Object.values(placeAdd).every((item, index) => {
       if (item == "") {
         setPlaceAdd({

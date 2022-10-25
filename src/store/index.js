@@ -24,4 +24,4 @@ export {
 } from "./temporaryArray/";
 
 /* other Function */
-export { base64ImgSrcToImgBinaryData } from "./function";
+export { base64ImgSrcToImgBinaryData, createNaverMap } from "./function";
