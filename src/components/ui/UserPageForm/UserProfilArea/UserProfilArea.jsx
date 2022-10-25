@@ -63,7 +63,7 @@ function UserProfilArea({ token }) {
             <span>100</span>
           </Link>
         </S.UserInfoWrap>
-        <Link to="/sign-up">
+        <Link to="/edit-user">
           <Button
             type="button"
             width={'220px'}

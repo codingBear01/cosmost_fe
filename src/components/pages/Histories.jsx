@@ -1,16 +1,13 @@
 /* libraries */
 import React, { useState, useEffect } from 'react';
-/* recoil */
-import { useRecoilState } from 'recoil';
-import { pathnameAtom } from '../../store';
+import { useLocation } from 'react-router-dom';
 /* components */
 import { HistoriesForm } from '..';
 
 function Histories() {
   /* 현재 접속한 페이지의 url에 따라 유저의 신고 내역 혹은 리뷰 조회 정보를 달리 뿌려주기 위한 state 및 pathname */
   const [isReportHistoryPage, setIsReportHistoryPage] = useState(false);
-  const [pathname] = useRecoilState(pathnameAtom);
-  const path = pathname;
+  const path = useLocation().pathname;
 
   /* 페이지 rendering 시 pathname에 report라는 문자열이 포함되어 있다면 isReport true로 설정 */
   useEffect(() => {

@@ -12,6 +12,8 @@ import {
   // pages
   CourseDetail,
   CourseRegistration,
+  Courses,
+  EditUser,
   EmailValidation,
   ErrorPage,
   Follows,
@@ -21,7 +23,6 @@ import {
   Login,
   Main,
   NotFoundPage,
-  SearchedCourses,
   SignUp,
   User,
 } from './components';
@@ -68,7 +69,7 @@ function App() {
         <Route path="/" element={<WithHeaderAndFooter />}>
           <Route index element={<Main />} />
           <Route path="/course-detail/:id" element={<CourseDetail />} />
-          <Route path="/searched-courses" element={<SearchedCourses />} />
+          <Route path="/courses/:type" element={<Courses />} />
         </Route>
         <Route element={<WithoutHeaderAndFooter />}>
           {/* {!token && !isLoggedIn && ( */}
@@ -78,6 +79,7 @@ function App() {
             <Route path="address" element={<InputAddress />} />
             <Route path="detail-address" element={<InputDetailAddress />} />
             <Route path="sign-up" element={<SignUp />} />
+            <Route path="edit-user" element={<EditUser />} />
           </>
           {/* )} */}
           {/* {token && isLoggedIn && ( */}

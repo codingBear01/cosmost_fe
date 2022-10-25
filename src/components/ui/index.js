@@ -7,6 +7,6 @@ export { InputAddressForm } from './InputAddressForm/';
 export { InputDetailAddressForm } from './InputDetailAddressForm/';
 export { LoginForm } from './LoginForm/';
 export { MainSection } from './MainSection/';
-export { SearchedCoursesForm } from './SearchedCoursesForm/';
+export { CoursesForm } from './CoursesForm';
 export { SignUpForm } from './SignUpForm/';
 export { UserPageForm } from './UserPageForm/';

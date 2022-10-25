@@ -35,7 +35,7 @@ export {
   InputDetailAddressForm,
   LoginForm,
   MainSection,
-  SearchedCoursesForm,
+  CoursesForm,
   SignUpForm,
   UserPageForm,
 } from './ui/';
@@ -44,6 +44,8 @@ export {
 export {
   CourseDetail,
   CourseRegistration,
+  Courses,
+  EditUser,
   EmailValidation,
   ErrorPage,
   Follows,
@@ -53,7 +55,6 @@ export {
   Login,
   Main,
   NotFoundPage,
-  SearchedCourses,
   SignUp,
   User,
 } from './pages/';

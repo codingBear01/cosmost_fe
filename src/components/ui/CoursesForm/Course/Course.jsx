@@ -1,6 +1,6 @@
 /* libraries */
 import React from 'react';
-import { SmallProfilePic } from '../../../';
+import { SmallProfilePic } from '../../..';
 /* components */
 import * as S from './styled';
 /* static data */
@@ -8,9 +8,9 @@ import { FONT_SIZE_LIST as fs } from '../../../../style';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 
-function SearchedCourse({ item }) {
+function Course({ item }) {
   return (
-    <S.StyledSearchedCourse>
+    <S.StyledCourse>
       {/* 코스 이미지 */}
       <S.CourseFeaturedImage src={item.courseImageUrl} alt={item.title} />
       {/* 코스 제목, 평점 */}
@@ -54,8 +54,8 @@ function SearchedCourse({ item }) {
           </div>
         ))}
       </S.CourseOrderWrap>
-    </S.StyledSearchedCourse>
+    </S.StyledCourse>
   );
 }
 
-export default SearchedCourse;
+export default Course;

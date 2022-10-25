@@ -1,17 +1,16 @@
 /* libraries */
 import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { isOrderingModalOpenedAtom, pathnameAtom } from '../../../store';
+import { isOrderingModalOpenedAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 
 function OrderingModal() {
-  /* States */
-  const [pathname] = useRecoilState(pathnameAtom);
-  const path = pathname;
+  const path = useLocation().pathname;
 
   /* 정렬 기준 Modal Open 여부 recoilState */
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
