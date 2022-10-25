@@ -18,7 +18,7 @@ import { DeleteModal, OrderingButton, ToTopBtn, UtilDiv } from "../..";
 /* static data */
 import { COURSE_DETAIL as courseDetail } from "../../../store";
 import axios from "axios";
-import { addNaverMapMarker } from "../../../store/function";
+import { addNaverMapMarker } from "../../../store";
 
 function CourseDetailForm() {
   /* States */

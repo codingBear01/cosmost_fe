@@ -25,7 +25,7 @@ import { MdOutlineNotInterested } from "react-icons/md";
 import axios from "axios";
 import { RiCreativeCommonsZeroLine } from "react-icons/ri";
 import { HeaderSearchBar } from "../../common/Header";
-import { addNaverMapMarker } from "../../../store/function";
+import { addNaverMapMarker } from "../../../store";
 
 // 등록한 코스이미지 및 해시태그를 삭제하는 X 버튼을 나타내는 컴포넌트
 const ItemRemoveButton = styled(AiIcons.AiOutlineClose)`

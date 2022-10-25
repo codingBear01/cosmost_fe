@@ -53,6 +53,7 @@ const createNaverMap = (
   });
   return map;
 };
+
 /** 네이버맵에 마커를 등록하고 마커에 이벤트 리스너들을 등록하는 함수.
  * map = object
  * markerInfo = {
@@ -93,4 +94,26 @@ const addNaverMapMarker = (map = null, markerInfo = null) => {
   return registeredMarker;
 };
 
-export { base64ImgSrcToImgBinaryData, createNaverMap, addNaverMapMarker };
+/** 네이버맵의 마커에 추가설명을 표시하는 함수.
+ *  map : object
+ *  marker : object
+ *  elementString : HTML 구조 문자열(Element.innerHTML 등)을 나타내는 string.
+ *
+ *  반환값 : 추가설명을 나타내는 Element(object)
+ * */
+const displayNaverMapMarkerInfo = (map, marker, elementString) => {
+  const { naver } = window;
+  const infowindow = new naver.maps.InfoWindow({
+    content: elementString,
+  });
+
+  infowindow.open(map, marker);
+
+  return infowindow;
+};
+export {
+  base64ImgSrcToImgBinaryData,
+  createNaverMap,
+  addNaverMapMarker,
+  displayNaverMapMarkerInfo,
+};
