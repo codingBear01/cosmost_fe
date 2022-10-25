@@ -34,7 +34,7 @@ function UserProfilArea({ token }) {
   useEffect(() => {
     getUser();
   }, []);
-
+  console.log(user);
   return (
     <S.ProfileWrap>
       {/* 프로필 사진 */}

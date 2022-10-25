@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { isOrderingModalOpenedAtom, loginToken } from '../../../store';
+import { isOrderingModalOpenedAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Course, SelectingCategoryArea } from '.';
@@ -13,7 +13,7 @@ import { OrderingButton, ToTopBtn, UtilDiv } from '../..';
 // import { COURSES } from '../../../store';
 
 function CoursesForm() {
-  // const [token] = useRecoilState(loginToken);
+  // const token = localStorage.getItem('token');
   const token =
     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4OCIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjY2NjczODI3LCJleHAiOjM2MDE2NjY2NzM4Mjd9.4Hzr9h89tJJNqNhnIOka4JIAqdR_CWTx7vA3Yl_4jg0';
 

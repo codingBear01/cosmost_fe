@@ -60,7 +60,6 @@ function LoginForm() {
         localStorage.setItem('token', response.data);
         setIsLoggedIn(true);
         navigate('/');
-        toast.success('로그인에 성공했습니다.');
       })
       .catch((e) => {
         toast.error('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');

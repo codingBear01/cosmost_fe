@@ -3,14 +3,13 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { isReportFormOpenedAtom, loginToken } from '../../../store';
+import { isReportFormOpenedAtom } from '../../../store';
 /* components */
 import { UserProfilArea } from '.';
 import { ReportForm, UtilDiv, UtilTitle, MenuListForm } from '../..';
 
 function UserInfoForm() {
-  const [token] = useRecoilState(loginToken);
-  // const token = '';
+  const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
   /* 모달창 Open 여부 state */

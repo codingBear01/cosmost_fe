@@ -5,7 +5,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { loginStateAtom, loginToken } from '../../../store';
+import { loginStateAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilTitle } from '../..';
@@ -20,7 +20,7 @@ function WithdrawUserForm() {
     isDeleteConfirmationMessageDisplayed,
     setIsDeleteConfirmationMessageDisplayed,
   ] = useState(false);
-  const [token] = useRecoilState(loginToken);
+  const token = localStorage.getItem('token');
 
   const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
   /* Refs */
@@ -28,7 +28,7 @@ function WithdrawUserForm() {
 
   /* Handlers */
   /* 비밀번호 유효성 검증하는 핸들러 */
-  const dummyPwd = 'testPwd14';
+  const dummyPwd = 'testPwd15';
   const checkPassword = () => {
     if (!passwordRef.current.value) {
       toast.error('비밀번호를 입력해주세요.');
@@ -52,7 +52,7 @@ function WithdrawUserForm() {
     if (isDeleteConfirmationMessageDisplayed) {
       const timer = setTimeout(() => {
         setIsDeleteConfirmationMessageDisplayed(false);
-      }, 2000);
+      }, 4000);
 
       return () => clearTimeout(timer);
     }
@@ -112,14 +112,14 @@ function WithdrawUserForm() {
       <Input
         ref={passwordRef}
         type="password"
-        width={'100%'}
+        width={'360px'}
         height={'40px'}
         placeholder={'비밀번호를 입력해주세요.'}
       />
       {!isDeleteConfirmationMessageDisplayed && (
         <Button
           type="submit"
-          width={'100%'}
+          width={'360px'}
           height={'40px'}
           margin={'30px 0 0 0'}
           color={color.white}
@@ -133,7 +133,7 @@ function WithdrawUserForm() {
       {isDeleteConfirmationMessageDisplayed && (
         <Button
           type="submit"
-          width={'100%'}
+          width={'360px'}
           height={'40px'}
           margin={'30px 0 0 0'}
           color={color.white}

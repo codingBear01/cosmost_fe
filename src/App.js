@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { loginStateAtom, loginToken } from './store';
+import { loginStateAtom } from './store';
 /* components */
 import {
   Header,
@@ -56,8 +56,8 @@ const WithoutHeaderAndFooter = () => {
 const { Kakao } = window;
 
 function App() {
+  const token = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
-  const [token] = useRecoilState(loginToken);
 
   /* 프로젝트 실행 시 Kakao API KEY 값 초기화하는 함수 */
   useEffect(() => {

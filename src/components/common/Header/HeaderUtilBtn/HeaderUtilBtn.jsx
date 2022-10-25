@@ -3,13 +3,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { loginStateAtom, loginToken } from '../../../../store';
+import { loginStateAtom } from '../../../../store';
 /* components */
 import { SmallProfilePic, Icon } from '../../../';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 function HeaderUtilBtn() {
-  const [token] = useRecoilState(loginToken);
+  const token = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   return (

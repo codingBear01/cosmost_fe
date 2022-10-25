@@ -23,8 +23,3 @@ export const pathnameAtom = atom({
   key: 'pathnameAtom',
   default: window.location.pathname,
 });
-
-export const loginToken = atom({
-  key: 'loginToken',
-  default: localStorage.getItem('token'),
-});

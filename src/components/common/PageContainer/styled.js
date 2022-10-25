@@ -22,7 +22,7 @@ export const StyledUtilPageContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 36rem;
+  width: 360px;
   height: 100%;
   margin: 0 auto;
   padding: 3rem 0;

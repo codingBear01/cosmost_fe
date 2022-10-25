@@ -53,7 +53,7 @@ function MenuListForm({ onClickOpenReportForm }) {
           </S.MenuItem>
         </Link>
         <Link to="/user/withdrawal">
-          <S.MenuItem style={{ fontSize: `${fs.m}` }}>
+          <S.MenuItem style={{ fontSize: '16px' }}>
             <TbIcons.TbUserOff />
             <span>회원 탈퇴</span>
           </S.MenuItem>
@@ -98,7 +98,7 @@ function MenuListForm({ onClickOpenReportForm }) {
             <span>신고내역</span>
           </S.MenuItem>
         </Link>
-        <S.MenuItem style={{ fontSize: `${fs.m}` }} onClick={onClickLogOut}>
+        <S.MenuItem style={{ fontSize: '16px' }} onClick={onClickLogOut}>
           <AiIcons.AiOutlineLogout style={{ fontSize: `${fs.m}` }} />
           <span>로그아웃</span>
         </S.MenuItem>

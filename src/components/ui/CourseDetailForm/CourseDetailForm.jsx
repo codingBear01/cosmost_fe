@@ -10,7 +10,6 @@ import {
   createNaverMap,
   isOrderingModalOpenedAtom,
   loginStateAtom,
-  loginToken,
 } from '../../../store';
 /* components */
 import * as S from './styled';
@@ -46,7 +45,8 @@ function CourseDetailForm() {
     useState(null);
   const [isClickedCourseReviewChanged, setIsClickedCourseReviewChanged] =
     useState(false);
-  const [token] = useRecoilState(loginToken);
+
+  const token = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   /* Handlers */

@@ -10,7 +10,6 @@ export {
   isOrderingModalOpenedAtom,
   loginStateAtom,
   pathnameAtom,
-  loginToken,
 } from './recoilStates';
 
 /* temporary array */

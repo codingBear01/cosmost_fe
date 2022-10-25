@@ -2,7 +2,7 @@
 import React from 'react';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { loginStateAtom, loginToken } from '../../../store';
+import { loginStateAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { MainContentWrap, MainCourse, MainTextWrap } from '.';
@@ -13,7 +13,7 @@ import * as FaIcons from 'react-icons/fa';
 import { MAIN_COURSES } from '../../../store/temporaryArray';
 
 function MainPageSection() {
-  const [token] = useRecoilState(loginToken);
+  const token = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   return (
