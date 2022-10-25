@@ -14,12 +14,12 @@ import {
   CourseRegistration,
   Courses,
   EditUser,
-  EmailValidation,
   ErrorPage,
   Follows,
   Histories,
   InputAddress,
   InputDetailAddress,
+  InputEmail,
   Login,
   Main,
   NotFoundPage,
@@ -75,7 +75,7 @@ function App() {
           {/* {!token && !isLoggedIn && ( */}
           <>
             <Route path="login" element={<Login />} />
-            <Route path="email-validation" element={<EmailValidation />} />
+            <Route path="email-validation" element={<InputEmail />} />
             <Route path="address" element={<InputAddress />} />
             <Route path="detail-address" element={<InputDetailAddress />} />
             <Route path="sign-up" element={<SignUp />} />

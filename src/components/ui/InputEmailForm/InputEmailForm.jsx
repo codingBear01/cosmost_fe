@@ -18,7 +18,7 @@ import * as BsIcons from 'react-icons/bs';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 
-function EmailValidForm() {
+function InputEmailForm() {
   /* States */
   const [email, setEmail] = useState(null);
   const [isCertificationNumberSent, setIsCertificationNumberSent] =
@@ -194,4 +194,4 @@ function EmailValidForm() {
   );
 }
 
-export default EmailValidForm;
+export default InputEmailForm;

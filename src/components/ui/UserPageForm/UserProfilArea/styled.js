@@ -1,7 +1,7 @@
 /* libraries */
 import styled from 'styled-components';
 /* static data */
-import { COLOR_LIST as color } from '../../../../style';
+import { COLOR_LIST as color, GAP_LIST as gap } from '../../../../style';
 
 export const ProfileWrap = styled.div`
   display: flex;
@@ -42,6 +42,7 @@ export const UserInfoWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: ${gap.s};
 
   a {
     display: flex;
