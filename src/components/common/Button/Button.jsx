@@ -11,8 +11,9 @@ function Button({
   color,
   bgColor,
   hoveredBgColor,
-  children,
+  value,
   onClick,
+  children,
 }) {
   return (
     <S.StyledButton
@@ -25,6 +26,7 @@ function Button({
       color={color}
       bgColor={bgColor}
       hoveredBgColor={hoveredBgColor}
+      value={value}
       onClick={onClick}
     >
       {children}

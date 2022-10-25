@@ -58,5 +58,6 @@ export {
   NotFoundPage,
   SignUp,
   User,
+  WithdrawalMessage,
   WithdrawUser,
 } from './pages/';

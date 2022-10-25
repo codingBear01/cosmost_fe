@@ -13,4 +13,5 @@ export { default as Main } from './Main';
 export { default as NotFoundPage } from './NotFoundPage';
 export { default as SignUp } from './SignUp';
 export { default as User } from './User';
+export { default as WithdrawalMessage } from './WithdrawalMessage';
 export { default as WithdrawUser } from './WithdrawUser';

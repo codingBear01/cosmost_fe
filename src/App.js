@@ -80,10 +80,6 @@ function App() {
             <Route path="address" element={<InputAddress />} />
             <Route path="detail-address" element={<InputDetailAddress />} />
             <Route path="sign-up" element={<SignUp />} />
-            <Route path="edit-user-menu" element={<EditUserMenu />} />
-            <Route path="edit-user-email" element={<InputEmail />} />
-            <Route path="edit-user-address" element={<InputAddress />} />
-            <Route path="withdraw-user" element={<WithdrawUser />} />
           </>
           {/* )} */}
           {/* {token && isLoggedIn && ( */}
@@ -94,6 +90,12 @@ function App() {
               <Route path=":id/followings" element={<Follows />} />
               <Route path=":id/report-histories" element={<Histories />} />
               <Route path=":id/review-histories" element={<Histories />} />
+              <Route path="edit">
+                <Route path="menu" element={<EditUserMenu />} />
+                <Route path="email" element={<InputEmail />} />
+                <Route path="address" element={<InputAddress />} />
+              </Route>
+              <Route path="withdrawal" element={<WithdrawUser />} />
             </Route>
 
             <Route
