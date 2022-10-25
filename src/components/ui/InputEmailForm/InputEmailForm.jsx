@@ -17,8 +17,13 @@ import * as AiIcons from 'react-icons/ai';
 import * as BsIcons from 'react-icons/bs';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
+import { useLocation } from 'react-router-dom';
 
 function InputEmailForm() {
+  /* Path */
+  const path = useLocation().pathname;
+  const isEmailValidationPage = path.includes('validation');
+
   /* States */
   const [email, setEmail] = useState(null);
   const [isCertificationNumberSent, setIsCertificationNumberSent] =

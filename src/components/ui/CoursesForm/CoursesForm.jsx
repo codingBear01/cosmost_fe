@@ -10,12 +10,12 @@ import * as S from './styled';
 import { Course, SelectingCategoryArea } from '.';
 import { OrderingButton, ToTopBtn, UtilDiv } from '../..';
 /* static data */
-import { COURSES } from '../../../store';
+// import { COURSES } from '../../../store';
 
 function CoursesForm() {
   // const [token] = useRecoilState(loginToken);
   const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4OCIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjY2NjY2NzkxLCJleHAiOjE2NjY2NzAzOTF9.Zp-3-jK0Oz237LayahYvpaQ2Mt8OX5dA7DhZgw9-1-U';
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4OCIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjY2NjczODI3LCJleHAiOjM2MDE2NjY2NzM4Mjd9.4Hzr9h89tJJNqNhnIOka4JIAqdR_CWTx7vA3Yl_4jg0';
 
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
@@ -43,7 +43,7 @@ function CoursesForm() {
     axios
       .get(url, config)
       .then((response) => {
-        console.log(response);
+        setCourses(response.data);
       })
       .catch((error) => console.log(error));
   };
@@ -53,17 +53,18 @@ function CoursesForm() {
     if (params.type === 'mine') {
       getMyCourses();
     }
-  }, []);
+  }, [params.type]);
 
   return (
-    <UtilDiv width={'76.8rem'} padding={'7rem 0'} margin={'0 auto'}>
+    <UtilDiv width={'76.8rem'} padding={'9rem 0 7rem'} margin={'0 auto'}>
       {/* 카테고리 선택 영역 */}
       <SelectingCategoryArea />
       {/* 정렬 기준 버튼 */}
       <OrderingButton onClick={onClickOpenOrderingModal} />
       {/* 코스 검색 결괏값 */}
       <S.SearchedCourseContainer>
-        {COURSES && COURSES.map((item) => <Course key={item.id} item={item} />)}
+        {courses &&
+          courses.map((course) => <Course key={course.id} course={course} />)}
       </S.SearchedCourseContainer>
       <ToTopBtn />
     </UtilDiv>

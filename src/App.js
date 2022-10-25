@@ -80,6 +80,7 @@ function App() {
             <Route path="detail-address" element={<InputDetailAddress />} />
             <Route path="sign-up" element={<SignUp />} />
             <Route path="edit-user" element={<EditUser />} />
+            <Route path="edit-user-email" element={<InputEmail />} />
           </>
           {/* )} */}
           {/* {token && isLoggedIn && ( */}

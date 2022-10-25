@@ -8,47 +8,51 @@ import { FONT_SIZE_LIST as fs } from '../../../../style';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 
-function Course({ item }) {
+function Course({ course }) {
   return (
     <S.StyledCourse>
       {/* 코스 이미지 */}
-      <S.CourseFeaturedImage src={item.courseImageUrl} alt={item.title} />
+      <S.CourseFeaturedImage
+        src={course.readPlaceImgResponseList[0].placeImgUrl}
+        alt={course.courseTitle}
+      />
       {/* 코스 제목, 평점 */}
       <S.CourseContentWrap justifyContent={'space-between'}>
-        <S.CourseTitle>제목</S.CourseTitle>
-        <S.CourseRate>⭐ {item.rate}</S.CourseRate>
+        <S.CourseTitle>{course.courseTitle}</S.CourseTitle>
+        {/* <S.CourseRate>⭐ {course.rate}</S.CourseRate> */}
       </S.CourseContentWrap>
       {/* 코스 카테고리 */}
       <S.CourseContentWrap>
-        {item.categories.map((category) => (
-          <S.CourseTag key={category.id}>{category.name}</S.CourseTag>
-        ))}
+        <S.CourseTag>
+          {course.categoryLists[0].locationCategoryName}
+        </S.CourseTag>
+        <S.CourseTag>{course.categoryLists[0].themeCategoryName}</S.CourseTag>
       </S.CourseContentWrap>
       {/* 코스 해시태그 */}
       <S.CourseContentWrap>
-        {item.hashTags.map((hashTag) => (
-          <S.CourseTag key={hashTag.id}>{hashTag.name}</S.CourseTag>
+        {course.hashtagList.map((hashTag) => (
+          <S.CourseTag key={hashTag.id}>{hashTag.keyword}</S.CourseTag>
         ))}
       </S.CourseContentWrap>
       {/* 코스 작성자, 작성일 */}
       <S.CourseContentWrap justifyContent={'space-between'}>
         <S.CourseAuthorWrap>
           <SmallProfilePic
-            src={item.author.profilPictureUrl}
-            alt={item.author.nickname}
+          // src={course.author.profilPictureUrl}
+          // alt={course.author.nickname}
           />
           <S.CourseAuthorNickname>
-            {item.author.nickname}
+            {/* {course.author.nickname} */}
           </S.CourseAuthorNickname>
         </S.CourseAuthorWrap>
-        <S.CourseCreatedDate>{item.createdDate}</S.CourseCreatedDate>
+        {/* <S.CourseCreatedDate>{course.createdDate}</S.CourseCreatedDate> */}
       </S.CourseContentWrap>
       {/* 코스 순서 */}
       <S.CourseOrderWrap>
-        {item.courseOrder.map((order) => (
-          <div key={order.id}>
-            <S.CourseName>{order.name}</S.CourseName>
-            {order.id !== item.courseOrder.length && (
+        {course.readPlaceDetailResponseList.map((item) => (
+          <div key={item.id}>
+            <S.CourseName>{item.placeName}</S.CourseName>
+            {item.id !== course.readPlaceDetailResponseList.length && (
               <AiIcons.AiOutlineArrowRight style={{ fontSize: `${fs.s}` }} />
             )}
           </div>
