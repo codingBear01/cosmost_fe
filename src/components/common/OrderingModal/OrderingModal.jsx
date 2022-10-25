@@ -2,14 +2,17 @@
 import React, { useEffect } from 'react';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { isOrderingModalOpenedAtom } from '../../../store';
+import { isOrderingModalOpenedAtom, pathnameAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 
-function OrderingModal({ path }) {
+function OrderingModal() {
   /* States */
+  const [pathname] = useRecoilState(pathnameAtom);
+  const path = pathname;
+
   /* 정렬 기준 Modal Open 여부 recoilState */
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
@@ -23,7 +26,7 @@ function OrderingModal({ path }) {
 
   /* Variables */
   /* 접속한 페이지가 코스 상세인지 아닌지 판별하는 데 쓰이는 변수 */
-  const pathIsCourseDetail = path.includes('detail');
+  const isPathCourseDetail = path.includes('detail');
 
   /* Hooks */
   /* 모달 열렸을 때 바깥 영역 스크롤 방지하는 함수 */
@@ -46,14 +49,14 @@ function OrderingModal({ path }) {
           <span>정렬</span>
         </S.OrderingModalHeader>
         <S.OrderingList>
-          {pathIsCourseDetail && (
+          {isPathCourseDetail && (
             <>
               <S.OrderingItem>평점 높은 순</S.OrderingItem>
               <S.OrderingItem>좋아요 많은 순</S.OrderingItem>
               <S.OrderingItem>최신순</S.OrderingItem>
             </>
           )}
-          {!pathIsCourseDetail && (
+          {!isPathCourseDetail && (
             <>
               <S.OrderingItem>전체</S.OrderingItem>
               <S.OrderingItem>거리 가까운 순</S.OrderingItem>

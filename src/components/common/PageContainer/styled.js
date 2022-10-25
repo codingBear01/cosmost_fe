@@ -1,17 +1,31 @@
 /* libraries */
 import styled from 'styled-components';
 /* static data */
-import { COLOR_LIST as color } from '../../../style';
+import {
+  COLOR_LIST as color,
+  FONT_SIZE_LIST as fs,
+  GAP_LIST as gap,
+} from '../../../style';
+
+export const UtilPageContainerHeader = styled.header`
+  padding: ${gap.l} ${gap.xl};
+  font-size: 20px;
+  color: ${color.white};
+
+  svg {
+    cursor: pointer;
+  }
+`;
 
 export const StyledUtilPageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 76.8rem;
+  width: 36rem;
   height: 100%;
   margin: 0 auto;
-  padding: 3rem;
+  padding: 3rem 0;
   color: ${color.white};
 
   svg {

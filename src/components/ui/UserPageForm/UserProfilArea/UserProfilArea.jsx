@@ -1,13 +1,40 @@
 /* libraries */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 /* components */
 import * as S from './styled';
 import { Button, ProfilePic } from '../../../';
 /* static data */
 import { COLOR_LIST as color } from '../../../../style';
 
-function UserProfilArea() {
+function UserProfilArea({ loginToken }) {
+  /* States */
+  const [user, setUser] = useState([]);
+
+  /* APIs */
+  /* 로그인한 User의 정보를 get하는 핸들러 */
+  const getUser = () => {
+    const url = 'http://10.10.10.164:9001/v1/auths';
+    const config = {
+      headers: {
+        Authorization: loginToken,
+      },
+      timeout: 3000,
+    };
+
+    axios
+      .get(url, config)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((error) => new Error(error));
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <S.ProfileWrap>
       {/* 프로필 사진 */}
@@ -18,7 +45,7 @@ function UserProfilArea() {
           width={'60px'}
           height={'60px'}
         />
-        <span>닉네임</span>
+        <span>{user.nickname}</span>
       </S.ProfilePicWrap>
       {/* 유저 정보 */}
       <S.ProfileUtilWrap>

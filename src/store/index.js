@@ -9,6 +9,7 @@ export {
   isReportFormOpenedAtom,
   isOrderingModalOpenedAtom,
   loginStateAtom,
+  pathnameAtom,
 } from "./recoilStates";
 
 /* temporary array */

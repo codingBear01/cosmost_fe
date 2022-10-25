@@ -47,24 +47,23 @@ function LoginForm() {
 
     if (!checkIdAndPassword()) return;
 
-    const loginApiUrl = `${process.env.REACT_APP_AUTH_IP}/v1/signin`;
-    const idAndPassword = {
+    const url = `${process.env.REACT_APP_AUTH_IP}/v1/signin`;
+    const body = {
       loginId: idRef.current.value,
       loginPwd: passwordRef.current.value,
     };
+    const config = { timeout: 3000 };
 
     axios
-      .put(loginApiUrl, idAndPassword)
+      .put(url, body, config)
       .then((response) => {
         localStorage.setItem('token', response.data);
         setIsLoggedIn(true);
         navigate('/');
-        toast.success('로그인에 성공하였습니다.');
+        toast.success('로그인에 성공했습니다.');
       })
       .catch((e) => {
-        toast.error(
-          '로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요.'
-        );
+        toast.error('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');
       });
   };
 

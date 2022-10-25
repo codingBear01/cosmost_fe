@@ -1,14 +1,14 @@
 /* libraries */
 import React, { useState, useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 /* components */
 import {
   Button,
   Icon,
   Input,
   NextBtn,
-  UtilForm,
+  UtilDiv,
   UtilInputWrap,
   UtilTitle,
 } from '../..';
@@ -19,51 +19,110 @@ import * as BsIcons from 'react-icons/bs';
 import { COLOR_LIST as color } from '../../../style';
 
 function EmailValidForm() {
+  /* States */
   const [email, setEmail] = useState(null);
+  const [isCertificationNumberSent, setIsCertificationNumberSent] =
+    useState(false);
+  const [isCertificationNumberValidated, setIsCertificationNumberValidated] =
+    useState(false);
 
+  /* Refs */
   const emailRef = useRef();
   const certificationNumberRef = useRef();
 
   /* 입력된 이메일의 유효성을 검증하는 함수 */
-  const validateEmail = () => {
+  const validateEmailByRegExp = (e) => {
+    e.preventDefault();
+
     const regExpEmail = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
 
-    if (!emailRef.current.value || !regExpEmail.test(emailRef.current.value)) {
+    if (!regExpEmail.test(emailRef.current.value)) {
+      toast.error('이메일을 올바르게 입력해주세요.');
       return false;
     }
     return true;
   };
 
-  /* 인증 번호 발송 버튼 클릭시 호출할 핸들러. 입력된 이메일의 유효성을 검증한 후 이메일 정보를 백엔드로 전송한다.*/
-  const onClickCheckInputAndRequestCertificationNumber = (e, type) => {
-    // 이메일 유효성 검증 및 입력된 이메일로 인증번호 전송
-    if (!emailRef.current.value && !certificationNumberRef.current.value) {
-      e.preventDefault();
-      toast.error('입력값을 확인해주세요.');
-      return;
-    }
-    if (!validateEmail()) {
-      e.preventDefault();
-      toast.error('이메일을 올바르게 입력해주세요.');
-      return;
-    }
-    if (validateEmail() && type === 'email') {
-      e.preventDefault();
-      setEmail(emailRef.current.value);
-      toast.success(`${emailRef.current.value}로 인증번호를 발송했습니다.`);
-    }
+  const checkInput = (e, type) => {
     if (
-      !certificationNumberRef.current.value &&
-      type === 'certificationNumber'
+      (type === 'email' && !emailRef.current.value) ||
+      (type === 'next' && !emailRef.current.value)
+    ) {
+      e.preventDefault();
+      toast.error('이메일을 입력해주세요.');
+      return false;
+    }
+
+    if (
+      (type === 'number' && !certificationNumberRef.current.value) ||
+      (type === 'next' && !certificationNumberRef.current.value)
     ) {
       e.preventDefault();
       toast.error('인증번호를 입력해주세요.');
-      return;
+      return false;
     }
+
+    setEmail(emailRef.current.value);
+
+    return true;
+  };
+
+  /* 인증번호 발송 및 인증번호 확인 버튼을 클릭했는지 확인하는 핸들러 */
+  const checkIsCertificationNumberButtonClicked = (e) => {
+    if (!isCertificationNumberSent) {
+      e.preventDefault();
+      toast.error('인증번호 발송 여부를 확인해주세요.');
+      return false;
+    }
+    if (!isCertificationNumberValidated) {
+      e.preventDefault();
+      toast.error('인증번호 일치 여부를 확인해주세요.');
+      return false;
+    }
+    return true;
+  };
+
+  /* 인증번호 발송하는 핸들러 */
+  const onClickSendCertificationNumber = (e) => {
+    e.preventDefault();
+
+    if (!checkInput(e, 'email')) return;
+    if (!validateEmailByRegExp(e)) return;
+
+    const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/email/confirm/${emailRef.current.value}`;
+    const config = { timeout: 3000 };
+
+    axios
+      .get(url, config)
+      .then((response) => {
+        toast.success(
+          `${emailRef.current.value}로 인증번호를 발송했습니다. 이메일을 확인해주세요.`
+        );
+        setIsCertificationNumberSent(true);
+      })
+      .catch((error) => {
+        toast.error('인증번호 발송에 실패했습니다.');
+        new Error(error);
+      });
+  };
+
+  /* 인증번호 확인하는 핸들러 */
+  const onClickCompareCertificationNumber = (e) => {
+    e.preventDefault();
+
+    if (!checkInput(e, 'number')) return;
+
+    setIsCertificationNumberValidated(true);
+  };
+
+  /* 다음 페이지로 이동하는 핸들러. 입력값의 유효성을 검증하고 인증번호 발송 및 확인 버튼 클릭 여부를 확인한 후 이상이 없으면 주소 입력 페이지로 이동한다. */
+  const onClickTransferAddressForm = (e) => {
+    if (!checkInput(e, 'next')) return;
+    if (!checkIsCertificationNumberButtonClicked(e)) return;
   };
 
   return (
-    <UtilForm padding={'15.4rem 10rem'}>
+    <UtilDiv padding={'15.4rem 10rem'}>
       <UtilTitle>이메일 인증을 해주세요.</UtilTitle>
       <UtilInputWrap>
         <Icon>
@@ -85,9 +144,7 @@ function EmailValidForm() {
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
-          onClick={(e) =>
-            onClickCheckInputAndRequestCertificationNumber(e, 'email')
-          }
+          onClick={onClickSendCertificationNumber}
         >
           인증번호 발송
         </Button>
@@ -101,21 +158,27 @@ function EmailValidForm() {
           type="text"
           name="userCertificationNumber"
           placeholder="인증번호"
-          width={'305px'}
+          width={'205px'}
           height={'40px'}
           margin={'0 10px'}
         />
+        <Button
+          type="submit"
+          width={'100px'}
+          height={'40px'}
+          color={color.white}
+          bgColor={color.darkBlue}
+          hoveredBgColor={color.navy}
+          onClick={onClickCompareCertificationNumber}
+        >
+          인증문자 확인
+        </Button>
       </UtilInputWrap>
       {/* 다음으로 버튼 */}
       <NextBtn
         to={'/address'}
         state={{ email: email }}
-        onClick={(e) =>
-          onClickCheckInputAndRequestCertificationNumber(
-            e,
-            'certificationNumber'
-          )
-        }
+        onClick={onClickTransferAddressForm}
       />
       <ToastContainer
         position="top-center"
@@ -127,7 +190,7 @@ function EmailValidForm() {
         pauseOnHover={false}
         theme="light"
       />
-    </UtilForm>
+    </UtilDiv>
   );
 }
 

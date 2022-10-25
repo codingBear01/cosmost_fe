@@ -1,9 +1,16 @@
 /* libraries */
 import React, { useState, useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+/* custom functions */
+import { addNaverMapMarker } from "../../../store/function";
 /* recoil */
 import { useRecoilState } from "recoil";
-import { createNaverMap, isOrderingModalOpenedAtom } from "../../../store";
+import {
+  createNaverMap,
+  isOrderingModalOpenedAtom,
+  loginStateAtom,
+} from "../../../store";
 /* components */
 import * as S from "./styled";
 import {
@@ -40,6 +47,8 @@ function CourseDetailForm() {
     useState(null);
   const [isClickedCourseReviewChanged, setIsClickedCourseReviewChanged] =
     useState(false);
+  const [isLoggedIn] = useRecoilState(loginStateAtom);
+  const loginToken = localStorage.getItem("token");
 
   /* Handlers */
   const onClickOpenOrderingModal = () => {
