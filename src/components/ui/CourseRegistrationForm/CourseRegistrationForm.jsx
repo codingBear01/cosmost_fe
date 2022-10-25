@@ -270,24 +270,6 @@ function CourseRegistrationForm() {
      naverMapEnable이 활성화되면 네이버 지도를 생성한다. */
   useEffect(() => {
     if (naverMapState.naverMapEnable) {
-      const { naver } = window;
-      const naverMapOptions = {
-        center: new naver.maps.LatLng(35.179816, 129.0750223),
-        zoom: 10,
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-          style: naver.maps.MapTypeControlStyle.BUTTON,
-          position: naver.maps.Position.TOP_LEFT,
-        },
-        zoomControl: true,
-        zoomControlOptions: {
-          style: naver.maps.ZoomControlStyle.SMALL,
-          position: naver.maps.Position.TOP_RIGHT,
-        },
-        scaleControl: false,
-        logoControl: false,
-        mapDataControl: false,
-      };
       const map = createNaverMap();
       SetNaverMapState({ ...naverMapState, naverMapHandle: map });
       document.querySelector('body').style.overflow = 'hidden';
@@ -485,7 +467,6 @@ function CourseRegistrationForm() {
   /* 지정한 쿼리와 지도, 지도에 등록된 마크를 입력받아 쿼리를 검색한 결과를 지도에 찍어주는 함수*/
   const NaverMapSearch = (map, query, mapMarker) => {
     //map copy 하기
-    console.log('mapMarker', mapMarker);
     let mapMarkerCopy = Array.from(mapMarker);
     const { naver } = window;
     const URL = '/v1/search/local.json';
@@ -573,8 +554,7 @@ function CourseRegistrationForm() {
         SetNaverMapState({ ...naverMapState, naverMapMarker: mapMarkerCopy });
       })
       .catch((error) => {
-        console.log(error);
-        alert(
+        toast.error(
           '네이버 검색 API와의 통신이 실패했습니다. 관리자에게 문의해주세요'
         );
       });
@@ -622,7 +602,7 @@ function CourseRegistrationForm() {
     if (registeredCourseImgState.imgSrc4 === 'none') {
       courseImgInputRef.current.click();
     } else {
-      alert('모든 코스 이미지가 등록되었습니다.');
+      toast.error('코스 이미지는 5장까지만 추가 가능합니다.');
     }
   };
 
@@ -752,7 +732,7 @@ function CourseRegistrationForm() {
   const onClickAddHashTagButton = (e) => {
     e.preventDefault();
     if (hashTagAdd.inputHashTag === '') {
-      alert('빈 값은 등록할 수 없습니다.');
+      toast.error('빈 값은 등록할 수 없습니다.');
       return;
     }
     const tempAddHashTags = Array.from(hashTagAdd.addHashTags);
@@ -764,7 +744,7 @@ function CourseRegistrationForm() {
     });
 
     if (result) {
-      alert('해시태그를 전부 등록했습니다.');
+      toast.error('해시태그는 5개까지만 추가 가능합니다.');
       return;
     }
 

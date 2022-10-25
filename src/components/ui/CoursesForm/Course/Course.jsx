@@ -45,7 +45,7 @@ function Course({ course }) {
             {/* {course.author.nickname} */}
           </S.CourseAuthorNickname>
         </S.CourseAuthorWrap>
-        {/* <S.CourseCreatedDate>{course.createdDate}</S.CourseCreatedDate> */}
+        <S.CourseCreatedDate>{course.createAt}</S.CourseCreatedDate>
       </S.CourseContentWrap>
       {/* 코스 순서 */}
       <S.CourseOrderWrap>

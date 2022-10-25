@@ -5,7 +5,7 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   let returnArr = [];
   const mimeTypeReg = /data:(.*);/;
   const Base64DataReg = /,(.*)/;
-  if (imgSrc !== "none") {
+  if (imgSrc !== 'none') {
     const itemMimeType = imgSrc.match(mimeTypeReg)
       ? imgSrc.match(mimeTypeReg)[1]
       : null;
@@ -37,7 +37,7 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   }
 */
 const createNaverMap = (
-  elementId = "map",
+  elementId = 'map',
   defaultCoordinate = {
     latitude: 35.179816,
     longitude: 129.0750223,
@@ -50,6 +50,19 @@ const createNaverMap = (
       defaultCoordinate.longitude
     ),
     zoom: 10,
+    mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: naver.maps.MapTypeControlStyle.BUTTON,
+      position: naver.maps.Position.TOP_LEFT,
+    },
+    zoomControl: true,
+    zoomControlOptions: {
+      style: naver.maps.ZoomControlStyle.SMALL,
+      position: naver.maps.Position.TOP_RIGHT,
+    },
+    scaleControl: false,
+    logoControl: false,
+    mapDataControl: false,
   });
   return map;
 };
