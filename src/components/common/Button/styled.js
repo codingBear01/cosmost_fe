@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { BORDER_RADIUS_LIST as br } from './../../../style/';
 
 export const StyledButton = styled.button`
+  align-self: ${({ alignSelf }) => alignSelf};
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   margin: ${({ margin }) => margin};

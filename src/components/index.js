@@ -38,6 +38,7 @@ export {
   CoursesForm,
   SignUpForm,
   UserPageForm,
+  WithdrawUserForm,
 } from './ui/';
 
 /* pages */
@@ -45,7 +46,7 @@ export {
   CourseDetail,
   CourseRegistration,
   Courses,
-  EditUser,
+  EditUserMenu,
   ErrorPage,
   Follows,
   Histories,
@@ -57,4 +58,5 @@ export {
   NotFoundPage,
   SignUp,
   User,
+  WithdrawUser,
 } from './pages/';

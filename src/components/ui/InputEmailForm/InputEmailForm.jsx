@@ -35,6 +35,7 @@ function InputEmailForm() {
   const emailRef = useRef();
   const certificationNumberRef = useRef();
 
+  /* Handlers */
   /* 입력된 이메일의 유효성을 검증하는 함수 */
   const validateEmailByRegExp = (e) => {
     e.preventDefault();
@@ -48,6 +49,7 @@ function InputEmailForm() {
     return true;
   };
 
+  /* 입력값 유효성 검증하는 핸들러 */
   const checkInput = (e, type) => {
     if (
       (type === 'email' && !emailRef.current.value) ||
@@ -87,7 +89,23 @@ function InputEmailForm() {
     return true;
   };
 
-  /* 인증번호 발송하는 핸들러 */
+  /* 인증번호 확인하는 핸들러 */
+  const onClickCompareCertificationNumber = (e) => {
+    e.preventDefault();
+
+    if (!checkInput(e, 'number')) return;
+
+    setIsCertificationNumberValidated(true);
+  };
+
+  /* 다음 페이지로 이동하는 핸들러. 입력값의 유효성을 검증하고 인증번호 발송 및 확인 버튼 클릭 여부를 확인한 후 이상이 없으면 주소 입력 페이지로 이동한다. */
+  const onClickTransferAddressForm = (e) => {
+    if (!checkInput(e, 'next')) return;
+    if (!checkIsCertificationNumberButtonClicked(e)) return;
+  };
+
+  /* APIs */
+  /* 인증번호 발송 api */
   const onClickSendCertificationNumber = (e) => {
     e.preventDefault();
 
@@ -111,19 +129,9 @@ function InputEmailForm() {
       });
   };
 
-  /* 인증번호 확인하는 핸들러 */
-  const onClickCompareCertificationNumber = (e) => {
-    e.preventDefault();
-
-    if (!checkInput(e, 'number')) return;
-
-    setIsCertificationNumberValidated(true);
-  };
-
-  /* 다음 페이지로 이동하는 핸들러. 입력값의 유효성을 검증하고 인증번호 발송 및 확인 버튼 클릭 여부를 확인한 후 이상이 없으면 주소 입력 페이지로 이동한다. */
-  const onClickTransferAddressForm = (e) => {
-    if (!checkInput(e, 'next')) return;
-    if (!checkIsCertificationNumberButtonClicked(e)) return;
+  /* 이메일 변경 api */
+  const onClickUpdateEmail = () => {
+    console.log('변경 완료!');
   };
 
   return (
@@ -180,11 +188,27 @@ function InputEmailForm() {
         </Button>
       </UtilInputWrap>
       {/* 다음으로 버튼 */}
-      <NextBtn
-        to={'/address'}
-        state={{ email: email }}
-        onClick={onClickTransferAddressForm}
-      />
+      {isEmailValidationPage && (
+        <NextBtn
+          to={'/address'}
+          state={{ email: email }}
+          onClick={onClickTransferAddressForm}
+        />
+      )}
+      {/* 수정 버튼 */}
+      {!isEmailValidationPage && (
+        <Button
+          type="submit"
+          width={'100%'}
+          height={'40px'}
+          color={color.white}
+          bgColor={color.darkBlue}
+          hoveredBgColor={color.navy}
+          onClick={onClickUpdateEmail}
+        >
+          수정
+        </Button>
+      )}
       <ToastContainer
         position="top-center"
         autoClose={2000}

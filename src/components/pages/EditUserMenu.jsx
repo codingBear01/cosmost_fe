@@ -3,8 +3,8 @@ import React from 'react';
 /* components */
 import { MenuListForm } from '..';
 
-function EditUser() {
+function EditUserMenu() {
   return <MenuListForm />;
 }
 
-export default EditUser;
+export default EditUserMenu;

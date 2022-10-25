@@ -34,19 +34,25 @@ function MenuListForm({ onClickOpenReportForm }) {
   if (isEditUserPage) {
     return (
       <S.MenuList>
-        <Link to="/course-registration">
+        <Link to="/edit-user-email">
           <S.MenuItem>
             <AiIcons.AiOutlineMail />
             <span>이메일 변경</span>
           </S.MenuItem>
+        </Link>
+        <Link to="/edit-user-address">
           <S.MenuItem>
             <AiIcons.AiOutlineHome />
             <span>주소 변경</span>
           </S.MenuItem>
+        </Link>
+        <Link to="/edit-user">
           <S.MenuItem>
             <RiIcons.RiUserSettingsLine />
             <span>회원정보 변경</span>
           </S.MenuItem>
+        </Link>
+        <Link to="/withdraw-user">
           <S.MenuItem style={{ fontSize: `${fs.m}` }}>
             <TbIcons.TbUserOff />
             <span>회원 탈퇴</span>

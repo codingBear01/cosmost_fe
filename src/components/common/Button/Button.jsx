@@ -3,6 +3,7 @@ import * as S from './styled';
 
 function Button({
   type,
+  alignSelf,
   width,
   height,
   margin,
@@ -16,6 +17,7 @@ function Button({
   return (
     <S.StyledButton
       type={type}
+      alignSelf={alignSelf}
       width={width}
       height={height}
       margin={margin}

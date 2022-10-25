@@ -15,7 +15,7 @@ function UserProfilArea({ token }) {
   /* APIs */
   /* 로그인한 User의 정보를 get하는 핸들러 */
   const getUser = () => {
-    const url = 'http://10.10.10.164:9001/v1/auths';
+    const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
     const config = {
       headers: {
         Authorization: token,
@@ -63,7 +63,7 @@ function UserProfilArea({ token }) {
             <span>100</span>
           </Link>
         </S.UserInfoWrap>
-        <Link to="/edit-user">
+        <Link to="/edit-user-menu">
           <Button
             type="button"
             width={'220px'}

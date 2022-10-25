@@ -1,7 +1,7 @@
 export { default as CourseDetail } from './CourseDetail';
 export { default as CourseRegistration } from './CourseRegistration';
 export { default as Courses } from './Courses';
-export { default as EditUser } from './EditUser';
+export { default as EditUserMenu } from './EditUserMenu';
 export { default as ErrorPage } from './ErrorPage';
 export { default as Follows } from './Follows';
 export { default as Histories } from './Histories';
@@ -13,3 +13,4 @@ export { default as Main } from './Main';
 export { default as NotFoundPage } from './NotFoundPage';
 export { default as SignUp } from './SignUp';
 export { default as User } from './User';
+export { default as WithdrawUser } from './WithdrawUser';

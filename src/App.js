@@ -13,7 +13,7 @@ import {
   CourseDetail,
   CourseRegistration,
   Courses,
-  EditUser,
+  EditUserMenu,
   ErrorPage,
   Follows,
   Histories,
@@ -25,6 +25,7 @@ import {
   NotFoundPage,
   SignUp,
   User,
+  WithdrawUser,
 } from './components';
 /* router */
 import { Routes, Route, Outlet } from 'react-router-dom';
@@ -79,8 +80,10 @@ function App() {
             <Route path="address" element={<InputAddress />} />
             <Route path="detail-address" element={<InputDetailAddress />} />
             <Route path="sign-up" element={<SignUp />} />
-            <Route path="edit-user" element={<EditUser />} />
+            <Route path="edit-user-menu" element={<EditUserMenu />} />
             <Route path="edit-user-email" element={<InputEmail />} />
+            <Route path="edit-user-address" element={<InputAddress />} />
+            <Route path="withdraw-user" element={<WithdrawUser />} />
           </>
           {/* )} */}
           {/* {token && isLoggedIn && ( */}

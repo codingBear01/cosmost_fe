@@ -10,3 +10,4 @@ export { MainSection } from './MainSection/';
 export { CoursesForm } from './CoursesForm';
 export { SignUpForm } from './SignUpForm/';
 export { UserPageForm } from './UserPageForm/';
+export { WithdrawUserForm } from './WithdrawUserForm/';
