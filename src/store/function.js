@@ -4,7 +4,8 @@
 const base64ImgSrcToImgBinaryData = (imgSrc) => {
   let returnArr = [];
   const mimeTypeReg = /data:(.*);/;
-  const Base64DataReg = /,(.*)/;
+  const Base64DataReg = /,(.*)\)/;
+
   if (imgSrc !== "none") {
     const itemMimeType = imgSrc.match(mimeTypeReg)
       ? imgSrc.match(mimeTypeReg)[1]
@@ -12,21 +13,24 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
     const itemBase64Data = imgSrc.match(Base64DataReg)
       ? imgSrc.match(Base64DataReg)[1]
       : null;
-    const itemBinaryData = atob(itemBase64Data);
+    const itemDecodeData = atob(itemBase64Data);
 
-    let itemBinaryDataLength = itemBinaryData.length;
-    let itemUnicodeBinaryData = new Uint8Array(itemBinaryDataLength);
-    while (itemBinaryDataLength--) {
-      itemUnicodeBinaryData[itemBinaryDataLength] =
-        itemBinaryData.charCodeAt(itemBinaryDataLength);
+    // 디코딩된 문자열을 바이너리 데이터로 변환.
+    let itemDecodeDataLength = itemDecodeData.length;
+    let itemBinaryData = new Uint8Array(itemDecodeDataLength);
+    while (itemDecodeDataLength--) {
+      itemBinaryData[itemDecodeDataLength] =
+        itemDecodeData.charCodeAt(itemDecodeDataLength);
     }
 
-    returnArr.push(itemUnicodeBinaryData);
+    returnArr.push(itemBinaryData);
     returnArr.push(itemMimeType);
     return returnArr;
   }
 
-  return null;
+  returnArr.push(null);
+  returnArr.push(null);
+  return returnArr;
 };
 
 /** 네이버맵을 생성하고 생성된 네이버 맵을 반환하는 함수
@@ -98,22 +102,22 @@ const addNaverMapMarker = (map = null, markerInfo = null) => {
  *  map : object
  *  marker : object
  *  elementString : HTML 구조 문자열(Element.innerHTML 등)을 나타내는 string.
- *
+ *  style : elementString 에 적용할 style CSS 속성값이 저장된 style.
  *  반환값 : 추가설명을 나타내는 Element(object)
  * */
-const displayNaverMapMarkerInfo = (map, marker, elementString) => {
+const addNaverMapMarkerInfo = (map, marker, elementString, style) => {
   const { naver } = window;
   const infowindow = new naver.maps.InfoWindow({
     content: elementString,
+    ...style,
   });
 
-  infowindow.open(map, marker);
-
+  infowindow.close();
   return infowindow;
 };
 export {
   base64ImgSrcToImgBinaryData,
   createNaverMap,
   addNaverMapMarker,
-  displayNaverMapMarkerInfo,
+  addNaverMapMarkerInfo,
 };

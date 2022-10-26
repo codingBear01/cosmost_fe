@@ -7,7 +7,11 @@ import { CourseUtillityModal } from "../../../";
 /* icons */
 import * as GrIcons from "react-icons/gr";
 
-function CourseTitleAndDate({ courseDetail, onClickOpenDeleteModal }) {
+function CourseTitleAndDate({
+  courseDetail,
+  onClickOpenDeleteModal,
+  onClickEditCourse,
+}) {
   /* States */
   /* 코스 및 리뷰 수정, 삭제 Modal Open useState */
   const [isCourseUtilityModalOpened, setIsCourseUtilityModalOpened] =
@@ -56,6 +60,7 @@ function CourseTitleAndDate({ courseDetail, onClickOpenDeleteModal }) {
           top={"8rem"}
           right={"2rem"}
           onClickOpenDeleteModal={onClickOpenDeleteModal}
+          onClickSetClickedCourseReviewEditButton={onClickEditCourse}
           clickedElement={"course"}
         />
       )}

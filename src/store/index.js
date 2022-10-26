@@ -29,5 +29,5 @@ export {
   base64ImgSrcToImgBinaryData,
   createNaverMap,
   addNaverMapMarker,
-  displayNaverMapMarkerInfo,
+  addNaverMapMarkerInfo,
 } from "./function";

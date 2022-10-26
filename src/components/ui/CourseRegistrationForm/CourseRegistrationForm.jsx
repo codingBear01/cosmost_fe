@@ -1,6 +1,6 @@
 /* libraries */
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDrag, useDrop } from "react-dnd";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
@@ -62,9 +62,17 @@ function CourseRegistrationForm() {
     imgSrc4: "none",
   });
 
+  const location = useLocation();
+
   // 백엔드로부터 가져온 카테고리 목록를 나타내는 state
   const [categoryLocalList, setCategoryLocalList] = useState([]);
   const [categoryThemeList, setCategoryThemeList] = useState([]);
+
+  // 사용자가 선택한 카테고리 항목을 나타내는 state
+  const [selectCategory, setSelectCategory] = useState({
+    locationCategoryName: 1,
+    themeCategoryName: 1,
+  });
 
   // 네이버 지도 관련 state
   const [naverMapState, SetNaverMapState] = useState({
@@ -230,8 +238,8 @@ function CourseRegistrationForm() {
   /*백엔드와의 API 통신을 위한 함수
     코스 카테고리의 지역값을 가져오는 API */
   const getCategroyLocal = () => {
-    const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=location`;
-    const config = { timeout: 3000 };
+    const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts?filter=all&category=location`;
+    const config = { timeout: 1000 };
 
     axios
       .get(url, config)
@@ -241,13 +249,14 @@ function CourseRegistrationForm() {
       })
       .catch((e) => {
         console.log(e);
+        alert("코스 카테고리의 지역값을 가져오지 못했습니다.");
       });
   };
   /*백엔드와의 API 통신을 위한 함수
     코스 카테고리의 테마값을 가져오는 API */
   const getCategroyTheme = () => {
-    const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=theme`;
-    const config = { timeout: 3000 };
+    const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts?filter=all&category=theme`;
+    const config = { timeout: 1000 };
 
     axios
       .get(url, config)
@@ -257,15 +266,106 @@ function CourseRegistrationForm() {
       })
       .catch((e) => {
         console.log(e);
+        alert("코스 카테고리의 테마값을 가져오지 못했습니다.");
       });
   };
 
-  /* 컴포넌트 생성시 한번만 호출되는 useEffect
+  /* 현재 컴포넌트가 새로운 코스 등록이 아닌 이전에 등록된 코스 수정의 역할일 경우 호출할 함수 
+     이전에 등록했던 코스 date값을 state로 전달한다.
+  */
+  const displayBeforeEditCourseInfo = (beforeCourseInfo) => {
+    console.log("beforeCourseInfo", beforeCourseInfo);
+
+    //카테고리를 기존에 등록한 카테고리 값으로 업데이트
+    const selectLocationCategoryName =
+      beforeCourseInfo.categoryLists[0].locationCategoryName;
+    const selectThemeCategoryName =
+      beforeCourseInfo.categoryLists[0].themeCategoryName;
+    let selectLocationCategoryNumber;
+    let selectThemeCategoryNumber;
+
+    categoryLocalList.every((item, index) => {
+      if (item.locationCategoryName === selectLocationCategoryName) {
+        selectLocationCategoryNumber = item.id;
+        return false;
+      }
+      return true;
+    });
+    categoryThemeList.every((item, index) => {
+      if (item.themeCategoryName === selectThemeCategoryName) {
+        selectThemeCategoryNumber = item.id;
+        return false;
+      }
+      return true;
+    });
+    setSelectCategory({
+      locationCategoryName: selectLocationCategoryNumber,
+      themeCategoryName: selectThemeCategoryNumber,
+    });
+
+    //코스이미지를 기존에 등록한 코스 이미지로 업데이트
+    let placeImgListTemp = Object.assign({}, registeredCourseImgState);
+    beforeCourseInfo.placeImgList.map((item, index) => {
+      placeImgListTemp = {
+        ...placeImgListTemp,
+        ["imgSrc" + index]: `url(${item.placeImgUrl})`,
+      };
+    });
+    setRegisteredCourseImgState(placeImgListTemp);
+
+    //코스 설명과 코스 제목을 기존에 등록한 코스 설명으로 업데이트
+    courseDescriptonRef.current.value = beforeCourseInfo.courseComment;
+    courseTitleRef.current.value = beforeCourseInfo.courseTitle;
+
+    //해시태그를 기존에 등록한 해시 태그로 업데이트
+    let hashtagListTemp = Object.assign({}, hashTagAdd);
+    let tempAddHashTags = Array.from(hashTagAdd.addHashTags);
+
+    beforeCourseInfo.hashtagList.map((item, index) => {
+      tempAddHashTags[index] = item.keyword;
+      hashtagListTemp = {
+        ...hashtagListTemp,
+        addHashTags: tempAddHashTags,
+      };
+    });
+    setHashTagAdd(hashtagListTemp);
+
+    // 장소와 좌표, 장소 코멘트를 기존에 등록한 값으로 업데이트
+    let placeAddTemp = Object.assign({}, placeAdd);
+    let placeAddCoordinateTemp = Array.from(placeAddCoordinate);
+    let placeAddCommentTemp = Array.from(placeAddComment);
+
+    beforeCourseInfo.placeDetailList.map((item, index) => {
+      placeAddTemp = {
+        ...placeAddTemp,
+        ["choicePlace" + index]: item.placeName,
+      };
+      placeAddCoordinateTemp[index] = {
+        x: item.placeXCoordinate,
+        y: item.placeYCoordinate,
+      };
+      placeAddCommentTemp[index] = item.placeComment;
+    });
+
+    setPlaceAdd(placeAddTemp);
+    setPlaceAddCoordinate(placeAddCoordinateTemp);
+    setPlaceAddComment(placeAddCommentTemp);
+  };
+
+  /* 코스 등록을 목적으로 컴포넌트 생성시 한번만 호출되는 useEffect
      카테고리 지역 목록과 카테고리 테마 목록을 가져오는 API 함수를 호출한다. */
   useEffect(() => {
     getCategroyLocal();
     getCategroyTheme();
   }, []);
+
+  /* 코스 수정을 목적으로 컴포넌트 생성시 한번만 호출되는 useEffect
+     기존에 등록된 데이터를 이용해 화면에 표시한다.*/
+  useEffect(() => {
+    if (location.state && categoryLocalList) {
+      displayBeforeEditCourseInfo(location.state);
+    }
+  }, [categoryLocalList]);
 
   /* 등록된 코스 이미지들을 검사하여 중간에 빈 칸이 있을 경우 코스 이미지들을 왼쪽으로 당겨
      중간의 빈 칸을 없애는 코드. */
@@ -533,7 +633,6 @@ function CourseRegistrationForm() {
       })
       .then(({ data }) => {
         const items = data.items;
-
         items?.forEach((item, index) => {
           const x = item.mapx;
           const y = item.mapy;
@@ -562,31 +661,6 @@ function CourseRegistrationForm() {
             latitude: latLng.y,
             longitude: latLng.x,
             eventList,
-          });
-
-          naver.maps.Event.addListener(marker, "mouseover", function (e) {
-            const title = `${item.address} ${item.title}`.replaceAll(
-              /<[/]*b>/g,
-              ""
-            );
-            e.pointerEvent.target.title = title;
-          });
-
-          var marker = new naver.maps.Marker({
-            position: new naver.maps.LatLng(latLng.y, latLng.x),
-            map: map,
-          });
-
-          naver.maps.Event.addListener(marker, "mouseover", function (e) {
-            const title = `${item.address} ${item.title}`.replaceAll(
-              /<[/]*b>/g,
-              ""
-            );
-            e.pointerEvent.target.title = title;
-          });
-
-          naver.maps.Event.addListener(marker, "click", (e) => {
-            onClickMarker(e, item);
           });
 
           mapMarkerCopy.push(registeredMarker);
@@ -647,7 +721,7 @@ function CourseRegistrationForm() {
     }
   };
 
-  /* 사용자가 코스 이미지를 선택했을 때 호출할 핸들러
+  /* 사용자가 대화상자에서 등록할 코스 이미지를 선택했을 때 호출할 핸들러
      선택한 코스 이미지의 URL 경로를 state로 전달한다. */
   const onChangeCourseImg = (e) => {
     const FileReaderObject = new FileReader();
@@ -761,6 +835,11 @@ function CourseRegistrationForm() {
     return count + 0;
   }, 0);
 
+  // 카테고리 선택 시 호출할 핸들러
+  const onChangeSelectCategory = (e) => {
+    setSelectCategory({ ...selectCategory, [e.target.name]: e.target.value });
+  };
+
   // 해시태그 입력시 호출할 핸들러
   const onChangeHashTag = (e) => {
     setHashTagAdd({
@@ -804,7 +883,7 @@ function CourseRegistrationForm() {
 
   // 사용자가 코스 등록 시 입력한 값들의 유효성을 검증하는 핸들러
   const validateCourseRegistrationInput = (input, imgs) => {
-    if (imgs.length === 0) {
+    if (imgs[0] === null) {
       toast.error("이미지를 1개 이상 추가해주세요");
       return false;
     }
@@ -836,6 +915,8 @@ function CourseRegistrationForm() {
       toast.error("코스 설명을 작성해주세요");
       return false;
     }
+
+    return true;
   };
 
   // 사용자가 코스 등록 버튼을 클릭할 때 호출되는 핸들러
@@ -844,13 +925,13 @@ function CourseRegistrationForm() {
     const createPlaceDetailRequestList = [];
     const createHashtagRequestList = [];
     const createCategoryListRequestList = [];
-    const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts`;
+    const token = localStorage.getItem("token");
     const config = {
       headers: {
-        Authorization: "token",
+        Authorization: token,
         "Content-Type": "multipart/form-data",
       },
-      timeout: 3000,
+      timeout: 1000,
     };
 
     e.preventDefault();
@@ -875,46 +956,82 @@ function CourseRegistrationForm() {
       }
     });
 
+    //DOM을 직접 참조하여 value를 가져옴.
     createCategoryListRequestList.push({
       locationCategory: +locationCategoryRef.current.value,
       themeCategory: +themeCategoryRef.current.value,
     });
 
-    const sendData = {
-      courseTitle: courseTitleRef.current.value,
-      courseComment: courseDescriptonRef.current.value,
-      createPlaceDetailRequestList,
-      createHashtagRequestList,
-      createCategoryListRequestList,
-    };
+    let sendData;
+
+    if (location.state) {
+      sendData = {
+        courseTitle: courseTitleRef.current.value,
+        courseComment: courseDescriptonRef.current.value,
+        courseStatus: location.state.courseStatus,
+        createPlaceDetailRequestList,
+        createHashtagRequestList,
+        createCategoryListRequestList,
+      };
+    } else {
+      sendData = {
+        courseTitle: courseTitleRef.current.value,
+        courseComment: courseDescriptonRef.current.value,
+        createPlaceDetailRequestList,
+        createHashtagRequestList,
+        createCategoryListRequestList,
+      };
+    }
 
     const sendJson = JSON.stringify(sendData);
     const jsonblob = new Blob([sendJson], { type: "application/json" });
     const imageblobs = [];
 
     Object.values(registeredCourseImgState).forEach((item, index) => {
-      const [itemUnicodeBinaryData, itemMimeType] =
-        base64ImgSrcToImgBinaryData(item);
+      const [itemBinaryData, itemMimeType] = base64ImgSrcToImgBinaryData(item);
 
       imageblobs.push(
-        itemUnicodeBinaryData &&
-          new Blob([itemUnicodeBinaryData], {
+        itemBinaryData &&
+          new Blob([itemBinaryData], {
             type: itemMimeType,
           })
       );
     });
 
     formData.append("createCourseRequest", jsonblob);
+
     imageblobs.forEach((item, index) => {
-      formData.append("file", item);
+      if (item) {
+        formData.append("file", item);
+      }
     });
 
     if (!validateCourseRegistrationInput(sendData, imageblobs)) return;
 
-    axios
-      .post(url, formData, config)
-      .then((response) => {})
-      .catch((error) => new Error(error));
+    for (let key of formData.keys()) {
+      console.log(key, ":", formData.get(key));
+    }
+
+    if (location.state) {
+      console.log("sendData", sendData);
+      const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts/${location.state.id}`;
+      axios
+        .put(url, formData, config)
+        .then((response) => {
+          alert("코스가 성공적으로 수정되었습니다.");
+        })
+        .catch((error) => console.log(error));
+      return;
+    } else {
+      const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts`;
+      axios
+        .post(url, formData, config)
+        .then((response) => {
+          alert("코스가 성공적으로 등록되었습니다.");
+        })
+        .catch((error) => console.log(error));
+      return;
+    }
   };
 
   return (
@@ -1077,7 +1194,12 @@ function CourseRegistrationForm() {
       <S.AddDetailCourseInfoArea>
         <S.CourseDetailInfoTitle>카테고리 선택</S.CourseDetailInfoTitle>
         <S.CourseCategoryWrap>
-          <S.CourseCategorySelect ref={locationCategoryRef} name="local">
+          <S.CourseCategorySelect
+            ref={locationCategoryRef}
+            name="locationCategoryName"
+            value={selectCategory.locationCategoryName}
+            onChange={onChangeSelectCategory}
+          >
             {categoryLocalList.length &&
               categoryLocalList.map((item) => (
                 <option key={item.id} value={item.id}>
@@ -1085,7 +1207,12 @@ function CourseRegistrationForm() {
                 </option>
               ))}
           </S.CourseCategorySelect>
-          <S.CourseCategorySelect ref={themeCategoryRef} name="theme">
+          <S.CourseCategorySelect
+            ref={themeCategoryRef}
+            name="themeCategoryName"
+            value={selectCategory.themeCategoryName}
+            onChange={onChangeSelectCategory}
+          >
             {categoryThemeList.length &&
               categoryThemeList.map((item) => (
                 <option key={item.id} value={item.id}>
