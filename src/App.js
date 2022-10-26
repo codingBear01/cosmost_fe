@@ -20,10 +20,10 @@ import {
   InputAddress,
   InputDetailAddress,
   InputEmail,
+  InputUser,
   Login,
   Main,
   NotFoundPage,
-  SignUp,
   User,
   WithdrawalMessage,
   WithdrawUser,
@@ -80,7 +80,7 @@ function App() {
             <Route path="email-validation" element={<InputEmail />} />
             <Route path="address" element={<InputAddress />} />
             <Route path="detail-address" element={<InputDetailAddress />} />
-            <Route path="sign-up" element={<SignUp />} />
+            <Route path="sign-up" element={<InputUser />} />
           </>
           {/* )} */}
           {/* {token && isLoggedIn && ( */}
@@ -95,6 +95,7 @@ function App() {
                 <Route path="menu" element={<EditUserMenu />} />
                 <Route path="email" element={<InputEmail />} />
                 <Route path="address" element={<InputAddress />} />
+                <Route path="my-information" element={<InputUser />} />
               </Route>
               <Route path="withdrawal" element={<WithdrawUser />} />
             </Route>

@@ -31,8 +31,16 @@ export const ProfileUtilWrap = styled.div`
   width: 220px;
   height: 100%;
   margin-left: 10px;
+  padding-top: 10px;
 
   button {
+    color: ${color.white};
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     color: ${color.white};
   }
 `;
@@ -42,12 +50,4 @@ export const UserInfoWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: ${gap.s};
-
-  a {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    color: ${color.white};
-  }
 `;

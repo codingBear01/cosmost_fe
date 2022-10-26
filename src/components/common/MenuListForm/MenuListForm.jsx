@@ -9,6 +9,7 @@ import { loginStateAtom } from '../../../store';
 import * as S from './styled';
 /* static data */
 import { FONT_SIZE_LIST as fs } from '../../../style';
+import { UtilDiv } from '../..';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 import * as TbIcons from 'react-icons/tb';
@@ -19,11 +20,10 @@ import * as RiIcons from 'react-icons/ri';
 function MenuListForm({ onClickOpenReportForm }) {
   const navigate = useNavigate();
 
-  const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
-
   const path = useLocation().pathname;
   const isEditUserPage = path.includes('edit');
 
+  const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
   /* Handlers */
   const onClickLogOut = () => {
     localStorage.removeItem('token');
@@ -33,32 +33,34 @@ function MenuListForm({ onClickOpenReportForm }) {
 
   if (isEditUserPage) {
     return (
-      <S.MenuList>
-        <Link to="/user/edit/email">
-          <S.MenuItem>
-            <AiIcons.AiOutlineMail />
-            <span>이메일 변경</span>
-          </S.MenuItem>
-        </Link>
-        <Link to="/user/edit/address">
-          <S.MenuItem>
-            <AiIcons.AiOutlineHome />
-            <span>주소 변경</span>
-          </S.MenuItem>
-        </Link>
-        <Link to="/user/edit">
-          <S.MenuItem>
-            <RiIcons.RiUserSettingsLine />
-            <span>회원정보 변경</span>
-          </S.MenuItem>
-        </Link>
-        <Link to="/user/withdrawal">
-          <S.MenuItem style={{ fontSize: '16px' }}>
-            <TbIcons.TbUserOff />
-            <span>회원 탈퇴</span>
-          </S.MenuItem>
-        </Link>
-      </S.MenuList>
+      <UtilDiv>
+        <S.MenuList>
+          <Link to="/user/edit/email">
+            <S.MenuItem>
+              <AiIcons.AiOutlineMail />
+              <span>이메일 변경</span>
+            </S.MenuItem>
+          </Link>
+          <Link to="/user/edit/address">
+            <S.MenuItem>
+              <AiIcons.AiOutlineHome />
+              <span>주소 변경</span>
+            </S.MenuItem>
+          </Link>
+          <Link to="/user/edit/my-information">
+            <S.MenuItem>
+              <RiIcons.RiUserSettingsLine />
+              <span>회원정보 변경</span>
+            </S.MenuItem>
+          </Link>
+          <Link to="/user/withdrawal">
+            <S.MenuItem style={{ fontSize: '16px' }}>
+              <TbIcons.TbUserOff />
+              <span>회원 탈퇴</span>
+            </S.MenuItem>
+          </Link>
+        </S.MenuList>
+      </UtilDiv>
     );
   } else {
     return (

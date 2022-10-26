@@ -1,9 +1,8 @@
 /* libraries */
 import React, { useRef, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilForm, UtilInputWrap, UtilTitle } from '../..';
@@ -17,7 +16,11 @@ const RegExpId = /^[A-Za-z][A-Za-z0-9]{2,15}$/;
 const RegExpNickName = /^[a-zA-Z0-9]{2,16}$/;
 const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
 
-function SignUpForm({ state }) {
+function InputUserForm({ state }) {
+  const path = useLocation().pathname;
+  const isEditUserPage = path.includes('edit');
+  const token = localStorage.getItem('token');
+
   /* User가 입력한 정보를 나타내는 state */
   const [userInformation, setUserInformation] = useState({
     id: '',
@@ -158,7 +161,7 @@ function SignUpForm({ state }) {
     fileReader.readAsDataURL(e.target.files[0]);
   };
 
-  /* 아이디 및 닉네임 중 빈 값이 있는지 확인하는 핸들러 */
+  /* 아이디 혹은 닉네임 중 빈 값이 있는지 확인하는 핸들러 */
   const checkIsIdOrNicknameEmpty = (type) => {
     if (type === 'id' && emptyInputError.idEmpty) {
       toast.error('먼저 아이디를 입력해주세요.');
@@ -171,6 +174,20 @@ function SignUpForm({ state }) {
     return true;
   };
 
+  /* 아이디 및 닉네임의 중복확인 버튼 클릭 여부를 확인하는 핸들러 */
+  const checkIsDuplicationButtonClicked = () => {
+    if (!isDuplicatedIdChecked) {
+      toast.error('아이디 중복 여부를 확인해주세요.');
+      return false;
+    }
+    if (!isDuplicatedNicknameChecked) {
+      toast.error('닉네임 중복 여부를 확인해주세요.');
+      return false;
+    }
+    return true;
+  };
+
+  /* APIs */
   /* 입력된 아이디의 중복 여부를 확인하는 핸들러 */
   const checkIsDuplicatedId = (id) => {
     if (!checkIsIdOrNicknameEmpty('id')) return;
@@ -225,19 +242,6 @@ function SignUpForm({ state }) {
       });
   };
 
-  /* 아이디 및 닉네임의 중복확인 버튼을 클릭했는지 확인하는 핸들러 */
-  const checkIsDuplicationButtonClicked = () => {
-    if (!isDuplicatedIdChecked) {
-      toast.error('아이디 중복 여부를 확인해주세요.');
-      return false;
-    }
-    if (!isDuplicatedNicknameChecked) {
-      toast.error('닉네임 중복 여부를 확인해주세요.');
-      return false;
-    }
-    return true;
-  };
-
   /* 회원가입 수행하는 핸들러 */
   const onSubmitRegisterUser = (e) => {
     e.preventDefault();
@@ -253,7 +257,7 @@ function SignUpForm({ state }) {
       const [profileImgSaveUrl] = base64ImgSrcToImgBinaryData(
         uploadedProfilePicture
       );
-      const body = {
+      const signUpBody = {
         loginId: userInformation.id,
         loginPwd: userInformation.password,
         email: userInformation.email,
@@ -268,15 +272,40 @@ function SignUpForm({ state }) {
         profilePictureUrl:
           'https://mblogthumb-phinf.pstatic.net/MjAyMDAzMTNfMjM1/MDAxNTg0MDcyNjY2MTA1.SzzKs1HkYI59Yw-92phFQQqJjm0vGacEQ6YqWl674eYg.fhVBJIFxJxIBmkiOArJqg5eplcD9Cm_NkXTs1DtpOAog.JPEG.kw9k/1584072665212.jpg?type=w800',
       };
-      const config = { timeout: 3000 };
+      const updateBody = {
+        id: '97',
+        loginId: userInformation.id,
+        loginPwd: userInformation.password,
+        nickname: userInformation.nickname,
+        email: userInformation.email,
+        address: `${userInformation.address} ${userInformation.detailAddress}`,
+        role: 'USER',
+        sns: 'NO',
+        status: 'ACTIVE',
+        ageGroup: userInformation.age,
+        married: userInformation.marriage,
+        profileImgSaveUrl:
+          'https://w7.pngwing.com/pngs/237/587/png-transparent-cute-pikachu-thumbnail.png',
+        type: e.target.value,
+      };
+      const config = {
+        headers: {
+          Authorization: isEditUserPage ? token : '',
+        },
+        timeout: 3000,
+      };
 
       axios
-        .post(url, body, config)
+        .post(url, isEditUserPage ? updateBody : signUpBody, config)
         .then((response) => {
-          navigate('/login');
+          navigate(isEditUserPage ? `/user/edit/menu` : '/login');
         })
         .catch((error) => {
-          toast.error('회원가입에 실패했습니다. 관리자에게 문의하세요.');
+          toast.error(
+            isEditUserPage
+              ? '회원정보 변경에 실패했습니다. 관리자에게 문의하세요.'
+              : '회원가입에 실패했습니다. 관리자에게 문의하세요.'
+          );
         });
     } else {
       toast.warn('모든 값을 입력해주세요.');
@@ -500,20 +529,37 @@ function SignUpForm({ state }) {
         </div>
       </S.UserInfoDropDownWrap>
       {/* 회원가입 버튼 */}
-      <Button
-        type={'submit'}
-        width={'340px'}
-        height={'40px'}
-        margin={'20px 0 0 0'}
-        bgColor={color.darkBlue}
-        color={color.white}
-        hoveredBgColor={color.navy}
-        onClick={onSubmitRegisterUser}
-      >
-        회원가입
-      </Button>
+      {!isEditUserPage && (
+        <Button
+          type={'submit'}
+          width={'340px'}
+          height={'40px'}
+          margin={'20px 0 0 0'}
+          bgColor={color.darkBlue}
+          color={color.white}
+          hoveredBgColor={color.navy}
+          onClick={onSubmitRegisterUser}
+        >
+          회원가입
+        </Button>
+      )}
+      {isEditUserPage && (
+        <Button
+          type={'submit'}
+          width={'340px'}
+          height={'40px'}
+          margin={'20px 0 0 0'}
+          bgColor={color.darkBlue}
+          color={color.white}
+          hoveredBgColor={color.navy}
+          value={'회원정보 수정'}
+          onClick={onSubmitRegisterUser}
+        >
+          수정
+        </Button>
+      )}
     </UtilForm>
   );
 }
 
-export default SignUpForm;
+export default InputUserForm;

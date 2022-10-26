@@ -11,7 +11,7 @@ export const StyledUtilDiv = styled.div`
   justify-content: ${({ justifyContent }) =>
     justifyContent ? justifyContent : 'flex-start'};
   flex-direction: column;
-  width: ${({ width }) => width};
+  width: ${({ width }) => width || '360px'};
   height: ${({ height }) => (height ? height : '100%')};
   margin: ${({ margin }) => margin};
   padding: ${({ padding }) => padding};
