@@ -24,6 +24,7 @@ function MenuListForm({ onClickOpenReportForm }) {
   const isEditUserPage = path.includes('edit');
 
   const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
+
   /* Handlers */
   const onClickLogOut = () => {
     localStorage.removeItem('token');
@@ -33,34 +34,33 @@ function MenuListForm({ onClickOpenReportForm }) {
 
   if (isEditUserPage) {
     return (
-      <UtilDiv>
-        <S.MenuList>
-          <Link to="/user/edit/email">
-            <S.MenuItem>
-              <AiIcons.AiOutlineMail />
-              <span>이메일 변경</span>
-            </S.MenuItem>
-          </Link>
-          <Link to="/user/edit/address">
-            <S.MenuItem>
-              <AiIcons.AiOutlineHome />
-              <span>주소 변경</span>
-            </S.MenuItem>
-          </Link>
-          <Link to="/user/edit/my-information">
-            <S.MenuItem>
-              <RiIcons.RiUserSettingsLine />
-              <span>회원정보 변경</span>
-            </S.MenuItem>
-          </Link>
-          <Link to="/user/withdrawal">
-            <S.MenuItem style={{ fontSize: '16px' }}>
-              <TbIcons.TbUserOff />
-              <span>회원 탈퇴</span>
-            </S.MenuItem>
-          </Link>
-        </S.MenuList>
-      </UtilDiv>
+      // 사용자 정보 변경 메뉴
+      <S.MenuList>
+        <Link to="/user/edit/email">
+          <S.MenuItem>
+            <AiIcons.AiOutlineMail />
+            <span>이메일 변경</span>
+          </S.MenuItem>
+        </Link>
+        <Link to="/user/edit/address">
+          <S.MenuItem>
+            <AiIcons.AiOutlineHome />
+            <span>주소 변경</span>
+          </S.MenuItem>
+        </Link>
+        <Link to="/user/edit/my-information">
+          <S.MenuItem>
+            <RiIcons.RiUserSettingsLine />
+            <span>회원정보 변경</span>
+          </S.MenuItem>
+        </Link>
+        <Link to="/user/withdrawal">
+          <S.MenuItem style={{ fontSize: '16px' }}>
+            <TbIcons.TbUserOff />
+            <span>회원 탈퇴</span>
+          </S.MenuItem>
+        </Link>
+      </S.MenuList>
     );
   } else {
     return (

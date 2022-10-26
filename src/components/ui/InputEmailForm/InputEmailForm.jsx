@@ -135,7 +135,7 @@ function InputEmailForm() {
   };
 
   return (
-    <UtilDiv padding={'15.4rem 10rem'}>
+    <>
       <UtilTitle>이메일 인증을 해주세요.</UtilTitle>
       <UtilInputWrap>
         <Icon>
@@ -219,7 +219,7 @@ function InputEmailForm() {
         pauseOnHover={false}
         theme="light"
       />
-    </UtilDiv>
+    </>
   );
 }
 

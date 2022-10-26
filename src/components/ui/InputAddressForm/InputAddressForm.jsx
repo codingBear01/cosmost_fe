@@ -5,16 +5,10 @@ import { DaumAddressApiForm } from '../DaumAddressApiForm';
 import { UtilForm, UtilTitle } from '../..';
 
 function InputAddressForm({ state }) {
-  /* Path */
-  const path = useLocation().pathname;
-  const isDetailAddressPage = path.includes('detail');
   return (
-    <UtilForm width={'100%'} padding={'10rem 0'}>
+    <UtilForm width={'100%'}>
       <UtilTitle>위치 정보를 입력해주세요.</UtilTitle>
-      <DaumAddressApiForm
-        state={state}
-        isDetailAddressPage={isDetailAddressPage}
-      />
+      <DaumAddressApiForm state={state} />
     </UtilForm>
   );
 }

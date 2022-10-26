@@ -313,7 +313,7 @@ function InputUserForm({ state }) {
   };
 
   return (
-    <UtilForm padding={'10rem 0'} onSubmit={onSubmitRegisterUser}>
+    <UtilForm onSubmit={onSubmitRegisterUser}>
       <ToastContainer
         position="top-center"
         autoClose={1000}
@@ -347,38 +347,44 @@ function InputUserForm({ state }) {
         </div>
         <S.UserProfileWrap flexDirection={'column'}>
           <UtilInputWrap margin={'0'} flexDirection={'column'}>
-            <div>
+            <div style={{ alignSelf: 'start' }}>
               <Input
                 type="text"
                 name="id"
                 value={userInformation.id}
                 placeholder="아이디"
+                disabled={isEditUserPage}
                 width={'150px'}
                 height={'40px'}
                 margin={'0 10px'}
+                fontSize={'14px'}
                 onChange={onChangeUserInformation}
               />
-
-              <Button
-                type="button"
-                width={'80px'}
-                height={'40px'}
-                color={color.white}
-                bgColor={color.darkBlue}
-                hoveredBgColor={color.navy}
-                onClick={() => checkIsDuplicatedId(userInformation.id)}
-              >
-                중복확인
-              </Button>
+              {!isEditUserPage && (
+                <Button
+                  type="button"
+                  width={'80px'}
+                  height={'40px'}
+                  color={color.white}
+                  bgColor={color.darkBlue}
+                  hoveredBgColor={color.navy}
+                  onClick={() => checkIsDuplicatedId(userInformation.id)}
+                >
+                  중복확인
+                </Button>
+              )}
             </div>
-            <S.MessageBox>
-              {emptyInputError.idEmpty ||
-                (inputError.idError && (
-                  <S.ErrorMessage>
-                    대소문자 및 숫자로 구성된 3자리 이상 16자리 이하여야 합니다.
-                  </S.ErrorMessage>
-                ))}
-            </S.MessageBox>
+            {!isEditUserPage && (
+              <S.MessageBox>
+                {emptyInputError.idEmpty ||
+                  (inputError.idError && (
+                    <S.ErrorMessage>
+                      대소문자 및 숫자로 구성된 3자리 이상 16자리 이하여야
+                      합니다.
+                    </S.ErrorMessage>
+                  ))}
+              </S.MessageBox>
+            )}
           </UtilInputWrap>
 
           <UtilInputWrap margin={'1rem 0 0 0'} flexDirection={'column'}>
@@ -391,6 +397,7 @@ function InputUserForm({ state }) {
                 width={'150px'}
                 height={'40px'}
                 margin={'0 10px'}
+                fontSize={'14px'}
                 onChange={onChangeUserInformation}
               />
               <Button
@@ -420,36 +427,43 @@ function InputUserForm({ state }) {
       </S.UserProfileWrap>
 
       {/* 앞서 입력한 이메일, 주소, 상세주소 */}
-      <UtilInputWrap>
-        <Input
-          type="text"
-          value={userInformation.email}
-          disabled={true}
-          width={'340px'}
-          height={'40px'}
-          margin={'0 10px'}
-        />
-      </UtilInputWrap>
-      <UtilInputWrap>
-        <Input
-          type="text"
-          value={userInformation.address}
-          disabled={true}
-          width={'340px'}
-          height={'40px'}
-          margin={'0 10px'}
-        />
-      </UtilInputWrap>
-      <UtilInputWrap>
-        <Input
-          type="text"
-          value={userInformation.detailAddress}
-          disabled={true}
-          width={'340px'}
-          height={'40px'}
-          margin={'0 10px'}
-        />
-      </UtilInputWrap>
+      {!isEditUserPage && (
+        <>
+          <UtilInputWrap>
+            <Input
+              type="text"
+              value={userInformation.email}
+              disabled={true}
+              width={'340px'}
+              height={'40px'}
+              margin={'0 10px'}
+              fontSize={'14px'}
+            />
+          </UtilInputWrap>
+          <UtilInputWrap>
+            <Input
+              type="text"
+              value={userInformation.address}
+              disabled={true}
+              width={'340px'}
+              height={'40px'}
+              margin={'0 10px'}
+              fontSize={'14px'}
+            />
+          </UtilInputWrap>
+          <UtilInputWrap>
+            <Input
+              type="text"
+              value={userInformation.detailAddress}
+              disabled={true}
+              width={'340px'}
+              height={'40px'}
+              margin={'0 10px'}
+              fontSize={'14px'}
+            />
+          </UtilInputWrap>
+        </>
+      )}
 
       {/* 비밀번호 */}
       <UtilInputWrap mb={'0'}>
@@ -462,6 +476,7 @@ function InputUserForm({ state }) {
           height={'40px'}
           margin={'0 10px'}
           onChange={onChangeUserInformation}
+          fontSize={'14px'}
         />
       </UtilInputWrap>
       {emptyInputError.passwordEmpty ||
@@ -482,6 +497,7 @@ function InputUserForm({ state }) {
           height={'40px'}
           margin={'0 10px'}
           onChange={onChangeUserInformation}
+          fontSize={'14px'}
         />
       </UtilInputWrap>
       {emptyInputError.passwordConfirmEmpty ||

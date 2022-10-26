@@ -15,7 +15,10 @@ import {
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 
-function InputDetailAddressForm({ state, isDetailAddressPage }) {
+function InputDetailAddressForm({ state }) {
+  /* Path */
+  const path = useLocation().pathname;
+  const isDetailAddressPage = path.includes('detail');
   const [detailAddress, setDetailAddress] = useState('');
 
   /* Handlers */
@@ -39,7 +42,7 @@ function InputDetailAddressForm({ state, isDetailAddressPage }) {
   };
 
   return (
-    <UtilForm padding={'15.4rem 10rem'}>
+    <UtilForm>
       <UtilTitle>상세 주소를 입력해주세요.</UtilTitle>
       <UtilInputWrap>
         <Input

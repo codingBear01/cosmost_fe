@@ -74,11 +74,7 @@ function LoginForm() {
   };
 
   return (
-    <UtilForm
-      justifyContent={'center'}
-      height={'100vh'}
-      onSubmit={onSubmitLogin}
-    >
+    <UtilForm onSubmit={onSubmitLogin}>
       <ToastContainer
         position="top-center"
         autoClose={2000}
