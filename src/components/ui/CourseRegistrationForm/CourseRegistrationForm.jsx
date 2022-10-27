@@ -114,6 +114,14 @@ function CourseRegistrationForm() {
     addHashTags: Array.from(Array(5)),
   });
 
+  // 코스 수정 관련 state
+  const [deletePlaceImgRequestListState, setDeletePlaceImgRequestListState] =
+    useState([]);
+  const [createPlaceImgRequestListState, setCreatePlaceImgRequestListState] =
+    useState([]);
+  const [updatePlaceImgRequestListState, setUpdatePlaceImgRequestListState] =
+    useState([]);
+
   // 드래그 관련 state와 ref
   const [{ isDragging0 }, drag0] = useDrag(() => ({
     type: "0",
@@ -350,6 +358,9 @@ function CourseRegistrationForm() {
     setPlaceAdd(placeAddTemp);
     setPlaceAddCoordinate(placeAddCoordinateTemp);
     setPlaceAddComment(placeAddCommentTemp);
+
+    // 수정에만 사용하는 state 업데이트
+    setUpdatePlaceImgRequestListState(beforeCourseInfo.placeImgList);
   };
 
   /* 코스 등록을 목적으로 컴포넌트 생성시 한번만 호출되는 useEffect
@@ -373,6 +384,8 @@ function CourseRegistrationForm() {
     Object.values(registeredCourseImgState).every((item, index, Array) => {
       if (item === "none") {
         if (index === Array.length - 1) {
+          console.log("indexUseEffet", index);
+          console.log("registeredCourseImgState", registeredCourseImgState);
           return false;
         } else if (Array[index + 1] !== "none") {
           setRegisteredCourseImgState({
@@ -419,7 +432,7 @@ function CourseRegistrationForm() {
 
   /* 드래그 앤 드랍을 한 경우 state 값을 변경하는 함수
        targetId : 드랍된 위치 
-       SourceID : 드래그한 아이템
+       SourceID : 드래그한 아이템, 0부터 4번까지
        registeredCourseImgState : 현재 state*/
   const DropCourseImg = (targetId, SourceID, registeredCourseImgState) => {
     switch (targetId[targetId.length - 1]) {
@@ -733,6 +746,11 @@ function CourseRegistrationForm() {
             ["imgSrc" + index]: `url(${FileReaderObject.result})`,
           });
           e.target.value = "";
+          const createPlaceImgRequestListStateTemp = Array.from(
+            createPlaceImgRequestListState
+          );
+          createPlaceImgRequestListStateTemp.push({ placeImgOrder: index });
+          setCreatePlaceImgRequestListState(createPlaceImgRequestListStateTemp);
           return false;
         }
         return true;
@@ -748,6 +766,71 @@ function CourseRegistrationForm() {
       ...registeredCourseImgState,
       ["imgSrc" + index]: `none`,
     });
+
+    if (location.state) {
+      const deletePlaceImgRequestListStateTemp = Array.from(
+        deletePlaceImgRequestListState
+      );
+      const updatePlaceImgRequestListStateTemp = Array.from(
+        updatePlaceImgRequestListState
+      );
+
+      const createPlaceImgRequestListStateTemp = Array.from(
+        createPlaceImgRequestListState
+      );
+      let isDelete = false;
+
+      //삭제한 아이템이 이전 DB에 등록된 아이템인 경우 이전 DB를 나나태는 State 변경
+      updatePlaceImgRequestListState.every((item) => {
+        if (item.placeImgOrder === index) {
+          updatePlaceImgRequestListStateTemp.splice(index, 1);
+          deletePlaceImgRequestListStateTemp.push(
+            updatePlaceImgRequestListState[index].id
+          );
+          isDelete = true;
+          return false;
+        }
+        return true;
+      });
+
+      //삭제한 아이템이 새롭게 추가된 아이템인 경우 새롭게 추가된 아이템을 나타내는 State 변경
+      createPlaceImgRequestListState.every((item, index2) => {
+        if (item.placeImgOrder === index) {
+          createPlaceImgRequestListStateTemp.splice(index2, 1);
+          isDelete = true;
+          return false;
+        }
+        return true;
+      });
+
+      // 중간 아이템을 삭제했다면 아이템들 인덱스를 왼쪽으로 옮김.
+      if (isDelete) {
+        createPlaceImgRequestListStateTemp.forEach((item2, index3) => {
+          if (item2.placeImgOrder > index)
+            item2.placeImgOrder = item2.placeImgOrder - 1;
+        });
+        updatePlaceImgRequestListStateTemp.forEach((item2, index3) => {
+          if (item2.placeImgOrder > index)
+            item2.placeImgOrder = item2.placeImgOrder - 1;
+        });
+      }
+
+      console.log(
+        "deletePlaceImgRequestListStateTemp",
+        deletePlaceImgRequestListStateTemp
+      );
+      console.log(
+        "updatePlaceImgRequestListStateTemp",
+        updatePlaceImgRequestListStateTemp
+      );
+      console.log(
+        "createPlaceImgRequestListStateTemp",
+        createPlaceImgRequestListStateTemp
+      );
+      setDeletePlaceImgRequestListState(deletePlaceImgRequestListStateTemp);
+      setUpdatePlaceImgRequestListState(updatePlaceImgRequestListStateTemp);
+      setCreatePlaceImgRequestListState(createPlaceImgRequestListStateTemp);
+    }
   };
 
   /* 사용자가 장소 삭제 버튼을 클릭했을 때 호출할 핸들러
@@ -925,6 +1008,7 @@ function CourseRegistrationForm() {
     const createPlaceDetailRequestList = [];
     const createHashtagRequestList = [];
     const createCategoryListRequestList = [];
+    const createPlaceImgRequestList = [];
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -962,6 +1046,22 @@ function CourseRegistrationForm() {
       themeCategory: +themeCategoryRef.current.value,
     });
 
+    const updateCategoryListRequestList = Array.from(
+      createCategoryListRequestList
+    );
+
+    if (location.state) {
+      updateCategoryListRequestList.forEach((item, index, array) => {
+        array[index] = { ...item, id: location.state.categoryLists[index].id };
+      });
+    }
+
+    Object.values(registeredCourseImgState).forEach((item, index) => {
+      if (item !== "none") {
+        createPlaceImgRequestList.push({ placeImgOrder: index });
+      }
+    });
+
     let sendData;
 
     if (location.state) {
@@ -971,7 +1071,11 @@ function CourseRegistrationForm() {
         courseStatus: location.state.courseStatus,
         createPlaceDetailRequestList,
         createHashtagRequestList,
-        createCategoryListRequestList,
+        updateCategoryListRequestList,
+
+        createPlaceImgRequestList: createPlaceImgRequestListState,
+        deletePlaceImgRequestList: deletePlaceImgRequestListState,
+        updatePlaceImgRequestList: updatePlaceImgRequestListState,
       };
     } else {
       sendData = {
@@ -980,6 +1084,7 @@ function CourseRegistrationForm() {
         createPlaceDetailRequestList,
         createHashtagRequestList,
         createCategoryListRequestList,
+        createPlaceImgRequestList,
       };
     }
 
@@ -989,7 +1094,8 @@ function CourseRegistrationForm() {
 
     Object.values(registeredCourseImgState).forEach((item, index) => {
       const [itemBinaryData, itemMimeType] = base64ImgSrcToImgBinaryData(item);
-
+      console.log("itemBinaryData", itemBinaryData);
+      console.log("itemMimeType", itemMimeType);
       imageblobs.push(
         itemBinaryData &&
           new Blob([itemBinaryData], {
@@ -998,40 +1104,51 @@ function CourseRegistrationForm() {
       );
     });
 
-    formData.append("createCourseRequest", jsonblob);
+    if (location.state) {
+      formData.append("updateCourseRequest", jsonblob);
+    } else {
+      formData.append("createCourseRequest", jsonblob);
+    }
 
     imageblobs.forEach((item, index) => {
       if (item) {
-        formData.append("file", item);
+        if (item.type !== "null") {
+          formData.append("file", item);
+        }
       }
     });
 
+    if (formData.get("file") === null) {
+      formData.append("file", "");
+    }
+
     if (!validateCourseRegistrationInput(sendData, imageblobs)) return;
 
+    console.log("formData");
     for (let key of formData.keys()) {
       console.log(key, ":", formData.get(key));
     }
 
-    if (location.state) {
-      console.log("sendData", sendData);
-      const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts/${location.state.id}`;
-      axios
-        .put(url, formData, config)
-        .then((response) => {
-          alert("코스가 성공적으로 수정되었습니다.");
-        })
-        .catch((error) => console.log(error));
-      return;
-    } else {
-      const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts`;
-      axios
-        .post(url, formData, config)
-        .then((response) => {
-          alert("코스가 성공적으로 등록되었습니다.");
-        })
-        .catch((error) => console.log(error));
-      return;
-    }
+    console.log("sendData", sendData);
+    // if (location.state) {
+    //   const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts/${location.state.id}`;
+    //   axios
+    //     .put(url, formData, config)
+    //     .then((response) => {
+    //       alert("코스가 성공적으로 수정되었습니다.");
+    //     })
+    //     .catch((error) => console.log(error));
+    //   return;
+    // } else {
+    //   const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts`;
+    //   axios
+    //     .post(url, formData, config)
+    //     .then((response) => {
+    //       alert("코스가 성공적으로 등록되었습니다.");
+    //     })
+    //     .catch((error) => console.log(error));
+    //   return;
+    // }
   };
 
   return (

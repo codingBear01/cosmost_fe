@@ -7,6 +7,11 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   const Base64DataReg = /,(.*)\)/;
 
   if (imgSrc !== "none") {
+    // if (imgSrc.slice(4, 8) === "http") {
+    //   returnArr.push(-1);
+    //   returnArr.push(-1);
+    //   return returnArr;
+    // }
     const itemMimeType = imgSrc.match(mimeTypeReg)
       ? imgSrc.match(mimeTypeReg)[1]
       : null;
