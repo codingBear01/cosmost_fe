@@ -3,6 +3,7 @@ import * as S from './styled';
 
 function Button({
   type,
+  alignSelf,
   width,
   height,
   margin,
@@ -10,12 +11,14 @@ function Button({
   color,
   bgColor,
   hoveredBgColor,
-  children,
+  value,
   onClick,
+  children,
 }) {
   return (
     <S.StyledButton
       type={type}
+      alignSelf={alignSelf}
       width={width}
       height={height}
       margin={margin}
@@ -23,6 +26,7 @@ function Button({
       color={color}
       bgColor={bgColor}
       hoveredBgColor={hoveredBgColor}
+      value={value}
       onClick={onClick}
     >
       {children}

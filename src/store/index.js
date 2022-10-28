@@ -1,16 +1,34 @@
-/* page 이동 시 scrollY 최상단으로 만드는 custom component*/
-export { default as GoToTop } from './GoToTop';
+/* page 이동 시 scrollY 최상단으로 만드는 custom component */
+export { default as GoToTop } from "./GoToTop";
+
+/* functions */
+export { sharingByKakao } from "./sharing";
 
 /* recoil states */
-export { isLoginAtom, isReportFormOpenedAtom } from './recoilStates';
+export {
+  isReportFormOpenedAtom,
+  isOrderingModalOpenedAtom,
+  loginStateAtom,
+  pathnameAtom,
+} from "./recoilStates";
 
 /* temporary array */
 export {
-  COURSE_DETAIL,
   CATEGORIES,
+  COURSE_DETAIL,
+  COURSE_REIVEWS,
+  COURSES,
   FOLLOWS,
   MAIN_COURSES,
   RANKERS,
   REPORT_HISTORIES,
-  REVIEW_HISTORIES,
-} from './temporaryArray/';
+} from "./temporaryArray/";
+
+/* other Function */
+export {
+  base64ImgSrcToImgBinaryData,
+  createNaverMap,
+  addNaverMapMarker,
+  addNaverMapMarkerInfo,
+  printFormData,
+} from "./function";

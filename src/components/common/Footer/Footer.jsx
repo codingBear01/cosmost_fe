@@ -17,7 +17,7 @@ function Footer() {
             Back-end Repo.
           </a>
           <a
-            href="https://github.com/codingBear01/cosMost_FE"
+            href="https://github.com/CosMost-FE"
             target="_blank"
             rel="noreferrer"
           >

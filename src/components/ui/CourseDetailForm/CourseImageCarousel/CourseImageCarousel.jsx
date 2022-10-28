@@ -1,8 +1,7 @@
 /* libraries */
-import React from 'react';
+import React from "react";
 /* components */
-import * as S from './styled';
-import { COURSE_DETAIL } from './../../../../store/';
+import * as S from "./styled";
 
 const carouselSettings = {
   dots: true,
@@ -12,13 +11,18 @@ const carouselSettings = {
   slidesToScroll: 1,
 };
 
-function CourseImgCarousel({ courseData }) {
+function CourseImgCarousel({ courseDetail }) {
+  console.log("courseDetail", courseDetail);
   return (
     <S.CarouselArea>
       <S.CarouselWrap {...carouselSettings}>
-        {courseData &&
-          courseData.courseImages.map((item) => (
-            <S.CarouselImage key={item.id} src={item.imageUrl} alt={item.alt} />
+        {courseDetail &&
+          courseDetail.placeImgList.map((item) => (
+            <S.CarouselImage
+              key={item.id}
+              src={item.placeImgUrl}
+              alt={item.placeImgSaveName}
+            />
           ))}
       </S.CarouselWrap>
     </S.CarouselArea>
