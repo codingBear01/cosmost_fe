@@ -384,8 +384,6 @@ function CourseRegistrationForm() {
     Object.values(registeredCourseImgState).every((item, index, Array) => {
       if (item === "none") {
         if (index === Array.length - 1) {
-          console.log("indexUseEffet", index);
-          console.log("registeredCourseImgState", registeredCourseImgState);
           return false;
         } else if (Array[index + 1] !== "none") {
           setRegisteredCourseImgState({
@@ -430,6 +428,51 @@ function CourseRegistrationForm() {
     }
   }, [naverMapState.naverMapEnable]);
 
+  /* 드래그 앤 드랍을 한 경우 수정 관련 state 값을 변경하는 함수
+       targetId : 드랍된 위치 
+       SourceId : 드래그한 아이템, 0부터 4번까지 */
+  const DropCourseImgState = (targetId, SourceId) => {
+    const imageOrderArray = createPlaceImgRequestListState.concat(
+      updatePlaceImgRequestListState
+    );
+
+    let targetIdIndex = -1;
+    let SourceIdIndex = -1;
+
+    imageOrderArray.every((item, index) => {
+      if (item.placeImgOrder === SourceId) {
+        SourceIdIndex = index;
+        return false;
+      }
+      return true;
+    });
+
+    imageOrderArray.every((item, index) => {
+      if (item.placeImgOrder === targetId) {
+        targetIdIndex = index;
+        return false;
+      }
+      return true;
+    });
+
+    if (targetIdIndex !== -1 && SourceIdIndex !== -1) {
+      imageOrderArray[SourceIdIndex].placeImgOrder = targetId;
+      imageOrderArray[targetIdIndex].placeImgOrder = SourceId;
+    }
+
+    const createPlaceImgRequestListStateTemp = imageOrderArray.splice(
+      0,
+      createPlaceImgRequestListState.length
+    );
+    const updatePlaceImgRequestListStateTemp = imageOrderArray.splice(
+      0,
+      updatePlaceImgRequestListState.length
+    );
+
+    setCreatePlaceImgRequestListState(createPlaceImgRequestListStateTemp);
+    setUpdatePlaceImgRequestListState(updatePlaceImgRequestListStateTemp);
+  };
+
   /* 드래그 앤 드랍을 한 경우 state 값을 변경하는 함수
        targetId : 드랍된 위치 
        SourceID : 드래그한 아이템, 0부터 4번까지
@@ -445,6 +488,7 @@ function CourseRegistrationForm() {
               imgSrc0: registeredCourseImgState.imgSrc1,
               imgSrc1: registeredCourseImgState.imgSrc0,
             });
+            DropCourseImgState(0, 1);
             break;
           case "2":
             setRegisteredCourseImgState({
@@ -452,6 +496,7 @@ function CourseRegistrationForm() {
               imgSrc0: registeredCourseImgState.imgSrc2,
               imgSrc2: registeredCourseImgState.imgSrc0,
             });
+            DropCourseImgState(0, 2);
             break;
           case "3":
             setRegisteredCourseImgState({
@@ -459,6 +504,7 @@ function CourseRegistrationForm() {
               imgSrc0: registeredCourseImgState.imgSrc3,
               imgSrc3: registeredCourseImgState.imgSrc0,
             });
+            DropCourseImgState(0, 3);
             break;
           case "4":
             setRegisteredCourseImgState({
@@ -466,6 +512,7 @@ function CourseRegistrationForm() {
               imgSrc0: registeredCourseImgState.imgSrc4,
               imgSrc4: registeredCourseImgState.imgSrc0,
             });
+            DropCourseImgState(0, 4);
             break;
           default:
             break;
@@ -480,6 +527,7 @@ function CourseRegistrationForm() {
               imgSrc1: registeredCourseImgState.imgSrc0,
               imgSrc0: registeredCourseImgState.imgSrc1,
             });
+            DropCourseImgState(1, 0);
             break;
           case "2":
             setRegisteredCourseImgState({
@@ -487,6 +535,7 @@ function CourseRegistrationForm() {
               imgSrc1: registeredCourseImgState.imgSrc2,
               imgSrc2: registeredCourseImgState.imgSrc1,
             });
+            DropCourseImgState(1, 2);
             break;
           case "3":
             setRegisteredCourseImgState({
@@ -494,13 +543,16 @@ function CourseRegistrationForm() {
               imgSrc1: registeredCourseImgState.imgSrc3,
               imgSrc3: registeredCourseImgState.imgSrc1,
             });
+            DropCourseImgState(1, 3);
             break;
+
           case "4":
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc1: registeredCourseImgState.imgSrc4,
               imgSrc4: registeredCourseImgState.imgSrc1,
             });
+            DropCourseImgState(1, 4);
             break;
           default:
             break;
@@ -515,6 +567,7 @@ function CourseRegistrationForm() {
               imgSrc2: registeredCourseImgState.imgSrc0,
               imgSrc0: registeredCourseImgState.imgSrc2,
             });
+            DropCourseImgState(2, 0);
             break;
           case "1":
             setRegisteredCourseImgState({
@@ -522,6 +575,7 @@ function CourseRegistrationForm() {
               imgSrc2: registeredCourseImgState.imgSrc1,
               imgSrc1: registeredCourseImgState.imgSrc2,
             });
+            DropCourseImgState(2, 1);
             break;
           case "3":
             setRegisteredCourseImgState({
@@ -529,6 +583,7 @@ function CourseRegistrationForm() {
               imgSrc2: registeredCourseImgState.imgSrc3,
               imgSrc3: registeredCourseImgState.imgSrc2,
             });
+            DropCourseImgState(2, 3);
             break;
           case "4":
             setRegisteredCourseImgState({
@@ -536,6 +591,7 @@ function CourseRegistrationForm() {
               imgSrc2: registeredCourseImgState.imgSrc4,
               imgSrc4: registeredCourseImgState.imgSrc2,
             });
+            DropCourseImgState(2, 4);
             break;
           default:
             break;
@@ -550,6 +606,7 @@ function CourseRegistrationForm() {
               imgSrc3: registeredCourseImgState.imgSrc0,
               imgSrc0: registeredCourseImgState.imgSrc3,
             });
+            DropCourseImgState(3, 0);
             break;
           case "1":
             setRegisteredCourseImgState({
@@ -557,6 +614,7 @@ function CourseRegistrationForm() {
               imgSrc3: registeredCourseImgState.imgSrc1,
               imgSrc1: registeredCourseImgState.imgSrc3,
             });
+            DropCourseImgState(3, 1);
             break;
           case "2":
             setRegisteredCourseImgState({
@@ -564,6 +622,7 @@ function CourseRegistrationForm() {
               imgSrc3: registeredCourseImgState.imgSrc2,
               imgSrc2: registeredCourseImgState.imgSrc3,
             });
+            DropCourseImgState(3, 2);
             break;
           case "4":
             setRegisteredCourseImgState({
@@ -571,6 +630,7 @@ function CourseRegistrationForm() {
               imgSrc3: registeredCourseImgState.imgSrc4,
               imgSrc4: registeredCourseImgState.imgSrc3,
             });
+            DropCourseImgState(3, 4);
             break;
           default:
             break;
@@ -585,6 +645,7 @@ function CourseRegistrationForm() {
               imgSrc4: registeredCourseImgState.imgSrc0,
               imgSrc0: registeredCourseImgState.imgSrc4,
             });
+            DropCourseImgState(4, 0);
             break;
           case "1":
             setRegisteredCourseImgState({
@@ -592,6 +653,7 @@ function CourseRegistrationForm() {
               imgSrc4: registeredCourseImgState.imgSrc1,
               imgSrc1: registeredCourseImgState.imgSrc4,
             });
+            DropCourseImgState(4, 1);
             break;
           case "2":
             setRegisteredCourseImgState({
@@ -599,6 +661,7 @@ function CourseRegistrationForm() {
               imgSrc4: registeredCourseImgState.imgSrc2,
               imgSrc2: registeredCourseImgState.imgSrc4,
             });
+            DropCourseImgState(4, 2);
             break;
           case "3":
             setRegisteredCourseImgState({
@@ -606,6 +669,7 @@ function CourseRegistrationForm() {
               imgSrc4: registeredCourseImgState.imgSrc3,
               imgSrc3: registeredCourseImgState.imgSrc4,
             });
+            DropCourseImgState(4, 3);
             break;
           default:
             break;
@@ -1130,25 +1194,27 @@ function CourseRegistrationForm() {
     }
 
     console.log("sendData", sendData);
-    // if (location.state) {
-    //   const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts/${location.state.id}`;
-    //   axios
-    //     .put(url, formData, config)
-    //     .then((response) => {
-    //       alert("코스가 성공적으로 수정되었습니다.");
-    //     })
-    //     .catch((error) => console.log(error));
-    //   return;
-    // } else {
-    //   const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts`;
-    //   axios
-    //     .post(url, formData, config)
-    //     .then((response) => {
-    //       alert("코스가 성공적으로 등록되었습니다.");
-    //     })
-    //     .catch((error) => console.log(error));
-    //   return;
-    // }
+    if (location.state) {
+      const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts/${location.state.id}`;
+      axios
+        .put(url, formData, config)
+        .then((response) => {
+          alert("코스가 성공적으로 수정되었습니다.");
+          navigate(`/course-detail/${location.state.id}`);
+        })
+        .catch((error) => console.log(error));
+
+      return;
+    } else {
+      const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts`;
+      axios
+        .post(url, formData, config)
+        .then((response) => {
+          alert("코스가 성공적으로 등록되었습니다.");
+        })
+        .catch((error) => console.log(error));
+      return;
+    }
   };
 
   return (
