@@ -45,8 +45,9 @@ function CourseDetailForm() {
     useState(null);
   const [isClickedCourseReviewChanged, setIsClickedCourseReviewChanged] =
     useState(false);
+
+  const token = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
-  const loginToken = localStorage.getItem('token');
 
   /* Handlers */
   const onClickOpenOrderingModal = () => {

@@ -19,7 +19,7 @@ import * as BiIcons from 'react-icons/bi';
 import * as AiIcons from 'react-icons/ai';
 
 function HistoriesForm({ isReportHistoryPage }) {
-  /* ReportForm 및 ReportReply Open 여부 관련 state */
+  /* States */
   const [isReportFormOpened, setIsReportFormOpened] = useRecoilState(
     isReportFormOpenedAtom
   );
@@ -43,7 +43,7 @@ function HistoriesForm({ isReportHistoryPage }) {
     setWarningDeleteIconIndex(i);
   };
 
-  /* 일정 시간 경과 후 index를 null로 만들어 삭제 확인 아이콘을 닫는 함수 */
+  /* 일정 시간 경과 후 index를 null로 만들어 삭제 확인 아이콘을 닫는 핸들러 */
   useEffect(() => {
     if (typeof warningDeleteIconIndex === 'number') {
       const timer = setTimeout(() => {
