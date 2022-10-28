@@ -1,10 +1,10 @@
 /* libraries */
-import React from 'react';
+import React from "react";
 /* components */
-import * as S from './styled';
+import * as S from "./styled";
 /* icons */
-import * as BsIcons from 'react-icons/bs';
-import * as AiIcons from 'react-icons/ai';
+import * as BsIcons from "react-icons/bs";
+import * as AiIcons from "react-icons/ai";
 
 function CourseUtillityModal({
   top,

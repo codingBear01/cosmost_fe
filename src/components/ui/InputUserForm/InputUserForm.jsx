@@ -1,16 +1,16 @@
 /* libraries */
-import React, { useRef, useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import React, { useRef, useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 /* components */
-import * as S from './styled';
-import { Button, Input, UtilForm, UtilInputWrap, UtilTitle } from '../..';
+import * as S from "./styled";
+import { Button, Input, UtilForm, UtilInputWrap, UtilTitle } from "../..";
 /* static data */
-import { COLOR_LIST as color, GAP_LIST as gap } from '../../../style';
-import { base64ImgSrcToImgBinaryData } from '../../../store';
+import { COLOR_LIST as color, GAP_LIST as gap } from "../../../style";
+import { base64ImgSrcToImgBinaryData, printFormData } from "../../../store";
 
-const PROFILE_PIC_DEFAULT_URL = '/assets/images/ProfileDefaultImage.png';
+const PROFILE_PIC_DEFAULT_URL = "/assets/images/ProfileDefaultImage.png";
 
 const RegExpId = /^[A-Za-z][A-Za-z0-9]{2,15}$/;
 const RegExpNickName = /^[a-zA-Z0-9]{2,16}$/;
@@ -18,18 +18,18 @@ const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
 
 function InputUserForm({ state }) {
   const path = useLocation().pathname;
-  const isEditUserPage = path.includes('edit');
-  const token = localStorage.getItem('token');
+  const isEditUserPage = path.includes("edit");
+  const token = localStorage.getItem("token");
 
   /* User가 입력한 정보를 나타내는 state */
   const [userInformation, setUserInformation] = useState({
-    id: '',
-    nickname: '',
+    id: "",
+    nickname: "",
     ...state,
-    password: '',
-    passwordConfirm: '',
-    age: 'default',
-    marriage: 'default',
+    password: "",
+    passwordConfirm: "",
+    age: "default",
+    marriage: "default",
     profilePictureUrl: PROFILE_PIC_DEFAULT_URL,
   });
   /* User가 입력한 정보의 유효성 여부를 나타내는 state */
@@ -84,32 +84,32 @@ function InputUserForm({ state }) {
 
   /* 사용자가 데이터를 입력할 때 호출할 핸들러. 입력값이 조건문을 통과하면 state에 저장한다. */
   const onChangeUserInformation = (e) => {
-    if (e.target.name === 'id') {
-      if (e.target.value === '') {
+    if (e.target.name === "id") {
+      if (e.target.value === "") {
         setEmptyInputError({ ...emptyInputError, idEmpty: true });
       } else setEmptyInputError({ ...emptyInputError, idEmpty: false });
 
       if (RegExpId.test(e.target.value) === false) {
         setInputError({ ...inputError, idError: true });
       } else setInputError({ ...inputError, idError: false });
-    } else if (e.target.name === 'nickname') {
-      if (e.target.value === '') {
+    } else if (e.target.name === "nickname") {
+      if (e.target.value === "") {
         setEmptyInputError({ ...emptyInputError, nicknameEmpty: true });
       } else setEmptyInputError({ ...emptyInputError, nicknameEmpty: false });
 
       if (RegExpNickName.test(e.target.value) === false) {
         setInputError({ ...inputError, nicknameError: true });
       } else setInputError({ ...inputError, nicknameError: false });
-    } else if (e.target.name === 'password') {
-      if (e.target.value === '') {
+    } else if (e.target.name === "password") {
+      if (e.target.value === "") {
         setEmptyInputError({ ...emptyInputError, passwordEmpty: true });
       } else setEmptyInputError({ ...emptyInputError, passwordEmpty: false });
 
       if (RegExpPassword.test(e.target.value) === false) {
         setInputError({ ...inputError, passwordError: true });
       } else setInputError({ ...inputError, passwordError: false });
-    } else if (e.target.name === 'passwordConfirm') {
-      if (e.target.value === '') {
+    } else if (e.target.name === "passwordConfirm") {
+      if (e.target.value === "") {
         setEmptyInputError({ ...emptyInputError, passwordConfirmEmpty: true });
       } else
         setEmptyInputError({ ...emptyInputError, passwordConfirmEmpty: false });
@@ -117,20 +117,20 @@ function InputUserForm({ state }) {
       if (userInformation.password !== e.target.value) {
         setInputError({ ...inputError, passwordConfirmError: true });
       } else setInputError({ ...inputError, passwordConfirmError: false });
-    } else if (e.target.name === 'age') {
-      if (e.target.value === '') {
+    } else if (e.target.name === "age") {
+      if (e.target.value === "") {
         setEmptyInputError({ ...emptyInputError, ageEmpty: true });
       } else setEmptyInputError({ ...emptyInputError, ageEmpty: false });
 
-      if (e.target.value === 'default') {
+      if (e.target.value === "default") {
         setInputError({ ...inputError, ageError: true });
       } else setInputError({ ...inputError, ageError: false });
-    } else if (e.target.name === 'marriage') {
-      if (e.target.value === '') {
+    } else if (e.target.name === "marriage") {
+      if (e.target.value === "") {
         setEmptyInputError({ ...emptyInputError, marriageEmpty: true });
       } else setEmptyInputError({ ...emptyInputError, marriageEmpty: false });
 
-      if (e.target.value === 'default') {
+      if (e.target.value === "default") {
         setInputError({ ...inputError, marriageError: true });
       } else setInputError({ ...inputError, marriageError: false });
     }
@@ -163,12 +163,12 @@ function InputUserForm({ state }) {
 
   /* 아이디 혹은 닉네임 중 빈 값이 있는지 확인하는 핸들러 */
   const checkIsIdOrNicknameEmpty = (type) => {
-    if (type === 'id' && emptyInputError.idEmpty) {
-      toast.error('먼저 아이디를 입력해주세요.');
+    if (type === "id" && emptyInputError.idEmpty) {
+      toast.error("먼저 아이디를 입력해주세요.");
       return false;
     }
-    if (type === 'nickname' && emptyInputError.nicknameEmpty) {
-      toast.error('먼저 닉네임을 입력해주세요.');
+    if (type === "nickname" && emptyInputError.nicknameEmpty) {
+      toast.error("먼저 닉네임을 입력해주세요.");
       return false;
     }
     return true;
@@ -177,11 +177,11 @@ function InputUserForm({ state }) {
   /* 아이디 및 닉네임의 중복확인 버튼 클릭 여부를 확인하는 핸들러 */
   const checkIsDuplicationButtonClicked = () => {
     if (!isDuplicatedIdChecked) {
-      toast.error('아이디 중복 여부를 확인해주세요.');
+      toast.error("아이디 중복 여부를 확인해주세요.");
       return false;
     }
     if (!isDuplicatedNicknameChecked) {
-      toast.error('닉네임 중복 여부를 확인해주세요.');
+      toast.error("닉네임 중복 여부를 확인해주세요.");
       return false;
     }
     return true;
@@ -190,7 +190,7 @@ function InputUserForm({ state }) {
   /* APIs */
   /* 입력된 아이디의 중복 여부를 확인하는 핸들러 */
   const checkIsDuplicatedId = (id) => {
-    if (!checkIsIdOrNicknameEmpty('id')) return;
+    if (!checkIsIdOrNicknameEmpty("id")) return;
 
     const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=login-id`;
     const config = {
@@ -204,20 +204,20 @@ function InputUserForm({ state }) {
       .get(url, config)
       .then((response) => {
         if (response.status === 200) {
-          toast.success('사용 가능한 아이디입니다.');
+          toast.success("사용 가능한 아이디입니다.");
           setIsDuplicatedIdChecked(!isDuplicatedIdChecked);
         }
       })
       .catch((error) => {
         if (error.response.status === 400) {
-          toast.error('이미 존재하는 아이디입니다.');
+          toast.error("이미 존재하는 아이디입니다.");
         }
       });
   };
 
   /* 입력된 닉네임의 중복 여부를 확인하는 핸들러 */
   const checkIsDuplicatedNickname = (nickname) => {
-    if (!checkIsIdOrNicknameEmpty('nickname')) return;
+    if (!checkIsIdOrNicknameEmpty("nickname")) return;
 
     const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=nickname`;
     const config = {
@@ -231,19 +231,20 @@ function InputUserForm({ state }) {
       .get(url, config)
       .then((response) => {
         if (response.status === 200) {
-          toast.success('사용 가능한 닉네임입니다.');
+          toast.success("사용 가능한 닉네임입니다.");
           setIsDuplicatedNicknameChecked(!isDuplicatedNicknameChecked);
         }
       })
       .catch((error) => {
         if (error.response.status === 400) {
-          toast.error('이미 존재하는 닉네임입니다.');
+          toast.error("이미 존재하는 닉네임입니다.");
         }
       });
   };
 
   /* 회원가입 수행하는 핸들러 */
   const onSubmitRegisterUser = (e) => {
+    const formData = new FormData();
     e.preventDefault();
 
     if (!checkIsDuplicationButtonClicked()) return;
@@ -253,7 +254,7 @@ function InputUserForm({ state }) {
     });
 
     if (ErrorCheck) {
-      const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+      const url = `${process.env.REACT_APP_SERVER2_IP}/v1/auths`;
       const [profileImgSaveUrl] = base64ImgSrcToImgBinaryData(
         uploadedProfilePicture
       );
@@ -263,52 +264,69 @@ function InputUserForm({ state }) {
         email: userInformation.email,
         married: userInformation.marriage,
         nickname: userInformation.nickname,
-        sns: 'NO',
-        status: 'ACTIVE',
-        role: 'USER',
+        sns: "NO",
         address: `${userInformation.address} ${userInformation.detailAddress}`,
         agegroup: userInformation.age,
-        // profileImgSaveUrl,
-        profilePictureUrl:
-          'https://mblogthumb-phinf.pstatic.net/MjAyMDAzMTNfMjM1/MDAxNTg0MDcyNjY2MTA1.SzzKs1HkYI59Yw-92phFQQqJjm0vGacEQ6YqWl674eYg.fhVBJIFxJxIBmkiOArJqg5eplcD9Cm_NkXTs1DtpOAog.JPEG.kw9k/1584072665212.jpg?type=w800',
       };
       const updateBody = {
-        id: '97',
+        id: "97",
         loginId: userInformation.id,
         loginPwd: userInformation.password,
         nickname: userInformation.nickname,
         email: userInformation.email,
         address: `${userInformation.address} ${userInformation.detailAddress}`,
-        role: 'USER',
-        sns: 'NO',
-        status: 'ACTIVE',
+        role: "USER",
+        sns: "NO",
+        status: "ACTIVE",
         ageGroup: userInformation.age,
         married: userInformation.marriage,
         profileImgSaveUrl:
-          'https://w7.pngwing.com/pngs/237/587/png-transparent-cute-pikachu-thumbnail.png',
+          "https://w7.pngwing.com/pngs/237/587/png-transparent-cute-pikachu-thumbnail.png",
         type: e.target.value,
       };
+
+      if (isEditUserPage) {
+        formData.append("createAuthRequest", updateBody);
+      } else {
+        const signUpBodyJson = JSON.stringify(signUpBody);
+        const signUpBodyBlob = new Blob([signUpBodyJson], {
+          type: "application/json",
+        });
+        const [profilePictureBinaryData, profilePictureMimeType] =
+          base64ImgSrcToImgBinaryData(uploadedProfilePicture);
+
+        const profilePictureBlob = new Blob([profilePictureBinaryData], {
+          type: profilePictureMimeType,
+        });
+        formData.append("createAuthRequest", signUpBodyBlob);
+        formData.append("file", profilePictureBlob);
+      }
+
       const config = {
         headers: {
-          Authorization: isEditUserPage ? token : '',
+          Authorization: isEditUserPage ? token : "",
         },
         timeout: 3000,
       };
 
+      printFormData(formData);
+      console.log("signUpBody", signUpBody);
+      console.log(url);
       axios
-        .post(url, isEditUserPage ? updateBody : signUpBody, config)
+        .post(url, formData, config)
         .then((response) => {
-          navigate(isEditUserPage ? `/user/edit/menu` : '/login');
+          navigate(isEditUserPage ? `/user/edit/menu` : "/login");
         })
         .catch((error) => {
+          console.log(error);
           toast.error(
             isEditUserPage
-              ? '회원정보 변경에 실패했습니다. 관리자에게 문의하세요.'
-              : '회원가입에 실패했습니다. 관리자에게 문의하세요.'
+              ? "회원정보 변경에 실패했습니다. 관리자에게 문의하세요."
+              : "회원가입에 실패했습니다. 관리자에게 문의하세요."
           );
         });
     } else {
-      toast.warn('모든 값을 입력해주세요.');
+      toast.warn("모든 값을 입력해주세요.");
     }
   };
 
@@ -336,35 +354,35 @@ function InputUserForm({ state }) {
             })`}
             onClick={onClickUploadProilePic}
           >
-            {isProfilePictureUploaded || '프로필 이미지 업로드'}
+            {isProfilePictureUploaded || "프로필 이미지 업로드"}
           </S.UploadProfilePicBox>
           <S.ProfilePicUploadInput
             ref={profileInputRef}
             type="file"
-            value={''}
+            value={""}
             onChange={onChangeProfileImg}
           />
         </div>
-        <S.UserProfileWrap flexDirection={'column'}>
-          <UtilInputWrap margin={'0'} flexDirection={'column'}>
-            <div style={{ alignSelf: 'start' }}>
+        <S.UserProfileWrap flexDirection={"column"}>
+          <UtilInputWrap margin={"0"} flexDirection={"column"}>
+            <div style={{ alignSelf: "start" }}>
               <Input
                 type="text"
                 name="id"
                 value={userInformation.id}
                 placeholder="아이디"
                 disabled={isEditUserPage}
-                width={'150px'}
-                height={'40px'}
-                margin={'0 10px'}
-                fontSize={'14px'}
+                width={"150px"}
+                height={"40px"}
+                margin={"0 10px"}
+                fontSize={"14px"}
                 onChange={onChangeUserInformation}
               />
               {!isEditUserPage && (
                 <Button
                   type="button"
-                  width={'80px'}
-                  height={'40px'}
+                  width={"80px"}
+                  height={"40px"}
                   color={color.white}
                   bgColor={color.darkBlue}
                   hoveredBgColor={color.navy}
@@ -387,23 +405,23 @@ function InputUserForm({ state }) {
             )}
           </UtilInputWrap>
 
-          <UtilInputWrap margin={'1rem 0 0 0'} flexDirection={'column'}>
+          <UtilInputWrap margin={"1rem 0 0 0"} flexDirection={"column"}>
             <div>
               <Input
                 type="text"
                 name="nickname"
                 value={userInformation.nickname}
                 placeholder="닉네임"
-                width={'150px'}
-                height={'40px'}
-                margin={'0 10px'}
-                fontSize={'14px'}
+                width={"150px"}
+                height={"40px"}
+                margin={"0 10px"}
+                fontSize={"14px"}
                 onChange={onChangeUserInformation}
               />
               <Button
                 type="button"
-                width={'80px'}
-                height={'40px'}
+                width={"80px"}
+                height={"40px"}
                 color={color.white}
                 bgColor={color.darkBlue}
                 hoveredBgColor={color.navy}
@@ -434,10 +452,10 @@ function InputUserForm({ state }) {
               type="text"
               value={userInformation.email}
               disabled={true}
-              width={'340px'}
-              height={'40px'}
-              margin={'0 10px'}
-              fontSize={'14px'}
+              width={"340px"}
+              height={"40px"}
+              margin={"0 10px"}
+              fontSize={"14px"}
             />
           </UtilInputWrap>
           <UtilInputWrap>
@@ -445,10 +463,10 @@ function InputUserForm({ state }) {
               type="text"
               value={userInformation.address}
               disabled={true}
-              width={'340px'}
-              height={'40px'}
-              margin={'0 10px'}
-              fontSize={'14px'}
+              width={"340px"}
+              height={"40px"}
+              margin={"0 10px"}
+              fontSize={"14px"}
             />
           </UtilInputWrap>
           <UtilInputWrap>
@@ -456,27 +474,27 @@ function InputUserForm({ state }) {
               type="text"
               value={userInformation.detailAddress}
               disabled={true}
-              width={'340px'}
-              height={'40px'}
-              margin={'0 10px'}
-              fontSize={'14px'}
+              width={"340px"}
+              height={"40px"}
+              margin={"0 10px"}
+              fontSize={"14px"}
             />
           </UtilInputWrap>
         </>
       )}
 
       {/* 비밀번호 */}
-      <UtilInputWrap mb={'0'}>
+      <UtilInputWrap mb={"0"}>
         <Input
           type="password"
           name="password"
           value={userInformation.password}
           placeholder="비밀번호"
-          width={'340px'}
-          height={'40px'}
-          margin={'0 10px'}
+          width={"340px"}
+          height={"40px"}
+          margin={"0 10px"}
           onChange={onChangeUserInformation}
-          fontSize={'14px'}
+          fontSize={"14px"}
         />
       </UtilInputWrap>
       {emptyInputError.passwordEmpty ||
@@ -487,17 +505,17 @@ function InputUserForm({ state }) {
           </S.ErrorMessage>
         ))}
 
-      <UtilInputWrap mb={'0'}>
+      <UtilInputWrap mb={"0"}>
         <Input
           type="password"
           name="passwordConfirm"
           value={userInformation.passwordConfirm}
           placeholder="비밀번호 재확인"
-          width={'340px'}
-          height={'40px'}
-          margin={'0 10px'}
+          width={"340px"}
+          height={"40px"}
+          margin={"0 10px"}
           onChange={onChangeUserInformation}
-          fontSize={'14px'}
+          fontSize={"14px"}
         />
       </UtilInputWrap>
       {emptyInputError.passwordConfirmEmpty ||
@@ -547,10 +565,10 @@ function InputUserForm({ state }) {
       {/* 회원가입 버튼 */}
       {!isEditUserPage && (
         <Button
-          type={'submit'}
-          width={'340px'}
-          height={'40px'}
-          margin={'20px 0 0 0'}
+          type={"submit"}
+          width={"340px"}
+          height={"40px"}
+          margin={"20px 0 0 0"}
           bgColor={color.darkBlue}
           color={color.white}
           hoveredBgColor={color.navy}
@@ -561,14 +579,14 @@ function InputUserForm({ state }) {
       )}
       {isEditUserPage && (
         <Button
-          type={'submit'}
-          width={'340px'}
-          height={'40px'}
-          margin={'20px 0 0 0'}
+          type={"submit"}
+          width={"340px"}
+          height={"40px"}
+          margin={"20px 0 0 0"}
           bgColor={color.darkBlue}
           color={color.white}
           hoveredBgColor={color.navy}
-          value={'회원정보 수정'}
+          value={"회원정보 수정"}
           onClick={onSubmitRegisterUser}
         >
           수정
