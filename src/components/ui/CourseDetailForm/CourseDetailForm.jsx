@@ -58,7 +58,8 @@ function CourseDetailForm() {
     setIsOrderingModalOpened(!isOrderingModalOpened);
   };
 
-  //코스 삭제 버튼 클릭시 호출할 핸들러
+  /*코스 삭제 버튼 클릭시 호출할 핸들러
+    정말로 코스 삭제하겠냐는 모달창을 활성화하거나 비활성화한다. */
   const onClickOpenDeleteModal = (clicked, i) => {
     setIsDeleteModalOpened(!isDeleteModalOpened);
     setClickedElement(clicked);
@@ -68,24 +69,6 @@ function CourseDetailForm() {
   //코스 수정 버튼 클릭시 호출할 핸들러
   const onClickEditCourse = (e) => {
     navigate(`/course-edit/${id}`, { state: courseInfo });
-    // const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts/${id}`;
-    // const loginToken = localStorage.getItem("token");
-    // console.log("loginToken", loginToken);
-    // const config = {
-    //   header: {
-    //     Authorization: loginToken,
-    //   },
-    //   timeout: 1000,
-    // };
-    // axios
-    //   .put(url, config)
-    //   .then((response) => {
-    //     const data = response.data;
-    //     console.log(data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   };
 
   useEffect(() => {
