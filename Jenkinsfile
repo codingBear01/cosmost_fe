@@ -5,7 +5,7 @@ pipeline{
     }
         environment {
         ECR_REPO_URI = "347222812711.dkr.ecr.${REGION}.amazonaws.com/test_cicd"
-        AWS_CREDENTIALS="TEST_CICD_JENKINS"
+        AWS_CREDENTIALS="COSMOST_DEPLOYER_ID"
         CLUSTER_NAME="cosmost"
         SERVICE_NAME="ecs-service"
         REGION="ap-northeast-2"
@@ -23,11 +23,6 @@ pipeline{
                 script{
                   app = docker.build("${ECR_REPO_URI}")
                 }
-            }
-        }
-        stage('Test'){
-            steps {
-                  echo 'Empty'
             }
         }
         stage('Upload to ECR') {
