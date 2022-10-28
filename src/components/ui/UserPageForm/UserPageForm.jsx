@@ -9,8 +9,7 @@ import { UserProfilArea } from '.';
 import { ReportForm, UtilDiv, UtilTitle, MenuListForm } from '../..';
 
 function UserInfoForm() {
-  const loginToken = localStorage.getItem('token');
-  // const loginToken = '';
+  const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
   /* 모달창 Open 여부 state */
@@ -23,9 +22,9 @@ function UserInfoForm() {
     setIsReportFormOpened(!isReportFormOpened);
   };
 
-  /* loginToken 없을 시 에러 페이지로 redirect */
+  /* token 없을 시 에러 페이지로 redirect */
   useEffect(() => {
-    if (!loginToken) {
+    if (!token) {
       navigate('/error');
     }
   }, []);
@@ -34,7 +33,7 @@ function UserInfoForm() {
     <UtilDiv width={'100%'} height={'100vh'}>
       <UtilTitle>닉네임 님</UtilTitle>
       {/* 유저 프로필 및 유저 정보, 프로필 편집 버튼 */}
-      <UserProfilArea loginToken={loginToken} />
+      <UserProfilArea token={token} />
       {/* 유저 페이지 메뉴 목록 */}
       <MenuListForm onClickOpenReportForm={onClickOpenReportForm} />
       {/* 신고하기 모달창 */}

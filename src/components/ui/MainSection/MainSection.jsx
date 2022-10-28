@@ -13,7 +13,7 @@ import * as FaIcons from 'react-icons/fa';
 import { MAIN_COURSES } from '../../../store/temporaryArray';
 
 function MainPageSection() {
-  const loginToken = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   return (
@@ -24,7 +24,7 @@ function MainPageSection() {
           <MainTextWrap />
           {/* 코스 등록 버튼 */}
           <S.CourseRegisterBtn
-            to={loginToken && isLoggedIn ? '/course-registration' : '/login'}
+            to={token && isLoggedIn ? '/course-registration' : '/login'}
           >
             나만의 코스 공유하기
             <FaIcons.FaChevronRight />

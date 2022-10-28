@@ -7,11 +7,6 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   const Base64DataReg = /,(.*)\)/;
 
   if (imgSrc !== "none") {
-    // if (imgSrc.slice(4, 8) === "http") {
-    //   returnArr.push(-1);
-    //   returnArr.push(-1);
-    //   return returnArr;
-    // }
     const itemMimeType = imgSrc.match(mimeTypeReg)
       ? imgSrc.match(mimeTypeReg)[1]
       : null;
@@ -59,6 +54,19 @@ const createNaverMap = (
       defaultCoordinate.longitude
     ),
     zoom: 10,
+    mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: naver.maps.MapTypeControlStyle.BUTTON,
+      position: naver.maps.Position.TOP_LEFT,
+    },
+    zoomControl: true,
+    zoomControlOptions: {
+      style: naver.maps.ZoomControlStyle.SMALL,
+      position: naver.maps.Position.TOP_RIGHT,
+    },
+    scaleControl: false,
+    logoControl: false,
+    mapDataControl: false,
   });
   return map;
 };

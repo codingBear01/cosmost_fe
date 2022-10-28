@@ -8,7 +8,7 @@ import {
   BREAK_POINTS as media,
 } from '../../../../style';
 
-export const StyledSearchedCourse = styled.div`
+export const StyledCourse = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

@@ -9,13 +9,13 @@ import { SmallProfilePic, Icon } from '../../../';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 function HeaderUtilBtn() {
-  const loginToken = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   return (
     <>
-      {loginToken && isLoggedIn ? (
-        <Link to={`/user/${loginToken}`}>
+      {token && isLoggedIn ? (
+        <Link to={`/user/${token}`}>
           <SmallProfilePic
             src={
               'https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg'

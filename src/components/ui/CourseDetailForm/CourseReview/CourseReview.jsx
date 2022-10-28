@@ -21,7 +21,7 @@ function CourseReview({
   isClickedCourseReviewChanged,
   setIsClickedCourseReviewChanged,
 }) {
-  /* States and Refs */
+  /* States*/
   const [courseReviews, setCourseReviews] = useState([]);
   const [clickedReviewIndex, setClickedRReviewIndex] = useState(null);
   const [isReviewUtilityModalOpened, setIsReviewUtilityModalOpened] =
@@ -30,7 +30,6 @@ function CourseReview({
     isCourseReviewEditTextareaOpened,
     setIsCourseReviewEditTextareaOpened,
   ] = useState(false);
-  /* 리뷰 수정에 쓰이는 states 및 ref */
   const [isYellowStar, setIsYellowStar] = useState([
     true,
     false,
@@ -38,6 +37,8 @@ function CourseReview({
     false,
     false,
   ]);
+
+  /* Refs */
   const edittedReviewContentRef = useRef();
   const edittedReviewRateRef = useRef();
 

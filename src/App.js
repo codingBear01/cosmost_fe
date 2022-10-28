@@ -12,18 +12,21 @@ import {
   // pages
   CourseDetail,
   CourseRegistration,
-  EmailValidation,
+  Courses,
+  EditUserMenu,
   ErrorPage,
   Follows,
   Histories,
   InputAddress,
   InputDetailAddress,
+  InputEmail,
+  InputUser,
   Login,
   Main,
   NotFoundPage,
-  SearchedCourses,
-  SignUp,
   User,
+  WithdrawalMessage,
+  WithdrawUser,
 } from "./components";
 /* router */
 import { Routes, Route, Outlet } from "react-router-dom";
@@ -53,7 +56,7 @@ const WithoutHeaderAndFooter = () => {
 const { Kakao } = window;
 
 function App() {
-  const loginToken = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   /* 프로젝트 실행 시 Kakao API KEY 값 초기화하는 함수 */
@@ -68,19 +71,19 @@ function App() {
         <Route path="/" element={<WithHeaderAndFooter />}>
           <Route index element={<Main />} />
           <Route path="/course-detail/:id" element={<CourseDetail />} />
-          <Route path="/searched-courses" element={<SearchedCourses />} />
+          <Route path="/courses/:type" element={<Courses />} />
         </Route>
         <Route element={<WithoutHeaderAndFooter />}>
-          {/* {!loginToken && !isLoggedIn && ( */}
+          {/* {!token && !isLoggedIn && ( */}
           <>
             <Route path="login" element={<Login />} />
-            <Route path="email-validation" element={<EmailValidation />} />
+            <Route path="email-validation" element={<InputEmail />} />
             <Route path="address" element={<InputAddress />} />
             <Route path="detail-address" element={<InputDetailAddress />} />
-            <Route path="sign-up" element={<SignUp />} />
+            <Route path="sign-up" element={<InputUser />} />
           </>
           {/* )} */}
-          {/* {loginToken && isLoggedIn && ( */}
+          {/* {token && isLoggedIn && ( */}
           <>
             <Route path="user">
               <Route path=":id" element={<User />} />
@@ -88,6 +91,13 @@ function App() {
               <Route path=":id/followings" element={<Follows />} />
               <Route path=":id/report-histories" element={<Histories />} />
               <Route path=":id/review-histories" element={<Histories />} />
+              <Route path="edit">
+                <Route path="menu" element={<EditUserMenu />} />
+                <Route path="email" element={<InputEmail />} />
+                <Route path="address" element={<InputAddress />} />
+                <Route path="my-information" element={<InputUser />} />
+              </Route>
+              <Route path="withdrawal" element={<WithdrawUser />} />
             </Route>
 
             <Route
@@ -98,6 +108,8 @@ function App() {
           </>
           {/* )} */}
         </Route>
+
+        <Route path="withdrawal-message" element={<WithdrawalMessage />} />
         {/* Error Page */}
         <Route path="error" element={<ErrorPage />} />
         {/* 잘못된 경로에 접근시 메인 페이지로 리다이렉트 시킴*/}

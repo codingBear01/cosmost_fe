@@ -50,6 +50,7 @@ function CourseDetailForm() {
     useState(false);
 
   //로그인 정보
+  const token = localStorage.getItem("token");
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   /* Handlers */

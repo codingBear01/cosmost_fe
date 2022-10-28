@@ -1,13 +1,27 @@
 /* libraries */
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 /* components */
-import { Input, NextBtn, UtilForm, UtilInputWrap, UtilTitle } from '../..';
+import {
+  Button,
+  Input,
+  NextBtn,
+  UtilForm,
+  UtilInputWrap,
+  UtilTitle,
+} from '../..';
+/* static data */
+import { COLOR_LIST as color } from '../../../style';
 
 function InputDetailAddressForm({ state }) {
+  /* Path */
+  const path = useLocation().pathname;
+  const isDetailAddressPage = path.includes('detail');
   const [detailAddress, setDetailAddress] = useState('');
 
+  /* Handlers */
   /* 상세주소 입력시 호출될 핸들러. state를 전달한다.*/
   const onChangeDetailAddress = (e) => {
     setDetailAddress(e.target.value);
@@ -21,8 +35,14 @@ function InputDetailAddressForm({ state }) {
     }
   };
 
+  /* APIs */
+  /* 주소 변경 api */
+  const onClickUpdateAddress = () => {
+    console.log('변경 완료!');
+  };
+
   return (
-    <UtilForm padding={'15.4rem 10rem'}>
+    <UtilForm>
       <UtilTitle>상세 주소를 입력해주세요.</UtilTitle>
       <UtilInputWrap>
         <Input
@@ -43,11 +63,28 @@ function InputDetailAddressForm({ state }) {
           onChange={onChangeDetailAddress}
         />
       </UtilInputWrap>
-      <NextBtn
-        to={'/sign-up'}
-        state={{ ...state, detailAddress }}
-        onClick={onClickCheckInput}
-      />
+      {/* 다음으로 버튼 */}
+      {isDetailAddressPage && (
+        <NextBtn
+          to={'/sign-up'}
+          state={{ ...state, detailAddress }}
+          onClick={onClickCheckInput}
+        />
+      )}
+      {/* 수정 버튼 */}
+      {!isDetailAddressPage && (
+        <Button
+          type="submit"
+          width={'100%'}
+          height={'40px'}
+          color={color.white}
+          bgColor={color.darkBlue}
+          hoveredBgColor={color.navy}
+          onClick={onClickUpdateAddress}
+        >
+          수정
+        </Button>
+      )}
       <ToastContainer
         position="top-center"
         autoClose={2000}

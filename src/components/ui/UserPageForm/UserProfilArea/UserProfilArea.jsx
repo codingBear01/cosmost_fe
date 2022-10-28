@@ -8,17 +8,17 @@ import { Button, ProfilePic } from '../../../';
 /* static data */
 import { COLOR_LIST as color } from '../../../../style';
 
-function UserProfilArea({ loginToken }) {
+function UserProfilArea({ token }) {
   /* States */
   const [user, setUser] = useState([]);
 
   /* APIs */
   /* 로그인한 User의 정보를 get하는 핸들러 */
   const getUser = () => {
-    const url = 'http://10.10.10.164:9001/v1/auths';
+    const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
     const config = {
       headers: {
-        Authorization: loginToken,
+        Authorization: token,
       },
       timeout: 3000,
     };
@@ -34,13 +34,13 @@ function UserProfilArea({ loginToken }) {
   useEffect(() => {
     getUser();
   }, []);
-
+  console.log(user);
   return (
     <S.ProfileWrap>
       {/* 프로필 사진 */}
       <S.ProfilePicWrap>
         <ProfilePic
-          src="https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMjI0/MDAxNTU0NDc3OTE1Mjc5.eljTe4bpgeYf2O0fbBqpB74ruNcyO5dLd2GZtXL4VEYg.p0ZIX-d01subwWzvY53FAF_hF2BHnKXuIpEB2Av8eg8g.JPEG.xvx404/1542459444594.jpg?type=w800"
+          src={user.profileImgSaveUrl}
           alt="profile_pic"
           width={'60px'}
           height={'60px'}
@@ -63,7 +63,7 @@ function UserProfilArea({ loginToken }) {
             <span>100</span>
           </Link>
         </S.UserInfoWrap>
-        <Link to="/sign-up">
+        <Link to="/user/edit/menu">
           <Button
             type="button"
             width={'220px'}
