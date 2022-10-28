@@ -4,7 +4,7 @@ pipeline{
         skipStagesAfterUnstable()
     }
         environment {
-        ECR_REPO_URI = "347222812711.dkr.ecr.${REGION}.amazonaws.com/test_cicd"
+        ECR_REPO_URI = "347222812711.dkr.ecr.ap-northeast-2.amazonaws.com/cosmost-fe-ecr"
         AWS_CREDENTIALS="COSMOST_DEPLOYER_ID"
         CLUSTER_NAME="cosmost"
         SERVICE_NAME="ecs-service"
