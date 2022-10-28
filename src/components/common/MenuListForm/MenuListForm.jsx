@@ -1,35 +1,37 @@
 /* libraries */
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 /* recoil */
-import { useRecoilState } from 'recoil';
-import { loginStateAtom } from '../../../store';
+import { useRecoilState } from "recoil";
+import { loginStateAtom } from "../../../store";
 /* components */
-import * as S from './styled';
+import * as S from "./styled";
 /* static data */
-import { FONT_SIZE_LIST as fs } from '../../../style';
-import { UtilDiv } from '../..';
+import { FONT_SIZE_LIST as fs } from "../../../style";
+import { UtilDiv } from "../..";
 /* icons */
-import * as AiIcons from 'react-icons/ai';
-import * as TbIcons from 'react-icons/tb';
-import * as FaIcons from 'react-icons/fa';
-import * as MdIcons from 'react-icons/md';
-import * as RiIcons from 'react-icons/ri';
+import * as AiIcons from "react-icons/ai";
+import * as TbIcons from "react-icons/tb";
+import * as FaIcons from "react-icons/fa";
+import * as MdIcons from "react-icons/md";
+import * as RiIcons from "react-icons/ri";
 
 function MenuListForm({ onClickOpenReportForm }) {
   const navigate = useNavigate();
 
   const path = useLocation().pathname;
-  const isEditUserPage = path.includes('edit');
+  const useInfo = useLocation().state;
+
+  const isEditUserPage = path.includes("edit");
 
   const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
 
   /* Handlers */
   const onClickLogOut = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
-    navigate('/');
+    navigate("/");
   };
 
   if (isEditUserPage) {
@@ -48,14 +50,14 @@ function MenuListForm({ onClickOpenReportForm }) {
             <span>주소 변경</span>
           </S.MenuItem>
         </Link>
-        <Link to="/user/edit/my-information">
+        <Link to="/user/edit/my-information" state={useInfo}>
           <S.MenuItem>
             <RiIcons.RiUserSettingsLine />
             <span>회원정보 변경</span>
           </S.MenuItem>
         </Link>
         <Link to="/user/withdrawal">
-          <S.MenuItem style={{ fontSize: '16px' }}>
+          <S.MenuItem style={{ fontSize: "16px" }}>
             <TbIcons.TbUserOff />
             <span>회원 탈퇴</span>
           </S.MenuItem>
@@ -100,7 +102,7 @@ function MenuListForm({ onClickOpenReportForm }) {
             <span>신고내역</span>
           </S.MenuItem>
         </Link>
-        <S.MenuItem style={{ fontSize: '16px' }} onClick={onClickLogOut}>
+        <S.MenuItem style={{ fontSize: "16px" }} onClick={onClickLogOut}>
           <AiIcons.AiOutlineLogout style={{ fontSize: `${fs.m}` }} />
           <span>로그아웃</span>
         </S.MenuItem>

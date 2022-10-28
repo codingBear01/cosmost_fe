@@ -16,7 +16,7 @@ const RegExpId = /^[A-Za-z][A-Za-z0-9]{2,15}$/;
 const RegExpNickName = /^[a-zA-Z0-9]{2,16}$/;
 const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
 
-function InputUserForm({ state }) {
+function InputUserForm({ state, beforeEditUserInfo }) {
   const path = useLocation().pathname;
   const isEditUserPage = path.includes("edit");
   const token = localStorage.getItem("token");
@@ -65,6 +65,16 @@ function InputUserForm({ state }) {
   const profileInputRef = useRef();
 
   const navigate = useNavigate();
+
+  //현재 페이지가 회원 정보 수정을 목적으로 들어온 경우
+  useEffect(() => {
+    if (beforeEditUserInfo) {
+      setUserInformation({
+        id: "",
+        nickname: "",
+      });
+    }
+  }, []);
 
   /* Handlers */
   /* 패스워드 일치 여부를 확인하는 함수 */
