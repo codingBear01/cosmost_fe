@@ -30,4 +30,5 @@ export {
   createNaverMap,
   addNaverMapMarker,
   addNaverMapMarkerInfo,
+  printFormData,
 } from "./function";

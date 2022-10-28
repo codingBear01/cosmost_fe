@@ -1,10 +1,17 @@
 //함수 집합
 
-// base64ImgSrc 이미지 경로를 바이너리 데이터로 변환한 뒤 변환한 바이너리 데이터와 MIME-Type을 배열로 반환하는 함수.
+/** base64ImgSrc 이미지 경로를 바이너리 데이터로 변환한 뒤 변환한 바이너리 데이터와 MIME-Type을 배열로 반환하는 함수. */
+
 const base64ImgSrcToImgBinaryData = (imgSrc) => {
   let returnArr = [];
+  let Base64DataReg;
   const mimeTypeReg = /data:(.*);/;
-  const Base64DataReg = /,(.*)\)/;
+
+  if (imgSrc.slice(0, 3) === "url") {
+    Base64DataReg = /,(.*)\)/;
+  } else {
+    Base64DataReg = /,(.*)/;
+  }
 
   if (imgSrc !== "none") {
     const itemMimeType = imgSrc.match(mimeTypeReg)
@@ -128,9 +135,21 @@ const addNaverMapMarkerInfo = (map, marker, elementString, style) => {
   infowindow.close();
   return infowindow;
 };
+
+/** FormData에 등록된 key와 value를 출력하는 함수
+ *
+ */
+const printFormData = (formData) => {
+  console.log("formData");
+  for (let key of formData.keys()) {
+    console.log(key, ":", formData.get(key));
+  }
+};
+
 export {
   base64ImgSrcToImgBinaryData,
   createNaverMap,
   addNaverMapMarker,
   addNaverMapMarkerInfo,
+  printFormData,
 };

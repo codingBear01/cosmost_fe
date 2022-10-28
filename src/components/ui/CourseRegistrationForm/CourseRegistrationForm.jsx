@@ -23,6 +23,7 @@ import {
   base64ImgSrcToImgBinaryData,
   addNaverMapMarker,
   createNaverMap,
+  printFormData,
 } from "../../../store";
 
 import styled from "styled-components";
@@ -1168,11 +1169,7 @@ function CourseRegistrationForm() {
 
     if (!validateCourseRegistrationInput(sendData, imageblobs)) return;
 
-    console.log("formData");
-    for (let key of formData.keys()) {
-      console.log(key, ":", formData.get(key));
-    }
-
+    printFormData(formData);
     console.log("sendData", sendData);
     if (location.state) {
       const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts/${location.state.id}`;
