@@ -65,7 +65,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'COSMOST_FE_DOCKER_HUB_ID', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                     sh 'docker build -t cosmost-fe .'
                     sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
-                    sh 'docker push cosmost-fe'
+                    sh 'docker push dasan8829/cosmost-fe'
                 }
             }
         }
