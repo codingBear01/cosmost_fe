@@ -62,9 +62,9 @@ pipeline {
         }
         stage('Build Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'COSMOST_FE_DOCKER_HUB_ID', password: 'audwkwkd1!', username: 'dasan8829')]) {
+                withCredentials([usernamePassword(credentialsId: 'COSMOST_FE_DOCKER_HUB_ID', password: 'PASSWORD', username: 'USERNAME')]) {
                     sh 'docker build -t cosmost-fe .'
-                    sh "echo ${password} | docker login -u ${username} --password-stdin"
+                    sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
                     sh 'docker push cosmost-fe'
                 }
             }
