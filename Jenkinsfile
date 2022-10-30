@@ -74,8 +74,9 @@ pipeline {
                 script {
                     def dockerPull = 'docker pull dasan8829/cosmost-fe:latest'
                     def dockerRun = 'docker run -p 3000:3000 -d cosmost-fe:latest'
+                        sh "docker pull dasan8829/cosmost-fe:latest"
                     sshagent(['3.36.109.0']) {
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.36.109.0 ${dockerPull}"
+                        // sh "ssh -o StrictHostKeyChecking=no ec2-user@3.36.109.0 ${dockerPull}"
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@3.36.109.0 ${dockerRun}"
                     }
                 }
