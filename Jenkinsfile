@@ -78,7 +78,7 @@ pipeline {
                         // sh "docker run -p 3000:3000 -d cosmost-fe:latest"
                     sshagent(['COSMOST-FE_EC2']) {
                         // sh "ssh -o StrictHostKeyChecking=no ec2-user@3.36.109.0 ${dockerPull}"
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.36.109.0 ${dockerRun}"
+                        sh "ssh -i 'cosmostpemkeyseoul.pem' ec2-user@ec2-3-36-109-0.ap-northeast-2.compute.amazonaws.com ${dockerRun}"
                     }
                 }
             }
