@@ -73,7 +73,7 @@ pipeline {
             steps {
                 script {
                     def dockerCmd = 'docker run -p 3000:3000 -d cosmost-fe:latest'
-                    sshagent(['COSMOST_DEPLOYER_ID']) {
+                    sshagent(['3.36.109.0']) {
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@3.36.109.0 ${dockerCmd}"
                     }
                 }
