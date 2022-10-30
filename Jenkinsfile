@@ -52,7 +52,7 @@
 pipeline {
     agent any
     tools {
-        nodejs 'nodejs'
+        nodejs 'node 16.18.0'
     }
     stages {
         stage('Build') {
