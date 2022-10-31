@@ -1,12 +1,21 @@
 /* libraries */
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React from "react";
+import { useLocation } from "react-router-dom";
 /* components */
-import { InputUserForm } from '..';
+import { InputUserForm } from "..";
 
 function InputUser() {
   const location = useLocation();
-  return <InputUserForm state={location.state} />;
+  let beforeEditUserInfo;
+  if (location.state.profileImgSaveUrl) {
+    beforeEditUserInfo = location.state;
+  }
+  return (
+    <InputUserForm
+      state={location.state}
+      beforeEditUserInfo={beforeEditUserInfo}
+    />
+  );
 }
 
 export default InputUser;

@@ -1,32 +1,57 @@
 /* librarie */
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 /* recoil */
-import { useRecoilState } from 'recoil';
-import { loginStateAtom } from '../../../../store';
+import { useRecoilState } from "recoil";
+import { loginStateAtom } from "../../../../store";
 /* components */
-import { SmallProfilePic, Icon } from '../../../';
+import { SmallProfilePic, Icon } from "../../../";
 /* icons */
-import * as AiIcons from 'react-icons/ai';
+import * as AiIcons from "react-icons/ai";
+import axios from "axios";
 function HeaderUtilBtn() {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
+  //사용자 정보를 나타내는 state.
+  const [userInfo, setUserInfo] = useState(null);
+
+  // 사용자 정보 가져오기
+  useEffect(() => {
+    if (token && isLoggedIn) {
+      const url = `${process.env.REACT_APP_SERVER2_IP}/v1/auths`;
+      const config = {
+        headers: {
+          Authorization: token,
+        },
+        timeout: 1000,
+      };
+      axios
+        .get(url, config)
+        .then((resonse) => {
+          setUserInfo(resonse.data);
+          console.log(resonse);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
+  console.log("userInfo", userInfo);
   return (
     <>
-      {token && isLoggedIn ? (
-        <Link to={`/user/${token}`}>
+      {token && isLoggedIn && userInfo ? (
+        <Link to={`/user/${userInfo.id}`} state={userInfo}>
           <SmallProfilePic
-            src={
-              'https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg'
-            }
-            alt={'profile_pic'}
+            src={userInfo.profileImgSaveUrl}
+            alt={"profile_pic"}
           />
         </Link>
       ) : (
         <Link to="/login">
           <Icon>
-            <AiIcons.AiOutlineLogin style={{ margin: '0' }} />
+            <AiIcons.AiOutlineLogin style={{ margin: "0" }} />
           </Icon>
         </Link>
       )}

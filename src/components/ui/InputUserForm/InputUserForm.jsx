@@ -16,7 +16,7 @@ const RegExpId = /^[A-Za-z][A-Za-z0-9]{2,15}$/;
 const RegExpNickName = /^[a-zA-Z0-9]{2,16}$/;
 const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
 
-function InputUserForm({ state }) {
+function InputUserForm({ state, beforeEditUserInfo }) {
   const path = useLocation().pathname;
   const isEditUserPage = path.includes("edit");
   const token = localStorage.getItem("token");
@@ -42,7 +42,7 @@ function InputUserForm({ state }) {
     marriageError: true,
     profilePictureUrlError: true,
   });
-  /* User가 입력한 정보 중 버이 있는 값이 있는지 나타내는 state */
+  /* User가 입력한 정보 중 비어 있는 값이 있는지 나타내는 state */
   const [emptyInputError, setEmptyInputError] = useState({
     idEmpty: true,
     nicknameEmpty: true,
@@ -75,6 +75,40 @@ function InputUserForm({ state }) {
       setInputError({ ...inputError, passwordConfirmError: false });
     }
   }, [userInformation.password, userInformation.passwordConfirm]);
+
+  /* 현재 페이지가 회원 정보 수정을 목적으로 들어온 경우 
+     전달받은 state 값을 이용해 수정한다. */
+  useEffect(() => {
+    if (beforeEditUserInfo) {
+      console.log("beforeEditUserInfo", beforeEditUserInfo);
+      setUserInformation({
+        ...userInformation,
+        id: beforeEditUserInfo.loginId,
+        nickname: beforeEditUserInfo.nickname,
+      });
+
+      //이미지 state 전달.
+      setUploadedProfilePicture(beforeEditUserInfo.profileImgSaveUrl);
+      setIsProfilePictureUploaded(true);
+
+      //ID는 중복체크할 이유가 없으므로 ID 중복 state True로 전달
+      setIsDuplicatedIdChecked(true);
+
+      //ID와 닉네임, 프로필 관련 에러가 없음을 나타내는 state 값을 전달
+      setEmptyInputError({
+        ...emptyInputError,
+        idEmpty: false,
+        nicknameEmpty: false,
+        profilePictureUrlEmpty: false,
+      });
+      setInputError({
+        ...inputError,
+        idError: false,
+        nicknameError: false,
+        profilePictureUrlError: false,
+      });
+    }
+  }, []);
 
   /*사용자가 프로파일 이미지 등록 버튼을 클릭한 경우 호출할 핸들러. input[type=file]에 클릭 이벤트를 발생시킨다.*/
   const onClickUploadProilePic = (e) => {
@@ -232,7 +266,7 @@ function InputUserForm({ state }) {
       .then((response) => {
         if (response.status === 200) {
           toast.success("사용 가능한 닉네임입니다.");
-          setIsDuplicatedNicknameChecked(!isDuplicatedNicknameChecked);
+          setIsDuplicatedNicknameChecked(true);
         }
       })
       .catch((error) => {
@@ -247,6 +281,7 @@ function InputUserForm({ state }) {
     const formData = new FormData();
     e.preventDefault();
 
+    // 중복체크
     if (!checkIsDuplicationButtonClicked()) return;
 
     const ErrorCheck = Object.values(inputError).every((element) => {
@@ -258,6 +293,8 @@ function InputUserForm({ state }) {
       const [profileImgSaveUrl] = base64ImgSrcToImgBinaryData(
         uploadedProfilePicture
       );
+
+      //회원가입용 Body
       const signUpBody = {
         loginId: userInformation.id,
         loginPwd: userInformation.password,
@@ -268,26 +305,98 @@ function InputUserForm({ state }) {
         address: `${userInformation.address} ${userInformation.detailAddress}`,
         agegroup: userInformation.age,
       };
+      //회원수정에서 프로필 이미지를 변경했을 때의 Body
       const updateBody = {
-        id: "97",
         loginId: userInformation.id,
         loginPwd: userInformation.password,
         nickname: userInformation.nickname,
-        email: userInformation.email,
-        address: `${userInformation.address} ${userInformation.detailAddress}`,
-        role: "USER",
-        sns: "NO",
-        status: "ACTIVE",
+        email: beforeEditUserInfo.email,
+        address: beforeEditUserInfo.address,
+        role: beforeEditUserInfo.role,
+        sns: beforeEditUserInfo.sns,
+        status: beforeEditUserInfo.status,
         ageGroup: userInformation.age,
         married: userInformation.marriage,
-        profileImgSaveUrl:
-          "https://w7.pngwing.com/pngs/237/587/png-transparent-cute-pikachu-thumbnail.png",
-        type: e.target.value,
+        type: "회원정보 수정",
+      };
+      //회원수정에서 프로필 이미지를 변경하지 않았을 때의 Body
+      const updateBody2 = {
+        ...updateBody,
+        profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
+        profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
+        profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
       };
 
+      const config = {
+        headers: {
+          Authorization: isEditUserPage ? token : "",
+        },
+        timeout: 3000,
+      };
+      //회원수정
       if (isEditUserPage) {
-        formData.append("createAuthRequest", updateBody);
-      } else {
+        //프로필 이미지가 변경되었다면
+        if (uploadedProfilePicture.slice(0, 4) == "data") {
+          const updateBodyJson = JSON.stringify(updateBody);
+          const updateBodyBlob = new Blob([updateBodyJson], {
+            type: "application/json",
+          });
+
+          const [profilePictureBinaryData, profilePictureMimeType] =
+            base64ImgSrcToImgBinaryData(uploadedProfilePicture);
+
+          const profilePictureBlob = new Blob([profilePictureBinaryData], {
+            type: profilePictureMimeType,
+          });
+
+          formData.append("updateAuthRequest", updateBodyBlob);
+          formData.append("file", profilePictureBlob);
+        }
+        //프로필 이미지가 변경되지 않았다면
+        else {
+          const updateBodyJson = JSON.stringify(updateBody2);
+          const updateBodyBlob = new Blob([updateBodyJson], {
+            type: "application/json",
+          });
+
+          const profilePictureBlob = new Blob([""]);
+
+          formData.append("updateAuthRequest", updateBodyBlob);
+          formData.append("file", profilePictureBlob);
+        }
+
+        // 회원수정
+        axios
+          .put(url, formData, config)
+          .then((response) => {
+            //수정된 데이터 다시 가져와서 리다이렉트 하기
+            toast.success(response.data);
+            const url = `${process.env.REACT_APP_SERVER2_IP}/v1/auths`;
+            const config = {
+              headers: {
+                Authorization: token,
+              },
+              timeout: 1000,
+            };
+            axios
+              .get(url, config)
+              .then((resonse) => {
+                navigate(`/user/edit/menu`, { state: resonse.data });
+              })
+              .catch((error) => {
+                console.log(error);
+                toast.error(
+                  "수정된 데이터를 가져오는데 실패했습니다. 관리자에게 문의하세요"
+                );
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error("회원정보 변경에 실패했습니다. 관리자에게 문의하세요.");
+          });
+      }
+      //회원가입
+      else {
         const signUpBodyJson = JSON.stringify(signUpBody);
         const signUpBodyBlob = new Blob([signUpBodyJson], {
           type: "application/json",
@@ -298,33 +407,25 @@ function InputUserForm({ state }) {
         const profilePictureBlob = new Blob([profilePictureBinaryData], {
           type: profilePictureMimeType,
         });
+
         formData.append("createAuthRequest", signUpBodyBlob);
         formData.append("file", profilePictureBlob);
+
+        axios
+          .post(url, formData, config)
+          .then((response) => {
+            navigate(`/user/edit/menu`);
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error("회원가입에 실패했습니다. 관리자에게 문의하세요.");
+          });
       }
 
-      const config = {
-        headers: {
-          Authorization: isEditUserPage ? token : "",
-        },
-        timeout: 3000,
-      };
-
       printFormData(formData);
-      console.log("signUpBody", signUpBody);
+      console.log("updateBody", updateBody);
+      console.log("updateBody2", updateBody2);
       console.log(url);
-      axios
-        .post(url, formData, config)
-        .then((response) => {
-          navigate(isEditUserPage ? `/user/edit/menu` : "/login");
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error(
-            isEditUserPage
-              ? "회원정보 변경에 실패했습니다. 관리자에게 문의하세요."
-              : "회원가입에 실패했습니다. 관리자에게 문의하세요."
-          );
-        });
     } else {
       toast.warn("모든 값을 입력해주세요.");
     }

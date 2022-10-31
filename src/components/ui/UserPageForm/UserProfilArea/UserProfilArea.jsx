@@ -1,14 +1,14 @@
 /* libraries */
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 /* components */
-import * as S from './styled';
-import { Button, ProfilePic } from '../../../';
+import * as S from "./styled";
+import { Button, ProfilePic } from "../../../";
 /* static data */
-import { COLOR_LIST as color } from '../../../../style';
+import { COLOR_LIST as color } from "../../../../style";
 
-function UserProfilArea({ token }) {
+function UserProfilArea({ token, userInfo }) {
   /* States */
   const [user, setUser] = useState([]);
 
@@ -34,18 +34,18 @@ function UserProfilArea({ token }) {
   useEffect(() => {
     getUser();
   }, []);
-  console.log(user);
+
   return (
     <S.ProfileWrap>
       {/* 프로필 사진 */}
       <S.ProfilePicWrap>
         <ProfilePic
-          src={user.profileImgSaveUrl}
+          src={userInfo.profileImgSaveUrl}
           alt="profile_pic"
-          width={'60px'}
-          height={'60px'}
+          width={"60px"}
+          height={"60px"}
         />
-        <span>{user.nickname}</span>
+        <span>{userInfo.nickname}</span>
       </S.ProfilePicWrap>
       {/* 유저 정보 */}
       <S.ProfileUtilWrap>
@@ -63,12 +63,12 @@ function UserProfilArea({ token }) {
             <span>100</span>
           </Link>
         </S.UserInfoWrap>
-        <Link to="/user/edit/menu">
+        <Link to="/user/edit/menu" state={userInfo}>
           <Button
             type="button"
-            width={'220px'}
-            height={'25px'}
-            font_size={'12px'}
+            width={"220px"}
+            height={"25px"}
+            font_size={"12px"}
             bgColor={color.darkBlue}
             hoveredBgColor={color.navy}
           >
