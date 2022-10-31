@@ -16,13 +16,15 @@ import * as TbIcons from "react-icons/tb";
 import * as FaIcons from "react-icons/fa";
 import * as MdIcons from "react-icons/md";
 import * as RiIcons from "react-icons/ri";
+import { useEffect } from "react";
+import axios from "axios";
 
 function MenuListForm({ onClickOpenReportForm }) {
   const navigate = useNavigate();
 
   const path = useLocation().pathname;
   const useInfo = useLocation().state;
-
+  const token = localStorage.getItem("token");
   const isEditUserPage = path.includes("edit");
 
   const [, setIsLoggedIn] = useRecoilState(loginStateAtom);

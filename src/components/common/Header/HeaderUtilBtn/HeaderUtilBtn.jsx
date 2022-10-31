@@ -38,6 +38,7 @@ function HeaderUtilBtn() {
     }
   }, []);
 
+  console.log("userInfo", userInfo);
   return (
     <>
       {token && isLoggedIn && userInfo ? (
