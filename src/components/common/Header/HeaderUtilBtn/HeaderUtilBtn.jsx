@@ -1,16 +1,16 @@
 /* librarie */
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 /* recoil */
-import { useRecoilState } from "recoil";
-import { loginStateAtom } from "../../../../store";
+import { useRecoilState } from 'recoil';
+import { loginStateAtom } from '../../../../store';
 /* components */
-import { SmallProfilePic, Icon } from "../../../";
+import { SmallProfilePic, Icon } from '../../../';
 /* icons */
-import * as AiIcons from "react-icons/ai";
-import axios from "axios";
+import * as AiIcons from 'react-icons/ai';
+import axios from 'axios';
 function HeaderUtilBtn() {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   //사용자 정보를 나타내는 state.
@@ -30,28 +30,26 @@ function HeaderUtilBtn() {
         .get(url, config)
         .then((resonse) => {
           setUserInfo(resonse.data);
-          console.log(resonse);
         })
         .catch((error) => {
-          console.log(error);
+          new Error(error);
         });
     }
   }, []);
 
-  console.log("userInfo", userInfo);
   return (
     <>
       {token && isLoggedIn && userInfo ? (
         <Link to={`/user/${userInfo.id}`} state={userInfo}>
           <SmallProfilePic
             src={userInfo.profileImgSaveUrl}
-            alt={"profile_pic"}
+            alt={'profile_pic'}
           />
         </Link>
       ) : (
         <Link to="/login">
           <Icon>
-            <AiIcons.AiOutlineLogin style={{ margin: "0" }} />
+            <AiIcons.AiOutlineLogin style={{ margin: '0' }} />
           </Icon>
         </Link>
       )}

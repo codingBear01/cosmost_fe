@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
@@ -15,12 +15,30 @@ import { OrderingButton, ToTopBtn, UtilDiv } from '../..';
 function CoursesForm() {
   // const token = localStorage.getItem('token');
   const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4OCIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjY2NjczODI3LCJleHAiOjM2MDE2NjY2NzM4Mjd9.4Hzr9h89tJJNqNhnIOka4JIAqdR_CWTx7vA3Yl_4jg0';
-
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxOSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjY3MjAxNTE0LCJleHAiOjM3NjY3MjAxNTE0fQ.mKmlkc8vX5YIO2AFoE_1chICSOyTpa8OYDVzAmsZLp8';
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
   );
   const [courses, setCourses] = useState([]);
+  const [page, setPage] = useState(0);
+  const [isFetching, setIsFetching] = useState(false);
+  const [isLastPage, setIsLastPage] = useState(false);
+
+  const URL_TYPES = {
+    all: 'all',
+    mine: 'auth',
+  };
+  const CONFIGS = {
+    all: {
+      timeout: 3000,
+    },
+    mine: {
+      headers: {
+        Authorization: token,
+      },
+      timeout: 3000,
+    },
+  };
 
   const params = useParams();
 
@@ -30,29 +48,45 @@ function CoursesForm() {
   };
 
   /* APIs */
-  /* 로그인한 사용자가 작성한 코스를 불러오는 api */
-  const getMyCourses = () => {
-    const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=auth`;
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
+  /** 페이지 종류에 따라 다른 코스를 불러오는 api */
+  const getCourses = useCallback(
+    async (type) => {
+      const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=${URL_TYPES[type]}&page=${page}&size=4`;
+      const config = CONFIGS[type];
 
-    axios
-      .get(url, config)
-      .then((response) => {
-        setCourses(response.data);
-      })
-      .catch((error) => console.log(error));
-  };
+      const { data } = await axios.get(url, config);
 
-  /* params의 type에 따라 호출하는 함수가 바뀜 */
+      setCourses(courses.concat(data));
+      setPage((prev) => prev + 1);
+      setIsLastPage(data[data.length - 1].whetherLastPage);
+      setIsFetching(false);
+    },
+    [page]
+  );
+
   useEffect(() => {
-    if (params.type === 'mine') {
-      getMyCourses();
+    const handleScroll = () => {
+      const { scrollTop, offsetHeight } = document.documentElement;
+      if (window.innerHeight + scrollTop >= offsetHeight) {
+        setIsFetching(true);
+      }
+    };
+    setIsFetching(true);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  /** 스크롤 event 및 마지막 페이지 여부를 체크하여 api를 호출 */
+  useEffect(() => {
+    if (isFetching && !isLastPage) {
+      getCourses(params.type);
+    } else if (isLastPage) {
+      setIsFetching(false);
     }
+  }, [isFetching]);
+
+  useEffect(() => {
+    setPage(0);
   }, [params.type]);
 
   return (
