@@ -1,7 +1,7 @@
 /* libraries */
-import React, { useState, useRef } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import axios from 'axios';
+import React, { useState, useRef } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 /* components */
 import {
   Button,
@@ -11,18 +11,18 @@ import {
   UtilDiv,
   UtilInputWrap,
   UtilTitle,
-} from '../..';
+} from "../..";
 /* icons */
-import * as AiIcons from 'react-icons/ai';
-import * as BsIcons from 'react-icons/bs';
+import * as AiIcons from "react-icons/ai";
+import * as BsIcons from "react-icons/bs";
 /* static data */
-import { COLOR_LIST as color } from '../../../style';
-import { useLocation } from 'react-router-dom';
+import { COLOR_LIST as color } from "../../../style";
+import { useLocation } from "react-router-dom";
 
 function InputEmailForm() {
   /* Path */
   const path = useLocation().pathname;
-  const isEmailValidationPage = path.includes('validation');
+  const isEmailValidationPage = path.includes("validation");
 
   /* States */
   const [email, setEmail] = useState(null);
@@ -43,7 +43,7 @@ function InputEmailForm() {
     const regExpEmail = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
 
     if (!regExpEmail.test(emailRef.current.value)) {
-      toast.error('이메일을 올바르게 입력해주세요.');
+      toast.error("이메일을 올바르게 입력해주세요.");
       return false;
     }
     return true;
@@ -52,20 +52,20 @@ function InputEmailForm() {
   /* 입력값 유효성 검증하는 핸들러 */
   const checkInput = (e, type) => {
     if (
-      (type === 'email' && !emailRef.current.value) ||
-      (type === 'next' && !emailRef.current.value)
+      (type === "email" && !emailRef.current.value) ||
+      (type === "next" && !emailRef.current.value)
     ) {
       e.preventDefault();
-      toast.error('이메일을 입력해주세요.');
+      toast.error("이메일을 입력해주세요.");
       return false;
     }
 
     if (
-      (type === 'number' && !certificationNumberRef.current.value) ||
-      (type === 'next' && !certificationNumberRef.current.value)
+      (type === "number" && !certificationNumberRef.current.value) ||
+      (type === "next" && !certificationNumberRef.current.value)
     ) {
       e.preventDefault();
-      toast.error('인증번호를 입력해주세요.');
+      toast.error("인증번호를 입력해주세요.");
       return false;
     }
 
@@ -78,29 +78,57 @@ function InputEmailForm() {
   const checkIsCertificationNumberButtonClicked = (e) => {
     if (!isCertificationNumberSent) {
       e.preventDefault();
-      toast.error('인증번호 발송 여부를 확인해주세요.');
+      toast.error("인증번호 발송 여부를 확인해주세요.");
       return false;
     }
     if (!isCertificationNumberValidated) {
       e.preventDefault();
-      toast.error('인증번호 일치 여부를 확인해주세요.');
+      toast.error("인증번호 일치 여부를 확인해주세요.");
       return false;
     }
     return true;
   };
 
-  /* 인증번호 확인하는 핸들러 */
+  /* 사용자가 입력한 인증번호가 진짜 인증번호인지 검증하는 핸들러 */
   const onClickCompareCertificationNumber = (e) => {
     e.preventDefault();
 
-    if (!checkInput(e, 'number')) return;
+    if (!checkInput(e, "number")) return;
 
-    setIsCertificationNumberValidated(true);
+    const url = `${process.env.REACT_APP_SERVER2_IP}/v1/authorization/code/confirm/${certificationNumberRef.current.value}/${emailRef.current.value}`;
+    const config = { timeout: 3000 };
+
+    axios
+      .get(url, config)
+      .then((response) => {
+        switch (response.data) {
+          case true:
+            toast.success(
+              `인증번호 검증이 완료되었습니다. 다음 버튼을 눌러주세요.`
+            );
+            setIsCertificationNumberValidated(true);
+            break;
+          case false:
+            toast.error(
+              `유효하지 않은 인증번호입니다. 인증번호를 다시 확인해주세요`
+            );
+            break;
+          default:
+            toast.error(`예상치 않은 에러입니다. 관리자에게 문의하세요`);
+            break;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          "인증번호 검증을 할 수 없는 상태입니다. 관리자에게 문의하세요."
+        );
+      });
   };
 
   /* 다음 페이지로 이동하는 핸들러. 입력값의 유효성을 검증하고 인증번호 발송 및 확인 버튼 클릭 여부를 확인한 후 이상이 없으면 주소 입력 페이지로 이동한다. */
   const onClickTransferAddressForm = (e) => {
-    if (!checkInput(e, 'next')) return;
+    if (!checkInput(e, "next")) return;
     if (!checkIsCertificationNumberButtonClicked(e)) return;
   };
 
@@ -109,29 +137,30 @@ function InputEmailForm() {
   const onClickSendCertificationNumber = (e) => {
     e.preventDefault();
 
-    if (!checkInput(e, 'email')) return;
+    if (!checkInput(e, "email")) return;
     if (!validateEmailByRegExp(e)) return;
 
-    const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/email/confirm/${emailRef.current.value}`;
+    const url = `${process.env.REACT_APP_SERVER2_IP}/v1/authorization/email/confirm/${emailRef.current.value}`;
     const config = { timeout: 3000 };
 
     axios
       .get(url, config)
       .then((response) => {
+        console.log(response);
         toast.success(
           `${emailRef.current.value}로 인증번호를 발송했습니다. 이메일을 확인해주세요.`
         );
         setIsCertificationNumberSent(true);
       })
       .catch((error) => {
-        toast.error('인증번호 발송에 실패했습니다.');
-        new Error(error);
+        console.log(error);
+        toast.error("인증번호 발송에 실패했습니다.");
       });
   };
 
   /* 이메일 변경 api */
   const onClickUpdateEmail = () => {
-    console.log('변경 완료!');
+    console.log("변경 완료!");
   };
 
   return (
@@ -146,14 +175,14 @@ function InputEmailForm() {
           type="email"
           placeholder="이메일"
           name="email"
-          width={'205px'}
-          height={'40px'}
-          margin={'0 10px'}
+          width={"205px"}
+          height={"40px"}
+          margin={"0 10px"}
         />
         <Button
           type="submit"
-          width={'100px'}
-          height={'40px'}
+          width={"100px"}
+          height={"40px"}
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
@@ -171,14 +200,14 @@ function InputEmailForm() {
           type="text"
           name="userCertificationNumber"
           placeholder="인증번호"
-          width={'205px'}
-          height={'40px'}
-          margin={'0 10px'}
+          width={"205px"}
+          height={"40px"}
+          margin={"0 10px"}
         />
         <Button
           type="submit"
-          width={'100px'}
-          height={'40px'}
+          width={"100px"}
+          height={"40px"}
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
@@ -190,7 +219,7 @@ function InputEmailForm() {
       {/* 다음으로 버튼 */}
       {isEmailValidationPage && (
         <NextBtn
-          to={'/address'}
+          to={"/address"}
           state={{ email: email }}
           onClick={onClickTransferAddressForm}
         />
@@ -199,8 +228,8 @@ function InputEmailForm() {
       {!isEmailValidationPage && (
         <Button
           type="submit"
-          width={'100%'}
-          height={'40px'}
+          width={"100%"}
+          height={"40px"}
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}

@@ -381,7 +381,10 @@ function InputUserForm({ state, beforeEditUserInfo }) {
             axios
               .get(url, config)
               .then((resonse) => {
-                navigate(`/user/edit/menu`, { state: resonse.data });
+                navigate(`/user/edit/menu`, {
+                  replace: true,
+                  state: resonse.data,
+                });
               })
               .catch((error) => {
                 console.log(error);
