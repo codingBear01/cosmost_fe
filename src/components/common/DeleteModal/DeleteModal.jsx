@@ -1,12 +1,12 @@
 /* libraries */
-import React from "react";
-import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
-import { Button } from "../../";
+import React from 'react';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import { Button } from '../../';
 /* components */
-import * as S from "./styled";
+import * as S from './styled';
 /* static data */
-import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from "../../../style";
+import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
 
 function DeleteModal({
   onClickOpenDeleteModal,
@@ -22,7 +22,7 @@ function DeleteModal({
     let id;
 
     // 코스 삭제
-    if (clicked === "course") {
+    if (clicked === 'course') {
       id = courseId;
       const deleteCourseUrl = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts/${id}`;
       const config = { timeout: 1000 };
@@ -33,8 +33,7 @@ function DeleteModal({
           toast.success(`${id}번 코스가 삭제되었읍니다!`);
         })
         .catch((error) => {
-          console.log(error);
-          toast.error("오류가 발생했습니다. 관리자에게 문의하세요.");
+          toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
         });
     }
     //코스 리뷰 삭제
@@ -50,7 +49,7 @@ function DeleteModal({
           setIsClickedCourseReviewChanged(!isClickedCourseReviewChanged);
         })
         .catch((error) => {
-          toast.error("오류가 발생했습니다. 관리자에게 문의하세요.");
+          toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
         });
     }
   };
@@ -71,10 +70,10 @@ function DeleteModal({
         <S.DeleteModalTitle>정말로 삭제하시겠습니까?</S.DeleteModalTitle>
         <S.DeleteModalButtonWrap>
           <Button
-            type={"button"}
-            width={"6rem"}
-            height={"3rem"}
-            margin={"0 1.5rem"}
+            type={'button'}
+            width={'6rem'}
+            height={'3rem'}
+            margin={'0 1.5rem'}
             fontSize={fs.m}
             color={color.black}
             bgColor={color.darkGrey}
@@ -84,10 +83,10 @@ function DeleteModal({
             취소
           </Button>
           <Button
-            type={"button"}
-            width={"6rem"}
-            height={"3rem"}
-            margin={"0 1.5rem"}
+            type={'button'}
+            width={'6rem'}
+            height={'3rem'}
+            margin={'0 1.5rem'}
             fontSize={fs.m}
             color={color.black}
             bgColor={color.darkRed}

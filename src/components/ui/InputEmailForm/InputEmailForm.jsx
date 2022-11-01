@@ -130,9 +130,7 @@ function InputEmailForm() {
   };
 
   /* 이메일 변경 api */
-  const onClickUpdateEmail = () => {
-    console.log('변경 완료!');
-  };
+  const onClickUpdateEmail = () => {};
 
   return (
     <>

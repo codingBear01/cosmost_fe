@@ -12,6 +12,7 @@ export { default as InputUser } from './InputUser';
 export { default as Login } from './Login';
 export { default as Main } from './Main';
 export { default as NotFoundPage } from './NotFoundPage';
+export { default as Rankers } from './Rankers';
 export { default as User } from './User';
 export { default as WithdrawalMessage } from './WithdrawalMessage';
 export { default as WithdrawUser } from './WithdrawUser';

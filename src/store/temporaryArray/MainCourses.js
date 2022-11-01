@@ -9,7 +9,7 @@ export const MAIN_COURSES = [
     alignSelf: 'start',
     title: '공유된 모든 코스',
     icon: <GiIcons.GiRoad />,
-    path: '/searched-courses',
+    path: '/courses/all',
   },
   {
     id: 2,

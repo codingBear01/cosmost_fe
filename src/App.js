@@ -1,8 +1,8 @@
 /* libraries */
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 /* recoil */
-import { useRecoilState } from "recoil";
-import { loginStateAtom } from "./store";
+import { useRecoilState } from 'recoil';
+import { loginStateAtom } from './store';
 /* components */
 import {
   Header,
@@ -24,12 +24,13 @@ import {
   Login,
   Main,
   NotFoundPage,
+  Rankers,
   User,
   WithdrawalMessage,
   WithdrawUser,
-} from "./components";
+} from './components';
 /* router */
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet } from 'react-router-dom';
 
 const WithHeaderAndFooter = () => {
   return (
@@ -56,7 +57,7 @@ const WithoutHeaderAndFooter = () => {
 const { Kakao } = window;
 
 function App() {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   /* 프로젝트 실행 시 Kakao API KEY 값 초기화하는 함수 */
@@ -72,6 +73,7 @@ function App() {
           <Route index element={<Main />} />
           <Route path="/course-detail/:id" element={<CourseDetail />} />
           <Route path="/courses/:type" element={<Courses />} />
+          <Route path="/rankers" element={<Rankers />} />
         </Route>
         <Route element={<WithoutHeaderAndFooter />}>
           {/* {!token && !isLoggedIn && ( */}
