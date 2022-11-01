@@ -5,10 +5,8 @@ import { Icon, Input } from '../../../';
 /* icons */
 import * as BsIcons from 'react-icons/bs';
 import * as AiIcons from 'react-icons/ai';
-/* static data */
-import { FONT_SIZE_LIST as fs } from '../../../../style';
 
-function HeaderSearchBar({ onClick, isSearchBarOpened }) {
+function HeaderSearchBar({ isSearchBarOpened, onClick }) {
   return (
     <S.HeaderSearchBar isSearchBarOpened={isSearchBarOpened}>
       <Icon>

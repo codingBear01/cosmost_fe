@@ -1,6 +1,11 @@
 /* libraries */
-import React, { useState, useContext } from 'react';
+import React, { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { loginStateAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Button, Icon, Input, UtilForm, UtilInputWrap } from '../../';
@@ -11,70 +16,94 @@ import * as SiIcons from 'react-icons/si';
 import * as FcIcons from 'react-icons/fc';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
-import axios from 'axios';
-import { LoginStateContext } from '../../context';
 
-const LoginApiUrl = 'http://10.10.10.21:8080/v1/signin';
+/* CONSTANTS */
+const { Kakao } = window;
 
 function LoginForm() {
-  //로그인 토큰
-  const loginTokenState = useContext(LoginStateContext);
-
-  //아이디, 패스워드 state
-  const [inputValue, setInputValue] = useState({
-    loginId: '',
-    loginPwd: '',
-  });
+  const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
+  const idRef = useRef();
+  const passwordRef = useRef();
 
   const navigate = useNavigate();
 
-  /* 아이디와 패스워드를 입력할 때마다 호출될 핸들러 */
-  const onChangeInput = (e) => {
-    setInputValue({
-      ...inputValue,
-      [e.target.name]: e.target.value,
-    });
+  /* Handlers */
+  /* 아이디 및 패스워드 입력값을 검증하는 핸들러 */
+  const checkIdAndPassword = () => {
+    if (!idRef.current.value) {
+      toast.error('아이디를 입력해주세요.');
+      return false;
+    }
+    if (!passwordRef.current.value) {
+      toast.error('비밀번호를 입력해주세요.');
+      return false;
+    }
+    return true;
   };
 
-  /* 로그인을 눌렀을시 호출될 핸들러*/
-  const onSubmitForm = (e) => {
+  /* 로그인을 수행하는 핸들러 */
+  const onSubmitLogin = (e) => {
     e.preventDefault();
+
+    if (!checkIdAndPassword()) return;
+
+    const url = `${process.env.REACT_APP_SERVER2_IP}/v1/signin`;
+    const body = {
+      loginId: idRef.current.value,
+      loginPwd: passwordRef.current.value,
+    };
+    const config = { timeout: 3000 };
+
+    //testId1001
+    //testPwd1001
     axios
-      .put(LoginApiUrl, inputValue, { timeout: 1000 })
+      .put(url, body, config)
       .then((response) => {
-        console.log(response);
-        if (response.data.isSuccess) {
-          sessionStorage.setItem('token', response.data.result);
-          navigate('/');
-        } else {
-          alert(response.data.message);
-        }
+        localStorage.setItem('token', response.data);
+        setIsLoggedIn(true);
+        navigate('/');
       })
       .catch((e) => {
-        alert('서버와 연결이 되지 않았습니다. 관리자에게 문의하세요.');
+        toast.error('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');
       });
+  };
+
+  /* 카카오 로그인 핸들러 */
+  const onClickLoginWithKakao = () => {
+    Kakao.Auth.authorize({
+      redirectUri: 'http://localhost:3000/',
+    });
   };
 
   return (
     <UtilForm
       justifyContent={'center'}
       height={'100vh'}
-      onSubmit={onSubmitForm}
+      onSubmit={onSubmitLogin}
     >
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       {/* 아이디, 비밀번호 인풋 */}
       <UtilInputWrap>
         <Icon>
           <AiIcons.AiOutlineUser />
         </Icon>
         <Input
+          ref={idRef}
           type="text"
           name="loginId"
-          value={inputValue.loginId}
           placeholder="아이디"
           width={'305px'}
           height={'40px'}
           margin={'0 0 0 10px'}
-          onChange={onChangeInput}
         />
       </UtilInputWrap>
       <UtilInputWrap>
@@ -82,14 +111,13 @@ function LoginForm() {
           <AiIcons.AiOutlineLock />
         </Icon>
         <Input
+          ref={passwordRef}
           type="password"
           name="loginPwd"
-          value={inputValue.loginPwd}
           placeholder="비밀번호"
           width={'305px'}
           height={'40px'}
           margin={'0 0 0 10px'}
-          onChange={onChangeInput}
         />
       </UtilInputWrap>
       {/* 로그인 버튼 */}
@@ -112,7 +140,7 @@ function LoginForm() {
       {/* 회원가입 및 SNS 로그인 버튼들 */}
       <Link to="/email-validation">
         <Button
-          type="submit"
+          type="button"
           width={'340px'}
           height={'40px'}
           margin={'0 0 10px 0'}
@@ -124,18 +152,19 @@ function LoginForm() {
         </Button>
       </Link>
       <Button
-        type="submit"
+        type="button"
         width={'340px'}
         height={'40px'}
         margin={'0 0 10px 0'}
         fontSize={'20px'}
         bgColor={color.yellow}
         hoveredBgColor={color.darkYellow}
+        onClick={onClickLoginWithKakao}
       >
         <RiIcons.RiKakaoTalkFill />
       </Button>
       <Button
-        type="submit"
+        type="button"
         width={'340px'}
         height={'40px'}
         margin={'0 0 10px 0'}
@@ -147,7 +176,7 @@ function LoginForm() {
         <SiIcons.SiNaver />
       </Button>
       <Button
-        type="submit"
+        type="button"
         width={'340px'}
         height={'40px'}
         margin={'0 0 10px 0'}

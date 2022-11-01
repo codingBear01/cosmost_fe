@@ -1,3 +1,4 @@
+/* libraries */
 import React from 'react';
 /* components */
 import * as S from './styled';
@@ -9,7 +10,7 @@ function MainCourse({ item }) {
     <S.StyledMainCourse alignSelf={item.alignSelf}>
       <S.CourseTextWrap>
         <S.CourseTitle>{item.title}</S.CourseTitle>
-        <S.CoureseLink>
+        <S.CoureseLink to={item.path}>
           더 둘러보기
           <FaIcons.FaChevronRight />
         </S.CoureseLink>
