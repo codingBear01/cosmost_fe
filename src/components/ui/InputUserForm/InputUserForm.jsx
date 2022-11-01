@@ -226,7 +226,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
   const checkIsDuplicatedId = (id) => {
     if (!checkIsIdOrNicknameEmpty("id")) return;
 
-    const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=login-id`;
+    const url = `${process.env.REACT_APP_SERVER2_IP}/v1/validation/duplicate?id=login-id`;
     const config = {
       headers: {
         Authorization: id,
@@ -237,12 +237,14 @@ function InputUserForm({ state, beforeEditUserInfo }) {
     axios
       .get(url, config)
       .then((response) => {
+        console.log(response);
         if (response.status === 200) {
           toast.success("사용 가능한 아이디입니다.");
           setIsDuplicatedIdChecked(!isDuplicatedIdChecked);
         }
       })
       .catch((error) => {
+        console.log(error);
         if (error.response.status === 400) {
           toast.error("이미 존재하는 아이디입니다.");
         }
@@ -306,26 +308,30 @@ function InputUserForm({ state, beforeEditUserInfo }) {
         agegroup: userInformation.age,
       };
       //회원수정에서 프로필 이미지를 변경했을 때의 Body
-      const updateBody = {
-        loginId: userInformation.id,
-        loginPwd: userInformation.password,
-        nickname: userInformation.nickname,
-        email: beforeEditUserInfo.email,
-        address: beforeEditUserInfo.address,
-        role: beforeEditUserInfo.role,
-        sns: beforeEditUserInfo.sns,
-        status: beforeEditUserInfo.status,
-        ageGroup: userInformation.age,
-        married: userInformation.marriage,
-        type: "회원정보 수정",
-      };
-      //회원수정에서 프로필 이미지를 변경하지 않았을 때의 Body
-      const updateBody2 = {
-        ...updateBody,
-        profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
-        profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
-        profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
-      };
+      let updateBody;
+      let updateBody2;
+      if (isEditUserPage) {
+        updateBody = {
+          loginId: userInformation.id,
+          loginPwd: userInformation.password,
+          nickname: userInformation.nickname,
+          email: beforeEditUserInfo?.email,
+          address: beforeEditUserInfo.address,
+          role: beforeEditUserInfo.role,
+          sns: beforeEditUserInfo.sns,
+          status: beforeEditUserInfo.status,
+          ageGroup: userInformation.age,
+          married: userInformation.marriage,
+          type: "회원정보 수정",
+        };
+        //회원수정에서 프로필 이미지를 변경하지 않았을 때의 Body
+        updateBody2 = {
+          ...updateBody,
+          profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
+          profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
+          profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
+        };
+      }
 
       const config = {
         headers: {
@@ -417,7 +423,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
         axios
           .post(url, formData, config)
           .then((response) => {
-            navigate(`/user/edit/menu`);
+            navigate(`/login`, { replace: true });
           })
           .catch((error) => {
             console.log(error);

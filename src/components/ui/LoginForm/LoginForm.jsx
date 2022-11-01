@@ -16,6 +16,7 @@ import * as SiIcons from "react-icons/si";
 import * as FcIcons from "react-icons/fc";
 /* static data */
 import { COLOR_LIST as color } from "../../../style";
+import { GiToken } from "react-icons/gi";
 
 /* CONSTANTS */
 const { Kakao } = window;
@@ -77,6 +78,22 @@ function LoginForm() {
     Kakao.Auth.authorize({
       redirectUri: "http://localhost:3000/",
     });
+  };
+  /* 네이버 로그인 핸들러 */
+  const onClickLoginWithNaver = () => {
+    const url = `${process.env.REACT_APP_SERVER2_IP}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
+    const config = {
+      headers: {
+        Authorization: "token",
+      },
+      timeout: 3000,
+    };
+    console.log("naver");
+  };
+
+  /* 구글 로그인 핸들러 */
+  const onClickLoginWithGoogle = () => {
+    console.log("Google");
   };
 
   return (
@@ -176,6 +193,7 @@ function LoginForm() {
         color={color.white}
         bgColor={color.naverGreen}
         hoveredBgColor={color.naverDarkGreen}
+        onClick={onClickLoginWithNaver}
       >
         <SiIcons.SiNaver />
       </Button>
@@ -187,6 +205,7 @@ function LoginForm() {
         fontSize={"20px"}
         bgColor={color.white}
         hoveredBgColor={color.lightGrey}
+        onClick={onClickLoginWithGoogle}
       >
         <FcIcons.FcGoogle />
       </Button>

@@ -78,12 +78,12 @@ function InputEmailForm() {
   const checkIsCertificationNumberButtonClicked = (e) => {
     if (!isCertificationNumberSent) {
       e.preventDefault();
-      toast.error("인증번호 발송 여부를 확인해주세요.");
+      toast.error("인증번호를 발급받아주세요.");
       return false;
     }
     if (!isCertificationNumberValidated) {
       e.preventDefault();
-      toast.error("인증번호 일치 여부를 확인해주세요.");
+      toast.error("발급받은 인증번호를 검증해주세요");
       return false;
     }
     return true;
@@ -188,7 +188,7 @@ function InputEmailForm() {
           hoveredBgColor={color.navy}
           onClick={onClickSendCertificationNumber}
         >
-          인증번호 발송
+          인증번호 발급
         </Button>
       </UtilInputWrap>
       <UtilInputWrap>
@@ -213,7 +213,7 @@ function InputEmailForm() {
           hoveredBgColor={color.navy}
           onClick={onClickCompareCertificationNumber}
         >
-          인증문자 확인
+          인증번호 검증
         </Button>
       </UtilInputWrap>
       {/* 다음으로 버튼 */}
