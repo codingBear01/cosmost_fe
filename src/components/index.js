@@ -48,7 +48,6 @@ export {
   CourseRegistration,
   Courses,
   EditUserMenu,
-  ErrorPage,
   Follows,
   Histories,
   InputAddress,
@@ -57,9 +56,8 @@ export {
   InputUser,
   Login,
   Main,
-  NotFoundPage,
+  Messages,
   Rankers,
   User,
-  WithdrawalMessage,
   WithdrawUser,
 } from './pages/';
