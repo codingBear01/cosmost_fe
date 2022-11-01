@@ -9,5 +9,6 @@ export { InputEmailForm } from './InputEmailForm/';
 export { InputUserForm } from './InputUserForm';
 export { LoginForm } from './LoginForm/';
 export { MainSection } from './MainSection/';
+export { RankersForm } from './RankersForm/';
 export { UserPageForm } from './UserPageForm/';
 export { WithdrawUserForm } from './WithdrawUserForm/';

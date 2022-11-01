@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
@@ -20,9 +20,11 @@ function CoursesForm() {
     isOrderingModalOpenedAtom
   );
   const [courses, setCourses] = useState([]);
-  const [page, setPage] = useState(0);
-  const [isFetching, setIsFetching] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
+  const page = useRef(0);
+  const observedTarget = useRef(null);
+
+  const params = useParams();
 
   const URL_TYPES = {
     all: 'all',
@@ -40,54 +42,44 @@ function CoursesForm() {
     },
   };
 
-  const params = useParams();
-
   /* Handlers */
   const onClickOpenOrderingModal = () => {
     setIsOrderingModalOpened(!isOrderingModalOpened);
   };
 
   /* APIs */
-  /** 페이지 종류에 따라 다른 코스를 불러오는 api */
-  const getCourses = useCallback(
-    async (type) => {
-      const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=${URL_TYPES[type]}&page=${page}&size=4`;
+  /** params에 따라 다른 코스를 가져오는 api */
+  const getCourses = useCallback(async (type) => {
+    try {
+      const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=${URL_TYPES[type]}&page=${page.current}&size=4`;
       const config = CONFIGS[type];
 
       const { data } = await axios.get(url, config);
 
-      setCourses(courses.concat(data));
-      setPage((prev) => prev + 1);
+      setCourses((prev) => prev.concat(data));
       setIsLastPage(data[data.length - 1].whetherLastPage);
-      setIsFetching(false);
-    },
-    [page]
-  );
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const { scrollTop, offsetHeight } = document.documentElement;
-      if (window.innerHeight + scrollTop >= offsetHeight) {
-        setIsFetching(true);
+      if (!isLastPage) {
+        page.current += 1;
       }
-    };
-    setIsFetching(true);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    } catch (error) {
+      new Error(error);
+    }
   }, []);
 
-  /** 스크롤 event 및 마지막 페이지 여부를 체크하여 api를 호출 */
+  /** 무한 스크롤을 위해 observing을 하는 함수 */
   useEffect(() => {
-    if (isFetching && !isLastPage) {
-      getCourses(params.type);
-    } else if (isLastPage) {
-      setIsFetching(false);
-    }
-  }, [isFetching]);
+    if (!observedTarget.current || isLastPage) return;
 
-  useEffect(() => {
-    setPage(0);
-  }, [params.type]);
+    const io = new IntersectionObserver((entries, observer) => {
+      if (entries[0].isIntersecting) {
+        getCourses(params.type);
+      }
+    });
+    io.observe(observedTarget.current);
+
+    return () => io.disconnect();
+  }, [getCourses, isLastPage]);
 
   return (
     <UtilDiv width={'76.8rem'} padding={'9rem 0 7rem'} margin={'0 auto'}>
@@ -98,8 +90,9 @@ function CoursesForm() {
       {/* 코스 검색 결괏값 */}
       <S.SearchedCourseContainer>
         {courses &&
-          courses.map((course) => <Course key={course.id} course={course} />)}
+          courses?.map((course) => <Course key={course.id} course={course} />)}
       </S.SearchedCourseContainer>
+      <div ref={observedTarget}></div>
       <ToTopBtn />
     </UtilDiv>
   );

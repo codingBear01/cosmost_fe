@@ -37,6 +37,7 @@ export {
   InputUserForm,
   LoginForm,
   MainSection,
+  RankersForm,
   UserPageForm,
   WithdrawUserForm,
 } from './ui/';
@@ -57,6 +58,7 @@ export {
   Login,
   Main,
   NotFoundPage,
+  Rankers,
   User,
   WithdrawalMessage,
   WithdrawUser,

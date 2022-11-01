@@ -7,13 +7,13 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   let Base64DataReg;
   const mimeTypeReg = /data:(.*);/;
 
-  if (imgSrc.slice(0, 3) === "url") {
+  if (imgSrc.slice(0, 3) === 'url') {
     Base64DataReg = /,(.*)\)/;
   } else {
     Base64DataReg = /,(.*)/;
   }
 
-  if (imgSrc !== "none") {
+  if (imgSrc !== 'none') {
     const itemMimeType = imgSrc.match(mimeTypeReg)
       ? imgSrc.match(mimeTypeReg)[1]
       : null;
@@ -48,7 +48,7 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   }
 */
 const createNaverMap = (
-  elementId = "map",
+  elementId = 'map',
   defaultCoordinate = {
     latitude: 35.179816,
     longitude: 129.0750223,
@@ -140,9 +140,8 @@ const addNaverMapMarkerInfo = (map, marker, elementString, style) => {
  *
  */
 const printFormData = (formData) => {
-  console.log("formData");
   for (let key of formData.keys()) {
-    console.log(key, ":", formData.get(key));
+    console.log(key, ':', formData.get(key));
   }
 };
 
