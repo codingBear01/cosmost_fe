@@ -72,7 +72,7 @@ function CourseDetailForm() {
   };
 
   useEffect(() => {
-    const courseInfoUrl = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts/${id}`;
+    const courseInfoUrl = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${id}`;
     const courseInfoUConfig = { timeout: 1000 };
 
     //코스 정보 가져오기
@@ -141,7 +141,7 @@ function CourseDetailForm() {
       });
 
       // 코스등록자명과 코스 프로필 가져오기
-      const authorInfoUrl = `${process.env.REACT_APP_SERVER2_IP}/v1/view/info?id=author-id`;
+      const authorInfoUrl = `${process.env.REACT_APP_AUTH_IP}/v1/view/info?id=author-id`;
       const authorInfoUConfig = {
         headers: {
           Authorization: courseInfo.authorId,

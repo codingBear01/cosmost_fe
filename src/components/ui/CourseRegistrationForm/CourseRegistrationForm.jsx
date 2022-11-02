@@ -247,7 +247,7 @@ function CourseRegistrationForm() {
   /*백엔드와의 API 통신을 위한 함수
     코스 카테고리의 지역값을 가져오는 API */
   const getCategroyLocal = () => {
-    const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts?filter=all&category=location`;
+    const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=location`;
     const config = { timeout: 1000 };
 
     axios
@@ -263,7 +263,7 @@ function CourseRegistrationForm() {
   /*백엔드와의 API 통신을 위한 함수
     코스 카테고리의 테마값을 가져오는 API */
   const getCategroyTheme = () => {
-    const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts?filter=all&category=theme`;
+    const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=theme`;
     const config = { timeout: 1000 };
 
     axios
@@ -1153,7 +1153,7 @@ function CourseRegistrationForm() {
 
     printFormData(formData);
     if (location.state) {
-      const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts/${location.state.id}`;
+      const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${location.state.id}`;
       axios
         .put(url, formData, config)
         .then((response) => {
@@ -1164,7 +1164,7 @@ function CourseRegistrationForm() {
 
       return;
     } else {
-      const url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts`;
+      const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts`;
       axios
         .post(url, formData, config)
         .then((response) => {

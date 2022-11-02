@@ -1,7 +1,7 @@
 /* libraries */
-import React, { useState, useRef } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import axios from "axios";
+import React, { useState, useRef } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import axios from 'axios';
 /* components */
 import {
   Button,
@@ -11,14 +11,14 @@ import {
   UtilDiv,
   UtilInputWrap,
   UtilTitle,
-} from "../..";
+} from '../..';
 /* icons */
-import * as AiIcons from "react-icons/ai";
-import * as BsIcons from "react-icons/bs";
+import * as AiIcons from 'react-icons/ai';
+import * as BsIcons from 'react-icons/bs';
 /* static data */
-import { COLOR_LIST as color } from "../../../style";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { COLOR_LIST as color } from '../../../style';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function InputEmailForm({ beforeEditUserInfo }) {
   /* Path */
@@ -26,10 +26,10 @@ function InputEmailForm({ beforeEditUserInfo }) {
   const navigate = useNavigate();
 
   //이메일 인증목적이면 true, 이메일 수정목적이면 false
-  const isEmailValidationPage = path.includes("validation");
+  const isEmailValidationPage = path.includes('validation');
 
   // 토큰
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
 
   /* States */
   const [email, setEmail] = useState(null);
@@ -57,7 +57,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
     const regExpEmail = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
 
     if (!regExpEmail.test(emailRef.current.value)) {
-      toast.error("이메일을 올바르게 입력해주세요.");
+      toast.error('이메일을 올바르게 입력해주세요.');
       return false;
     }
     return true;
@@ -66,20 +66,20 @@ function InputEmailForm({ beforeEditUserInfo }) {
   /* 입력값 유효성 검증하는 핸들러 */
   const checkInput = (e, type) => {
     if (
-      (type === "email" && !emailRef.current.value) ||
-      (type === "next" && !emailRef.current.value)
+      (type === 'email' && !emailRef.current.value) ||
+      (type === 'next' && !emailRef.current.value)
     ) {
       e.preventDefault();
-      toast.error("이메일을 입력해주세요.");
+      toast.error('이메일을 입력해주세요.');
       return false;
     }
 
     if (
-      (type === "number" && !certificationNumberRef.current.value) ||
-      (type === "next" && !certificationNumberRef.current.value)
+      (type === 'number' && !certificationNumberRef.current.value) ||
+      (type === 'next' && !certificationNumberRef.current.value)
     ) {
       e.preventDefault();
-      toast.error("인증번호를 입력해주세요.");
+      toast.error('인증번호를 입력해주세요.');
       return false;
     }
 
@@ -92,12 +92,12 @@ function InputEmailForm({ beforeEditUserInfo }) {
   const checkIsCertificationNumberButtonClicked = (e) => {
     if (!isCertificationNumberSent) {
       e.preventDefault();
-      toast.error("인증번호를 발급받아주세요.");
+      toast.error('인증번호를 발급받아주세요.');
       return false;
     }
     if (!isCertificationNumberValidated) {
       e.preventDefault();
-      toast.error("발급받은 인증번호를 검증해주세요");
+      toast.error('발급받은 인증번호를 검증해주세요');
       return false;
     }
     return true;
@@ -107,9 +107,9 @@ function InputEmailForm({ beforeEditUserInfo }) {
   const onClickCompareCertificationNumber = (e) => {
     e.preventDefault();
 
-    if (!checkInput(e, "number")) return;
+    if (!checkInput(e, 'number')) return;
 
-    const url = `${process.env.REACT_APP_SERVER2_IP}/v1/authorization/code/confirm/${certificationNumberRef.current.value}/${emailRef.current.value}`;
+    const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/code/confirm/${certificationNumberRef.current.value}/${emailRef.current.value}`;
     const config = { timeout: 3000 };
 
     axios
@@ -133,14 +133,14 @@ function InputEmailForm({ beforeEditUserInfo }) {
       .catch((error) => {
         console.log(error);
         toast.error(
-          "인증번호 검증을 할 수 없는 상태입니다. 관리자에게 문의하세요."
+          '인증번호 검증을 할 수 없는 상태입니다. 관리자에게 문의하세요.'
         );
       });
   };
 
   /* 다음 페이지로 이동하는 핸들러. 입력값의 유효성을 검증하고 인증번호 발송 및 확인 버튼 클릭 여부를 확인한 후 이상이 없으면 주소 입력 페이지로 이동한다. */
   const onClickTransferAddressForm = (e) => {
-    if (!checkInput(e, "next")) return;
+    if (!checkInput(e, 'next')) return;
     if (!checkIsCertificationNumberButtonClicked(e)) return;
   };
 
@@ -149,10 +149,10 @@ function InputEmailForm({ beforeEditUserInfo }) {
   const onClickSendCertificationNumber = (e) => {
     e.preventDefault();
 
-    if (!checkInput(e, "email")) return;
+    if (!checkInput(e, 'email')) return;
     if (!validateEmailByRegExp(e)) return;
 
-    const url = `${process.env.REACT_APP_SERVER2_IP}/v1/authorization/email/confirm/${emailRef.current.value}`;
+    const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/email/confirm/${emailRef.current.value}`;
     const config = { timeout: 3000 };
 
     axios
@@ -166,17 +166,17 @@ function InputEmailForm({ beforeEditUserInfo }) {
       })
       .catch((error) => {
         console.log(error);
-        toast.error("인증번호 발송에 실패했습니다.");
+        toast.error('인증번호 발송에 실패했습니다.');
       });
   };
 
   /* 이메일 변경 api */
   const onClickUpdateEmail = (e) => {
-    if (!checkInput(e, "next")) return;
+    if (!checkInput(e, 'next')) return;
     if (!checkIsCertificationNumberButtonClicked(e)) return;
 
     const formData = new FormData();
-    const url = `${process.env.REACT_APP_SERVER2_IP}/v1/auths`;
+    const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
     const config = {
       headers: {
         Authorization: token,
@@ -188,16 +188,16 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
     const updateBody2 = {
       loginId: beforeEditUserInfo.loginId,
-      loginPwd: "",
+      loginPwd: '',
       nickname: beforeEditUserInfo.nickname,
       email: emailRef.current.value,
       address: beforeEditUserInfo.address,
       role: beforeEditUserInfo.role,
       sns: beforeEditUserInfo.sns,
       status: beforeEditUserInfo.status,
-      ageGroup: "",
-      married: "",
-      type: "회원정보 수정",
+      ageGroup: '',
+      married: '',
+      type: '회원정보 수정',
       profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
       profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
       profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
@@ -205,20 +205,20 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
     const updateBodyJson = JSON.stringify(updateBody2);
     const updateBodyBlob = new Blob([updateBodyJson], {
-      type: "application/json",
+      type: 'application/json',
     });
 
-    const profilePictureBlob = new Blob([""]);
+    const profilePictureBlob = new Blob(['']);
 
-    formData.append("updateAuthRequest", updateBodyBlob);
-    formData.append("file", profilePictureBlob);
+    formData.append('updateAuthRequest', updateBodyBlob);
+    formData.append('file', profilePictureBlob);
 
     // axios
     //   .put(url, formData, config)
     //   .then((response) => {
     //     //수정된 데이터 다시 가져와서 리다이렉트 하기
     //     toast.success(response.data);
-    //     const url = `${process.env.REACT_APP_SERVER2_IP}/v1/auths`;
+    //     const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
     //     const config = {
     //       headers: {
     //         Authorization: token,
@@ -246,35 +246,35 @@ function InputEmailForm({ beforeEditUserInfo }) {
     //   });
   };
 
-  console.log("beforeEditUserInfo", beforeEditUserInfo);
-  console.log("isEmailValidationPage", isEmailValidationPage);
+  console.log('beforeEditUserInfo', beforeEditUserInfo);
+  console.log('isEmailValidationPage', isEmailValidationPage);
   return (
     <>
       <UtilTitle>
         {isEmailValidationPage
-          ? "이메일 인증을 해주세요."
-          : "변경할 이메일을 입력 후 인증해주세요."}
+          ? '이메일 인증을 해주세요.'
+          : '변경할 이메일을 입력 후 인증해주세요.'}
       </UtilTitle>
       <UtilInputWrap>
         <Icon>
           <AiIcons.AiOutlineMail />
         </Icon>
-        {console.log("AA")}
+        {console.log('AA')}
         <Input
           ref={emailRef}
           // defaultValue={isEmailValidationPage ? "" : beforeEditUserInfo.email}
           type="email"
           placeholder="이메일"
           name="email"
-          width={"205px"}
-          height={"40px"}
-          margin={"0 10px"}
+          width={'205px'}
+          height={'40px'}
+          margin={'0 10px'}
           // onChange={onChangeEmailInput}
         />
         <Button
           type="submit"
-          width={"100px"}
-          height={"40px"}
+          width={'100px'}
+          height={'40px'}
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
@@ -292,14 +292,14 @@ function InputEmailForm({ beforeEditUserInfo }) {
           type="text"
           name="userCertificationNumber"
           placeholder="인증번호"
-          width={"205px"}
-          height={"40px"}
-          margin={"0 10px"}
+          width={'205px'}
+          height={'40px'}
+          margin={'0 10px'}
         />
         <Button
           type="submit"
-          width={"100px"}
-          height={"40px"}
+          width={'100px'}
+          height={'40px'}
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
@@ -311,7 +311,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
       {/* 다음으로 버튼 */}
       {isEmailValidationPage && (
         <NextBtn
-          to={"/address"}
+          to={'/address'}
           state={{ email: email }}
           onClick={onClickTransferAddressForm}
         />
@@ -320,8 +320,8 @@ function InputEmailForm({ beforeEditUserInfo }) {
       {!isEmailValidationPage && (
         <Button
           type="submit"
-          width={"100%"}
-          height={"40px"}
+          width={'100%'}
+          height={'40px'}
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
