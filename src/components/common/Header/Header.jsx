@@ -1,12 +1,12 @@
 /* hooks */
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 /* components */
-import * as S from './styled';
-import { HeaderLogo, HeaderSearchBar, HeaderUtilBtn } from './';
-import { Icon } from '../../';
+import * as S from "./styled";
+import { HeaderLogo, HeaderSearchBar, HeaderUtilBtn } from "./";
+import { Icon } from "../../";
 /* icons */
-import * as BsIcons from 'react-icons/bs';
+import * as BsIcons from "react-icons/bs";
 
 function Header() {
   /* States */
@@ -23,8 +23,8 @@ function Header() {
   /* 서치바 열렸을 때 바깥 영역 스크롤 방지하는 함수 */
   useEffect(() => {
     isSearchBarOpened
-      ? (document.body.style.overflow = 'hidden')
-      : (document.body.style.overflow = 'unset');
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
   }, [isSearchBarOpened]);
 
   return (
@@ -45,6 +45,7 @@ function Header() {
 
         <HeaderSearchBar
           isSearchBarOpened={isSearchBarOpened}
+          setIsSearchBarOpened={setIsSearchBarOpened}
           onClick={onClickOpenSearchBar}
         />
       </S.Header>

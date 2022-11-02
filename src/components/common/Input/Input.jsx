@@ -1,6 +1,6 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef } from "react";
 /* components */
-import * as S from './styled';
+import * as S from "./styled";
 
 const Input = forwardRef(
   (
@@ -16,6 +16,7 @@ const Input = forwardRef(
       margin,
       fontSize,
       onChange,
+      onKeyDown,
       required,
     },
     ref
@@ -34,6 +35,7 @@ const Input = forwardRef(
         margin={margin}
         fontSize={fontSize}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         required={required}
       />
     );

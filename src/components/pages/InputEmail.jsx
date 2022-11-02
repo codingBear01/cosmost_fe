@@ -1,9 +1,17 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 /* components */
 import { InputEmailForm } from '..';
 
 function InputEmail() {
-  return <InputEmailForm />;
+  const location = useLocation();
+  let beforeEditUserInfo = location.state;
+
+  return (
+    <>
+      <InputEmailForm beforeEditUserInfo={beforeEditUserInfo} />
+    </>
+  );
 }
 
 export default InputEmail;

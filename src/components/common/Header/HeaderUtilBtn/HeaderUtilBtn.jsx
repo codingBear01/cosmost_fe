@@ -1,6 +1,6 @@
 /* librarie */
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 /* recoil */
 import { useRecoilState } from 'recoil';
 import { loginStateAtom } from '../../../../store';
@@ -11,6 +11,7 @@ import * as AiIcons from 'react-icons/ai';
 import axios from 'axios';
 function HeaderUtilBtn() {
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   //사용자 정보를 나타내는 state.
@@ -18,13 +19,14 @@ function HeaderUtilBtn() {
 
   // 사용자 정보 가져오기
   useEffect(() => {
+    console.log('token', token);
     if (token && isLoggedIn) {
-      const url = `${process.env.REACT_APP_SERVER2_IP}/v1/auths`;
+      const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
       const config = {
         headers: {
           Authorization: token,
         },
-        timeout: 1000,
+        timeout: 3000,
       };
       axios
         .get(url, config)
@@ -32,7 +34,10 @@ function HeaderUtilBtn() {
           setUserInfo(resonse.data);
         })
         .catch((error) => {
-          new Error(error);
+          //토큰 만료로 실패했다면 토큰 삭제
+          localStorage.removeItem('token');
+          console.log(error);
+          // navigate("/error");
         });
     }
   }, []);
