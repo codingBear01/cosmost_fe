@@ -19,6 +19,7 @@ import {
   InputAddress,
   InputDetailAddress,
   InputEmail,
+  InputPassword,
   InputUser,
   Login,
   Main,
@@ -103,6 +104,7 @@ function App() {
                 <Route path="menu" element={<EditUserMenu />} />
                 <Route path="email" element={<InputEmail />} />
                 <Route path="address" element={<InputAddress />} />
+                <Route path="password" element={<InputPassword />} />
                 <Route path="my-information" element={<InputUser />} />
               </Route>
               <Route path="withdrawal" element={<WithdrawUser />} />

@@ -1,12 +1,12 @@
 /* libraries */
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 /* components */
-import * as S from "./styled";
-import { Button, ProfilePic } from "../../../";
+import * as S from './styled';
+import { Button, ProfilePic } from '../../../';
 /* static data */
-import { COLOR_LIST as color } from "../../../../style";
+import { COLOR_LIST as color } from '../../../../style';
 
 function UserProfilArea({ token, userInfo }) {
   /* States */
@@ -26,6 +26,7 @@ function UserProfilArea({ token, userInfo }) {
     axios
       .get(url, config)
       .then((response) => {
+        console.log(response);
         setUser(response.data);
       })
       .catch((error) => new Error(error));
@@ -42,8 +43,8 @@ function UserProfilArea({ token, userInfo }) {
         <ProfilePic
           src={userInfo.profileImgSaveUrl}
           alt="profile_pic"
-          width={"60px"}
-          height={"60px"}
+          width={'60px'}
+          height={'60px'}
         />
         <span>{userInfo.nickname}</span>
       </S.ProfilePicWrap>
@@ -66,9 +67,9 @@ function UserProfilArea({ token, userInfo }) {
         <Link to="/user/edit/menu" state={userInfo}>
           <Button
             type="button"
-            width={"220px"}
-            height={"25px"}
-            font_size={"12px"}
+            width={'220px'}
+            height={'25px'}
+            font_size={'12px'}
             bgColor={color.darkBlue}
             hoveredBgColor={color.navy}
           >

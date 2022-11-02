@@ -3,11 +3,7 @@ import React from 'react';
 import { InputEmailForm } from '..';
 
 function InputEmail() {
-  return (
-    <>
-      <InputEmailForm />
-    </>
-  );
+  return <InputEmailForm />;
 }
 
 export default InputEmail;

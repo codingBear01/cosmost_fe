@@ -7,6 +7,7 @@ export { default as Histories } from './Histories';
 export { default as InputAddress } from './InputAddress';
 export { default as InputDetailAddress } from './InputDetailAddress';
 export { default as InputEmail } from './InputEmail';
+export { default as InputPassword } from './InputPassword';
 export { default as InputUser } from './InputUser';
 export { default as Login } from './Login';
 export { default as Main } from './Main';
