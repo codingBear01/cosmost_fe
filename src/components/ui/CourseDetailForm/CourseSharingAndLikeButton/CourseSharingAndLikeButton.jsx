@@ -4,7 +4,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
-import { loginStateAtom } from '../../../../store';
+import { useRecoilState } from 'recoil';
+import { loginStateAtom, userAtom } from '../../../../store';
 /* components */
 import * as S from './styled';
 import { StyledCourseContentWrap } from '../CourseContentWrap/styled';
@@ -12,33 +13,38 @@ import { CourseSharingModal } from '../';
 /* icons */
 import * as BiIcons from 'react-icons/bi';
 import * as FaIcons from 'react-icons/fa';
-import { useRecoilState } from 'recoil';
+import { useLocation } from 'react-router-dom';
 
 /* 현재 접속한 페이지 url */
 const currentUrl = window.location.href;
 
-function CourseSharingAndLikeButton({ courseDetail }) {
+function CourseSharingAndLikeButton({ courseDetail, token }) {
   const [isLoggedIn] = useRecoilState(loginStateAtom);
   const navigate = useNavigate();
-
+  const location = useLocation();
   /* States */
   const [isSharingCourseModalOpened, setIsSharingCourseModalOpened] =
     useState(false);
   const [isCourseLiked, setIsCourseLiked] = useState(false);
+  const [user] = useRecoilState(userAtom);
+  const loggedInUserId = user?.id;
+  const authorId = courseDetail?.authorId;
+
+  console.log(token);
 
   /* Handlers */
-  /* 코스 공유하기 Modal Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
+  /**  코스 공유하기 Modal Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
   const onClickOpenSharingCourseModal = () => {
     setIsSharingCourseModalOpened(!isSharingCourseModalOpened);
   };
-  /* 현재 페이지의 url을 복사하는 핸들러 */
+  /** 현재 페이지의 url을 복사하는 핸들러 */
   const onClickCopyCurrentPageUrl = () => {
     window.navigator.clipboard.writeText(currentUrl);
     toast.success('url을 복사했습니다.');
   };
 
   /* Hooks */
-  /* 모달 바깥 영역 클릭 시 모달 닫는 함수 */
+  /** 모달 바깥 영역 클릭 시 모달 닫는 함수 */
   const modalRef = useRef();
   useEffect(() => {
     const closeModal = (e) => {
@@ -58,15 +64,21 @@ function CourseSharingAndLikeButton({ courseDetail }) {
 
     const url = `${process.env.REACT_APP_POPULARITY_IP}/v1/popularities`;
     const body = {
-      // authId: 1,
       courseId: courseDetail.id,
       type: 'course',
     };
-    const config = { timeout: 3000 };
+    const config = {
+      headers: {
+        Authorization: token,
+      },
+      timeout: 3000,
+    };
 
     axios
       .post(url, body, config)
-      .then((response) => {})
+      .then((response) => {
+        console.log(response);
+      })
       .catch((error) => new Error(error));
   };
 

@@ -25,8 +25,6 @@ import {
   CourseTitleAndDate,
 } from '.';
 import { DeleteModal, OrderingButton, ToTopBtn, UtilDiv } from '../..';
-/* static data */
-import { COURSE_DETAIL as courseDetail } from '../../../store';
 
 function CourseDetailForm() {
   /* States */
@@ -37,8 +35,8 @@ function CourseDetailForm() {
   // URL로부터 전달받은 코스 ID
   const { id } = useParams();
   // 백엔드로부터 응답받은 데이터
-  const [courseInfo, setCourseInfo] = useState(null);
-  const [authorInfo, setAuthorInfo] = useState(null);
+  const [courseDetail, setCourseDetail] = useState(null);
+  const [author, setAuthor] = useState(null);
   // 내비게이트
   const navigate = useNavigate();
 
@@ -68,19 +66,19 @@ function CourseDetailForm() {
 
   //코스 수정 버튼 클릭시 호출할 핸들러
   const onClickEditCourse = (e) => {
-    navigate(`/course-edit/${id}`, { state: courseInfo });
+    navigate(`/course-edit/${id}`, { state: courseDetail });
   };
 
   useEffect(() => {
-    const courseInfoUrl = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${id}`;
-    const courseInfoUConfig = { timeout: 1000 };
+    const courseDetailUrl = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${id}`;
+    const courseDetailUConfig = { timeout: 1000 };
 
     //코스 정보 가져오기
     axios
-      .get(courseInfoUrl, courseInfoUConfig)
+      .get(courseDetailUrl, courseDetailUConfig)
       .then((response) => {
         const data = response.data;
-        setCourseInfo(data);
+        setCourseDetail(data);
       })
       .catch((error) => {
         alert('코스 정보 가져오기 실패');
@@ -88,12 +86,12 @@ function CourseDetailForm() {
       });
   }, []);
 
-  // courseInfo를 성공적으로 가져오면 호출하는 useEffect.
+  // courseDetail를 성공적으로 가져오면 호출하는 useEffect.
   useEffect(() => {
-    if (courseInfo) {
+    if (courseDetail) {
       // 네이버 지도 생성
       const map = createNaverMap();
-      courseInfo.placeDetailList.map((item, index) => {
+      courseDetail.placeDetailList.map((item, index) => {
         const marker = addNaverMapMarker(map, {
           latitude: item.placeYCoordinate,
           longitude: item.placeXCoordinate,
@@ -140,11 +138,11 @@ function CourseDetailForm() {
         };
       });
 
-      // 코스등록자명과 코스 프로필 가져오기
+      // 코스 등록자명과 코스 프로필 가져오기
       const authorInfoUrl = `${process.env.REACT_APP_AUTH_IP}/v1/view/info?id=author-id`;
       const authorInfoUConfig = {
         headers: {
-          Authorization: courseInfo.authorId,
+          Authorization: courseDetail.authorId,
         },
         timeout: 3000,
       };
@@ -152,19 +150,19 @@ function CourseDetailForm() {
         .get(authorInfoUrl, authorInfoUConfig)
         .then((response) => {
           const data = response.data;
-          setAuthorInfo(data);
+          setAuthor(data);
         })
         .catch((error) => {
           alert('코스 등록자명 가져오기 통신 실패');
         });
     }
-  }, [courseInfo]);
+  }, [courseDetail]);
 
   return (
-    courseInfo && (
+    courseDetail && (
       <>
         {/* 코스 이미지 carousel */}
-        <CourseImageCarousel courseDetail={courseInfo} />
+        <CourseImageCarousel courseDetail={courseDetail} />
         {/* 본문 */}
         {isDeleteModalOpened && (
           <DeleteModal
@@ -172,7 +170,7 @@ function CourseDetailForm() {
             isClickedCourseReviewChanged={isClickedCourseReviewChanged}
             setIsClickedCourseReviewChanged={setIsClickedCourseReviewChanged}
             clickedElement={clickedElement}
-            courseId={courseInfo.id}
+            courseId={courseDetail.id}
             courseReviewId={clickedCourseReviewIndex}
           />
         )}
@@ -184,7 +182,7 @@ function CourseDetailForm() {
         >
           {/* 코스 제목 및 날짜, 더보기 버튼 */}
           <CourseTitleAndDate
-            courseDetail={courseInfo}
+            courseDetail={courseDetail}
             onClickOpenDeleteModal={onClickOpenDeleteModal}
             onClickEditCourse={onClickEditCourse}
           />
@@ -195,20 +193,20 @@ function CourseDetailForm() {
           />
           {/* 카테고리 */}
           <CourseContentWrap
-            courseDetail={courseInfo}
+            courseDetail={courseDetail}
             dataCategory="categoryLists"
           />
           {/* 해시태그 */}
           <CourseContentWrap
-            courseDetail={courseInfo}
+            courseDetail={courseDetail}
             dataCategory="hashtagList"
           />
           {/* 작성자 정보 */}
-          {authorInfo && (
+          {author && (
             <CourseContentWrap
               justifyContent={'center'}
               height={'10rem'}
-              courseDetail={authorInfo}
+              author={author}
               dataCategory="authorProfile"
             />
           )}
@@ -221,7 +219,7 @@ function CourseDetailForm() {
             id="map"
           />
           {/* { 
-            courseInfo.placeDetailList.map((itme, index) => {
+            courseDetail.placeDetailList.map((itme, index) => {
               createNaverMap("map", null, [{}])
             }) 
           } */}
@@ -229,13 +227,18 @@ function CourseDetailForm() {
           <CourseContentWrap
             justifyContent={'center'}
             height={'10rem'}
-            courseDetail={courseInfo}
+            courseDetail={courseDetail}
             dataCategory="courses"
           />
           {/* 코스 설명 */}
-          <S.CourseDescription>{courseInfo.courseComment}</S.CourseDescription>
+          <S.CourseDescription>
+            {courseDetail.courseComment}
+          </S.CourseDescription>
           {/* 공유, 좋아요 버튼 */}
-          <CourseSharingAndLikeButton courseDetail={courseDetail} />
+          <CourseSharingAndLikeButton
+            courseDetail={courseDetail}
+            token={token}
+          />
           {/* 코스 평균 평점 및 별 개수별 퍼센테이지 */}
           <CourseContentWrap
             justifyContent={'center'}

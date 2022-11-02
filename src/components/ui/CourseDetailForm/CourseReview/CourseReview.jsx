@@ -43,7 +43,7 @@ function CourseReview({
   const edittedReviewRateRef = useRef();
 
   /* Handlers */
-  /* 클릭된 review의 데이터를 저장하기 위한 핸들러. 클릭 시 해당 review의 index가 state에 저장되며, 리뷰 수정, 삭제 모달의 Open 여부가 반대로 변경되고, modalRef의 current값에 클릭된 타깃이 할당되며 코스 리뷰 수정 textarea가 닫힘. */
+  /** 클릭된 review의 데이터를 저장하기 위한 핸들러. 클릭 시 해당 review의 index가 state에 저장되며, 리뷰 수정, 삭제 모달의 Open 여부가 반대로 변경되고, modalRef의 current값에 클릭된 타깃이 할당되며 코스 리뷰 수정 textarea가 닫힘. */
   const onClickSetClickedReview = (e, i) => {
     setClickedRReviewIndex(i);
     setIsReviewUtilityModalOpened(!isReviewUtilityModalOpened);
@@ -51,7 +51,7 @@ function CourseReview({
     modalRef.current = e.target;
   };
 
-  /* 클릭 시 코스 리뷰 수정 textarea Open 여부를 변경하고, 코스 리뷰 버튼의 인덱스를 저장하는 핸들러. */
+  /** 클릭 시 코스 리뷰 수정 textarea Open 여부를 변경하고, 코스 리뷰 버튼의 인덱스를 저장하는 핸들러. */
   const onClickSetClickedCourseReviewEditButton = (i) => {
     setIsCourseReviewEditTextareaOpened(!isCourseReviewEditTextareaOpened);
     setClickedRReviewIndex(i);
@@ -108,7 +108,7 @@ function CourseReview({
     axios
       .get(url, config)
       .then((response) => {
-        setCourseReviews(response.data);
+        setCourseReviews(response.data[0].courseReviewList);
       })
       .catch((error) => {
         new Error(error);

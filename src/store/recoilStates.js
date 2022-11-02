@@ -23,3 +23,8 @@ export const pathnameAtom = atom({
   key: 'pathnameAtom',
   default: window.location.pathname,
 });
+
+export const userAtom = atom({
+  key: 'userAtom',
+  default: null,
+});

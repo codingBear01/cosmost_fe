@@ -37,7 +37,7 @@ function UserInfoForm() {
       <UtilDiv width={'100%'} height={'100vh'}>
         <UtilTitle>{location.state.nickname} 님</UtilTitle>
         {/* 유저 프로필 및 유저 정보, 프로필 편집 버튼 */}
-        <UserProfilArea token={token} userInfo={location.state} />
+        <UserProfilArea token={token} user={location.state} />
         {/* 유저 페이지 메뉴 목록 */}
         <MenuListForm onClickOpenReportForm={onClickOpenReportForm} />
         {/* 신고하기 모달창 */}
