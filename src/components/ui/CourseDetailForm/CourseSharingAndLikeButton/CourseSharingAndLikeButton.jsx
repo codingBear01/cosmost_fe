@@ -30,8 +30,6 @@ function CourseSharingAndLikeButton({ courseDetail, token }) {
   const loggedInUserId = user?.id;
   const authorId = courseDetail?.authorId;
 
-  console.log(token);
-
   /* Handlers */
   /**  코스 공유하기 Modal Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
   const onClickOpenSharingCourseModal = () => {

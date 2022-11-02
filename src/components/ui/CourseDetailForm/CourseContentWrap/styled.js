@@ -16,6 +16,13 @@ export const StyledCourseContentWrap = styled.div`
   width: 100%;
   padding: 2rem 1rem;
   border-bottom: 1px solid ${color.white};
+
+  a,
+  a:link,
+  a:visited,
+  a:active {
+    color: ${color.white};
+  }
 `;
 
 // 작성자 프로필

@@ -13,7 +13,6 @@ function HeaderSearchBar({ isSearchBarOpened, setIsSearchBarOpened, onClick }) {
 
   /** 검색 키워드를 입력했을 때 호출할 핸들러*/
   const onChangeSearchInput = (e) => {
-    console.log(e.target.value);
     searchText.current = e.target.value;
   };
 
@@ -21,7 +20,7 @@ function HeaderSearchBar({ isSearchBarOpened, setIsSearchBarOpened, onClick }) {
   const onKeydownSearchInput = (e) => {
     if (e.code === 'Enter') {
       setIsSearchBarOpened(false);
-      navigate(`/courses/keyword?keyword=${searchText.current}`);
+      navigate(`/courses/searched?keyword=${searchText.current}`);
     }
   };
 

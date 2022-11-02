@@ -26,8 +26,6 @@ function CoursesForm() {
   const [queryStringsState, setQueryStringsState] = useState(false);
   const page = useRef(0);
   const observedTarget = useRef(null);
-  // const categoryType = useRef(null);
-  // const categoryNumber = useRef(null);
 
   const params = useParams();
   const [queryStrings] = useSearchParams();
@@ -63,12 +61,12 @@ function CoursesForm() {
     async (type, searchKeyword, categoryType, categoryNumber) => {
       try {
         let url;
-        console.log('categoryType', categoryType);
-        console.log('type', type);
-        console.log('queryStrings', queryStrings);
 
-        if (type === 'keyword' && searchKeyword) {
+        if (type === 'searched' && searchKeyword) {
           url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?keyword=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
+        }
+        if (type === 'hashtags' && searchKeyword) {
+          url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?hashtag=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
         }
         if (
           (!searchKeyword && categoryType === 'all') ||
@@ -84,14 +82,11 @@ function CoursesForm() {
           url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?category=${categoryType}&name-id=${categoryNumber}&sort=id,desc&page=${page.current}&size=4`;
         }
 
-        console.log(url);
-
         const config = CONFIGS[type];
 
         const result = await axios.get(url, config);
         const { data } = result;
 
-        console.log(data);
         setCourses((prev) => prev.concat(data));
         setIsLastPage(data[data.length - 1].whetherLastPage);
 

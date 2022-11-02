@@ -70,12 +70,12 @@ function CourseDetailForm() {
   };
 
   useEffect(() => {
-    const courseDetailUrl = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${id}`;
-    const courseDetailUConfig = { timeout: 1000 };
+    const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${id}`;
+    const config = { timeout: 1000 };
 
     //코스 정보 가져오기
     axios
-      .get(courseDetailUrl, courseDetailUConfig)
+      .get(url, config)
       .then((response) => {
         const data = response.data;
         setCourseDetail(data);

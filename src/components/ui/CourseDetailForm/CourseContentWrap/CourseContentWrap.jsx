@@ -1,5 +1,6 @@
 /* libraries */
 import React from 'react';
+import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
 import { CourseContent } from '..';
@@ -129,9 +130,14 @@ function CourseContentWrap({
           //해시태그
           if (dataCategory === 'hashtagList') {
             return (
-              <CourseContent key={item.id}>
-                <p>{`#${item.keyword}`}</p>
-              </CourseContent>
+              <Link
+                key={item.id}
+                to={`/courses/hashtags?keyword=${item.keyword}`}
+              >
+                <CourseContent>
+                  <p>{`#${item.keyword}`}</p>
+                </CourseContent>
+              </Link>
             );
           }
           return [];
