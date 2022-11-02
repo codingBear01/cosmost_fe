@@ -15,10 +15,6 @@ export {
 
 /* temporary array */
 export {
-  CATEGORIES,
-  COURSE_DETAIL,
-  COURSE_REIVEWS,
-  COURSES,
   FOLLOWS,
   MAIN_COURSES,
   RANKERS,

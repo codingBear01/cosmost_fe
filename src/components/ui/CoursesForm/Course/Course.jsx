@@ -30,7 +30,7 @@ function Course({ course }) {
             setCourseRate(result.data);
           })
           .catch((error) => {
-            console.log(error);
+            new Error(error);
           });
       }
       //코스 작성자 정보 가져오기
@@ -48,13 +48,11 @@ function Course({ course }) {
             setcourseAuthor(result.data);
           })
           .catch((error) => {
-            console.log(error);
+            new Error(error);
           });
       }
     }
   }, []);
-
-  console.log('course', course);
 
   return (
     <S.StyledCourse>
