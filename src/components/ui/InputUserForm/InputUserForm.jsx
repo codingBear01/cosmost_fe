@@ -277,7 +277,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
       });
   };
 
-  /* 회원가입 수행하는 핸들러 */
+  /** 회원가입 수행하는 핸들러 */
   const onSubmitRegisterUser = (e) => {
     const formData = new FormData();
     e.preventDefault();
@@ -304,7 +304,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
         nickname: userInformation.nickname,
         sns: "NO",
         address: `${userInformation.address} ${userInformation.detailAddress}`,
-        agegroup: userInformation.age,
+        ageGroup: userInformation.age,
       };
       //회원수정에서 프로필 이미지를 변경했을 때의 Body
       let updateBody;
@@ -339,6 +339,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
         timeout: 3000,
       };
       //회원수정
+
       if (isEditUserPage) {
         //프로필 이미지가 변경되었다면
         if (uploadedProfilePicture.slice(0, 4) == "data") {
@@ -423,14 +424,13 @@ function InputUserForm({ state, beforeEditUserInfo }) {
         axios
           .post(url, formData, config)
           .then((response) => {
-            navigate(`/login`, { replace: true });
+            console.log("response", response);
+            // navigate(`/login`, { replace: true });
           })
           .catch((error) => {
             toast.error("회원가입에 실패했습니다. 관리자에게 문의하세요.");
           });
       }
-
-      printFormData(formData);
     } else {
       toast.warn("모든 값을 입력해주세요.");
     }
