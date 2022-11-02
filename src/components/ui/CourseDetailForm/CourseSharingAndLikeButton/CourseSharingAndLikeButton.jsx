@@ -66,15 +66,12 @@ function CourseSharingAndLikeButton({ courseDetail }) {
 
     axios
       .post(url, body, config)
-      .then((response) => {
-        console.log(response);
-      })
+      .then((response) => {})
       .catch((error) => new Error(error));
   };
 
   const unLikeCourse = () => {
     setIsCourseLiked(!isCourseLiked);
-    console.log('좋아요 취소');
   };
 
   return (

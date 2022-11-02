@@ -1,8 +1,8 @@
 /* libraries */
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 /* recoil */
-import { useRecoilState } from "recoil";
-import { loginStateAtom } from "./store";
+import { useRecoilState } from 'recoil';
+import { loginStateAtom } from './store';
 /* components */
 import {
   Header,
@@ -14,7 +14,6 @@ import {
   CourseRegistration,
   Courses,
   EditUserMenu,
-  ErrorPage,
   Follows,
   Histories,
   InputAddress,
@@ -23,13 +22,13 @@ import {
   InputUser,
   Login,
   Main,
-  NotFoundPage,
+  Messages,
+  Rankers,
   User,
-  WithdrawalMessage,
   WithdrawUser,
-} from "./components";
+} from './components';
 /* router */
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet } from 'react-router-dom';
 
 const WithHeaderAndFooter = () => {
   return (
@@ -56,7 +55,7 @@ const WithoutHeaderAndFooter = () => {
 const { Kakao } = window;
 
 function App() {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   /* 프로젝트 실행 시 Kakao API KEY 값 초기화하는 함수 */
@@ -70,8 +69,9 @@ function App() {
       <Routes>
         <Route path="/" element={<WithHeaderAndFooter />}>
           <Route index element={<Main />} />
-          <Route path="/course-detail/:id" element={<CourseDetail />} />
-          <Route path="/courses/:type" element={<Courses />} />
+          <Route path="course-detail/:id" element={<CourseDetail />} />
+          <Route path="courses/:type" element={<Courses />} />
+          <Route path="rankers" element={<Rankers />} />
         </Route>
         <Route element={<WithoutHeaderAndFooter />}>
           {/* {!token && !isLoggedIn && ( */}
@@ -85,13 +85,21 @@ function App() {
           {/* )} */}
           {/* {token && isLoggedIn && ( */}
           <>
-            <Route path="user">
-              <Route path=":id" element={<User />} />
-              <Route path=":id/followers" element={<Follows />} />
-              <Route path=":id/followings" element={<Follows />} />
-              <Route path=":id/report-histories" element={<Histories />} />
-              <Route path=":id/review-histories" element={<Histories />} />
-              <Route path="edit">
+            <Route exact path="user">
+              <Route exact path=":id" element={<User />} />
+              <Route exact path=":id/followers" element={<Follows />} />
+              <Route exact path=":id/followings" element={<Follows />} />
+              <Route
+                exact
+                path=":id/report-histories"
+                element={<Histories />}
+              />
+              <Route
+                exact
+                path=":id/review-histories"
+                element={<Histories />}
+              />
+              <Route exact path="edit">
                 <Route path="menu" element={<EditUserMenu />} />
                 <Route path="email" element={<InputEmail />} />
                 <Route path="address" element={<InputAddress />} />
@@ -101,19 +109,20 @@ function App() {
             </Route>
 
             <Route
-              path="/course-registration"
+              path="course-registration"
               element={<CourseRegistration />}
             />
-            <Route path="/course-edit/:id" element={<CourseRegistration />} />
+            <Route path="course-edit/:id" element={<CourseRegistration />} />
           </>
           {/* )} */}
         </Route>
 
-        <Route path="withdrawal-message" element={<WithdrawalMessage />} />
-        {/* Error Page */}
-        <Route path="error" element={<ErrorPage />} />
-        {/* 잘못된 경로에 접근시 메인 페이지로 리다이렉트 시킴*/}
-        <Route path="*" element={<NotFoundPage />} />
+        <Route
+          path="withdrawal-message"
+          element={<Messages type={'withdrawal'} />}
+        />
+        <Route path="error" element={<Messages type={'error'} />} />
+        <Route path="*" element={<Messages type={'notFound'} />} />
       </Routes>
     </>
   );

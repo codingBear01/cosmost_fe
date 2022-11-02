@@ -32,7 +32,6 @@ function HeaderUtilBtn() {
         .get(url, config)
         .then((resonse) => {
           setUserInfo(resonse.data);
-          console.log(resonse);
         })
         .catch((error) => {
           navigate("/error");
@@ -40,7 +39,6 @@ function HeaderUtilBtn() {
     }
   }, []);
 
-  console.log("userInfo", userInfo);
   return (
     <>
       {token && isLoggedIn && userInfo ? (

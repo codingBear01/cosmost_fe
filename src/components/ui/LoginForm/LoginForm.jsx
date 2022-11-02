@@ -49,7 +49,6 @@ function LoginForm() {
     if (!checkIdAndPassword()) return;
 
     const url = `${process.env.REACT_APP_SERVER2_IP}/v1/signin`;
-    console.log(url);
     const body = {
       loginId: idRef.current.value,
       loginPwd: passwordRef.current.value,
@@ -58,17 +57,14 @@ function LoginForm() {
 
     //testId1001
     //testPwd1001
-    console.log(body);
     axios
       .put(url, body, config)
       .then((response) => {
-        console.log(response);
         localStorage.setItem("token", response.data);
         setIsLoggedIn(true);
         navigate("/");
       })
       .catch((e) => {
-        console.log(e);
         toast.error("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
       });
   };

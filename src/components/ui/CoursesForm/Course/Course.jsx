@@ -13,25 +13,25 @@ function Course({ course }) {
     <S.StyledCourse>
       {/* 코스 이미지 */}
       <S.CourseFeaturedImage
-        src={course.readPlaceImgResponseList[0].placeImgUrl}
-        alt={course.courseTitle}
+        src={course.readPlaceImgResponseList[0]?.placeImgUrl}
+        alt={course?.courseTitle}
       />
       {/* 코스 제목, 평점 */}
       <S.CourseContentWrap justifyContent={'space-between'}>
-        <S.CourseTitle>{course.courseTitle}</S.CourseTitle>
+        <S.CourseTitle>{course?.courseTitle}</S.CourseTitle>
         {/* <S.CourseRate>⭐ {course.rate}</S.CourseRate> */}
       </S.CourseContentWrap>
       {/* 코스 카테고리 */}
       <S.CourseContentWrap>
         <S.CourseTag>
-          {course.categoryLists[0].locationCategoryName}
+          {course.categoryLists[0]?.locationCategoryName}
         </S.CourseTag>
-        <S.CourseTag>{course.categoryLists[0].themeCategoryName}</S.CourseTag>
+        <S.CourseTag>{course.categoryLists[0]?.themeCategoryName}</S.CourseTag>
       </S.CourseContentWrap>
       {/* 코스 해시태그 */}
       <S.CourseContentWrap>
         {course.hashtagList.map((hashTag) => (
-          <S.CourseTag key={hashTag.id}>{hashTag.keyword}</S.CourseTag>
+          <S.CourseTag key={hashTag.id}>{hashTag?.keyword}</S.CourseTag>
         ))}
       </S.CourseContentWrap>
       {/* 코스 작성자, 작성일 */}
