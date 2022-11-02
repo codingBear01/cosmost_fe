@@ -69,12 +69,6 @@ function LoginForm() {
       });
   };
 
-  /* 카카오 로그인 핸들러 */
-  const onClickLoginWithKakao = () => {
-    Kakao.Auth.authorize({
-      redirectUri: 'http://localhost:3000/',
-    });
-  };
   /* 네이버 로그인 핸들러 */
   const onClickLoginWithNaver = () => {
     const url = `${process.env.REACT_APP_AUTH_IP}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
@@ -85,11 +79,6 @@ function LoginForm() {
       timeout: 3000,
     };
     console.log('naver');
-  };
-
-  /* 구글 로그인 핸들러 */
-  const onClickLoginWithGoogle = () => {
-    console.log('Google');
   };
 
   return (
@@ -174,36 +163,12 @@ function LoginForm() {
         height={'40px'}
         margin={'0 0 10px 0'}
         fontSize={'20px'}
-        bgColor={color.yellow}
-        hoveredBgColor={color.darkYellow}
-        onClick={onClickLoginWithKakao}
-      >
-        <RiIcons.RiKakaoTalkFill />
-      </Button>
-      <Button
-        type="button"
-        width={'340px'}
-        height={'40px'}
-        margin={'0 0 10px 0'}
-        fontSize={'20px'}
         color={color.white}
         bgColor={color.naverGreen}
         hoveredBgColor={color.naverDarkGreen}
         onClick={onClickLoginWithNaver}
       >
         <SiIcons.SiNaver />
-      </Button>
-      <Button
-        type="button"
-        width={'340px'}
-        height={'40px'}
-        margin={'0 0 10px 0'}
-        fontSize={'20px'}
-        bgColor={color.white}
-        hoveredBgColor={color.lightGrey}
-        onClick={onClickLoginWithGoogle}
-      >
-        <FcIcons.FcGoogle />
       </Button>
     </UtilForm>
   );
