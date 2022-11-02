@@ -26,7 +26,7 @@ function HeaderUtilBtn() {
         headers: {
           Authorization: token,
         },
-        timeout: 1000,
+        timeout: 3000,
       };
       axios
         .get(url, config)
@@ -34,7 +34,10 @@ function HeaderUtilBtn() {
           setUserInfo(resonse.data);
         })
         .catch((error) => {
-          navigate("/error");
+          //토큰 만료로 실패했다면 토큰 삭제
+          localStorage.removeItem("token");
+          console.log(error);
+          // navigate("/error");
         });
     }
   }, []);

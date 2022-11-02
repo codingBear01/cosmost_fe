@@ -5,10 +5,8 @@ import { InputEmailForm } from "..";
 
 function InputEmail() {
   const location = useLocation();
-  let beforeEditUserInfo;
-  if (location.state.profileImgSaveUrl) {
-    beforeEditUserInfo = location.state;
-  }
+  let beforeEditUserInfo = location.state;
+
   return (
     <>
       <InputEmailForm beforeEditUserInfo={beforeEditUserInfo} />
