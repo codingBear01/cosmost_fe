@@ -425,7 +425,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
           .post(url, formData, config)
           .then((response) => {
             console.log("response", response);
-            // navigate(`/login`, { replace: true });
+            navigate(`/login`, { replace: true });
           })
           .catch((error) => {
             toast.error("회원가입에 실패했습니다. 관리자에게 문의하세요.");
