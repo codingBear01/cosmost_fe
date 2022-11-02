@@ -5,14 +5,11 @@
 /.pnp
 .pnp.js
 
-# API
+# ENVIRONMENT VARIABLES
 .env
 
 # testing
 /coverage
-
-# API
-.env
 
 # production
 /build
@@ -27,8 +24,4 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# # Docker
-# Dockerfile
-# .dockerignore
-# docker-compose.yml
+.vercel

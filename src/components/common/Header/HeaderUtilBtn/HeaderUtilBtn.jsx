@@ -1,6 +1,7 @@
 /* librarie */
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 /* recoil */
 import { useRecoilState } from 'recoil';
 import { loginStateAtom, userAtom } from '../../../../store';
@@ -8,7 +9,7 @@ import { loginStateAtom, userAtom } from '../../../../store';
 import { SmallProfilePic, Icon } from '../../../';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
-import axios from 'axios';
+
 function HeaderUtilBtn() {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ function HeaderUtilBtn() {
       ) : (
         <Link to="/login">
           <Icon>
-            <AiIcons.AiOutlineLogin style={{ margin: '0' }} />
+            <AiIcons.AiOutlineLogin />
           </Icon>
         </Link>
       )}
