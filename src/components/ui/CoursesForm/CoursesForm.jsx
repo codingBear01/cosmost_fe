@@ -64,7 +64,7 @@ function CoursesForm() {
       if (URL_TYPES[type] == "keyword" && searchKeyword) {
         url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts?keyword=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
       } else {
-        url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts?filter=${URL_TYPES[type]}&page=${page.current}&size=4`;
+        url = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts?filter=${URL_TYPES[type]}&sort=id,desc&page=${page.current}&size=4`;
       }
 
       const config = CONFIGS[type];

@@ -403,6 +403,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
       }
       //회원가입
       else {
+        console.log("signUpBody", signUpBody);
         const signUpBodyJson = JSON.stringify(signUpBody);
         const signUpBodyBlob = new Blob([signUpBodyJson], {
           type: "application/json",
@@ -416,6 +417,8 @@ function InputUserForm({ state, beforeEditUserInfo }) {
 
         formData.append("createAuthRequest", signUpBodyBlob);
         formData.append("file", profilePictureBlob);
+
+        printFormData(formData);
 
         axios
           .post(url, formData, config)
