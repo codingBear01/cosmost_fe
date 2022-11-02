@@ -40,7 +40,7 @@ function MenuListForm({ onClickOpenReportForm }) {
     return (
       // 사용자 정보 변경 메뉴
       <S.MenuList>
-        <Link to="/user/edit/email">
+        <Link to="/user/edit/email" state={useInfo}>
           <S.MenuItem>
             <AiIcons.AiOutlineMail />
             <span>이메일 변경</span>
