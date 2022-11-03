@@ -38,6 +38,9 @@ function CourseReview({
     false,
     false,
   ]);
+  const [isLikedCourseReviewChanged, setIsLikedCourseReviewChanged] =
+    useState(false);
+  const [isLikedCourseReview, setIsLikedCourseReview] = useState([]);
 
   /* Refs */
   const edittedReviewContentRef = useRef();
@@ -126,11 +129,14 @@ function CourseReview({
       });
   };
 
-  /** 코스 리뷰 좋아요 */
-  const onClickLikeCourseReview = (id) => {
+  /** 코스 리뷰 좋아요 등록 및 취소 */
+  const handleLikeCourseReview = (id, type) => {
     const token =
       'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDgiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzQzNzM4NCwiZXhwIjozNzY2NzQzNzM4NH0.Tz-E2hPqW8zSC94tYcD2GzqMPZKvWWz76UJC2RmGpXw';
-    const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities`;
+    const URLS = {
+      like: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities`,
+      unlike: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}/review`,
+    };
     const body = {
       courseReviewId: id,
       type: 'courseReviewThumbsup',
@@ -142,11 +148,43 @@ function CourseReview({
       timeout: 3000,
     };
 
+    if (type === 'like') {
+      axios
+        .post(URLS[type], body, config)
+        .then((response) =>
+          setIsLikedCourseReviewChanged(!isLikedCourseReviewChanged)
+        )
+        .catch((error) => new Error(error));
+    } else {
+      axios
+        .delete(URLS[type], config)
+        .then((response) =>
+          setIsLikedCourseReviewChanged(!isLikedCourseReviewChanged)
+        )
+        .catch((error) => new Error(error));
+    }
+  };
+
+  /** 코스 리뷰 좋아요 여부 확인 */
+  const likedCourseReview = (id) => {
+    const token =
+      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDgiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzQzNzM4NCwiZXhwIjozNzY2NzQzNzM4NH0.Tz-E2hPqW8zSC94tYcD2GzqMPZKvWWz76UJC2RmGpXw';
+    const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}?type=review`;
+    const config = {
+      headers: {
+        Authorization: token,
+      },
+      timeout: 3000,
+    };
+
     axios
-      .post(url, body, config)
-      .then((response) => console.log(response))
+      .get(url, config)
+      .then((response) => setIsLikedCourseReview(response.data))
       .catch((error) => new Error(error));
   };
+  useEffect(() => {
+    likedCourseReview(courseId);
+  }, [isLikedCourseReviewChanged]);
 
   return (
     <>
@@ -263,12 +301,23 @@ function CourseReview({
               <FaIcons.FaRegThumbsUp />
               <span>{course.likeCount}</span>
             </S.CourseReviewLikeCountWrap>
-            <S.CourseReviewLikeButton
-              type="button"
-              onClick={() => onClickLikeCourseReview(courseId)}
-            >
-              <FaIcons.FaRegThumbsUp />
-            </S.CourseReviewLikeButton>
+            {!isLikedCourseReview[0] && (
+              <S.CourseReviewLikeButton
+                type="button"
+                onClick={() => handleLikeCourseReview(courseId, 'like')}
+              >
+                <FaIcons.FaRegThumbsUp />
+              </S.CourseReviewLikeButton>
+            )}
+            {isLikedCourseReview[0] &&
+              isLikedCourseReview[0].courseReviewId === courseId && (
+                <S.CourseReviewLikeButton
+                  type="button"
+                  onClick={() => handleLikeCourseReview(courseId, 'unlike')}
+                >
+                  <FaIcons.FaThumbsUp style={{ color: 'white' }} />
+                </S.CourseReviewLikeButton>
+              )}
           </S.CourseReviewInnerContentWrap>
           {/* 리뷰 내용 */}
           {i === clickedReviewIndex && isCourseReviewEditTextareaOpened ? (
