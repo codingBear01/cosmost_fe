@@ -8,6 +8,7 @@ import {
 } from '../../../style';
 
 export const UtilPageContainerHeader = styled.header`
+  position: fixed;
   padding: ${gap.l} ${gap.xl};
   font-size: 20px;
   color: ${color.white};
@@ -25,7 +26,7 @@ export const StyledUtilPageContainer = styled.div`
   width: 360px;
   height: 100%;
   margin: 0 auto;
-  padding: 3rem 0;
+  padding: 7rem 0;
   color: ${color.white};
 
   svg {

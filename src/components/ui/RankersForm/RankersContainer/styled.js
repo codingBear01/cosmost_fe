@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {
   COLOR_LIST as color,
   BORDER_RADIUS_LIST as br,
+  FONT_SIZE_LIST as fs,
   BREAK_POINTS as media,
 } from '../../../../style';
 
@@ -19,4 +20,9 @@ export const StyledRankersContainer = styled.div`
     align-items: center;
     flex-direction: column;
   }
+`;
+
+export const RankerTypeText = styled.span`
+  font-size: ${fs.xl};
+  font-weight: 600;
 `;

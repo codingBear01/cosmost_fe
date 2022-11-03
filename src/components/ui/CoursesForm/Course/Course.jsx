@@ -1,20 +1,21 @@
 /* libraries */
-import React from "react";
-import { SmallProfilePic } from "../../..";
+import React from 'react';
+import { Link } from 'react-router-dom';
 /* components */
-import * as S from "./styled";
+import * as S from './styled';
+import { SmallProfilePic } from '../../..';
 /* static data */
-import { FONT_SIZE_LIST as fs } from "../../../../style";
+import { FONT_SIZE_LIST as fs } from '../../../../style';
 /* icons */
-import * as AiIcons from "react-icons/ai";
-import { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
-import { getCourseAuthorInfo, getCoursePointAverage } from "../../../../store";
+import * as AiIcons from 'react-icons/ai';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { getCourseAuthor, getCoursePointAverage } from '../../../../store';
 
 function Course({ course }) {
-  const [courseRate, setCourseRate] = useState("");
-  const [courseAuthor, setCourseAuthor] = useState("");
+  const [courseRate, setCourseRate] = useState('');
+  const [courseAuthor, setCourseAuthor] = useState('');
 
   useEffect(() => {
     if (course) {
@@ -22,9 +23,11 @@ function Course({ course }) {
       getCoursePointAverage(course.id, setCourseRate);
 
       //코스 작성자 정보 업데이트
-      getCourseAuthorInfo(course.authorId, setCourseAuthor);
+      getCourseAuthor(course.authorId, setCourseAuthor);
     }
   }, []);
+
+  console.log('course', course);
 
   return (
     <S.StyledCourse>
@@ -34,7 +37,7 @@ function Course({ course }) {
         alt={course?.courseTitle}
       />
       {/* 코스 제목, 평점 */}
-      <S.CourseContentWrap justifyContent={"space-between"}>
+      <S.CourseContentWrap justifyContent={'space-between'}>
         <S.CourseTitle>{course?.courseTitle}</S.CourseTitle>
         <S.CourseRate>
           ⭐ {courseRate && courseRate[0].courseAvgRate}
@@ -54,7 +57,7 @@ function Course({ course }) {
         ))}
       </S.CourseContentWrap>
       {/* 코스 작성자, 작성일 */}
-      <S.CourseContentWrap justifyContent={"space-between"}>
+      <S.CourseContentWrap justifyContent={'space-between'}>
         <S.CourseAuthorWrap>
           <SmallProfilePic
             src={courseAuthor && courseAuthor.profileImgSaveUrl}

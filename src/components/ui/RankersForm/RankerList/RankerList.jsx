@@ -30,7 +30,7 @@ function RankerList({ items, type }) {
             )}
             <S.RankerItemText type={type}>
               {item[contentName].length > 14
-                ? `${item[contentName].slice(0, 15)}...`
+                ? `${item[contentName].substring(0, 15)}...`
                 : item[contentName]}
             </S.RankerItemText>
           </S.RankerItem>

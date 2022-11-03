@@ -1,8 +1,8 @@
 /* page 이동 시 scrollY 최상단으로 만드는 custom component */
-export { default as GoToTop } from "./GoToTop";
+export { default as GoToTop } from './GoToTop';
 
 /* functions */
-export { sharingByKakao } from "./sharing";
+export { sharingByKakao } from './sharing';
 
 /* recoil states */
 export {
@@ -10,19 +10,16 @@ export {
   isOrderingModalOpenedAtom,
   loginStateAtom,
   pathnameAtom,
-} from "./recoilStates";
+  userAtom,
+} from './recoilStates';
 
 /* temporary array */
 export {
-  CATEGORIES,
-  COURSE_DETAIL,
-  COURSE_REIVEWS,
-  COURSES,
   FOLLOWS,
   MAIN_COURSES,
   RANKERS,
   REPORT_HISTORIES,
-} from "./temporaryArray/";
+} from './temporaryArray/';
 
 /* other Function */
 export {
@@ -32,8 +29,8 @@ export {
   addNaverMapMarkerInfo,
   printFormData,
   getCoursePointAverage,
-  getCourseAuthorInfo,
-  getCourseReviewInfo,
+  getCourseAuthor,
+  getCourseReviews,
   getCourseGoodCount,
-  getCourseInfo,
-} from "./function";
+  getCourseDetail,
+} from './functions';

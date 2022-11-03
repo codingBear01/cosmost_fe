@@ -21,7 +21,7 @@ function MenuListForm({ onClickOpenReportForm }) {
   const navigate = useNavigate();
 
   const path = useLocation().pathname;
-  const useInfo = useLocation().state;
+  const user = useLocation().state;
   const token = localStorage.getItem('token');
   const isEditUserPage = path.includes('edit');
 
@@ -38,7 +38,7 @@ function MenuListForm({ onClickOpenReportForm }) {
     return (
       // 사용자 정보 변경 메뉴
       <S.MenuList>
-        <Link to="/user/edit/email" state={useInfo}>
+        <Link to="/user/edit/email" state={user}>
           <S.MenuItem>
             <AiIcons.AiOutlineMail />
             <span>이메일 변경</span>
@@ -50,13 +50,13 @@ function MenuListForm({ onClickOpenReportForm }) {
             <span>주소 변경</span>
           </S.MenuItem>
         </Link>
-        <Link to="/user/edit/my-information" state={useInfo}>
+        <Link to="/user/edit/my-information" state={user}>
           <S.MenuItem>
             <RiIcons.RiUserSettingsLine />
             <span>회원정보 변경</span>
           </S.MenuItem>
         </Link>
-        <Link to="/user/edit/password" state={useInfo}>
+        <Link to="/user/edit/password" state={user}>
           <S.MenuItem>
             <BsIcons.BsKey />
             <span>비밀번호 변경</span>

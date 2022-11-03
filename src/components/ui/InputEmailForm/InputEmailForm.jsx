@@ -22,11 +22,17 @@ import { useEffect } from 'react';
 
 function InputEmailForm({ beforeEditUserInfo }) {
   /* Path */
-  const path = useLocation().pathname;
   const navigate = useNavigate();
+  const location = useLocation();
+  const pathname = location.pathname;
+  const NEXT_PAGE_URLS = {
+    '/email-validation': '/address',
+    '/find/email-validation': `/find/${location.state}`,
+  };
 
-  //이메일 인증목적이면 true, 이메일 수정목적이면 false
-  const isEmailValidationPage = path.includes('validation');
+  // 페이지 분기용 boolean
+  const isEditEmailPage = pathname.includes('edit');
+  const isFindUserPage = pathname.includes('find');
 
   // 토큰
   const token = localStorage.getItem('token');
@@ -42,13 +48,15 @@ function InputEmailForm({ beforeEditUserInfo }) {
   const emailRef = useRef();
   const certificationNumberRef = useRef();
 
-  // 이메일 수정목적이면 기존의 이메일 값을 가져오는 useEffect();
+  /* Hooks */
+  /** 이메일 수정목적이면 기존의 이메일 값을 가져오는 useEffect */
   useEffect(() => {
-    if (!isEmailValidationPage) {
+    if (isEditEmailPage) {
       emailRef.current.value = beforeEditUserInfo.email;
       setEmail(emailRef.current.value);
     }
   }, []);
+
   /* Handlers */
   /* 입력된 이메일의 유효성을 검증하는 함수 */
   const validateEmailByRegExp = (e) => {
@@ -139,7 +147,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
   };
 
   /* 다음 페이지로 이동하는 핸들러. 입력값의 유효성을 검증하고 인증번호 발송 및 확인 버튼 클릭 여부를 확인한 후 이상이 없으면 주소 입력 페이지로 이동한다. */
-  const onClickTransferAddressForm = (e) => {
+  const onClickTransferNextPage = (e) => {
     if (!checkInput(e, 'next')) return;
     if (!checkIsCertificationNumberButtonClicked(e)) return;
   };
@@ -213,63 +221,55 @@ function InputEmailForm({ beforeEditUserInfo }) {
     formData.append('updateAuthRequest', updateBodyBlob);
     formData.append('file', profilePictureBlob);
 
-    // axios
-    //   .put(url, formData, config)
-    //   .then((response) => {
-    //     //수정된 데이터 다시 가져와서 리다이렉트 하기
-    //     toast.success(response.data);
-    //     const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
-    //     const config = {
-    //       headers: {
-    //         Authorization: token,
-    //       },
-    //       timeout: 1000,
-    //     };
-    //     axios
-    //       .get(url, config)
-    //       .then((resonse) => {
-    //         navigate(`/user/edit/menu`, {
-    //           replace: true,
-    //           state: resonse.data,
-    //         });
-    //       })
-    //       .catch((error) => {
-    //         console.log(error);
-    //         toast.error(
-    //           "변경된 이메일 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요"
-    //         );
-    //       });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     toast.error("이메일 변경에 실패했습니다. 관리자에게 문의하세요.");
-    //   });
+    axios
+      .put(url, formData, config)
+      .then((response) => {
+        //수정된 데이터 다시 가져와서 리다이렉트 하기
+        toast.success(response.data);
+        const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+        const config = {
+          headers: {
+            Authorization: token,
+          },
+          timeout: 1000,
+        };
+        axios
+          .get(url, config)
+          .then((resonse) => {
+            navigate(`/user/edit/menu`, {
+              replace: true,
+              state: resonse.data,
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error(
+              '변경된 이메일 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
+            );
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error('이메일 변경에 실패했습니다. 관리자에게 문의하세요.');
+      });
   };
 
-  console.log('beforeEditUserInfo', beforeEditUserInfo);
-  console.log('isEmailValidationPage', isEmailValidationPage);
   return (
     <>
-      <UtilTitle>
-        {isEmailValidationPage
-          ? '이메일 인증을 해주세요.'
-          : '변경할 이메일을 입력 후 인증해주세요.'}
-      </UtilTitle>
+      <UtilTitle>이메일 주소 {isEditEmailPage ? '변경' : '인증'}</UtilTitle>
       <UtilInputWrap>
         <Icon>
           <AiIcons.AiOutlineMail />
         </Icon>
-        {console.log('AA')}
         <Input
           ref={emailRef}
-          // defaultValue={isEmailValidationPage ? "" : beforeEditUserInfo.email}
+          defaultValue={isEditEmailPage ? beforeEditUserInfo.email : ''}
           type="email"
           placeholder="이메일"
           name="email"
           width={'205px'}
           height={'40px'}
           margin={'0 10px'}
-          // onChange={onChangeEmailInput}
         />
         <Button
           type="submit"
@@ -309,15 +309,15 @@ function InputEmailForm({ beforeEditUserInfo }) {
         </Button>
       </UtilInputWrap>
       {/* 다음으로 버튼 */}
-      {isEmailValidationPage && (
+      {!isEditEmailPage && (
         <NextBtn
-          to={'/address'}
-          state={{ email: email }}
-          onClick={onClickTransferAddressForm}
+          to={NEXT_PAGE_URLS[pathname]}
+          state={isFindUserPage ? location.state : { email: email }}
+          onClick={onClickTransferNextPage}
         />
       )}
       {/* 수정 버튼 */}
-      {!isEmailValidationPage && (
+      {isEditEmailPage && (
         <Button
           type="submit"
           width={'100%'}

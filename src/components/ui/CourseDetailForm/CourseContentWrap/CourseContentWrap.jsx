@@ -1,55 +1,57 @@
 /* libraries */
-import React from "react";
+import React from 'react';
+import { Link } from 'react-router-dom';
 /* components */
-import * as S from "./styled";
-import { CourseContent } from "..";
-import { Button, ProfilePic } from "../../..";
+import * as S from './styled';
+import { CourseContent } from '..';
+import { Button, ProfilePic } from '../../..';
 /* icons */
-import * as FaIcons from "react-icons/fa";
-import * as MdIcons from "react-icons/md";
-import * as BiIcons from "react-icons/bi";
-import * as FiIcons from "react-icons/fi";
-import * as GiIcons from "react-icons/gi";
-import * as AiIcons from "react-icons/ai";
+import * as FaIcons from 'react-icons/fa';
+import * as MdIcons from 'react-icons/md';
+import * as BiIcons from 'react-icons/bi';
+import * as FiIcons from 'react-icons/fi';
+import * as GiIcons from 'react-icons/gi';
+import * as AiIcons from 'react-icons/ai';
 /* static data */
-import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from "../../../../style";
-import { useState } from "react";
-import { useEffect } from "react";
+import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../../style';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import {
   getCourseGoodCount,
   getCoursePointAverage,
-  getCourseReviewInfo,
-} from "../../../../store";
-import { useParams } from "react-router-dom";
+  getCourseReviews,
+} from '../../../../store';
+import { useParams } from 'react-router-dom';
 
 function CourseContentWrap({
   justifyContent,
   height,
   courseDetail,
+  author,
   dataCategory,
   authorCourseCount,
 }) {
   const courseID = useParams().id;
 
   /* 코스의 리뷰 정보를 나타내는 state*/
-  const [courseReviewInfo, setCourseReviewInfo] = useState("");
+  const [courseReviews, setCourseReviews] = useState([]);
 
   /* 코스 리뷰 평균 점수를 나타내는 state*/
-  const [courseReviewAvgPoint, setCourseReviewAvgPoint] = useState("");
+  const [courseReviewAvgPoint, setCourseReviewAvgPoint] = useState('');
 
   /* 코스 평균 평점 state*/
-  const [coursePointAverageArr, setCoursePointAverageArr] = useState("");
+  const [coursePointAverageArr, setCoursePointAverageArr] = useState('');
 
   /* 코스 좋아요 수 state*/
-  const [courseGoodCount, setCourseGoodCount] = useState("");
+  const [courseGoodCount, setCourseGoodCount] = useState('');
 
   useEffect(() => {
-    getCourseReviewInfo(courseID, (result) => {
-      setCourseReviewInfo(result.data);
+    getCourseReviews(courseID, (result) => {
+      setCourseReviews(result.data);
       setCourseReviewAvgPoint(
         result.data[0].rateAllTypeList[0]
           .match(/\[(.*)\]/)[1]
-          .split(", ")
+          .split(', ')
           .reverse()
       );
     });
@@ -60,7 +62,7 @@ function CourseContentWrap({
   return (
     // dataCategory에 따라 다른 컴포넌트 렌더링됨
     <S.StyledCourseContentWrap justifyContent={justifyContent} height={height}>
-      {dataCategory === "likeAndReview" ? (
+      {dataCategory === 'likeAndReview' ? (
         // 좋아요, 리뷰 숫자
         <>
           <CourseContent>
@@ -69,26 +71,24 @@ function CourseContentWrap({
           </CourseContent>
           <CourseContent>
             <MdIcons.MdOutlineRateReview />
-            <span>
-              {courseReviewInfo && courseReviewInfo[0].courseReviewCnt}
-            </span>
+            <span>{courseReviews && courseReviews[0].courseReviewCnt}</span>
           </CourseContent>
         </>
-      ) : dataCategory === "authorProfile" ? (
+      ) : dataCategory === 'authorProfile' ? (
         // 작성자 프로필
         <>
           <ProfilePic
-            src={courseDetail.profileImgSaveUrl}
-            alt={courseDetail.nickname}
-            width={"8rem"}
-            height={"8rem"}
+            src={author.profileImgSaveUrl}
+            alt={author.nickname}
+            width={'8rem'}
+            height={'8rem'}
           />
-          <S.AutorProfileVerticalWrap marginRight={"3rem"}>
-            <S.AutorNickname>{courseDetail.nickname}</S.AutorNickname>
+          <S.AutorProfileVerticalWrap marginRight={'3rem'}>
+            <S.AutorNickname>{author.nickname}</S.AutorNickname>
             <Button
-              type={"button"}
-              width={"6rem"}
-              height={"3rem"}
+              type={'button'}
+              width={'6rem'}
+              height={'3rem'}
               fontSize={fs.s}
               color={color.black}
               bgColor={color.lightGreen}
@@ -99,21 +99,21 @@ function CourseContentWrap({
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <BiIcons.BiCrown />
-            <span>{courseDetail?.author?.ranking}</span>
+            <span>{author?.ranking}</span>
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <FiIcons.FiUsers />
-            <span>{courseDetail?.author?.followers}</span>
+            <span>{author?.followers}</span>
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <GiIcons.GiRoad />
             <span>{authorCourseCount}</span>
           </S.AutorProfileVerticalWrap>
         </>
-      ) : dataCategory === "courses" ? (
+      ) : dataCategory === 'courses' ? (
         // 코스 순서
         <>
-          {courseDetail.placeDetailList.map((item) => (
+          {courseDetail?.placeDetailList?.map((item) => (
             <div key={item.id}>
               <S.CourseName>
                 {item.id}. {item.placeName}
@@ -124,7 +124,7 @@ function CourseContentWrap({
             </div>
           ))}
         </>
-      ) : dataCategory === "averageRate" ? (
+      ) : dataCategory === 'averageRate' ? (
         // 코스 평균 평점 및 별 개수별 퍼센테이지
         <>
           {/* 코스 평균 평점 */}
@@ -135,7 +135,7 @@ function CourseContentWrap({
             </span>
           </S.AverageRate>
           <ul>
-            {console.log("courseDetail.rate.stars", courseDetail.rate.stars)}
+            {console.log('courseDetail.rate.stars', courseDetail.rate.stars)}
             {courseReviewAvgPoint &&
               courseDetail.rate.stars.map((item, index) => {
                 return (
@@ -157,7 +157,7 @@ function CourseContentWrap({
       ) : (
         courseDetail[`${dataCategory}`].map((item) => {
           // 카테고리
-          if (dataCategory === "categoryLists") {
+          if (dataCategory === 'categoryLists') {
             return (
               <React.Fragment key={item.id}>
                 <CourseContent>
@@ -170,11 +170,16 @@ function CourseContentWrap({
             );
           }
           //해시태그
-          if (dataCategory === "hashtagList") {
+          if (dataCategory === 'hashtagList') {
             return (
-              <CourseContent key={item.id}>
-                <p>{`#${item.keyword}`}</p>
-              </CourseContent>
+              <Link
+                key={item.id}
+                to={`/courses/hashtags?keyword=${item.keyword}`}
+              >
+                <CourseContent>
+                  <p>{`#${item.keyword}`}</p>
+                </CourseContent>
+              </Link>
             );
           }
           return [];

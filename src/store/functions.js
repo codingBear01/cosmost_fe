@@ -1,21 +1,19 @@
-//함수 집합
-
-import axios from "axios";
+// 함수 집합
+import axios from 'axios';
 
 /** base64ImgSrc 이미지 경로를 바이너리 데이터로 변환한 뒤 변환한 바이너리 데이터와 MIME-Type을 배열로 반환하는 함수. */
-
 const base64ImgSrcToImgBinaryData = (imgSrc) => {
   let returnArr = [];
   let Base64DataReg;
   const mimeTypeReg = /data:(.*);/;
 
-  if (imgSrc.slice(0, 3) === "url") {
+  if (imgSrc.slice(0, 3) === 'url') {
     Base64DataReg = /,(.*)\)/;
   } else {
     Base64DataReg = /,(.*)/;
   }
 
-  if (imgSrc !== "none") {
+  if (imgSrc !== 'none') {
     const itemMimeType = imgSrc.match(mimeTypeReg)
       ? imgSrc.match(mimeTypeReg)[1]
       : null;
@@ -50,7 +48,7 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   }
 */
 const createNaverMap = (
-  elementId = "map",
+  elementId = 'map',
   defaultCoordinate = {
     latitude: 35.179816,
     longitude: 129.0750223,
@@ -143,9 +141,10 @@ const addNaverMapMarkerInfo = (map, marker, elementString, style) => {
  */
 const printFormData = (formData) => {
   for (let key of formData.keys()) {
-    console.log(key, ":", formData.get(key));
+    console.log(key, ':', formData.get(key));
   }
 };
+
 /** 코스 평균 평점을 가져온 후 가져온 평균 평점값을 state로 업데이트 시켜주는 함수
  *  courseID : 코스 ID를 나타내는 Number
  *  setState : 가져온 값을 state 값으로 변경시켜주기 위한 Function
@@ -170,7 +169,7 @@ const getCoursePointAverage = (courseID, setState) => {
  *  authorID : 코스 작성자 ID를 나타내는 Number
  *  setState : 가져온 값을 state 값으로 변경시켜주기 위한 Function
  */
-const getCourseAuthorInfo = (authorID, setState) => {
+const getCourseAuthor = (authorID, setState) => {
   const url = `${process.env.REACT_APP_AUTH_IP}/v1/view/info?id=author-id`;
   const config = {
     headers: {
@@ -192,7 +191,7 @@ const getCourseAuthorInfo = (authorID, setState) => {
  *  courseID : 코스 ID를 나타내는 Number
  *  thenCallback : 리뷰를 가져오는데 성공했을 때 호출할 콜백
  */
-const getCourseReviewInfo = (courseID, thenCallback) => {
+const getCourseReviews = (courseID, thenCallback) => {
   const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?type=review`;
   const config = {
     headers: {
@@ -233,7 +232,7 @@ const getCourseGoodCount = (courseID, setState) => {
  *  courseID : 코스 ID를 나타내는 Number
  *  setState : 업데이트해줄 함수
  */
-const getCourseInfo = (courseID, setState) => {
+const getCourseDetail = (courseID, setState) => {
   const courseInfoUrl = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}`;
   const courseInfoUConfig = { timeout: 3000 };
 
@@ -243,7 +242,7 @@ const getCourseInfo = (courseID, setState) => {
       setState(response.data);
     })
     .catch((error) => {
-      alert("코스 정보 가져오기 실패");
+      alert('코스 정보 가져오기 실패');
     });
 };
 
@@ -254,8 +253,8 @@ export {
   addNaverMapMarkerInfo,
   printFormData,
   getCoursePointAverage,
-  getCourseAuthorInfo,
-  getCourseReviewInfo,
+  getCourseAuthor,
+  getCourseReviews,
   getCourseGoodCount,
-  getCourseInfo,
+  getCourseDetail,
 };

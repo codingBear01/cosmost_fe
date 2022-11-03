@@ -13,6 +13,7 @@ import {
   CourseDetail,
   CourseRegistration,
   Courses,
+  DisplayFindedUser,
   EditUserMenu,
   Follows,
   Histories,
@@ -82,6 +83,12 @@ function App() {
             <Route path="address" element={<InputAddress />} />
             <Route path="detail-address" element={<InputDetailAddress />} />
             <Route path="sign-up" element={<InputUser />} />
+
+            <Route path="find">
+              <Route path="email-validation" element={<InputEmail />} />
+              <Route path="id" element={<DisplayFindedUser />} />
+              <Route path="password" element={<DisplayFindedUser />} />
+            </Route>
           </>
           {/* )} */}
           {/* {token && isLoggedIn && ( */}
