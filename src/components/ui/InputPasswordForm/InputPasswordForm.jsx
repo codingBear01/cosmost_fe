@@ -1,6 +1,6 @@
 /* libraries */
-import React, { useRef, useState, useEffect } from 'react';
-import { useNavigate, useLocation, Navigate } from 'react-router-dom';
+import React, { useRef, useState, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 /* components */
@@ -10,30 +10,45 @@ import { Button, Input, UtilForm } from '../..';
 import { COLOR_LIST as color } from '../../../style';
 
 function InputPasswordForm({ state, beforeEditUserInfo }) {
-  const beforePw = 'aaaaaaaa';
+  const pathname = useLocation().pathname;
+  const isEditPasswordPage = pathname.includes('edit');
+
+  const [newPassword, setNewPassword] = useState('');
+  const [isValidatedPassword, setIsValidatedPassword] = useState(false);
 
   const beforePasswordConfirmation = useRef();
-  const newPassword = useRef();
+  // const newPassword = useRef();
   const newPasswordConfirmation = useRef();
 
   const navigate = useNavigate();
 
+  const beforePw = 'aaaaaaaa';
+
   /* Handlers */
+  const onChangeNewPassword = (e) => {
+    const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
+    setNewPassword(e.target.value);
+    setIsValidatedPassword(RegExpPassword.test(e.target.value));
+  };
+
   /** 입력된 비밀번호들을 검증하는 핸들러 */
   const checkPasswords = () => {
     if (
-      !beforePasswordConfirmation.current.value ||
-      !newPassword.current.value ||
+      (isEditPasswordPage && !beforePasswordConfirmation.current.value) ||
+      !newPassword ||
       !newPasswordConfirmation.current.value
     ) {
       toast.error('비밀번호를 입력해주세요.');
       return false;
     }
-    if (beforePw !== beforePasswordConfirmation.current.value) {
+    if (
+      isEditPasswordPage &&
+      beforePw !== beforePasswordConfirmation.current.value
+    ) {
       toast.error('기존 비밀번호와 다릅니다.');
       return false;
     }
-    if (newPassword.current.value !== newPasswordConfirmation.current.value) {
+    if (newPassword !== newPasswordConfirmation.current.value) {
       toast.error('비밀번호가 불일치합니다.');
       return false;
     }
@@ -62,16 +77,34 @@ function InputPasswordForm({ state, beforeEditUserInfo }) {
         pauseOnHover={false}
         theme="light"
       />
-      <S.InputPasswordFormText>기존 비밀번호</S.InputPasswordFormText>
+      {isEditPasswordPage && (
+        <>
+          <S.InputPasswordFormText>기존 비밀번호</S.InputPasswordFormText>
+          <Input
+            ref={beforePasswordConfirmation}
+            type={'password'}
+            width={'340px'}
+          />
+        </>
+      )}
+      <S.InputPasswordFormText>새 비밀번호</S.InputPasswordFormText>
       <Input
-        ref={beforePasswordConfirmation}
+        width={'340px'}
+        type="password"
+        value={newPassword}
+        onChange={onChangeNewPassword}
+        maxLength={16}
+      />
+      {!isValidatedPassword && (
+        <span>비밀번호를 양식에 맞게 작성해주세요.</span>
+      )}
+      <S.InputPasswordFormText>새 비밀번호 확인</S.InputPasswordFormText>
+      <Input
+        ref={newPasswordConfirmation}
         type={'password'}
         width={'340px'}
+        maxLength={16}
       />
-      <S.InputPasswordFormText>새 비밀번호</S.InputPasswordFormText>
-      <Input ref={newPassword} type={'password'} width={'340px'} />
-      <S.InputPasswordFormText>새 비밀번호 확인</S.InputPasswordFormText>
-      <Input ref={newPasswordConfirmation} type={'password'} width={'340px'} />
       <Button
         type={'submit'}
         width={'340px'}
@@ -83,7 +116,7 @@ function InputPasswordForm({ state, beforeEditUserInfo }) {
         value={'비밀번호 수정'}
         onClick={updatePassword}
       >
-        수정
+        변경
       </Button>
     </UtilForm>
   );

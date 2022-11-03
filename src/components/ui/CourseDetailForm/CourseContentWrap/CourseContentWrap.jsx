@@ -71,7 +71,7 @@ function CourseContentWrap({
           </CourseContent>
           <CourseContent>
             <MdIcons.MdOutlineRateReview />
-            <span>{courseReviews && courseReviews[0].courseReviewCnt}</span>
+            <span>{courseReviews && courseReviews[0]?.courseReviewCnt}</span>
           </CourseContent>
         </>
       ) : dataCategory === 'authorProfile' ? (
@@ -131,13 +131,12 @@ function CourseContentWrap({
           <S.AverageRate>
             <span>평균 평점</span>
             <span>
-              {coursePointAverageArr && coursePointAverageArr[0].courseAvgRate}
+              {coursePointAverageArr && coursePointAverageArr[0]?.courseAvgRate}
             </span>
           </S.AverageRate>
           <ul>
-            {console.log('courseDetail.rate.stars', courseDetail.rate.stars)}
             {courseReviewAvgPoint &&
-              courseDetail.rate.stars.map((item, index) => {
+              courseDetail.rate?.stars.map((item, index) => {
                 return (
                   <S.CourseRateStarWrap key={item.id}>
                     <S.CourseRateStar>{item.star}</S.CourseRateStar>

@@ -2,7 +2,7 @@ export { CourseDetailForm } from './CourseDetailForm/';
 export { CourseRegistrationForm } from './CourseRegistrationForm/';
 export { CoursesForm } from './CoursesForm/';
 export { DaumAddressApiForm } from './DaumAddressApiForm/';
-export { DisplayFindedUserForm } from './DisplayFindedUserForm/';
+export { DisplayFindedIdForm } from './DisplayFindedIdForm';
 export { FollowsForm } from './FollowsForm/';
 export { InputAddressForm } from './InputAddressForm/';
 export { InputDetailAddressForm } from './InputDetailAddressForm/';

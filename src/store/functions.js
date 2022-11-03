@@ -1,4 +1,4 @@
-// 함수 집합
+/* libraries */
 import axios from 'axios';
 
 /** base64ImgSrc 이미지 경로를 바이너리 데이터로 변환한 뒤 변환한 바이너리 데이터와 MIME-Type을 배열로 반환하는 함수. */
