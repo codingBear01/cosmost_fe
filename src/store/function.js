@@ -1,5 +1,7 @@
 //함수 집합
 
+import axios from "axios";
+
 /** base64ImgSrc 이미지 경로를 바이너리 데이터로 변환한 뒤 변환한 바이너리 데이터와 MIME-Type을 배열로 반환하는 함수. */
 
 const base64ImgSrcToImgBinaryData = (imgSrc) => {
@@ -7,13 +9,13 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   let Base64DataReg;
   const mimeTypeReg = /data:(.*);/;
 
-  if (imgSrc.slice(0, 3) === 'url') {
+  if (imgSrc.slice(0, 3) === "url") {
     Base64DataReg = /,(.*)\)/;
   } else {
     Base64DataReg = /,(.*)/;
   }
 
-  if (imgSrc !== 'none') {
+  if (imgSrc !== "none") {
     const itemMimeType = imgSrc.match(mimeTypeReg)
       ? imgSrc.match(mimeTypeReg)[1]
       : null;
@@ -48,7 +50,7 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   }
 */
 const createNaverMap = (
-  elementId = 'map',
+  elementId = "map",
   defaultCoordinate = {
     latitude: 35.179816,
     longitude: 129.0750223,
@@ -141,8 +143,108 @@ const addNaverMapMarkerInfo = (map, marker, elementString, style) => {
  */
 const printFormData = (formData) => {
   for (let key of formData.keys()) {
-    console.log(key, ':', formData.get(key));
+    console.log(key, ":", formData.get(key));
   }
+};
+/** 코스 평균 평점을 가져온 후 가져온 평균 평점값을 state로 업데이트 시켜주는 함수
+ *  courseID : 코스 ID를 나타내는 Number
+ *  setState : 가져온 값을 state 값으로 변경시켜주기 위한 Function
+ */
+const getCoursePointAverage = (courseID, setState) => {
+  const url = `${process.env.REACT_APP_COMMENT_IP}/v1/view?rate=average&course=${courseID}`;
+  const config = {
+    timeout: 3000,
+  };
+
+  axios
+    .get(url, config)
+    .then((result) => {
+      setState(result.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+/** 코스 작성자 정보를 가져온 후 가져온 코스 작성자 정보를 state로 업데이트 시켜주는 함수
+ *  authorID : 코스 작성자 ID를 나타내는 Number
+ *  setState : 가져온 값을 state 값으로 변경시켜주기 위한 Function
+ */
+const getCourseAuthorInfo = (authorID, setState) => {
+  const url = `${process.env.REACT_APP_AUTH_IP}/v1/view/info?id=author-id`;
+  const config = {
+    headers: {
+      Authorization: authorID,
+    },
+    timeout: 3000,
+  };
+  axios
+    .get(url, config)
+    .then((result) => {
+      setState(result.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+/** 해당 코스의 리뷰 정보를 가져오는데 성공한 경우 콜백 함수를 실행하는 함수.
+ *  courseID : 코스 ID를 나타내는 Number
+ *  thenCallback : 리뷰를 가져오는데 성공했을 때 호출할 콜백
+ */
+const getCourseReviewInfo = (courseID, thenCallback) => {
+  const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?type=review`;
+  const config = {
+    headers: {
+      Authorization: courseID,
+    },
+    timeout: 3000,
+  };
+
+  axios
+    .get(url, config)
+    .then(thenCallback)
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+/** 해당 코스의 좋아요 개수를 가져온 뒤 코스 좋아요 개수를 state로 업데이트 시켜주는 함수.
+ *  courseID : 코스 ID를 나타내는 Number
+ *  setState : 업데이트해줄 함수
+ */
+const getCourseGoodCount = (courseID, setState) => {
+  const url = `${process.env.REACT_APP_POPULARITY_IP}/v1/popularities/${courseID}?filter=count&type=cosmost`;
+  const config = {
+    timeout: 3000,
+  };
+
+  axios
+    .get(url, config)
+    .then((result) => {
+      setState(result.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+/** 코스의 정보를 가져온 뒤 state로 업데이트 시켜주는 함수.
+ *  courseID : 코스 ID를 나타내는 Number
+ *  setState : 업데이트해줄 함수
+ */
+const getCourseInfo = (courseID, setState) => {
+  const courseInfoUrl = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}`;
+  const courseInfoUConfig = { timeout: 3000 };
+
+  axios
+    .get(courseInfoUrl, courseInfoUConfig)
+    .then((response) => {
+      setState(response.data);
+    })
+    .catch((error) => {
+      alert("코스 정보 가져오기 실패");
+    });
 };
 
 export {
@@ -151,4 +253,9 @@ export {
   addNaverMapMarker,
   addNaverMapMarkerInfo,
   printFormData,
+  getCoursePointAverage,
+  getCourseAuthorInfo,
+  getCourseReviewInfo,
+  getCourseGoodCount,
+  getCourseInfo,
 };

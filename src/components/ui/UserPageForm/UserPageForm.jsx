@@ -1,17 +1,15 @@
 /* libraries */
-import React, { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 /* recoil */
-import { useRecoilState } from 'recoil';
-import { isReportFormOpenedAtom } from '../../../store';
+import { useRecoilState } from "recoil";
+import { isReportFormOpenedAtom } from "../../../store";
 /* components */
-import { UserProfilArea } from '.';
-import { ReportForm, UtilDiv, UtilTitle, MenuListForm } from '../..';
+import { UserProfilArea } from ".";
+import { ReportForm, UtilDiv, UtilTitle, MenuListForm } from "../..";
 
 function UserInfoForm() {
-  // const token = localStorage.getItem('token');
-  const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxOSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjY3MzY5MjUxLCJleHAiOjM3NjY3MzY5MjUxfQ.U355G0POH8GpxlaaS5mcB3terIKnQFfq1jFWe4QGhFU';
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -28,13 +26,13 @@ function UserInfoForm() {
   /* token 없을 시 에러 페이지로 redirect */
   useEffect(() => {
     if (!token) {
-      navigate('/error');
+      navigate("/error");
     }
   }, []);
 
   return (
     location.state && (
-      <UtilDiv width={'100%'} height={'100vh'}>
+      <UtilDiv width={"100%"} height={"100vh"}>
         <UtilTitle>{location.state.nickname} 님</UtilTitle>
         {/* 유저 프로필 및 유저 정보, 프로필 편집 버튼 */}
         <UserProfilArea token={token} userInfo={location.state} />

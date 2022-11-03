@@ -31,4 +31,9 @@ export {
   addNaverMapMarker,
   addNaverMapMarkerInfo,
   printFormData,
+  getCoursePointAverage,
+  getCourseAuthorInfo,
+  getCourseReviewInfo,
+  getCourseGoodCount,
+  getCourseInfo,
 } from "./function";
