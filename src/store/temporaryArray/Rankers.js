@@ -1,40 +1,231 @@
-export const RANKERS = [
-  {
-    id: 1,
-    imgUrl:
-      'https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg',
-    nickname: '강명모',
-    rank: 1,
-    medal: '🥇',
+export const RANKERS = {
+  topRankers: [
+    {
+      id: 1,
+      userId: 1,
+      ranking: 1,
+      nickname: '농담곰',
+      profilePicUrl: `https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMTg2/MDAxNTU0NDc3OTMzMTIx.lZxA8p3-TkDHntBzFNRTKlSmrWA2mp5lFEltW7VViz4g.6k8BCXgPvDUXlXGW211LLmq6oJPY7NKRR3INv7ALUHIg.JPEG.xvx404/1544156194762.jpg?type=w800`,
+    },
+    {
+      id: 2,
+      userId: 2,
+      ranking: 2,
+      nickname: '농담곰',
+      profilePicUrl: `https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMTg2/MDAxNTU0NDc3OTMzMTIx.lZxA8p3-TkDHntBzFNRTKlSmrWA2mp5lFEltW7VViz4g.6k8BCXgPvDUXlXGW211LLmq6oJPY7NKRR3INv7ALUHIg.JPEG.xvx404/1544156194762.jpg?type=w800`,
+    },
+    {
+      id: 3,
+      userId: 3,
+      ranking: 3,
+      nickname: '농담곰',
+      profilePicUrl: `https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMTg2/MDAxNTU0NDc3OTMzMTIx.lZxA8p3-TkDHntBzFNRTKlSmrWA2mp5lFEltW7VViz4g.6k8BCXgPvDUXlXGW211LLmq6oJPY7NKRR3INv7ALUHIg.JPEG.xvx404/1544156194762.jpg?type=w800`,
+    },
+    {
+      id: 4,
+      userId: 4,
+      ranking: 4,
+      nickname: '농담곰',
+      profilePicUrl: `https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMTg2/MDAxNTU0NDc3OTMzMTIx.lZxA8p3-TkDHntBzFNRTKlSmrWA2mp5lFEltW7VViz4g.6k8BCXgPvDUXlXGW211LLmq6oJPY7NKRR3INv7ALUHIg.JPEG.xvx404/1544156194762.jpg?type=w800`,
+    },
+    {
+      id: 5,
+      userId: 5,
+      ranking: 5,
+      nickname: '농담곰',
+      profilePicUrl: `https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMTg2/MDAxNTU0NDc3OTMzMTIx.lZxA8p3-TkDHntBzFNRTKlSmrWA2mp5lFEltW7VViz4g.6k8BCXgPvDUXlXGW211LLmq6oJPY7NKRR3INv7ALUHIg.JPEG.xvx404/1544156194762.jpg?type=w800`,
+    },
+    {
+      id: 6,
+      userId: 6,
+      ranking: 6,
+      nickname: '농담곰',
+      profilePicUrl: `https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMTg2/MDAxNTU0NDc3OTMzMTIx.lZxA8p3-TkDHntBzFNRTKlSmrWA2mp5lFEltW7VViz4g.6k8BCXgPvDUXlXGW211LLmq6oJPY7NKRR3INv7ALUHIg.JPEG.xvx404/1544156194762.jpg?type=w800`,
+    },
+    {
+      id: 7,
+      userId: 7,
+      ranking: 7,
+      nickname: '농담곰',
+      profilePicUrl: `https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMTg2/MDAxNTU0NDc3OTMzMTIx.lZxA8p3-TkDHntBzFNRTKlSmrWA2mp5lFEltW7VViz4g.6k8BCXgPvDUXlXGW211LLmq6oJPY7NKRR3INv7ALUHIg.JPEG.xvx404/1544156194762.jpg?type=w800`,
+    },
+    {
+      id: 8,
+      userId: 8,
+      ranking: 8,
+      nickname: '농담곰',
+      profilePicUrl: `https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMTg2/MDAxNTU0NDc3OTMzMTIx.lZxA8p3-TkDHntBzFNRTKlSmrWA2mp5lFEltW7VViz4g.6k8BCXgPvDUXlXGW211LLmq6oJPY7NKRR3INv7ALUHIg.JPEG.xvx404/1544156194762.jpg?type=w800`,
+    },
+    {
+      id: 9,
+      userId: 9,
+      ranking: 9,
+      nickname: '농담곰',
+      profilePicUrl: `https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMTg2/MDAxNTU0NDc3OTMzMTIx.lZxA8p3-TkDHntBzFNRTKlSmrWA2mp5lFEltW7VViz4g.6k8BCXgPvDUXlXGW211LLmq6oJPY7NKRR3INv7ALUHIg.JPEG.xvx404/1544156194762.jpg?type=w800`,
+    },
+    {
+      id: 10,
+      userId: 10,
+      ranking: 10,
+      nickname: '농담곰',
+      profilePicUrl: `https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMTg2/MDAxNTU0NDc3OTMzMTIx.lZxA8p3-TkDHntBzFNRTKlSmrWA2mp5lFEltW7VViz4g.6k8BCXgPvDUXlXGW211LLmq6oJPY7NKRR3INv7ALUHIg.JPEG.xvx404/1544156194762.jpg?type=w800`,
+    },
+  ],
+  bestCosmosters: {
+    theMostRegisterCourses: [
+      {
+        id: 1,
+        userId: 1,
+        ranking: 1,
+        nickname: '앵그리맨',
+        profilePicUrl: `https://mblogthumb-phinf.pstatic.net/MjAxOTA0MDZfMTg2/MDAxNTU0NDc3OTMzMTIx.lZxA8p3-TkDHntBzFNRTKlSmrWA2mp5lFEltW7VViz4g.6k8BCXgPvDUXlXGW211LLmq6oJPY7NKRR3INv7ALUHIg.JPEG.xvx404/1544156194762.jpg?type=w800`,
+      },
+      {
+        id: 2,
+        userId: 2,
+        ranking: 2,
+        nickname: '앵그리맨',
+        profilePicUrl: `https://t1.daumcdn.net/cfile/tistory/226F1A47560398B21D`,
+      },
+      {
+        id: 3,
+        userId: 3,
+        ranking: 3,
+        nickname: '앵그리맨',
+        profilePicUrl: `https://t1.daumcdn.net/cfile/tistory/226F1A47560398B21D`,
+      },
+      {
+        id: 4,
+        userId: 4,
+        ranking: 4,
+        nickname: '앵그리맨',
+        profilePicUrl: `https://t1.daumcdn.net/cfile/tistory/226F1A47560398B21D`,
+      },
+      {
+        id: 5,
+        userId: 5,
+        ranking: 5,
+        nickname: '앵그리맨',
+        profilePicUrl: `https://t1.daumcdn.net/cfile/tistory/226F1A47560398B21D`,
+      },
+    ],
+    theMostLikeReceivers: [
+      {
+        id: 1,
+        userId: 1,
+        ranking: 1,
+        nickname: '퍼그상',
+        profilePicUrl: `https://media.bunjang.co.kr/product/200886742_1_1664620724_w360.jpg`,
+      },
+      {
+        id: 2,
+        userId: 2,
+        ranking: 2,
+        nickname: '퍼그상',
+        profilePicUrl: `https://media.bunjang.co.kr/product/200886742_1_1664620724_w360.jpg`,
+      },
+      {
+        id: 3,
+        userId: 3,
+        ranking: 3,
+        nickname: '퍼그상',
+        profilePicUrl: `https://media.bunjang.co.kr/product/200886742_1_1664620724_w360.jpg`,
+      },
+      {
+        id: 4,
+        userId: 4,
+        ranking: 4,
+        nickname: '퍼그상',
+        profilePicUrl: `https://media.bunjang.co.kr/product/200886742_1_1664620724_w360.jpg`,
+      },
+      {
+        id: 5,
+        userId: 5,
+        ranking: 5,
+        nickname: '퍼그상',
+        profilePicUrl: `https://media.bunjang.co.kr/product/200886742_1_1664620724_w360.jpg`,
+      },
+    ],
   },
-  {
-    id: 2,
-    imgUrl:
-      'https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg',
-    nickname: '홍찬영',
-    rank: 2,
-    medal: '🥈',
+  bestCourses: {
+    theMostReviewReceivers: [
+      {
+        id: 1,
+        courseId: 1,
+        ranking: 1,
+        title: '매우 좋은 코스입니다 매우 좋은 코스입니다 매우 좋은 코스입니다',
+        thumbnailUrl: `https://images.unsplash.com/photo-1615256871065-e12d4b97a260?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80`,
+      },
+      {
+        id: 2,
+        courseId: 2,
+        ranking: 2,
+        title: '매우 좋은 코스입니다 매우 좋은 코스입니다 매우 좋은 코스입니다',
+        thumbnailUrl: `https://images.unsplash.com/photo-1615256871065-e12d4b97a260?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80`,
+      },
+      {
+        id: 3,
+        courseId: 3,
+        ranking: 3,
+        title: '매우 좋은 코스입니다 매우 좋은 코스입니다 매우 좋은 코스입니다',
+        thumbnailUrl: `https://images.unsplash.com/photo-1615256871065-e12d4b97a260?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80`,
+      },
+      {
+        id: 4,
+        courseId: 4,
+        ranking: 4,
+        title: '매우 좋은 코스입니다 매우 좋은 코스입니다 매우 좋은 코스입니다',
+        thumbnailUrl: `https://images.unsplash.com/photo-1615256871065-e12d4b97a260?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80`,
+      },
+      {
+        id: 5,
+        courseId: 5,
+        ranking: 5,
+        title: '매우 좋은 코스입니다 매우 좋은 코스입니다 매우 좋은 코스입니다',
+        thumbnailUrl: `https://images.unsplash.com/photo-1615256871065-e12d4b97a260?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80`,
+      },
+    ],
+    theMostLikeReceivers: [
+      {
+        id: 1,
+        courseId: 1,
+        ranking: 1,
+        title:
+          '매우 아름다운 코스입니다 매우 아름다운 코스입니다 매우 아름다운 코스입니다',
+        thumbnailUrl: `https://images.unsplash.com/photo-1575907794679-016b6bd90285?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1331&q=80`,
+      },
+      {
+        id: 2,
+        courseId: 2,
+        ranking: 2,
+        title:
+          '매우 아름다운 코스입니다 매우 아름다운 코스입니다 매우 아름다운 코스입니다',
+        thumbnailUrl: `https://images.unsplash.com/photo-1575907794679-016b6bd90285?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1331&q=80`,
+      },
+      {
+        id: 3,
+        courseId: 3,
+        ranking: 3,
+        title:
+          '매우 아름다운 코스입니다 매우 아름다운 코스입니다 매우 아름다운 코스입니다',
+        thumbnailUrl: `https://images.unsplash.com/photo-1575907794679-016b6bd90285?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1331&q=80`,
+      },
+      {
+        id: 4,
+        courseId: 4,
+        ranking: 4,
+        title:
+          '매우 아름다운 코스입니다 매우 아름다운 코스입니다 매우 아름다운 코스입니다',
+        thumbnailUrl: `https://images.unsplash.com/photo-1575907794679-016b6bd90285?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1331&q=80`,
+      },
+      {
+        id: 5,
+        courseId: 5,
+        ranking: 5,
+        title:
+          '매우 아름다운 코스입니다 매우 아름다운 코스입니다 매우 아름다운 코스입니다',
+        thumbnailUrl: `https://images.unsplash.com/photo-1575907794679-016b6bd90285?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1331&q=80`,
+      },
+    ],
   },
-  {
-    id: 3,
-    imgUrl:
-      'https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg',
-    nickname: '권재현',
-    rank: 3,
-    medal: '🥉',
-  },
-  {
-    id: 4,
-    imgUrl:
-      'https://i.pinimg.com/564x/26/ad/53/26ad538a432e0b13fe76a23dd22f55ad.jpg',
-    nickname: '최영수',
-    rank: 4,
-  },
-  {
-    id: 5,
-    imgUrl:
-      'https://play-lh.googleusercontent.com/GUnI2oqYL4ZQ4_zMFHn2pVRmTgg8n8vj2RFCnkrpq4Vg16pbMbsNgyuWCXXNFjclgbk',
-    nickname: '김승후',
-    rank: 5,
-  },
-];
+};

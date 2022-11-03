@@ -1,21 +1,49 @@
 /* libraries */
 import React, { useState } from 'react';
+import axios from 'axios';
 /* components */
 import * as S from './styled';
-/* static data */
-import { CATEGORIES } from '../../../../store';
+import { Link } from 'react-router-dom';
+/* CONSTANTS */
+const URLS = {
+  location: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=location`,
+  theme: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=theme`,
+};
 
-function SelectingCategoryArea() {
-  /* 카테고리 스타일 관련 states */
+function SelectingCategoryArea({ setCategoryNumber, setCategoryType }) {
+  /* States */
+  const [categories, setCategories] = useState({
+    location: [],
+    theme: [],
+  });
   const [isClickedCategory, setIsClickedCategory] = useState({
     entire: true,
     location: false,
     theme: false,
   });
 
-  /* 카테고리 클릭 시 클릭된 카테고리에 밑줄을 표시하기 위한 핸들러 */
+  /* APIs */
+  const getCategories = (type) => {
+    const url = URLS[type];
+    const config = { timeout: 3000 };
+
+    axios
+      .get(url, config)
+      .then((response) =>
+        setCategories((prev) => {
+          return {
+            ...prev,
+            [type]: response.data,
+          };
+        })
+      )
+      .catch((error) => new Error(error));
+  };
+
+  /* Handlers */
+  /**  카테고리 클릭 시 클릭된 카테고리에 밑줄을 표시하기 위한 핸들러 */
   const onClickSetClickedCategory = (isClicked) => {
-    if (isClicked === 'entire') {
+    if (isClicked === 'all') {
       setIsClickedCategory({
         entire: true,
         location: false,
@@ -34,13 +62,21 @@ function SelectingCategoryArea() {
         theme: true,
       });
     }
+
+    setCategoryType(isClicked);
+    setCategoryNumber(null);
+    getCategories(isClicked);
+  };
+
+  const onClickSetClikedCategoryId = (id) => {
+    setCategoryNumber(id);
   };
 
   return (
     <S.StyledSelectingCategoryArea>
       <S.Categories>
         <S.Category
-          onClick={() => onClickSetClickedCategory('entire')}
+          onClick={() => onClickSetClickedCategory('all')}
           isClickedCategory={isClickedCategory.entire}
         >
           전체
@@ -61,15 +97,29 @@ function SelectingCategoryArea() {
       <S.SubordinateCategories>
         <ul>
           {isClickedCategory.location &&
-            CATEGORIES[0].gu.map((item) => (
-              <li key={item.id}>
-                <S.SubordinateCategory>{item.name}</S.SubordinateCategory>
+            categories.location[0] &&
+            categories.location.map((item) => (
+              <li
+                key={item.id}
+                value={item.id}
+                onClick={() => onClickSetClikedCategoryId(item.id)}
+              >
+                <S.SubordinateCategory>
+                  {item.locationCategoryName}
+                </S.SubordinateCategory>
               </li>
             ))}
           {isClickedCategory.theme &&
-            CATEGORIES[1].theme.map((item) => (
-              <li key={item.id}>
-                <S.SubordinateCategory>{item.name}</S.SubordinateCategory>
+            categories.theme[0] &&
+            categories.theme.map((item) => (
+              <li
+                key={item.id}
+                value={item.id}
+                onClick={() => onClickSetClikedCategoryId(item.id)}
+              >
+                <S.SubordinateCategory>
+                  {item.themeCategoryName}
+                </S.SubordinateCategory>
               </li>
             ))}
         </ul>

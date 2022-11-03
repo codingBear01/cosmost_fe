@@ -14,11 +14,13 @@ import {
   CourseRegistration,
   Courses,
   EditUserMenu,
+  FindingUserPage,
   Follows,
   Histories,
   InputAddress,
   InputDetailAddress,
   InputEmail,
+  InputPassword,
   InputUser,
   Login,
   Main,
@@ -81,6 +83,12 @@ function App() {
             <Route path="address" element={<InputAddress />} />
             <Route path="detail-address" element={<InputDetailAddress />} />
             <Route path="sign-up" element={<InputUser />} />
+
+            <Route path="find">
+              <Route path="email-validation" element={<InputEmail />} />
+              <Route path="id" element={<FindingUserPage />} />
+              <Route path="pwd" element={<FindingUserPage />} />
+            </Route>
           </>
           {/* )} */}
           {/* {token && isLoggedIn && ( */}
@@ -103,6 +111,7 @@ function App() {
                 <Route path="menu" element={<EditUserMenu />} />
                 <Route path="email" element={<InputEmail />} />
                 <Route path="address" element={<InputAddress />} />
+                <Route path="password" element={<InputPassword />} />
                 <Route path="my-information" element={<InputUser />} />
               </Route>
               <Route path="withdrawal" element={<WithdrawUser />} />

@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import * as S from './styled';
 import { HeaderLogo, HeaderSearchBar, HeaderUtilBtn } from './';
 import { Icon } from '../../';
+/* static data */
+import { GAP_LIST as gap } from '../../../style';
 /* icons */
 import * as BsIcons from 'react-icons/bs';
 
@@ -36,7 +38,11 @@ function Header() {
           </Link>
 
           <S.HeaderUtilWrap>
-            <Icon onClick={onClickOpenSearchBar}>
+            <Icon
+              marginRight={'3rem'}
+              onClick={onClickOpenSearchBar}
+              style={{ marginRight: '1rem' }}
+            >
               <BsIcons.BsSearch />
             </Icon>
             <HeaderUtilBtn />
@@ -45,6 +51,7 @@ function Header() {
 
         <HeaderSearchBar
           isSearchBarOpened={isSearchBarOpened}
+          setIsSearchBarOpened={setIsSearchBarOpened}
           onClick={onClickOpenSearchBar}
         />
       </S.Header>

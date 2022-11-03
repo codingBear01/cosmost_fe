@@ -26,7 +26,7 @@ export const HeaderContainer = styled.div`
   width: 76.8rem;
   height: 100%;
   margin: 0 auto;
-  padding: 0 ${gap.l};
+  padding: 0 ${gap.xl};
   transition: all 0.2s ease;
 
   ${media.mobile} {

@@ -7,6 +7,7 @@ import { COLOR_LIST as color, GAP_LIST as gap } from '../../../style';
 export const StyledNextBtn = styled(Link)`
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   align-self: end;
   font-size: 16px;
   color: ${color.lightGrey};

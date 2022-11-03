@@ -24,7 +24,7 @@ function DeleteModal({
     // 코스 삭제
     if (clicked === 'course') {
       id = courseId;
-      const deleteCourseUrl = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts/${id}`;
+      const deleteCourseUrl = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${id}`;
       const config = { timeout: 1000 };
       axios
         .delete(deleteCourseUrl, config)

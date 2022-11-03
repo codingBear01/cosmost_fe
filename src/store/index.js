@@ -10,25 +10,29 @@ export {
   isOrderingModalOpenedAtom,
   loginStateAtom,
   pathnameAtom,
+  userAtom,
 } from "./recoilStates";
 
 /* temporary array */
 export {
-  CATEGORIES,
-  COURSE_DETAIL,
-  COURSE_REIVEWS,
-  COURSES,
   FOLLOWS,
   MAIN_COURSES,
   RANKERS,
   REPORT_HISTORIES,
 } from "./temporaryArray/";
 
-/* other Function */
+/* functions */
 export {
   base64ImgSrcToImgBinaryData,
   createNaverMap,
   addNaverMapMarker,
   addNaverMapMarkerInfo,
   printFormData,
-} from "./function";
+  getCoursePointAverage,
+  getCourseAuthor,
+  getCourseReviews,
+  getCourseGoodCount,
+  getCourseDetail,
+  viewAllcourseAverageRatingSort,
+  getSingleCourseView,
+} from "./functions";

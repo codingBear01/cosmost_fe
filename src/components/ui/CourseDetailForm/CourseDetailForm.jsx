@@ -9,10 +9,11 @@ import { useRecoilState } from 'recoil';
 import {
   createNaverMap,
   addNaverMapMarker,
-  isOrderingModalOpenedAtom,
   loginStateAtom,
   displayNaverMapMarkerInfo,
   addNaverMapMarkerInfo,
+  getCourseAuthor,
+  getCourseDetail,
 } from '../../../store';
 /* components */
 import * as S from './styled';
@@ -24,21 +25,15 @@ import {
   CourseSharingAndLikeButton,
   CourseTitleAndDate,
 } from '.';
-import { DeleteModal, OrderingButton, ToTopBtn, UtilDiv } from '../..';
-/* static data */
-import { COURSE_DETAIL as courseDetail } from '../../../store';
+import { DeleteModal, ToTopBtn, UtilDiv } from '../..';
 
 function CourseDetailForm() {
-  /* States */
-  const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
-    isOrderingModalOpenedAtom
-  );
-
   // URL로부터 전달받은 코스 ID
   const { id } = useParams();
   // 백엔드로부터 응답받은 데이터
-  const [courseInfo, setCourseInfo] = useState(null);
-  const [authorInfo, setAuthorInfo] = useState(null);
+  const [courseDetail, setCourseDetail] = useState(null);
+  const [author, setAuthor] = useState(null);
+  const [courseReviews, setCourseReviews] = useState([]);
   // 내비게이트
   const navigate = useNavigate();
 
@@ -54,12 +49,8 @@ function CourseDetailForm() {
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   /* Handlers */
-  const onClickOpenOrderingModal = () => {
-    setIsOrderingModalOpened(!isOrderingModalOpened);
-  };
-
-  /*코스 삭제 버튼 클릭시 호출할 핸들러
-    정말로 코스 삭제하겠냐는 모달창을 활성화하거나 비활성화한다. */
+  /** 코스 삭제 버튼 클릭시 호출할 핸들러
+    코스 삭제 여부 확인 모달창을 활성화하거나 비활성화한다. */
   const onClickOpenDeleteModal = (clicked, i) => {
     setIsDeleteModalOpened(!isDeleteModalOpened);
     setClickedElement(clicked);
@@ -68,32 +59,20 @@ function CourseDetailForm() {
 
   //코스 수정 버튼 클릭시 호출할 핸들러
   const onClickEditCourse = (e) => {
-    navigate(`/course-edit/${id}`, { state: courseInfo });
+    navigate(`/course-edit/${id}`, { state: courseDetail });
   };
 
+  /* APIs */
   useEffect(() => {
-    const courseInfoUrl = `${process.env.REACT_APP_SERVER1_IP}/v1/cosmosts/${id}`;
-    const courseInfoUConfig = { timeout: 1000 };
-
-    //코스 정보 가져오기
-    axios
-      .get(courseInfoUrl, courseInfoUConfig)
-      .then((response) => {
-        const data = response.data;
-        setCourseInfo(data);
-      })
-      .catch((error) => {
-        alert('코스 정보 가져오기 실패');
-        navigate('/');
-      });
+    getCourseDetail(id, setCourseDetail);
   }, []);
 
-  // courseInfo를 성공적으로 가져오면 호출하는 useEffect.
+  // courseDetail를 성공적으로 가져오면 호출하는 useEffect.
   useEffect(() => {
-    if (courseInfo) {
+    if (courseDetail) {
       // 네이버 지도 생성
       const map = createNaverMap();
-      courseInfo.placeDetailList.map((item, index) => {
+      courseDetail.placeDetailList.map((item, index) => {
         const marker = addNaverMapMarker(map, {
           latitude: item.placeYCoordinate,
           longitude: item.placeXCoordinate,
@@ -141,30 +120,15 @@ function CourseDetailForm() {
       });
 
       // 코스등록자명과 코스 프로필 가져오기
-      const authorInfoUrl = `${process.env.REACT_APP_SERVER2_IP}/v1/view/info?id=author-id`;
-      const authorInfoUConfig = {
-        headers: {
-          Authorization: courseInfo.authorId,
-        },
-        timeout: 3000,
-      };
-      axios
-        .get(authorInfoUrl, authorInfoUConfig)
-        .then((response) => {
-          const data = response.data;
-          setAuthorInfo(data);
-        })
-        .catch((error) => {
-          alert('코스 등록자명 가져오기 통신 실패');
-        });
+      getCourseAuthor(courseDetail.authorId, setAuthor);
     }
-  }, [courseInfo]);
+  }, [courseDetail]);
 
   return (
-    courseInfo && (
+    courseDetail && (
       <>
         {/* 코스 이미지 carousel */}
-        <CourseImageCarousel courseDetail={courseInfo} />
+        <CourseImageCarousel courseDetail={courseDetail} />
         {/* 본문 */}
         {isDeleteModalOpened && (
           <DeleteModal
@@ -172,7 +136,7 @@ function CourseDetailForm() {
             isClickedCourseReviewChanged={isClickedCourseReviewChanged}
             setIsClickedCourseReviewChanged={setIsClickedCourseReviewChanged}
             clickedElement={clickedElement}
-            courseId={courseInfo.id}
+            courseId={courseDetail.id}
             courseReviewId={clickedCourseReviewIndex}
           />
         )}
@@ -184,32 +148,35 @@ function CourseDetailForm() {
         >
           {/* 코스 제목 및 날짜, 더보기 버튼 */}
           <CourseTitleAndDate
-            courseDetail={courseInfo}
+            courseDetail={courseDetail}
             onClickOpenDeleteModal={onClickOpenDeleteModal}
             onClickEditCourse={onClickEditCourse}
           />
           {/* 좋아요, 리뷰 숫자 */}
           <CourseContentWrap
             courseDetail={courseDetail}
+            courseReviews={courseReviews}
+            setCourseReviews={setCourseReviews}
             dataCategory="likeAndReview"
           />
           {/* 카테고리 */}
           <CourseContentWrap
-            courseDetail={courseInfo}
+            courseDetail={courseDetail}
             dataCategory="categoryLists"
           />
           {/* 해시태그 */}
           <CourseContentWrap
-            courseDetail={courseInfo}
+            courseDetail={courseDetail}
             dataCategory="hashtagList"
           />
           {/* 작성자 정보 */}
-          {authorInfo && (
+          {author && (
             <CourseContentWrap
               justifyContent={'center'}
               height={'10rem'}
-              courseDetail={authorInfo}
+              author={author}
               dataCategory="authorProfile"
+              authorCourseCount={courseDetail.authorCourseCount}
             />
           )}
 
@@ -221,7 +188,7 @@ function CourseDetailForm() {
             id="map"
           />
           {/* { 
-            courseInfo.placeDetailList.map((itme, index) => {
+            courseDetail.placeDetailList.map((itme, index) => {
               createNaverMap("map", null, [{}])
             }) 
           } */}
@@ -229,13 +196,18 @@ function CourseDetailForm() {
           <CourseContentWrap
             justifyContent={'center'}
             height={'10rem'}
-            courseDetail={courseInfo}
+            courseDetail={courseDetail}
             dataCategory="courses"
           />
           {/* 코스 설명 */}
-          <S.CourseDescription>{courseInfo.courseComment}</S.CourseDescription>
+          <S.CourseDescription>
+            {courseDetail.courseComment}
+          </S.CourseDescription>
           {/* 공유, 좋아요 버튼 */}
-          <CourseSharingAndLikeButton courseDetail={courseDetail} />
+          <CourseSharingAndLikeButton
+            courseDetail={courseDetail}
+            token={token}
+          />
           {/* 코스 평균 평점 및 별 개수별 퍼센테이지 */}
           <CourseContentWrap
             justifyContent={'center'}
@@ -245,15 +217,21 @@ function CourseDetailForm() {
           />
           {/* 리뷰 작성 폼 */}
           <CourseReviewRegisterForm courseDetail={courseDetail} />
-          {/* 정렬 버튼 */}
-          <OrderingButton onClick={onClickOpenOrderingModal} />
           {/* 코스 리뷰 */}
-          <CourseReview
-            courseDetail={courseDetail}
-            onClickOpenDeleteModal={onClickOpenDeleteModal}
-            isClickedCourseReviewChanged={isClickedCourseReviewChanged}
-            setIsClickedCourseReviewChanged={setIsClickedCourseReviewChanged}
-          />
+          {courseReviews[0] &&
+            courseReviews[0].courseReviewList.map((course, i) => (
+              <CourseReview
+                key={course.id}
+                courseDetail={courseDetail}
+                course={course}
+                i={i}
+                onClickOpenDeleteModal={onClickOpenDeleteModal}
+                isClickedCourseReviewChanged={isClickedCourseReviewChanged}
+                setIsClickedCourseReviewChanged={
+                  setIsClickedCourseReviewChanged
+                }
+              />
+            ))}
         </UtilDiv>
         <ToTopBtn />
       </>

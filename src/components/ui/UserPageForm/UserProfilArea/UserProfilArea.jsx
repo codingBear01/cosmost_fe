@@ -1,51 +1,28 @@
 /* libraries */
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { userAtom } from '../../../../store';
 /* components */
-import * as S from "./styled";
-import { Button, ProfilePic } from "../../../";
+import * as S from './styled';
+import { Button, ProfilePic } from '../../../';
 /* static data */
-import { COLOR_LIST as color } from "../../../../style";
+import { COLOR_LIST as color } from '../../../../style';
 
-function UserProfilArea({ token, userInfo }) {
-  /* States */
-  const [user, setUser] = useState([]);
-
-  /* APIs */
-  /* 로그인한 User의 정보를 get하는 핸들러 */
-  const getUser = () => {
-    const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .get(url, config)
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch((error) => new Error(error));
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
-
+function UserProfilArea({ token, user }) {
   return (
     <S.ProfileWrap>
       {/* 프로필 사진 */}
       <S.ProfilePicWrap>
         <ProfilePic
-          src={userInfo.profileImgSaveUrl}
+          src={user.profileImgSaveUrl}
           alt="profile_pic"
-          width={"60px"}
-          height={"60px"}
+          width={'60px'}
+          height={'60px'}
         />
-        <span>{userInfo.nickname}</span>
+        <span>{user.nickname}</span>
       </S.ProfilePicWrap>
       {/* 유저 정보 */}
       <S.ProfileUtilWrap>
@@ -63,12 +40,12 @@ function UserProfilArea({ token, userInfo }) {
             <span>100</span>
           </Link>
         </S.UserInfoWrap>
-        <Link to="/user/edit/menu" state={userInfo}>
+        <Link to="/user/edit/menu" state={user}>
           <Button
             type="button"
-            width={"220px"}
-            height={"25px"}
-            font_size={"12px"}
+            width={'220px'}
+            height={'25px'}
+            font_size={'12px'}
             bgColor={color.darkBlue}
             hoveredBgColor={color.navy}
           >

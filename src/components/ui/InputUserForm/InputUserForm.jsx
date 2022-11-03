@@ -275,7 +275,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
       });
   };
 
-  /* 회원가입 수행하는 핸들러 */
+  /** 회원가입 수행하는 핸들러 */
   const onSubmitRegisterUser = (e) => {
     const formData = new FormData();
     e.preventDefault();
@@ -288,7 +288,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
     });
 
     if (ErrorCheck) {
-      const url = `${process.env.REACT_APP_SERVER2_IP}/v1/auths`;
+      const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
       const [profileImgSaveUrl] = base64ImgSrcToImgBinaryData(
         uploadedProfilePicture
       );
@@ -302,29 +302,33 @@ function InputUserForm({ state, beforeEditUserInfo }) {
         nickname: userInformation.nickname,
         sns: 'NO',
         address: `${userInformation.address} ${userInformation.detailAddress}`,
-        agegroup: userInformation.age,
+        ageGroup: userInformation.age,
       };
       //회원수정에서 프로필 이미지를 변경했을 때의 Body
-      const updateBody = {
-        loginId: userInformation.id,
-        loginPwd: userInformation.password,
-        nickname: userInformation.nickname,
-        email: beforeEditUserInfo.email,
-        address: beforeEditUserInfo.address,
-        role: beforeEditUserInfo.role,
-        sns: beforeEditUserInfo.sns,
-        status: beforeEditUserInfo.status,
-        ageGroup: userInformation.age,
-        married: userInformation.marriage,
-        type: '회원정보 수정',
-      };
-      //회원수정에서 프로필 이미지를 변경하지 않았을 때의 Body
-      const updateBody2 = {
-        ...updateBody,
-        profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
-        profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
-        profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
-      };
+      let updateBody;
+      let updateBody2;
+      if (isEditUserPage) {
+        updateBody = {
+          loginId: userInformation.id,
+          loginPwd: userInformation.password,
+          nickname: userInformation.nickname,
+          email: beforeEditUserInfo?.email,
+          address: beforeEditUserInfo.address,
+          role: beforeEditUserInfo.role,
+          sns: beforeEditUserInfo.sns,
+          status: beforeEditUserInfo.status,
+          ageGroup: userInformation.age,
+          married: userInformation.marriage,
+          type: '회원정보 수정',
+        };
+        //회원수정에서 프로필 이미지를 변경하지 않았을 때의 Body
+        updateBody2 = {
+          ...updateBody,
+          profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
+          profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
+          profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
+        };
+      }
 
       const config = {
         headers: {
@@ -333,6 +337,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
         timeout: 3000,
       };
       //회원수정
+
       if (isEditUserPage) {
         //프로필 이미지가 변경되었다면
         if (uploadedProfilePicture.slice(0, 4) == 'data') {
@@ -370,7 +375,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
           .then((response) => {
             //수정된 데이터 다시 가져와서 리다이렉트 하기
             toast.success(response.data);
-            const url = `${process.env.REACT_APP_SERVER2_IP}/v1/auths`;
+            const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
             const config = {
               headers: {
                 Authorization: token,
@@ -380,7 +385,10 @@ function InputUserForm({ state, beforeEditUserInfo }) {
             axios
               .get(url, config)
               .then((resonse) => {
-                navigate(`/user/edit/menu`, { state: resonse.data });
+                navigate(`/user/edit/menu`, {
+                  replace: true,
+                  state: resonse.data,
+                });
               })
               .catch((error) => {
                 toast.error(
@@ -408,17 +416,17 @@ function InputUserForm({ state, beforeEditUserInfo }) {
         formData.append('createAuthRequest', signUpBodyBlob);
         formData.append('file', profilePictureBlob);
 
+        printFormData(formData);
+
         axios
           .post(url, formData, config)
           .then((response) => {
-            navigate(`/user/edit/menu`);
+            navigate(`/login`, { replace: true });
           })
           .catch((error) => {
             toast.error('회원가입에 실패했습니다. 관리자에게 문의하세요.');
           });
       }
-
-      printFormData(formData);
     } else {
       toast.warn('모든 값을 입력해주세요.');
     }
