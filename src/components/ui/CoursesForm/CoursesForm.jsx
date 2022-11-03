@@ -27,7 +27,7 @@ function CoursesForm() {
   const [categoryType, setCategoryType] = useState(null);
   const [categoryNumber, setCategoryNumber] = useState(0);
 
-  //쿼리값이 변경되서 useEffect가 호출되면 변경되는 상태
+  // 쿼리값이 변경되어 useEffect가 호출되면 변경되는 상태들
   const [queryStringsState, setQueryStringsState] = useState(false);
   const page = useRef(0);
   const observedTarget = useRef(null);

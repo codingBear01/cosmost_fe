@@ -17,8 +17,8 @@ function HeaderSearchBar({ isSearchBarOpened, setIsSearchBarOpened, onClick }) {
   };
 
   /** 사용자가 검색창에서 Enter를 입력한 경우 검색을 시도하는 핸들러 */
-  const onKeydownSearchInput = (e) => {
-    if (e.code === 'Enter') {
+  const handleSearchKeyword = (e) => {
+    if (e.type === 'click' || e.code === 'Enter') {
       setIsSearchBarOpened(false);
       navigate(`/courses/searched?keyword=${searchText.current}`);
     }
@@ -26,18 +26,18 @@ function HeaderSearchBar({ isSearchBarOpened, setIsSearchBarOpened, onClick }) {
 
   return (
     <S.HeaderSearchBar isSearchBarOpened={isSearchBarOpened}>
-      <Icon>
+      <Icon onClick={handleSearchKeyword}>
         <BsIcons.BsSearch />
       </Icon>
       <Input
         ref={searchText}
-        type="text"
+        type="search"
         placeholder="키워드를 입력하세요."
         width={'60rem'}
         height={'2.5rem'}
         margin={'0 2rem'}
         onChange={onChangeSearchInput}
-        onKeyDown={onKeydownSearchInput}
+        onKeyDown={handleSearchKeyword}
       />
       <Icon onClick={onClick}>
         <AiIcons.AiOutlineClose />
