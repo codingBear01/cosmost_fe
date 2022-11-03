@@ -1,5 +1,5 @@
 // 함수 집합
-import axios from 'axios';
+import axios from "axios";
 
 /** base64ImgSrc 이미지 경로를 바이너리 데이터로 변환한 뒤 변환한 바이너리 데이터와 MIME-Type을 배열로 반환하는 함수. */
 const base64ImgSrcToImgBinaryData = (imgSrc) => {
@@ -7,13 +7,13 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   let Base64DataReg;
   const mimeTypeReg = /data:(.*);/;
 
-  if (imgSrc.slice(0, 3) === 'url') {
+  if (imgSrc.slice(0, 3) === "url") {
     Base64DataReg = /,(.*)\)/;
   } else {
     Base64DataReg = /,(.*)/;
   }
 
-  if (imgSrc !== 'none') {
+  if (imgSrc !== "none") {
     const itemMimeType = imgSrc.match(mimeTypeReg)
       ? imgSrc.match(mimeTypeReg)[1]
       : null;
@@ -48,7 +48,7 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   }
 */
 const createNaverMap = (
-  elementId = 'map',
+  elementId = "map",
   defaultCoordinate = {
     latitude: 35.179816,
     longitude: 129.0750223,
@@ -141,28 +141,22 @@ const addNaverMapMarkerInfo = (map, marker, elementString, style) => {
  */
 const printFormData = (formData) => {
   for (let key of formData.keys()) {
-    console.log(key, ':', formData.get(key));
+    console.log(key, ":", formData.get(key));
   }
 };
 
-/** 코스 평균 평점을 가져온 후 가져온 평균 평점값을 state로 업데이트 시켜주는 함수
+/** 단일 코스 평균 평점을 가져오는 데 성공하면 콜백함수를 호출하는 함수
  *  courseID : 코스 ID를 나타내는 Number
- *  setState : 가져온 값을 state 값으로 변경시켜주기 위한 Function
+ *  thenCallback : 값을 가져오는 데 성공할 시 호출할 콜백함수
+ *  errorCallback : 값을 가져오는 데 실패할 시 호출할 콜백함수
  */
-const getCoursePointAverage = (courseID, setState) => {
-  const url = `${process.env.REACT_APP_COMMENT_IP}/v1/view?rate=average&course=${courseID}`;
+const getCoursePointAverage = (courseID, thenCallback, errorCallback) => {
+  const url = `${process.env.REACT_APP_COMMENT1_IP}/v1/view?rate=average&course=${courseID}`;
   const config = {
     timeout: 3000,
   };
 
-  axios
-    .get(url, config)
-    .then((result) => {
-      setState(result.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  axios.get(url, config).then(thenCallback).catch(errorCallback);
 };
 
 /** 코스 작성자 정보를 가져온 후 가져온 코스 작성자 정보를 state로 업데이트 시켜주는 함수
@@ -187,11 +181,12 @@ const getCourseAuthor = (authorID, setState) => {
     });
 };
 
-/** 해당 코스의 리뷰 정보를 가져오는데 성공한 경우 콜백 함수를 실행하는 함수.
+/** 해당 코스의 리뷰 정보를 가져오는 함수.
  *  courseID : 코스 ID를 나타내는 Number
  *  thenCallback : 리뷰를 가져오는데 성공했을 때 호출할 콜백
+ *  errorCallback : 리뷰를 가져오는데 실패했을 때 호출할 콜백
  */
-const getCourseReviews = (courseID, thenCallback) => {
+const getCourseReviews = (courseID, thenCallback, errorCallback) => {
   const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?type=review`;
   const config = {
     headers: {
@@ -200,12 +195,7 @@ const getCourseReviews = (courseID, thenCallback) => {
     timeout: 3000,
   };
 
-  axios
-    .get(url, config)
-    .then(thenCallback)
-    .catch((error) => {
-      console.log(error);
-    });
+  axios.get(url, config).then(thenCallback).catch(errorCallback);
 };
 
 /** 해당 코스의 좋아요 개수를 가져온 뒤 코스 좋아요 개수를 state로 업데이트 시켜주는 함수.
@@ -242,7 +232,70 @@ const getCourseDetail = (courseID, setState) => {
       setState(response.data);
     })
     .catch((error) => {
-      alert('코스 정보 가져오기 실패');
+      alert("코스 정보 가져오기 실패");
+    });
+};
+
+/** 코스 평균 평점을 기준으로 모든 코스를 페이지 단위로 조회하여 state로 업데이트하는 함수
+ *  courseID : 코스 ID를 나타내는 Number
+ *  setState : 업데이트해줄 함수
+ */
+const viewAllcourseAverageRatingSort = (page, setState) => {
+  const url = `${process.env.REACT_APP_COSMOST_IP}/v1/view/ranking?order=rate&sort=desc&page=${page}&size=4`;
+  const config = { timeout: 3000 };
+
+  axios
+    .get(url, config)
+    .then((response) => {
+      setState(response.data);
+    })
+    .catch((error) => {
+      alert("코스 평균 평점 기준으로 가져오기 실패");
+    });
+};
+
+/** 단일 코스의 조회용 데이터를 가져와 state로 업데이트하는 함수
+ *  courseID : 코스 ID를 나타내는 Number
+ *  setState : 업데이트해줄 함수
+ */
+const getSingleCourseView = (courseID, setState) => {
+  const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}?filter=frame`;
+  const config = { timeout: 3000 };
+
+  axios
+    .get(url, config)
+    .then((response) => {
+      let singleCourseViewData = response.data;
+      getCoursePointAverage(
+        courseID,
+        (result) => {
+          const cpaArr = result.data;
+          singleCourseViewData = {
+            ...singleCourseViewData,
+            courseAvgRate: cpaArr[0].courseAvgRate,
+          };
+          setState(singleCourseViewData);
+        },
+        (error) => {
+          let cpaArr;
+          switch (error.response.data) {
+            case "해당 코스의 리뷰가 존재하지 않습니다":
+              cpaArr = [{ courseId: courseID, courseAvgRate: 0 }];
+              break;
+            default:
+              console.log(error);
+              break;
+          }
+          singleCourseViewData = {
+            ...singleCourseViewData,
+            courseAvgRate: cpaArr[0].courseAvgRate,
+          };
+          setState(singleCourseViewData);
+        }
+      );
+    })
+    .catch((error) => {
+      console.log("단일 코스의 조회용 데이터 가져오기 실패");
     });
 };
 
@@ -257,4 +310,6 @@ export {
   getCourseReviews,
   getCourseGoodCount,
   getCourseDetail,
+  viewAllcourseAverageRatingSort,
+  getSingleCourseView,
 };
