@@ -150,7 +150,7 @@ const printFormData = (formData) => {
  *  setState : 가져온 값을 state 값으로 변경시켜주기 위한 Function
  */
 const getCoursePointAverage = (courseID, setState) => {
-  const url = `${process.env.REACT_APP_COMMENT_IP}/v1/view?rate=average&course=${courseID}`;
+  const url = `${process.env.REACT_APP_COMMENT2_IP}/v1/view?rate=average&course=${courseID}`;
   const config = {
     timeout: 3000,
   };
@@ -192,7 +192,7 @@ const getCourseAuthor = (authorID, setState) => {
  *  thenCallback : 리뷰를 가져오는데 성공했을 때 호출할 콜백
  */
 const getCourseReviews = (courseID, thenCallback) => {
-  const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?type=review`;
+  const url = `${process.env.REACT_APP_COMMENT2_IP}/v1/comments?type=review`;
   const config = {
     headers: {
       Authorization: courseID,

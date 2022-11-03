@@ -32,21 +32,23 @@ function CourseContentWrap({
   authorCourseCount,
 }) {
   const courseID = useParams().id;
+  console.log(courseDetail);
 
-  /* 코스의 리뷰 정보를 나타내는 state*/
+  /* 코스의 리뷰 정보를 나타내는 state */
   const [courseReviews, setCourseReviews] = useState([]);
 
-  /* 코스 리뷰 평균 점수를 나타내는 state*/
+  /* 코스 리뷰 평균 점수를 나타내는 state */
   const [courseReviewAvgPoint, setCourseReviewAvgPoint] = useState('');
 
-  /* 코스 평균 평점 state*/
+  /* 코스 평균 평점 state */
   const [coursePointAverageArr, setCoursePointAverageArr] = useState('');
 
-  /* 코스 좋아요 수 state*/
+  /* 코스 좋아요 수 state */
   const [courseGoodCount, setCourseGoodCount] = useState('');
 
   useEffect(() => {
     getCourseReviews(courseID, (result) => {
+      console.log(result);
       setCourseReviews(result.data);
       setCourseReviewAvgPoint(
         result.data[0].rateAllTypeList[0]
@@ -136,10 +138,24 @@ function CourseContentWrap({
           </S.AverageRate>
           <ul>
             {courseReviewAvgPoint &&
-              courseDetail.rate?.stars.map((item, index) => {
+              courseReviewAvgPoint.map((item, index) => {
                 return (
-                  <S.CourseRateStarWrap key={item.id}>
-                    <S.CourseRateStar>{item.star}</S.CourseRateStar>
+                  <S.CourseRateStarWrap key={index}>
+                    <S.CourseRateStar>
+                      {index === 0 ? (
+                        '⭐⭐⭐⭐⭐'
+                      ) : index === 1 ? (
+                        '⭐⭐⭐⭐'
+                      ) : index === 2 ? (
+                        '⭐⭐⭐'
+                      ) : index === 3 ? (
+                        '⭐⭐'
+                      ) : index === 4 ? (
+                        '⭐'
+                      ) : (
+                        <></>
+                      )}
+                    </S.CourseRateStar>
                     <S.CourseRateStarPercentGaugeWrap>
                       <S.CourseRateStarPercentGauge
                         width={`${courseReviewAvgPoint[index]}%`}

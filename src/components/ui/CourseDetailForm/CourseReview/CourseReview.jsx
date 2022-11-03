@@ -95,9 +95,9 @@ function CourseReview({
   };
 
   /* APIs */
-  /* 해당 코스 전체 리뷰 받아오기 */
+  /** 해당 코스 전체 리뷰 받아오기 */
   const getCourseReviews = (courseId) => {
-    const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?type=review`;
+    const url = `${process.env.REACT_APP_COMMENT2_IP}/v1/comments?type=review`;
     const config = {
       headers: {
         Authorization: courseId,
