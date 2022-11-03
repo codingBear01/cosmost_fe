@@ -27,8 +27,6 @@ function Course({ course }) {
     }
   }, []);
 
-  console.log('course', course);
-
   return (
     <S.StyledCourse>
       {/* 코스 이미지 */}
@@ -40,7 +38,7 @@ function Course({ course }) {
       <S.CourseContentWrap justifyContent={'space-between'}>
         <S.CourseTitle>{course?.courseTitle}</S.CourseTitle>
         <S.CourseRate>
-          ⭐ {courseRate && courseRate[0].courseAvgRate}
+          ⭐ {courseRate && courseRate[0]?.courseAvgRate}
         </S.CourseRate>
       </S.CourseContentWrap>
       {/* 코스 카테고리 */}

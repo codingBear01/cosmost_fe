@@ -9,7 +9,6 @@ import { useRecoilState } from 'recoil';
 import {
   createNaverMap,
   addNaverMapMarker,
-  isOrderingModalOpenedAtom,
   loginStateAtom,
   displayNaverMapMarkerInfo,
   addNaverMapMarkerInfo,
@@ -26,19 +25,15 @@ import {
   CourseSharingAndLikeButton,
   CourseTitleAndDate,
 } from '.';
-import { DeleteModal, OrderingButton, ToTopBtn, UtilDiv } from '../..';
+import { DeleteModal, ToTopBtn, UtilDiv } from '../..';
 
 function CourseDetailForm() {
-  /* States */
-  const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
-    isOrderingModalOpenedAtom
-  );
-
   // URL로부터 전달받은 코스 ID
   const { id } = useParams();
   // 백엔드로부터 응답받은 데이터
   const [courseDetail, setCourseDetail] = useState(null);
   const [author, setAuthor] = useState(null);
+  const [courseReviews, setCourseReviews] = useState([]);
   // 내비게이트
   const navigate = useNavigate();
 
@@ -54,12 +49,8 @@ function CourseDetailForm() {
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   /* Handlers */
-  const onClickOpenOrderingModal = () => {
-    setIsOrderingModalOpened(!isOrderingModalOpened);
-  };
-
-  /*코스 삭제 버튼 클릭시 호출할 핸들러
-    정말로 코스 삭제하겠냐는 모달창을 활성화하거나 비활성화한다. */
+  /** 코스 삭제 버튼 클릭시 호출할 핸들러
+    코스 삭제 여부 확인 모달창을 활성화하거나 비활성화한다. */
   const onClickOpenDeleteModal = (clicked, i) => {
     setIsDeleteModalOpened(!isDeleteModalOpened);
     setClickedElement(clicked);
@@ -71,6 +62,7 @@ function CourseDetailForm() {
     navigate(`/course-edit/${id}`, { state: courseDetail });
   };
 
+  /* APIs */
   useEffect(() => {
     getCourseDetail(id, setCourseDetail);
   }, []);
@@ -163,6 +155,8 @@ function CourseDetailForm() {
           {/* 좋아요, 리뷰 숫자 */}
           <CourseContentWrap
             courseDetail={courseDetail}
+            courseReviews={courseReviews}
+            setCourseReviews={setCourseReviews}
             dataCategory="likeAndReview"
           />
           {/* 카테고리 */}
@@ -223,15 +217,21 @@ function CourseDetailForm() {
           />
           {/* 리뷰 작성 폼 */}
           <CourseReviewRegisterForm courseDetail={courseDetail} />
-          {/* 정렬 버튼 */}
-          <OrderingButton onClick={onClickOpenOrderingModal} />
           {/* 코스 리뷰 */}
-          <CourseReview
-            courseDetail={courseDetail}
-            onClickOpenDeleteModal={onClickOpenDeleteModal}
-            isClickedCourseReviewChanged={isClickedCourseReviewChanged}
-            setIsClickedCourseReviewChanged={setIsClickedCourseReviewChanged}
-          />
+          {courseReviews[0] &&
+            courseReviews[0].courseReviewList.map((course, i) => (
+              <CourseReview
+                key={course.id}
+                courseDetail={courseDetail}
+                course={course}
+                i={i}
+                onClickOpenDeleteModal={onClickOpenDeleteModal}
+                isClickedCourseReviewChanged={isClickedCourseReviewChanged}
+                setIsClickedCourseReviewChanged={
+                  setIsClickedCourseReviewChanged
+                }
+              />
+            ))}
         </UtilDiv>
         <ToTopBtn />
       </>

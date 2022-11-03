@@ -34,9 +34,6 @@ function RankersContainer({ i, rankers, type }) {
     setRightRankers(right);
   }, []);
 
-  console.log(type);
-  console.log(i);
-
   return (
     <S.StyledRankersContainer i={i}>
       <RankersBox i={i}>

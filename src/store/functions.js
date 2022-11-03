@@ -1,4 +1,4 @@
-// 함수 집합
+/* libraries */
 import axios from 'axios';
 
 /** base64ImgSrc 이미지 경로를 바이너리 데이터로 변환한 뒤 변환한 바이너리 데이터와 MIME-Type을 배열로 반환하는 함수. */
@@ -150,7 +150,7 @@ const printFormData = (formData) => {
  *  setState : 가져온 값을 state 값으로 변경시켜주기 위한 Function
  */
 const getCoursePointAverage = (courseID, setState) => {
-  const url = `${process.env.REACT_APP_COMMENT_IP}/v1/view?rate=average&course=${courseID}`;
+  const url = `${process.env.REACT_APP_COMMENT2_IP}/v1/view?rate=average&course=${courseID}`;
   const config = {
     timeout: 3000,
   };
@@ -161,7 +161,7 @@ const getCoursePointAverage = (courseID, setState) => {
       setState(result.data);
     })
     .catch((error) => {
-      console.log(error);
+      new Error(error);
     });
 };
 
@@ -183,7 +183,7 @@ const getCourseAuthor = (authorID, setState) => {
       setState(result.data);
     })
     .catch((error) => {
-      console.log(error);
+      new Error(error);
     });
 };
 
@@ -192,7 +192,7 @@ const getCourseAuthor = (authorID, setState) => {
  *  thenCallback : 리뷰를 가져오는데 성공했을 때 호출할 콜백
  */
 const getCourseReviews = (courseID, thenCallback) => {
-  const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?type=review`;
+  const url = `${process.env.REACT_APP_COMMENT2_IP}/v1/comments?type=review`;
   const config = {
     headers: {
       Authorization: courseID,
@@ -204,7 +204,7 @@ const getCourseReviews = (courseID, thenCallback) => {
     .get(url, config)
     .then(thenCallback)
     .catch((error) => {
-      console.log(error);
+      new Error(error);
     });
 };
 
@@ -224,7 +224,7 @@ const getCourseGoodCount = (courseID, setState) => {
       setState(result.data);
     })
     .catch((error) => {
-      console.log(error);
+      new Error(error);
     });
 };
 
@@ -233,16 +233,16 @@ const getCourseGoodCount = (courseID, setState) => {
  *  setState : 업데이트해줄 함수
  */
 const getCourseDetail = (courseID, setState) => {
-  const courseInfoUrl = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}`;
-  const courseInfoUConfig = { timeout: 3000 };
+  const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}`;
+  const config = { timeout: 3000 };
 
   axios
-    .get(courseInfoUrl, courseInfoUConfig)
+    .get(url, config)
     .then((response) => {
       setState(response.data);
     })
     .catch((error) => {
-      alert('코스 정보 가져오기 실패');
+      new Error(error);
     });
 };
 
