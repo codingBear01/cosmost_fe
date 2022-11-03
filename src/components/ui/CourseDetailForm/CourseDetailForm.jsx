@@ -1,11 +1,11 @@
 /* libraries */
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 /* custom functions */
 
 /* recoil */
-import { useRecoilState } from 'recoil';
+import { useRecoilState } from "recoil";
 import {
   createNaverMap,
   addNaverMapMarker,
@@ -13,9 +13,11 @@ import {
   loginStateAtom,
   displayNaverMapMarkerInfo,
   addNaverMapMarkerInfo,
-} from '../../../store';
+  getCourseAuthorInfo,
+  getCourseInfo,
+} from "../../../store";
 /* components */
-import * as S from './styled';
+import * as S from "./styled";
 import {
   CourseContentWrap,
   CourseImageCarousel,
@@ -23,10 +25,10 @@ import {
   CourseReviewRegisterForm,
   CourseSharingAndLikeButton,
   CourseTitleAndDate,
-} from '.';
-import { DeleteModal, OrderingButton, ToTopBtn, UtilDiv } from '../..';
+} from ".";
+import { DeleteModal, OrderingButton, ToTopBtn, UtilDiv } from "../..";
 /* static data */
-import { COURSE_DETAIL as courseDetail } from '../../../store';
+import { COURSE_DETAIL as courseDetail } from "../../../store";
 
 function CourseDetailForm() {
   /* States */
@@ -39,6 +41,7 @@ function CourseDetailForm() {
   // 백엔드로부터 응답받은 데이터
   const [courseInfo, setCourseInfo] = useState(null);
   const [authorInfo, setAuthorInfo] = useState(null);
+
   // 내비게이트
   const navigate = useNavigate();
 
@@ -50,7 +53,7 @@ function CourseDetailForm() {
     useState(false);
 
   //로그인 정보
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   /* Handlers */
@@ -72,20 +75,7 @@ function CourseDetailForm() {
   };
 
   useEffect(() => {
-    const courseInfoUrl = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${id}`;
-    const courseInfoUConfig = { timeout: 1000 };
-
-    //코스 정보 가져오기
-    axios
-      .get(courseInfoUrl, courseInfoUConfig)
-      .then((response) => {
-        const data = response.data;
-        setCourseInfo(data);
-      })
-      .catch((error) => {
-        alert('코스 정보 가져오기 실패');
-        navigate('/');
-      });
+    getCourseInfo(id, setCourseInfo);
   }, []);
 
   // courseInfo를 성공적으로 가져오면 호출하는 useEffect.
@@ -99,13 +89,13 @@ function CourseDetailForm() {
           longitude: item.placeXCoordinate,
           eventList: [
             {
-              eventName: 'mouseover',
+              eventName: "mouseover",
               eventListener: (e) => {
                 e.pointerEvent.target.title = item.placeName;
               },
             },
             {
-              eventName: 'click',
+              eventName: "click",
               eventListener: (e) => {
                 onClickMarker(e);
               },
@@ -117,11 +107,11 @@ function CourseDetailForm() {
             <div><h3>${item.placeName}</h3><div>${item.placeComment}</div></div>
         `;
         const markerInfoStyle = {
-          backgroundColor: '#000',
-          borderColor: '#2db400',
+          backgroundColor: "#000",
+          borderColor: "#2db400",
           borderWidth: 5,
           anchorSkew: true,
-          anchorColor: '#eee',
+          anchorColor: "#eee",
         };
         const info = addNaverMapMarkerInfo(
           map,
@@ -141,22 +131,7 @@ function CourseDetailForm() {
       });
 
       // 코스등록자명과 코스 프로필 가져오기
-      const authorInfoUrl = `${process.env.REACT_APP_AUTH_IP}/v1/view/info?id=author-id`;
-      const authorInfoUConfig = {
-        headers: {
-          Authorization: courseInfo.authorId,
-        },
-        timeout: 3000,
-      };
-      axios
-        .get(authorInfoUrl, authorInfoUConfig)
-        .then((response) => {
-          const data = response.data;
-          setAuthorInfo(data);
-        })
-        .catch((error) => {
-          alert('코스 등록자명 가져오기 통신 실패');
-        });
+      getCourseAuthorInfo(courseInfo.authorId, setAuthorInfo);
     }
   }, [courseInfo]);
 
@@ -177,10 +152,10 @@ function CourseDetailForm() {
           />
         )}
         <UtilDiv
-          justifyContent={'center'}
-          width={'76.8rem'}
-          padding={'0 0 7rem 0'}
-          margin={'0 auto'}
+          justifyContent={"center"}
+          width={"76.8rem"}
+          padding={"0 0 7rem 0"}
+          margin={"0 auto"}
         >
           {/* 코스 제목 및 날짜, 더보기 버튼 */}
           <CourseTitleAndDate
@@ -206,16 +181,17 @@ function CourseDetailForm() {
           {/* 작성자 정보 */}
           {authorInfo && (
             <CourseContentWrap
-              justifyContent={'center'}
-              height={'10rem'}
+              justifyContent={"center"}
+              height={"10rem"}
               courseDetail={authorInfo}
               dataCategory="authorProfile"
+              authorCourseCount={courseInfo.authorCourseCount}
             />
           )}
 
           {/* 코스에 등록된 장소를 표시하는 지도 */}
           <div
-            style={{ width: '100%', height: '46rem' }}
+            style={{ width: "100%", height: "46rem" }}
             // src="https://file.mk.co.kr/meet/neds/2020/11/image_readtop_2020_1206310_16061899354442297.jpg"
             // alt="locations"
             id="map"
@@ -227,8 +203,8 @@ function CourseDetailForm() {
           } */}
           {/* 코스에 등록된 장소 순서 */}
           <CourseContentWrap
-            justifyContent={'center'}
-            height={'10rem'}
+            justifyContent={"center"}
+            height={"10rem"}
             courseDetail={courseInfo}
             dataCategory="courses"
           />
@@ -238,8 +214,8 @@ function CourseDetailForm() {
           <CourseSharingAndLikeButton courseDetail={courseDetail} />
           {/* 코스 평균 평점 및 별 개수별 퍼센테이지 */}
           <CourseContentWrap
-            justifyContent={'center'}
-            height={'30rem'}
+            justifyContent={"center"}
+            height={"30rem"}
             courseDetail={courseDetail}
             dataCategory="averageRate"
           />

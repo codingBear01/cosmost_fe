@@ -13,13 +13,50 @@ import * as GiIcons from "react-icons/gi";
 import * as AiIcons from "react-icons/ai";
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from "../../../../style";
+import { useState } from "react";
+import { useEffect } from "react";
+import {
+  getCourseGoodCount,
+  getCoursePointAverage,
+  getCourseReviewInfo,
+} from "../../../../store";
+import { useParams } from "react-router-dom";
 
 function CourseContentWrap({
   justifyContent,
   height,
   courseDetail,
   dataCategory,
+  authorCourseCount,
 }) {
+  const courseID = useParams().id;
+
+  /* 코스의 리뷰 정보를 나타내는 state*/
+  const [courseReviewInfo, setCourseReviewInfo] = useState("");
+
+  /* 코스 리뷰 평균 점수를 나타내는 state*/
+  const [courseReviewAvgPoint, setCourseReviewAvgPoint] = useState("");
+
+  /* 코스 평균 평점 state*/
+  const [coursePointAverageArr, setCoursePointAverageArr] = useState("");
+
+  /* 코스 좋아요 수 state*/
+  const [courseGoodCount, setCourseGoodCount] = useState("");
+
+  useEffect(() => {
+    getCourseReviewInfo(courseID, (result) => {
+      setCourseReviewInfo(result.data);
+      setCourseReviewAvgPoint(
+        result.data[0].rateAllTypeList[0]
+          .match(/\[(.*)\]/)[1]
+          .split(", ")
+          .reverse()
+      );
+    });
+    getCoursePointAverage(courseID, setCoursePointAverageArr);
+    getCourseGoodCount(courseID, setCourseGoodCount);
+  }, []);
+
   return (
     // dataCategory에 따라 다른 컴포넌트 렌더링됨
     <S.StyledCourseContentWrap justifyContent={justifyContent} height={height}>
@@ -28,11 +65,13 @@ function CourseContentWrap({
         <>
           <CourseContent>
             <FaIcons.FaRegThumbsUp />
-            <span>{courseDetail.likeCount}</span>
+            <span>{courseGoodCount.courseThumbsCnt}</span>
           </CourseContent>
           <CourseContent>
             <MdIcons.MdOutlineRateReview />
-            <span>{courseDetail.reviewCount}</span>
+            <span>
+              {courseReviewInfo && courseReviewInfo[0].courseReviewCnt}
+            </span>
           </CourseContent>
         </>
       ) : dataCategory === "authorProfile" ? (
@@ -68,7 +107,7 @@ function CourseContentWrap({
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <GiIcons.GiRoad />
-            <span>{courseDetail?.author?.courses}</span>
+            <span>{authorCourseCount}</span>
           </S.AutorProfileVerticalWrap>
         </>
       ) : dataCategory === "courses" ? (
@@ -91,23 +130,28 @@ function CourseContentWrap({
           {/* 코스 평균 평점 */}
           <S.AverageRate>
             <span>평균 평점</span>
-            <span>{courseDetail.rate.average}</span>
+            <span>
+              {coursePointAverageArr && coursePointAverageArr[0].courseAvgRate}
+            </span>
           </S.AverageRate>
           <ul>
-            {/* 별 개수별 퍼센테이지 */}
-            {courseDetail.rate.stars.map((item) => (
-              <S.CourseRateStarWrap key={item.id}>
-                <S.CourseRateStar>{item.star}</S.CourseRateStar>
-                <S.CourseRateStarPercentGaugeWrap>
-                  <S.CourseRateStarPercentGauge
-                    width={`${item.percent}%`}
-                  ></S.CourseRateStarPercentGauge>
-                </S.CourseRateStarPercentGaugeWrap>
-                <S.CourseRateStarPercent>
-                  {item.percent}%
-                </S.CourseRateStarPercent>
-              </S.CourseRateStarWrap>
-            ))}
+            {console.log("courseDetail.rate.stars", courseDetail.rate.stars)}
+            {courseReviewAvgPoint &&
+              courseDetail.rate.stars.map((item, index) => {
+                return (
+                  <S.CourseRateStarWrap key={item.id}>
+                    <S.CourseRateStar>{item.star}</S.CourseRateStar>
+                    <S.CourseRateStarPercentGaugeWrap>
+                      <S.CourseRateStarPercentGauge
+                        width={`${courseReviewAvgPoint[index]}%`}
+                      ></S.CourseRateStarPercentGauge>
+                    </S.CourseRateStarPercentGaugeWrap>
+                    <S.CourseRateStarPercent>
+                      {courseReviewAvgPoint[index]}%
+                    </S.CourseRateStarPercent>
+                  </S.CourseRateStarWrap>
+                );
+              })}
           </ul>
         </>
       ) : (
