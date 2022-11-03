@@ -8,6 +8,7 @@ import * as S from './styled';
 import { Button, Input, UtilForm } from '../..';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
+import { useEffect } from 'react';
 
 function InputPasswordForm({ state, beforeEditUserInfo }) {
   const pathname = useLocation().pathname;
@@ -25,11 +26,14 @@ function InputPasswordForm({ state, beforeEditUserInfo }) {
   const beforePw = 'aaaaaaaa';
 
   /* Handlers */
-  const onChangeNewPassword = (e) => {
+  const checkNewPassword = () => {
     const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
-    setNewPassword(e.target.value);
-    setIsValidatedPassword(RegExpPassword.test(e.target.value));
+    return RegExpPassword.test(newPassword);
   };
+
+  useEffect(() => {
+    checkNewPassword();
+  }, [newPassword]);
 
   /** 입력된 비밀번호들을 검증하는 핸들러 */
   const checkPasswords = () => {
@@ -92,11 +96,14 @@ function InputPasswordForm({ state, beforeEditUserInfo }) {
         width={'340px'}
         type="password"
         value={newPassword}
-        onChange={onChangeNewPassword}
+        onChange={(e) => setNewPassword(e.target.value)}
         maxLength={16}
       />
-      {!isValidatedPassword && (
-        <span>비밀번호를 양식에 맞게 작성해주세요.</span>
+      {!checkNewPassword() && (
+        <S.InvalidPasswordAlertMessage>
+          비밀번호는 8자 이상 16자 이하, 영대소문자, 숫자, 특수문자만 입력
+          가능합니다.
+        </S.InvalidPasswordAlertMessage>
       )}
       <S.InputPasswordFormText>새 비밀번호 확인</S.InputPasswordFormText>
       <Input
