@@ -76,7 +76,16 @@ function OrderingModal() {
               </Link>
 
               <S.OrderingItem>리뷰 많은 순</S.OrderingItem>
-              <S.OrderingItem>최신순</S.OrderingItem>
+              <Link
+                to={
+                  queryString.get("keyword")
+                    ? `/courses/searched?keyword=${queryString.get("keyword")}`
+                    : "/courses/all"
+                }
+                style={{ width: "50%", color: "black" }}
+              >
+                <S.OrderingItem width="100%">최신순</S.OrderingItem>
+              </Link>
             </>
           )}
         </S.OrderingList>

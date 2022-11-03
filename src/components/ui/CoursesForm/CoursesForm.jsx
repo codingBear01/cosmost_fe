@@ -29,9 +29,9 @@ function CoursesForm() {
 
   //쿼리값이 변경되서 useEffect가 호출되면 변경되는 상태
   const [queryStringsState, setQueryStringsState] = useState(false);
+
   const page = useRef(0);
   const observedTarget = useRef(null);
-
   const params = useParams();
   const [queryStrings] = useSearchParams();
 
@@ -71,7 +71,14 @@ function CoursesForm() {
       try {
         let url;
         if (type === "searched" && searchKeyword) {
-          url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?keyword=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
+          switch (sortType) {
+            case "rate":
+              // url = `${process.env.REACT_APP_COMMENT1_IP}/v1/view/ranking?order=rate&sort=desc&page=${page.current}&size=4`;
+              break;
+            default:
+              url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?keyword=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
+              break;
+          }
         }
         if (type === "hashtags" && searchKeyword) {
           url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?hashtag=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
@@ -101,6 +108,7 @@ function CoursesForm() {
 
         const result = await axios.get(url, config);
         const { data } = result;
+        console.log(data);
 
         setCourses((prev) => prev.concat(data));
         setIsLastPage(data[data.length - 1].whetherLastPage);
@@ -114,9 +122,19 @@ function CoursesForm() {
     },
     [categoryType, categoryNumber, page]
   );
-  // useEffect(()=>{
-  //   queryStrings.get("sort"),
-  // })
+
+  //정렬 표시
+  useEffect(() => {
+    const sortQuery = queryStrings.get("sort");
+    switch (sortQuery) {
+      case "rate":
+        setCourseSortType("평점 높은 순");
+        break;
+      default:
+        setCourseSortType("최신순");
+        break;
+    }
+  }, [queryStrings]);
 
   /** 쿼리스트링이 변경될 때마다 호출되는 useEffect. IsLastPage와 Course State를 초기화한다.*/
   useEffect(() => {
