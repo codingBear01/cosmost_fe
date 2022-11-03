@@ -25,7 +25,7 @@ function HeaderSearchBar({
   const handleSearchKeyword = (e) => {
     if (e.type === 'click' || e.code === 'Enter') {
       setIsSearchBarOpened(false);
-      navigate(`/courses/searched?keyword=${searchKeyword}`);
+      navigate(`/courses/keyword?keyword=${searchKeyword}`);
     }
   };
 

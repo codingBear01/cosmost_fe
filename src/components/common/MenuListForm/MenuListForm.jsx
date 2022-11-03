@@ -80,7 +80,7 @@ function MenuListForm({ onClickOpenReportForm }) {
             <span>코스 등록하기</span>
           </S.MenuItem>
         </Link>
-        <Link to="/courses/mine">
+        <Link to="/courses/auth">
           <S.MenuItem>
             <TbIcons.TbRoad />
             <span>내가 등록한 코스</span>
