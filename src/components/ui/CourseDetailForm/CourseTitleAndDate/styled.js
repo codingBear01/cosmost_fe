@@ -30,7 +30,9 @@ export const CourseAverageRate = styled.span`
 
 export const CourseCreatedDateAndMoreIconWrap = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: flex-end;
+  width: 20rem;
   height: 100%;
 
   svg {
@@ -40,7 +42,7 @@ export const CourseCreatedDateAndMoreIconWrap = styled.div`
   }
 `;
 
-export const CourseCreatedDate = styled.div`
+export const CourseCreatedDate = styled.span`
   font-size: ${fs.m};
   font-weight: 600;
 `;
