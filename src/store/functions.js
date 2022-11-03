@@ -161,7 +161,7 @@ const getCoursePointAverage = (courseID, setState) => {
       setState(result.data);
     })
     .catch((error) => {
-      console.log(error);
+      new Error(error);
     });
 };
 
@@ -183,7 +183,7 @@ const getCourseAuthor = (authorID, setState) => {
       setState(result.data);
     })
     .catch((error) => {
-      console.log(error);
+      new Error(error);
     });
 };
 
@@ -204,7 +204,7 @@ const getCourseReviews = (courseID, thenCallback) => {
     .get(url, config)
     .then(thenCallback)
     .catch((error) => {
-      console.log(error);
+      new Error(error);
     });
 };
 
@@ -224,7 +224,7 @@ const getCourseGoodCount = (courseID, setState) => {
       setState(result.data);
     })
     .catch((error) => {
-      console.log(error);
+      new Error(error);
     });
 };
 
@@ -233,16 +233,16 @@ const getCourseGoodCount = (courseID, setState) => {
  *  setState : 업데이트해줄 함수
  */
 const getCourseDetail = (courseID, setState) => {
-  const courseInfoUrl = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}`;
-  const courseInfoUConfig = { timeout: 3000 };
+  const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}`;
+  const config = { timeout: 3000 };
 
   axios
-    .get(courseInfoUrl, courseInfoUConfig)
+    .get(url, config)
     .then((response) => {
       setState(response.data);
     })
     .catch((error) => {
-      alert('코스 정보 가져오기 실패');
+      new Error(error);
     });
 };
 

@@ -236,14 +236,12 @@ function InputUserForm({ state, beforeEditUserInfo }) {
     axios
       .get(url, config)
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
           toast.success('사용 가능한 아이디입니다.');
           setIsDuplicatedIdChecked(!isDuplicatedIdChecked);
         }
       })
       .catch((error) => {
-        console.log(error);
         if (error.response.status === 400) {
           toast.error('이미 존재하는 아이디입니다.');
         }
@@ -404,7 +402,6 @@ function InputUserForm({ state, beforeEditUserInfo }) {
       }
       //회원가입
       else {
-        console.log('signUpBody', signUpBody);
         const signUpBodyJson = JSON.stringify(signUpBody);
         const signUpBodyBlob = new Blob([signUpBodyJson], {
           type: 'application/json',
@@ -424,7 +421,6 @@ function InputUserForm({ state, beforeEditUserInfo }) {
         axios
           .post(url, formData, config)
           .then((response) => {
-            console.log('response', response);
             navigate(`/login`, { replace: true });
           })
           .catch((error) => {

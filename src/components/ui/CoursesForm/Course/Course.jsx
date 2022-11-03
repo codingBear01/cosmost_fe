@@ -27,8 +27,6 @@ function Course({ course }) {
     }
   }, []);
 
-  console.log('course', course);
-
   return (
     <S.StyledCourse>
       {/* 코스 이미지 */}

@@ -26,16 +26,14 @@ import { useParams } from 'react-router-dom';
 function CourseContentWrap({
   justifyContent,
   height,
+  courseReviews,
+  setCourseReviews,
   courseDetail,
   author,
   dataCategory,
   authorCourseCount,
 }) {
   const courseID = useParams().id;
-  console.log(courseDetail);
-
-  /* 코스의 리뷰 정보를 나타내는 state */
-  const [courseReviews, setCourseReviews] = useState([]);
 
   /* 코스 리뷰 평균 점수를 나타내는 state */
   const [courseReviewAvgPoint, setCourseReviewAvgPoint] = useState('');
@@ -48,7 +46,6 @@ function CourseContentWrap({
 
   useEffect(() => {
     getCourseReviews(courseID, (result) => {
-      console.log(result);
       setCourseReviews(result.data);
       setCourseReviewAvgPoint(
         result.data[0].rateAllTypeList[0]

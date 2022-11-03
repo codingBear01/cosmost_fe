@@ -147,7 +147,6 @@ function CoursesForm() {
       <OrderingButton onClick={onClickOpenOrderingModal} />
       {/* 코스 검색 결괏값 */}
       <S.SearchedCourseContainer>
-        {console.log('courses', courses)}
         {courses.length ? (
           courses.map((course) => (
             <Link to={`/course-detail/${course.id}`} key={course.id}>
