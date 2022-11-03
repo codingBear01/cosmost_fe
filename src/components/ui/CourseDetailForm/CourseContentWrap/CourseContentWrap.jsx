@@ -35,9 +35,6 @@ function CourseContentWrap({
 }) {
   const courseID = useParams().id;
 
-  /* 코스의 리뷰 정보를 나타내는 state*/
-  const [courseReviews, setCourseReviews] = useState([]);
-
   /* 코스 리뷰 평균 점수를 나타내는 state*/
   const [courseReviewAvgPoint, setCourseReviewAvgPoint] = useState("");
 
