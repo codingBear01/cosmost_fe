@@ -139,7 +139,7 @@ function LoginForm() {
       </Button>
       {/* 비밀번호, 아이디 찾기 */}
       <S.LoginFindWrap>
-        <S.LoginServiceLink to="/find/email-validation" state={'password'}>
+        <S.LoginServiceLink to="/find/email-validation" state={'pwd'}>
           비밀번호 찾기
         </S.LoginServiceLink>
         <span style={{ color: 'white' }}>|</span>

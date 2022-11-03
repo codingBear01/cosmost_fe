@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 /* components */
 import * as S from './styled';
+import { Link } from 'react-router-dom';
 /* CONSTANTS */
 const URLS = {
   location: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=location`,

@@ -10,7 +10,13 @@ import {
 
 export const InputPasswordFormText = styled.span`
   align-self: start;
-  margin: ${gap.m} 0;
-  font-size: ${fs.xl};
+  margin: 15px 0;
+  font-size: 20px;
+  font-weight: 600;
+`;
+
+export const InvalidPasswordAlertMessage = styled.span`
+  margin-top: 15px;
+  color: ${color.red};
   font-weight: 600;
 `;

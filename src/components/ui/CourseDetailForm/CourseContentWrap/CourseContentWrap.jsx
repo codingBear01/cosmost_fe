@@ -26,6 +26,8 @@ import { useParams } from "react-router-dom";
 function CourseContentWrap({
   justifyContent,
   height,
+  courseReviews,
+  setCourseReviews,
   courseDetail,
   author,
   dataCategory,
@@ -74,7 +76,7 @@ function CourseContentWrap({
           </CourseContent>
           <CourseContent>
             <MdIcons.MdOutlineRateReview />
-            <span>{courseReviews && courseReviews[0].courseReviewCnt}</span>
+            <span>{courseReviews && courseReviews[0]?.courseReviewCnt}</span>
           </CourseContent>
         </>
       ) : dataCategory === "authorProfile" ? (
@@ -134,16 +136,29 @@ function CourseContentWrap({
           <S.AverageRate>
             <span>평균 평점</span>
             <span>
-              {coursePointAverageArr && coursePointAverageArr[0].courseAvgRate}
+              {coursePointAverageArr && coursePointAverageArr[0]?.courseAvgRate}
             </span>
           </S.AverageRate>
           <ul>
-            {console.log("courseDetail.rate.stars", courseDetail.rate.stars)}
             {courseReviewAvgPoint &&
-              courseDetail.rate.stars.map((item, index) => {
+              courseReviewAvgPoint.map((item, index) => {
                 return (
-                  <S.CourseRateStarWrap key={item.id}>
-                    <S.CourseRateStar>{item.star}</S.CourseRateStar>
+                  <S.CourseRateStarWrap key={index}>
+                    <S.CourseRateStar>
+                      {index === 0 ? (
+                        "⭐⭐⭐⭐⭐"
+                      ) : index === 1 ? (
+                        "⭐⭐⭐⭐"
+                      ) : index === 2 ? (
+                        "⭐⭐⭐"
+                      ) : index === 3 ? (
+                        "⭐⭐"
+                      ) : index === 4 ? (
+                        "⭐"
+                      ) : (
+                        <></>
+                      )}
+                    </S.CourseRateStar>
                     <S.CourseRateStarPercentGaugeWrap>
                       <S.CourseRateStarPercentGauge
                         width={`${courseReviewAvgPoint[index]}%`}

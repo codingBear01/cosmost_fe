@@ -1,12 +1,12 @@
 /* libraries */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 /* components */
-import * as S from "./styled";
-import { StyledCourseContentWrap } from "./../CourseContentWrap/styled";
-import { CourseUtillityModal } from "../../../";
+import * as S from './styled';
+import { StyledCourseContentWrap } from './../CourseContentWrap/styled';
+import { CourseUtillityModal } from '../../../';
 /* icons */
-import * as GrIcons from "react-icons/gr";
-import { getCoursePointAverage } from "../../../../store";
+import * as GrIcons from 'react-icons/gr';
+import { getCoursePointAverage } from '../../../../store';
 
 function CourseTitleAndDate({
   courseDetail,
@@ -19,7 +19,7 @@ function CourseTitleAndDate({
     useState(false);
 
   /* 코스 평균 평점 state*/
-  const [coursePointAverageArr, setCoursePointAverageArr] = useState("");
+  const [coursePointAverageArr, setCoursePointAverageArr] = useState('');
 
   /* Handlers */
   /* 코스 및 리뷰 수정, 삭제 Modal의 Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
@@ -43,21 +43,21 @@ function CourseTitleAndDate({
       }
     };
 
-    document.addEventListener("click", closeModal);
+    document.addEventListener('click', closeModal);
 
-    return () => document.removeEventListener("click", closeModal);
+    return () => document.removeEventListener('click', closeModal);
   }, [isCourseUtilityModalOpened]);
 
   return (
     <StyledCourseContentWrap
-      justifyContent={"space-between"}
+      justifyContent={'space-between'}
       courseDetail={courseDetail}
       dataCategory="titleAndDate"
     >
-      <StyledCourseContentWrap style={{ borderBottom: "none" }}>
+      <StyledCourseContentWrap style={{ borderBottom: 'none' }}>
         <S.CourseTitle>{courseDetail.courseTitle}</S.CourseTitle>
         <S.CourseAverageRate>
-          ⭐ {coursePointAverageArr && coursePointAverageArr[0].courseAvgRate}
+          ⭐ {coursePointAverageArr && coursePointAverageArr[0]?.courseAvgRate}
         </S.CourseAverageRate>
       </StyledCourseContentWrap>
       <S.CourseCreatedDateAndMoreIconWrap>
@@ -68,11 +68,11 @@ function CourseTitleAndDate({
       </S.CourseCreatedDateAndMoreIconWrap>
       {isCourseUtilityModalOpened && (
         <CourseUtillityModal
-          top={"8rem"}
-          right={"2rem"}
+          top={'8rem'}
+          right={'2rem'}
           onClickOpenDeleteModal={onClickOpenDeleteModal}
           onClickSetClickedCourseReviewEditButton={onClickEditCourse}
-          clickedElement={"course"}
+          clickedElement={'course'}
         />
       )}
     </StyledCourseContentWrap>

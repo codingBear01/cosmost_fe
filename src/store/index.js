@@ -21,7 +21,7 @@ export {
   REPORT_HISTORIES,
 } from "./temporaryArray/";
 
-/* other Function */
+/* functions */
 export {
   base64ImgSrcToImgBinaryData,
   createNaverMap,

@@ -1,4 +1,4 @@
-// 함수 집합
+/* libraries */
 import axios from "axios";
 
 /** base64ImgSrc 이미지 경로를 바이너리 데이터로 변환한 뒤 변환한 바이너리 데이터와 MIME-Type을 배열로 반환하는 함수. */
@@ -177,7 +177,7 @@ const getCourseAuthor = (authorID, setState) => {
       setState(result.data);
     })
     .catch((error) => {
-      console.log(error);
+      new Error(error);
     });
 };
 
@@ -214,7 +214,7 @@ const getCourseGoodCount = (courseID, setState) => {
       setState(result.data);
     })
     .catch((error) => {
-      console.log(error);
+      new Error(error);
     });
 };
 
@@ -223,11 +223,11 @@ const getCourseGoodCount = (courseID, setState) => {
  *  setState : 업데이트해줄 함수
  */
 const getCourseDetail = (courseID, setState) => {
-  const courseInfoUrl = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}`;
-  const courseInfoUConfig = { timeout: 3000 };
+  const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}`;
+  const config = { timeout: 3000 };
 
   axios
-    .get(courseInfoUrl, courseInfoUConfig)
+    .get(url, config)
     .then((response) => {
       setState(response.data);
     })

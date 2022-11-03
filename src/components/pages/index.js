@@ -1,8 +1,8 @@
 export { default as CourseDetail } from './CourseDetail';
 export { default as CourseRegistration } from './CourseRegistration';
 export { default as Courses } from './Courses';
-export { default as DisplayFindedUser } from './DisplayFindedUser';
 export { default as EditUserMenu } from './EditUserMenu';
+export { default as FindingUserPage } from './FindingUserPage';
 export { default as Follows } from './Follows';
 export { default as Histories } from './Histories';
 export { default as InputAddress } from './InputAddress';

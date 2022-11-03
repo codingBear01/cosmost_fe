@@ -13,8 +13,8 @@ import {
   CourseDetail,
   CourseRegistration,
   Courses,
-  DisplayFindedUser,
   EditUserMenu,
+  FindingUserPage,
   Follows,
   Histories,
   InputAddress,
@@ -86,8 +86,8 @@ function App() {
 
             <Route path="find">
               <Route path="email-validation" element={<InputEmail />} />
-              <Route path="id" element={<DisplayFindedUser />} />
-              <Route path="password" element={<DisplayFindedUser />} />
+              <Route path="id" element={<FindingUserPage />} />
+              <Route path="pwd" element={<FindingUserPage />} />
             </Route>
           </>
           {/* )} */}
