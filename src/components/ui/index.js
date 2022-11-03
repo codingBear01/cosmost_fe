@@ -6,6 +6,7 @@ export { FollowsForm } from './FollowsForm/';
 export { InputAddressForm } from './InputAddressForm/';
 export { InputDetailAddressForm } from './InputDetailAddressForm/';
 export { InputEmailForm } from './InputEmailForm/';
+export { InputPasswordForm } from './InputPasswordForm/';
 export { InputUserForm } from './InputUserForm';
 export { LoginForm } from './LoginForm/';
 export { MainSection } from './MainSection/';

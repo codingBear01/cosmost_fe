@@ -1,7 +1,7 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 /* components */
-import { InputEmailForm } from "..";
+import { InputEmailForm } from '..';
 
 function InputEmail() {
   const location = useLocation();
