@@ -80,6 +80,7 @@ function CoursesForm() {
 
         const result = await axios.get(url);
         const { data } = result;
+        console.log(data);
 
         setCourses((prev) => prev.concat(data));
         setIsLastPage(data[data.length - 1].whetherLastPage);
