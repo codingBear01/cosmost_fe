@@ -4,13 +4,12 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import {
-  isReportFormOpenedAtom,
-  // REPORT_HISTORIES as reports,
-} from '../../../store';
+import { isReportFormOpenedAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Button, ReportForm, UtilDiv, UtilTitle } from '../..';
+/* APIs */
+import { getMyReports, getMyReviews } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 /* icons */
@@ -29,6 +28,9 @@ function HistoriesForm({ isReportHistoryPage }) {
   const [reports, setReports] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [warningDeleteIconIndex, setWarningDeleteIconIndex] = useState(null);
+
+  /* Variables */
+  const token = localStorage.getItem('token');
 
   /* Handlers */
   /* 신고 상세 조회 폼의 Open 여부를 조작하는 핸들러. 클릭 시 폼 Open 여부를 반대로 변경하고, 신고 데이터를 폼으로 props 전달하며 formRef.current에 클릭된 신고를 할당한다. */
@@ -71,51 +73,12 @@ function HistoriesForm({ isReportHistoryPage }) {
     }
   }, [setIsReportFormOpened, openingReportFormType]);
 
-  /* APIs */
-  /* 접속한 페이지가 신고 내역 페이지라면 나의 신고 내역을 불러오고 아니라면 내가 남긴 리뷰를 불러오는 함수 */
-  const getReports = () => {
-    // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards?filter=auth`;
-    const url = `${process.env.REACT_APP_API}/boards?filter=auth`;
-    const config = {
-      headers: {
-        Authorization: 1, // 로그인한 사용자의 식별자
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .get(url, config)
-      .then((response) => {
-        setReports(response.data);
-      })
-      .catch((error) => {
-        new Error(error);
-      });
-  };
-  const getReviews = () => {
-    // const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?filter=auth&type=review`;
-    const url = `${process.env.REACT_APP_API}/comments?filter=auth&type=review`;
-    const config = {
-      headers: {
-        Authorization: 2, // 로그인한 사용자의 식별자
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .get(url, config)
-      .then((response) => {
-        setReviews(response.data);
-      })
-      .catch((error) => {
-        new Error(error);
-      });
-  };
+  /* 페이지 종류에 따라 나의 신고 내역 또는 내가 작성한 리뷰 불러오는 hooks */
   useEffect(() => {
     if (isReportHistoryPage) {
-      getReports();
+      getMyReports(token, setReports);
     } else {
-      getReviews();
+      getMyReviews(token, setReviews);
     }
   }, [isReportHistoryPage, isHistoriesChanged]);
 

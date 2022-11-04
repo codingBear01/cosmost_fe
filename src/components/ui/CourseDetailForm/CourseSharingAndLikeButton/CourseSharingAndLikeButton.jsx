@@ -7,6 +7,8 @@ import axios from 'axios';
 import * as S from './styled';
 import { StyledCourseContentWrap } from '../CourseContentWrap/styled';
 import { CourseSharingModal } from '../';
+/* APIs */
+import { handleLikeCourse, checkLikedCourse } from '../../../../apis';
 /* functions */
 import {
   checkIsLoggedIn,
@@ -60,74 +62,9 @@ function CourseSharingAndLikeButton({
   }, [isSharingCourseModalOpened]);
 
   /* APIs */
-  /** 코스 좋아요 등록 및 취소 */
-  const handleLikeCourse = (id, type) => {
-    if (!checkIsLoggedIn(token, isLoggedIn, navigate)) return;
-
-    if (
-      !compareAuthorIdWithLoggedInUserId(
-        courseDetail.authorId,
-        loggedInUserId,
-        toast
-      )
-    )
-      return;
-
-    // const token =
-    //   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
-    const URLS = {
-      // like: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities`,
-      like: `${process.env.REACT_APP_API}/popularities`,
-      // unlike: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}/cosmost`,
-      unlike: `${process.env.REACT_APP_API}/popularities/${id}/cosmost`,
-    };
-    const url = URLS[type];
-    const body = {
-      courseId: id,
-      type: 'course',
-    };
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-
-    if (type === 'like') {
-      axios
-        .post(url, body, config)
-        .then((response) => setIsLikedCourseChanged(!isLikedCourseChanged))
-        .catch((error) => new Error(error));
-    } else {
-      axios
-        .delete(url, config)
-        .then((response) => setIsLikedCourseChanged(!isLikedCourseChanged))
-        .catch((error) => new Error(error));
-    }
-  };
-
-  /** 코스 좋아요 여부 확인 */
-  const likedCourse = () => {
-    const token =
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
-    // const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${courseDetail.id}?type=cosmost`;
-    const url = `${process.env.REACT_APP_API}/popularities/${courseDetail.id}?type=cosmost`;
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .get(url, config)
-      .then((response) => {
-        setIsLikedCourse(response.data);
-      })
-      .catch((error) => new Error(error));
-  };
+  /** 코스 좋아요 여부 조회 */
   useEffect(() => {
-    likedCourse();
+    checkLikedCourse(courseDetail, setIsLikedCourse, token);
   }, [isLikedCourseChanged]);
 
   return (
@@ -155,7 +92,22 @@ function CourseSharingAndLikeButton({
       {!isLikedCourse[0] && (
         <S.ShareAndLikeButton
           type="button"
-          onClick={() => handleLikeCourse(courseDetail.id, 'like')}
+          onClick={() =>
+            handleLikeCourse(
+              courseDetail.id,
+              'like',
+              checkIsLoggedIn,
+              token,
+              isLoggedIn,
+              navigate,
+              compareAuthorIdWithLoggedInUserId,
+              courseDetail,
+              loggedInUserId,
+              toast,
+              setIsLikedCourseChanged,
+              isLikedCourseChanged
+            )
+          }
         >
           <FaIcons.FaRegThumbsUp />
         </S.ShareAndLikeButton>

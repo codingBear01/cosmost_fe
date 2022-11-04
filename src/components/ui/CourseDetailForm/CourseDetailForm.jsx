@@ -12,12 +12,15 @@ import {
   // custom functions
   displayNaverMapMarkerInfo,
   addNaverMapMarkerInfo,
+} from '../../../store';
+/* APIs */
+import {
+  getCourseAverageRate,
   getCourseDetail,
+  getCourseLikeCount,
   getCourseReviews,
   getCourseAuthor,
-  getCourseAverageRate,
-  getCourseGoodCount,
-} from '../../../store';
+} from '../../../apis';
 /* components */
 import * as S from './styled';
 import {
@@ -136,7 +139,7 @@ function CourseDetailForm() {
       getCourseAuthor(courseDetail.authorId, setAuthor);
       getCourseReviews(id, setCourseReviews);
       getCourseAverageRate(id, setCourseAverageRate);
-      getCourseGoodCount(id, setCourseGoodCount);
+      getCourseLikeCount(id, setCourseGoodCount);
     }
   }, [courseDetail]);
 
@@ -238,8 +241,10 @@ function CourseDetailForm() {
             courseRatePercantage={courseRatePercantage}
           />
           {/* 리뷰 작성 폼 */}
-          {token && isLoggedIn && (
+          {(token && isLoggedIn) || id !== user?.id ? (
             <CourseReviewRegisterForm courseDetail={courseDetail} />
+          ) : (
+            <></>
           )}
           {/* 코스 리뷰 */}
           {courseReviews[0] &&

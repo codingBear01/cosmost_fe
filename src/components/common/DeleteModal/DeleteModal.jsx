@@ -1,11 +1,12 @@
 /* libraries */
 import React from 'react';
-import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 /* components */
 import * as S from './styled';
 import { Button } from '../../';
+/* APIs */
+import { deleteCourseOrReview } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
 
@@ -18,44 +19,6 @@ function DeleteModal({
   clickedElement,
 }) {
   const navigate = useNavigate();
-  /* APIs */
-  /* 코스 혹은 코스 리뷰 삭제 */
-  const onClickDeleteCourseOrReview = (clicked, courseId, courseReviewId) => {
-    if (clicked === 'course') {
-      // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${id}`;
-      const url = `${process.env.REACT_APP_API}/cosmosts/${courseId}`;
-      const config = { timeout: 1000 };
-      axios
-        .delete(url, config)
-        .then((response) => {
-          onClickOpenDeleteModal();
-          navigate(-1);
-        })
-        .catch((error) => {
-          new Error(error);
-          toast.error(
-            '코스 삭제 도중 오류가 발생했습니다. 관리자에게 문의하세요.'
-          );
-        });
-    }
-    //코스 리뷰 삭제
-    else {
-      // const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments/${id}/review`;
-      const url = `${process.env.REACT_APP_API}/comments/${courseReviewId}/review`;
-      const config = { timeout: 3000 };
-
-      axios
-        .delete(url, config)
-        .then((response) => {
-          onClickOpenDeleteModal();
-          setIsClickedCourseReviewChanged(!isClickedCourseReviewChanged);
-        })
-        .catch((error) => {
-          new Error(error);
-          toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
-        });
-    }
-  };
 
   return (
     <S.DeleteModalOverlay>
@@ -95,10 +58,15 @@ function DeleteModal({
             bgColor={color.darkRed}
             hoveredBgColor={color.red}
             onClick={() =>
-              onClickDeleteCourseOrReview(
+              deleteCourseOrReview(
                 clickedElement,
                 courseId,
-                courseReviewId
+                courseReviewId,
+                onClickOpenDeleteModal,
+                navigate,
+                toast,
+                setIsClickedCourseReviewChanged,
+                isClickedCourseReviewChanged
               )
             }
           >

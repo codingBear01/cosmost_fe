@@ -6,6 +6,12 @@ import { toast, ToastContainer } from 'react-toastify';
 /* components */
 import * as S from './styled';
 import { Button, CourseUtillityModal, ProfilePic } from '../../../';
+/* APIs */
+import {
+  editCourseReview,
+  handleLikeCourseReview,
+  likedCourseReview,
+} from '../../../../apis';
 /* functions */
 import {
   checkIsLoggedIn,
@@ -113,112 +119,10 @@ function CourseReview({
   };
 
   /* APIs */
-  /** 코스 리뷰 수정 */
-  const onSubmitEditCourseReview = (courseId) => {
-    if (!checkEditCourseReviewValues()) return;
-
-    const token =
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDgiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzQzNzM4NCwiZXhwIjozNzY2NzQzNzM4NH0.Tz-E2hPqW8zSC94tYcD2GzqMPZKvWWz76UJC2RmGpXw';
-    // const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments/${courseId}`;
-    const url = `${process.env.REACT_APP_API}/comments/${courseId}`;
-    const body = {
-      courseReviewContent: edittedReviewContentRef.current.value,
-      rate: edittedReviewRateRef.current.value,
-    };
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .put(url, body, config)
-      .then((response) => {
-        edittedReviewContentRef.current.value = '';
-        setIsCourseReviewEditTextareaOpened(false);
-        setIsClickedCourseReviewChanged(!isClickedCourseReviewChanged);
-      })
-      .catch((error) => {
-        new Error(error);
-      });
-  };
-
-  /** 코스 리뷰 좋아요 등록 및 취소 */
-  const handleLikeCourseReview = (id, type) => {
-    if (!checkIsLoggedIn(token, isLoggedIn, navigate)) return;
-
-    if (
-      !compareAuthorIdWithLoggedInUserId(
-        courseReview.reviewerId,
-        loggedInUserId,
-        toast
-      )
-    )
-      return;
-
-    console.log('ㅋㅋㅋㅋ');
-
-    // const token =
-    //   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDgiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzQzNzM4NCwiZXhwIjozNzY2NzQzNzM4NH0.Tz-E2hPqW8zSC94tYcD2GzqMPZKvWWz76UJC2RmGpXw';
-    // const URLS = {
-    //   // like: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities`,
-    //   like: `${process.env.REACT_APP_API}/popularities`,
-    //   // unlike: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}/review`,
-    //   unlike: `${process.env.REACT_APP_API}/popularities/${id}/review`,
-    // };
-    // const body = {
-    //   courseReviewId: id,
-    //   type: 'courseReviewThumbsup',
-    // };
-    // const config = {
-    //   headers: {
-    //     Authorization: token,
-    //   },
-    //   timeout: 3000,
-    // };
-
-    // if (type === 'like') {
-    //   axios
-    //     .post(URLS[type], body, config)
-    //     .then((response) =>
-    //       setIsLikedCourseReviewChanged(!isLikedCourseReviewChanged)
-    //     )
-    //     .catch((error) => new Error(error));
-    // } else {
-    //   axios
-    //     .delete(URLS[type], config)
-    //     .then((response) =>
-    //       setIsLikedCourseReviewChanged(!isLikedCourseReviewChanged)
-    //     )
-    //     .catch((error) => new Error(error));
-    // }
-  };
-
-  /** 코스 리뷰 좋아요 여부 확인 */
-  const likedCourseReview = (id) => {
-    const token =
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDgiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzQzNzM4NCwiZXhwIjozNzY2NzQzNzM4NH0.Tz-E2hPqW8zSC94tYcD2GzqMPZKvWWz76UJC2RmGpXw';
-    // const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}?type=review`;
-    const url = `${process.env.REACT_APP_API}/popularities/${id}?type=review`;
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .get(url, config)
-      .then((response) => setIsLikedCourseReview(response.data))
-      .catch((error) => new Error(error));
-  };
+  /** 코스 리뷰 좋아요 여부 조회 */
   useEffect(() => {
-    likedCourseReview(courseId);
+    likedCourseReview(courseId, setIsLikedCourseReview, token);
   }, [isLikedCourseReviewChanged]);
-
-  /** 코스 리뷰 좋아요 개수 */
-  const courseReviewLikeCount = () => {};
 
   return (
     <>
@@ -337,7 +241,22 @@ function CourseReview({
             {!isLikedCourseReview[0] && (
               <S.CourseReviewLikeButton
                 type="button"
-                onClick={() => handleLikeCourseReview(courseId, 'like')}
+                onClick={() =>
+                  handleLikeCourseReview(
+                    courseId,
+                    'like',
+                    checkIsLoggedIn,
+                    token,
+                    isLoggedIn,
+                    navigate,
+                    compareAuthorIdWithLoggedInUserId,
+                    courseReview,
+                    loggedInUserId,
+                    toast,
+                    setIsLikedCourseReviewChanged,
+                    isLikedCourseReviewChanged
+                  )
+                }
               >
                 <FaIcons.FaRegThumbsUp />
               </S.CourseReviewLikeButton>
@@ -389,7 +308,18 @@ function CourseReview({
                 color={color.white}
                 bgColor={color.darkBlue}
                 hoveredBgColor={color.navy}
-                onClick={() => onSubmitEditCourseReview(courseDetail.id)}
+                onClick={() =>
+                  editCourseReview(
+                    courseDetail.id,
+                    checkEditCourseReviewValues,
+                    edittedReviewContentRef,
+                    edittedReviewRateRef,
+                    setIsCourseReviewEditTextareaOpened,
+                    setIsClickedCourseReviewChanged,
+                    isClickedCourseReviewChanged,
+                    token
+                  )
+                }
               >
                 수정
               </Button>

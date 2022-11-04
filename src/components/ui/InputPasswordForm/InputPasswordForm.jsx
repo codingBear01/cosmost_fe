@@ -6,6 +6,8 @@ import { toast, ToastContainer } from 'react-toastify';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilForm } from '../..';
+/* APIs */
+import { updateUserPassword } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 import { useEffect } from 'react';
@@ -57,16 +59,6 @@ function InputPasswordForm({ state, beforeEditUserInfo }) {
       return false;
     }
     return true;
-  };
-
-  /* APIs */
-  const updatePassword = (e) => {
-    e.preventDefault();
-
-    if (!checkPasswords()) return;
-
-    alert('비밀번호를 변경했습니다!');
-    // navigate(-1);
   };
 
   return (
@@ -121,7 +113,7 @@ function InputPasswordForm({ state, beforeEditUserInfo }) {
         color={color.white}
         hoveredBgColor={color.navy}
         value={'비밀번호 수정'}
-        onClick={updatePassword}
+        onClick={(e) => updateUserPassword(e, checkPasswords)}
       >
         변경
       </Button>

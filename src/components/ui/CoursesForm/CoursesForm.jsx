@@ -81,7 +81,6 @@ function CoursesForm() {
 
         const result = await axios.get(url, config);
         const { data } = result;
-        console.log('코스 조회', data);
 
         setIsLoading(false);
         setCourses((prev) => prev.concat(data));

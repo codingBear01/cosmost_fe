@@ -1,20 +1,18 @@
 /* libraries */
 import React from 'react';
-import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
 import { SmallProfilePic } from '../../..';
 /* static data */
 import { FONT_SIZE_LIST as fs } from '../../../../style';
+/* APIs */
+import { getSingleCourseView, getCourseAuthor } from '../../../../apis';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import axios from 'axios';
-import { getCourseAuthor, getSingleCourseView } from '../../../../store';
 
 function Course({ course }) {
-  const [courseRate, setCourseRate] = useState('');
   const [courseAuthor, setCourseAuthor] = useState('');
   const [courseState, setCourseState] = useState('');
 

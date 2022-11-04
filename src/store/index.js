@@ -24,13 +24,6 @@ export {
   addNaverMapMarkerInfo,
   checkIsLoggedIn,
   compareAuthorIdWithLoggedInUserId,
-  getCourseAverageRate,
-  getCourseAuthor,
-  getCourseReviews,
-  getCourseGoodCount,
-  getCourseDetail,
-  viewAllcourseAverageRatingSort,
-  getSingleCourseView,
 } from './functions';
 
 /* temporary array */
