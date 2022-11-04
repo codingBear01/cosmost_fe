@@ -80,6 +80,7 @@ function CoursesForm() {
 
         const result = await axios.get(url);
         const { data } = result;
+        console.log('통신');
         console.log(data);
 
         setCourses((prev) => prev.concat(data));
@@ -89,7 +90,7 @@ function CoursesForm() {
           page.current += 1;
         }
       } catch (error) {
-        console.log('error', error);
+        new Error(error);
       }
     },
     [params.type, categoryId, page.current]
