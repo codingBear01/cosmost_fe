@@ -63,8 +63,10 @@ function CourseSharingAndLikeButton({ courseDetail, token }) {
     const token =
       'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
     const URLS = {
-      like: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities`,
-      unlike: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}/cosmost`,
+      // like: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities`,
+      like: `${process.env.REACT_APP_API}/popularities`,
+      // unlike: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}/cosmost`,
+      unlike: `${process.env.REACT_APP_API}/v1/popularities/${id}/cosmost`,
     };
     const body = {
       courseId: id,
@@ -94,7 +96,8 @@ function CourseSharingAndLikeButton({ courseDetail, token }) {
   const likedCourse = () => {
     const token =
       'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
-    const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${courseDetail.id}?type=cosmost`;
+    // const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${courseDetail.id}?type=cosmost`;
+    const url = `${process.env.REACT_APP_API}/popularities/${courseDetail.id}?type=cosmost`;
     const config = {
       headers: {
         Authorization: token,

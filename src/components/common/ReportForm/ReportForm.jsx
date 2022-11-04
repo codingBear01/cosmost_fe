@@ -52,23 +52,24 @@ function ReportForm({
   };
 
   /* APIs */
-  /* 리뷰 작성에 쓰일 신고 카테고리를 불러오는 함수 */
-  // const getReportCategories = () => {
-  //   const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
-  // const config = { timeout: 3000 };
+  /** 리뷰 작성에 쓰일 신고 카테고리를 불러오는 함수 */
+  const getReportCategories = () => {
+    // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
+    const url = `${process.env.REACT_APP_API}/boards`;
+    const config = { timeout: 3000 };
 
-  //   axios
-  //     .get(url, config)
-  //     .then((response) => {
-  //       setReportCategories(response.data);
-  //     })
-  //     .catch((error) => {
-  //       new Error(error);
-  //     });
-  // };
-  // useEffect(() => {
-  //   getReportCategories();
-  // }, []);
+    axios
+      .get(url, config)
+      .then((response) => {
+        setReportCategories(response.data);
+      })
+      .catch((error) => {
+        new Error(error);
+      });
+  };
+  useEffect(() => {
+    getReportCategories();
+  }, []);
 
   /* 신고 버튼 클릭 시 작성된 신고 내용을 서버로 전송하는 함수 */
   const postReport = (e) => {
@@ -76,7 +77,8 @@ function ReportForm({
 
     if (!checkReportInput()) return;
 
-    const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
+    // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
+    const url = `${process.env.REACT_APP_API}/boards`;
     const body = {
       reporterId: 2,
       reportTitle: reportTitle.current.value,
@@ -105,7 +107,8 @@ function ReportForm({
 
     if (!checkReportInput()) return;
 
-    const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards/${id}`;
+    // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards/${id}`;
+    const url = `${process.env.REACT_APP_API}/boards/${id}`;
     const body = {
       reportTitle: reportTitle.current.value,
       reportContent: reportContent.current.value,

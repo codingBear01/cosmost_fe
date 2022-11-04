@@ -4,23 +4,24 @@ import { Link, useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
 /* recoil */
-import { useRecoilState } from "recoil";
-import { isOrderingModalOpenedAtom } from "../../../store";
+import { useRecoilState } from 'recoil';
+import { isOrderingModalOpenedAtom } from '../../../store';
 /* components */
-import * as S from "./styled";
-import { Course, SelectingCategoryArea } from ".";
-import { OrderingButton, ToTopBtn, UtilDiv } from "../..";
+import * as S from './styled';
+import { Course, SelectingCategoryArea } from '.';
+import { OrderingButton, ToTopBtn, UtilDiv } from '../..';
 
 function CoursesForm() {
   // const token = localStorage.getItem('token');
   const token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo";
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
   );
   const [courses, setCourses] = useState([]);
   const [isLastPage, setIsLastPage] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
+  const [courseSortType, setCourseSortType] = useState('최신순');
 
   // 쿼리값이 변경되어 useEffect가 호출되면 변경되는 상태들
   const [queryStringsState, setQueryStringsState] = useState(false);
@@ -29,7 +30,6 @@ function CoursesForm() {
 
   const params = useParams();
   const [queryStrings] = useSearchParams();
-
 
   /* Handlers */
   const onClickOpenOrderingModal = () => {
@@ -41,13 +41,15 @@ function CoursesForm() {
     let url;
 
     if (type === 'all' || type === 'auth') {
-      url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
+      // url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
+      url = `${process.env.REACT_APP_API}/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
     }
     if (type === 'keyword' || type === 'hastags') {
-      url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?${type}=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
+      // url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?${type}=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
+      url = `${process.env.REACT_APP_API}/cosmosts?${type}=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
     }
     if (type === 'location' || type === 'theme') {
-      url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?category=${type}&name-id=${categoryNumber}&sort=id,desc&page=${page.current}&size=4`;
+      url = `${process.env.REACT_APP_API}/cosmosts?category=${type}&name-id=${categoryNumber}&sort=id,desc&page=${page.current}&size=4`;
     }
 
     return url;
@@ -86,7 +88,7 @@ function CoursesForm() {
           page.current += 1;
         }
       } catch (error) {
-        console.log("error", error);
+        console.log('error', error);
       }
     },
     [params.type, categoryId, page.current]
@@ -118,7 +120,7 @@ function CoursesForm() {
   }, [isLastPage, queryStringsState, page.current]);
 
   return (
-    <UtilDiv width={"76.8rem"} padding={"9rem 0 7rem"} margin={"0 auto"}>
+    <UtilDiv width={'76.8rem'} padding={'9rem 0 7rem'} margin={'0 auto'}>
       {/* 카테고리 선택 영역 */}
       {params.type !== 'mine' && (
         <SelectingCategoryArea setCategoryId={setCategoryId} />
@@ -133,7 +135,7 @@ function CoursesForm() {
         {courses.length ? (
           courses.map(
             (course, index) =>
-              console.log("course, courses.length", course, courses.length) || (
+              console.log('course, courses.length', course, courses.length) || (
                 <Link
                   to={`/course-detail/${course.id || course.courseId}`}
                   key={course.id || course.courseId}
