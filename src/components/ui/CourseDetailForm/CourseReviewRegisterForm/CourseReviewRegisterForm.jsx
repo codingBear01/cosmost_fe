@@ -72,6 +72,7 @@ function CourseReviewRegisterForm({ courseDetail }) {
         reviewContentRef.current.value = '';
       })
       .catch((error) => {
+        new Error(error);
         toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
       });
   };

@@ -12,6 +12,9 @@ function CourseTitleAndDate({
   onClickOpenDeleteModal,
   onClickEditCourse,
   courseReviewAverageRate,
+  token,
+  isLoggedIn,
+  loggedInUserId,
 }) {
   /* States */
   /* 코스 및 리뷰 수정, 삭제 Modal Open useState */
@@ -31,7 +34,7 @@ function CourseTitleAndDate({
 
   useEffect(() => {
     const closeModal = (e) => {
-      if (!modalRef.current.contains(e.target)) {
+      if (!modalRef?.current?.contains(e.target)) {
         setIsCourseUtilityModalOpened(false);
       }
     };
@@ -56,9 +59,11 @@ function CourseTitleAndDate({
       </StyledCourseContentWrap>
       <S.CourseCreatedDateAndMoreIconWrap>
         <S.CourseCreatedDate>{courseDetail.createAt}</S.CourseCreatedDate>
-        <div ref={modalRef}>
-          <GrIcons.GrMoreVertical onClick={onClickOpenCourseUtilityModal} />
-        </div>
+        {token && isLoggedIn && loggedInUserId === courseDetail.authorId && (
+          <div ref={modalRef}>
+            <GrIcons.GrMoreVertical onClick={onClickOpenCourseUtilityModal} />
+          </div>
+        )}
       </S.CourseCreatedDateAndMoreIconWrap>
       {isCourseUtilityModalOpened && (
         <CourseUtillityModal

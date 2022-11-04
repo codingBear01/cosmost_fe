@@ -1,11 +1,8 @@
-/* main에 띄워주는 코스 카드들 */
+/* main에 띄우는 코스 카드들 */
 export { MAIN_COURSES } from './MainCourses';
 
 /* page 이동 시 scrollY 최상단으로 만드는 custom component */
 export { default as GoToTop } from './GoToTop';
-
-/* functions */
-export { sharingByKakao } from './sharing';
 
 /* recoil states */
 export {
@@ -19,11 +16,14 @@ export {
 
 /* functions */
 export {
+  sharingByKakao,
   base64ImgSrcToImgBinaryData,
+  printFormData,
   createNaverMap,
   addNaverMapMarker,
   addNaverMapMarkerInfo,
-  printFormData,
+  checkIsLoggedIn,
+  compareAuthorIdWithLoggedInUserId,
   getCourseAverageRate,
   getCourseAuthor,
   getCourseReviews,

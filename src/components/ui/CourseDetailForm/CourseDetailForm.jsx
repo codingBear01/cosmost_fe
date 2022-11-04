@@ -2,14 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-/* custom functions */
-
 /* recoil */
 import { useRecoilState } from 'recoil';
 import {
   createNaverMap,
   addNaverMapMarker,
   loginStateAtom,
+  userAtom,
+  // custom functions
   displayNaverMapMarkerInfo,
   addNaverMapMarkerInfo,
   getCourseDetail,
@@ -36,15 +36,19 @@ function CourseDetailForm() {
   const navigate = useNavigate();
 
   /* States */
-  const [courseDetail, setCourseDetail] = useState(null);
-  const [author, setAuthor] = useState(null);
-  const [courseReviews, setCourseReviews] = useState([]);
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
   const [clickedElement, setClickedElement] = useState(null);
   const [clickedCourseReviewIndex, setClickedCourseReviewIndex] =
     useState(null);
   const [isClickedCourseReviewChanged, setIsClickedCourseReviewChanged] =
     useState(false);
+  // Auth
+  const [author, setAuthor] = useState(null);
+  // Cosmost
+  const [courseDetail, setCourseDetail] = useState(null);
+  // Comment
+  const [courseReviews, setCourseReviews] = useState([]);
+  // Popularity
   const [courseReviewAverageRate, setCourseAverageRate] = useState(0);
   const [courseGoodCount, setCourseGoodCount] = useState('');
 
@@ -52,9 +56,11 @@ function CourseDetailForm() {
   const courseRatePercantage =
     courseReviews[0] && courseReviews[0].rateAllTypeList.reverse();
 
-  //로그인 정보
+  /* 로그인 정보 */
   const token = localStorage.getItem('token');
+  const [user] = useRecoilState(userAtom);
   const [isLoggedIn] = useRecoilState(loginStateAtom);
+  const loggedInUserId = user?.id;
 
   /* Handlers */
   /** 코스 삭제 버튼 클릭시 호출할 핸들러
@@ -159,6 +165,9 @@ function CourseDetailForm() {
           {/* 코스 제목 및 날짜, 더보기 버튼 */}
           <CourseTitleAndDate
             courseDetail={courseDetail}
+            token={token}
+            isLoggedIn={isLoggedIn}
+            loggedInUserId={loggedInUserId}
             onClickOpenDeleteModal={onClickOpenDeleteModal}
             onClickEditCourse={onClickEditCourse}
             courseReviewAverageRate={courseReviewAverageRate}
@@ -217,6 +226,8 @@ function CourseDetailForm() {
           <CourseSharingAndLikeButton
             courseDetail={courseDetail}
             token={token}
+            isLoggedIn={isLoggedIn}
+            loggedInUserId={loggedInUserId}
           />
           {/* 코스 평균 평점 및 별 개수별 퍼센테이지 */}
           <CourseContentWrap
@@ -238,6 +249,9 @@ function CourseDetailForm() {
                 courseDetail={courseDetail}
                 courseReview={courseReview}
                 i={i}
+                token={token}
+                isLoggedIn={isLoggedIn}
+                loggedInUserId={loggedInUserId}
                 onClickOpenDeleteModal={onClickOpenDeleteModal}
                 isClickedCourseReviewChanged={isClickedCourseReviewChanged}
                 setIsClickedCourseReviewChanged={

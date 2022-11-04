@@ -243,6 +243,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
         }
       })
       .catch((error) => {
+        new Error(error);
         if (error.response.status === 400) {
           toast.error('이미 존재하는 아이디입니다.');
         }
@@ -271,6 +272,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
         }
       })
       .catch((error) => {
+        new Error(error);
         if (error.response.status === 400) {
           toast.error('이미 존재하는 닉네임입니다.');
         }
@@ -395,12 +397,14 @@ function InputUserForm({ state, beforeEditUserInfo }) {
                 });
               })
               .catch((error) => {
+                new Error(error);
                 toast.error(
                   '수정된 데이터를 가져오는데 실패했습니다. 관리자에게 문의하세요'
                 );
               });
           })
           .catch((error) => {
+            new Error(error);
             toast.error('회원정보 변경에 실패했습니다. 관리자에게 문의하세요.');
           });
       }
@@ -428,6 +432,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
             navigate(`/login`, { replace: true });
           })
           .catch((error) => {
+            new Error(error);
             toast.error('회원가입에 실패했습니다. 관리자에게 문의하세요.');
           });
       }

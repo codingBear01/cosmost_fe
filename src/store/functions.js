@@ -1,8 +1,38 @@
 /* libraries */
 import axios from 'axios';
 
+/* CONSTANTS */
+const { Kakao, location } = window;
+const SHARED_URL = location.href;
+
+/** Kakao 공유하기 함수 */
+export const sharingByKakao = (data) => {
+  Kakao.Share.sendDefault({
+    objectType: 'feed',
+    content: {
+      title: data.title,
+      description: data.description,
+      imageUrl: data.courseImages[0].imageUrl,
+      link: {
+        webUrl: SHARED_URL,
+        mobileWebUrl: SHARED_URL,
+      },
+    },
+    buttons: [
+      {
+        title: '자세히 보기',
+        link: {
+          webUrl: SHARED_URL,
+          mobileWebUrl: SHARED_URL,
+        },
+      },
+    ],
+  });
+};
+
+/* Image */
 /** base64ImgSrc 이미지 경로를 바이너리 데이터로 변환한 뒤 변환한 바이너리 데이터와 MIME-Type을 배열로 반환하는 함수. */
-const base64ImgSrcToImgBinaryData = (imgSrc) => {
+export const base64ImgSrcToImgBinaryData = (imgSrc) => {
   let returnArr = [];
   let Base64DataReg;
   const mimeTypeReg = /data:(.*);/;
@@ -40,6 +70,14 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   return returnArr;
 };
 
+/** FormData에 등록된 key와 value를 출력하는 함수 */
+export const printFormData = (formData) => {
+  for (let key of formData.keys()) {
+    console.log(key, ':', formData.get(key));
+  }
+};
+
+/* Naver Map */
 /** 네이버맵을 생성하고 생성된 네이버 맵을 반환하는 함수
  * elementId = string
  * defaultCoordinate = {
@@ -47,7 +85,7 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
     longitude: Number,
   }
 */
-const createNaverMap = (
+export const createNaverMap = (
   elementId = 'map',
   defaultCoordinate = {
     latitude: 35.179816,
@@ -93,7 +131,7 @@ const createNaverMap = (
   }
   * 반환값 : object(등록한 마커)
 */
-const addNaverMapMarker = (map = null, markerInfo = null) => {
+export const addNaverMapMarker = (map = null, markerInfo = null) => {
   const { naver } = window;
   let registeredMarker = null;
 
@@ -125,7 +163,7 @@ const addNaverMapMarker = (map = null, markerInfo = null) => {
  *  style : elementString 에 적용할 style CSS 속성값이 저장된 style.
  *  반환값 : 추가설명을 나타내는 Element(object)
  * */
-const addNaverMapMarkerInfo = (map, marker, elementString, style) => {
+export const addNaverMapMarkerInfo = (map, marker, elementString, style) => {
   const { naver } = window;
   const infowindow = new naver.maps.InfoWindow({
     content: elementString,
@@ -136,21 +174,36 @@ const addNaverMapMarkerInfo = (map, marker, elementString, style) => {
   return infowindow;
 };
 
-/** FormData에 등록된 key와 value를 출력하는 함수
- *
- */
-const printFormData = (formData) => {
-  for (let key of formData.keys()) {
-    console.log(key, ':', formData.get(key));
+/* Validation Handlers */
+export const checkIsLoggedIn = (token, isLoggedIn, transferToLoginPage) => {
+  if (!token || !isLoggedIn) {
+    if (
+      window.confirm(
+        '좋아요를 하기 전에 로그인해주세요. 로그인 창으로 이동하시겠습니까?'
+      )
+    ) {
+      transferToLoginPage('/login');
+    }
+    return false;
   }
+  return true;
 };
 
+export const compareAuthorIdWithLoggedInUserId = (authorId, userId, toast) => {
+  if (authorId === userId) {
+    toast.warn('자신의 글은 좋아요할 수 없습니다.');
+    return false;
+  }
+  return true;
+};
+
+/* APIs */
 /** 단일 코스 평균 평점을 가져오는 데 성공하면 콜백함수를 호출하는 함수
  *  courseID : 코스 ID를 나타내는 Number
  *  thenCallback : 값을 가져오는 데 성공할 시 호출할 콜백함수
  *  errorCallback : 값을 가져오는 데 실패할 시 호출할 콜백함수
  */
-const getCourseAverageRate = (courseID, setState) => {
+export const getCourseAverageRate = (courseID, setState) => {
   // const url = `${process.env.REACT_APP_COMMENT1_IP}/v1/view?rate=average&course=${courseID}`;
   const url = `${process.env.REACT_APP_API}/view?rate=average&course=${courseID}`;
   const config = {
@@ -167,7 +220,7 @@ const getCourseAverageRate = (courseID, setState) => {
  *  authorID : 코스 작성자 ID를 나타내는 Number
  *  setState : 가져온 값을 state 값으로 변경시켜주기 위한 Function
  */
-const getCourseAuthor = (id, setState) => {
+export const getCourseAuthor = (id, setState) => {
   // const url = `${process.env.REACT_APP_AUTH_IP}/v1/view/info?id=author-id`;
   const url = `${process.env.REACT_APP_API_IP}/view/info?id=author-id`;
   const config = {
@@ -176,7 +229,7 @@ const getCourseAuthor = (id, setState) => {
     },
     timeout: 3000,
   };
-  console.log(id);
+
   axios
     .get(url, config)
     .then((response) => {
@@ -192,7 +245,7 @@ const getCourseAuthor = (id, setState) => {
  *  thenCallback : 리뷰를 가져오는데 성공했을 때 호출할 콜백
  *  errorCallback : 리뷰를 가져오는데 실패했을 때 호출할 콜백
  */
-const getCourseReviews = (courseID, setState) => {
+export const getCourseReviews = (courseID, setState) => {
   // const url = `${process.env.REACT_APP_COMMENT2_IP}/v1/comments?type=review`;
   const url = `${process.env.REACT_APP_API}/comments?type=review`;
   const config = {
@@ -214,7 +267,7 @@ const getCourseReviews = (courseID, setState) => {
  *  courseID : 코스 ID를 나타내는 Number
  *  setState : 업데이트해줄 함수
  */
-const getCourseGoodCount = (courseID, setState) => {
+export const getCourseGoodCount = (courseID, setState) => {
   // const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${courseID}?filter=count&type=cosmost`;
   const url = `${process.env.REACT_APP_API}/popularities/${courseID}?filter=count&type=cosmost`;
   const config = {
@@ -235,7 +288,7 @@ const getCourseGoodCount = (courseID, setState) => {
  *  courseID : 코스 ID를 나타내는 Number
  *  setState : 업데이트해줄 함수
  */
-const getCourseDetail = (courseID, setState) => {
+export const getCourseDetail = (courseID, setState) => {
   // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}`;
   const url = `${process.env.REACT_APP_API}/cosmosts/${courseID}`;
   const config = { timeout: 3000 };
@@ -243,12 +296,10 @@ const getCourseDetail = (courseID, setState) => {
   axios
     .get(url, config)
     .then((response) => {
-      console.log(response);
       setState(response.data);
     })
     .catch((error) => {
       new Error(error);
-      alert('코스 정보 가져오기 실패');
     });
 };
 
@@ -256,7 +307,7 @@ const getCourseDetail = (courseID, setState) => {
  *  courseID : 코스 ID를 나타내는 Number
  *  setState : 업데이트해줄 함수
  */
-const viewAllcourseAverageRatingSort = (page, setState) => {
+export const viewAllcourseAverageRatingSort = (page, setState) => {
   // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/view/ranking?order=rate&sort=desc&page=${page}&size=4`;
   const url = `${process.env.REACT_APP_API}/view/ranking?order=rate&sort=desc&page=${page}&size=4`;
   const config = { timeout: 3000 };
@@ -267,7 +318,7 @@ const viewAllcourseAverageRatingSort = (page, setState) => {
       setState(response.data);
     })
     .catch((error) => {
-      alert('코스 평균 평점 기준으로 가져오기 실패');
+      new Error(error);
     });
 };
 
@@ -275,7 +326,7 @@ const viewAllcourseAverageRatingSort = (page, setState) => {
  *  courseID : 코스 ID를 나타내는 Number
  *  setState : 업데이트해줄 함수
  */
-const getSingleCourseView = (courseID, setState) => {
+export const getSingleCourseView = (courseID, setState) => {
   // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}?filter=frame`;
   const url = `${process.env.REACT_APP_API}/cosmosts/${courseID}?filter=frame`;
   const config = { timeout: 3000 };
@@ -284,7 +335,6 @@ const getSingleCourseView = (courseID, setState) => {
     .get(url, config)
     .then((response) => {
       let singleCourseViewData = response.data;
-      console.log(response);
       getCourseAverageRate(
         courseID,
         (result) => {
@@ -316,19 +366,4 @@ const getSingleCourseView = (courseID, setState) => {
     .catch((error) => {
       new Error(error);
     });
-};
-
-export {
-  base64ImgSrcToImgBinaryData,
-  createNaverMap,
-  addNaverMapMarker,
-  addNaverMapMarkerInfo,
-  printFormData,
-  getCourseAverageRate,
-  getCourseAuthor,
-  getCourseReviews,
-  getCourseGoodCount,
-  getCourseDetail,
-  viewAllcourseAverageRatingSort,
-  getSingleCourseView,
 };
