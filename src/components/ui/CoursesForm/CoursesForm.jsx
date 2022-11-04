@@ -2,10 +2,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
-
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { isOrderingModalOpenedAtom } from '../../../store';
+import { isOrderingModalOpenedAtom, isLoadingAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Course, SelectingCategoryArea } from '.';
@@ -18,6 +17,7 @@ function CoursesForm() {
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
   );
+  const [isLoading, setIsLoading] = useRecoilState(isLoadingAtom);
   const [courses, setCourses] = useState([]);
   const [isLastPage, setIsLastPage] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
