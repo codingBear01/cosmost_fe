@@ -12,8 +12,9 @@ import {
   loginStateAtom,
   displayNaverMapMarkerInfo,
   addNaverMapMarkerInfo,
-  getCourseAuthor,
   getCourseDetail,
+  getCourseReviews,
+  getCourseAuthor,
 } from '../../../store';
 /* components */
 import * as S from './styled';
@@ -119,8 +120,8 @@ function CourseDetailForm() {
         };
       });
 
-      // 코스등록자명과 코스 프로필 가져오기
       getCourseAuthor(courseDetail.authorId, setAuthor);
+      getCourseReviews(courseDetail.id, setCourseReviews);
     }
   }, [courseDetail]);
 
@@ -162,11 +163,13 @@ function CourseDetailForm() {
           {/* 카테고리 */}
           <CourseContentWrap
             courseDetail={courseDetail}
+            courseReviews={courseReviews}
             dataCategory="categoryLists"
           />
           {/* 해시태그 */}
           <CourseContentWrap
             courseDetail={courseDetail}
+            courseReviews={courseReviews}
             dataCategory="hashtagList"
           />
           {/* 작성자 정보 */}
@@ -177,6 +180,7 @@ function CourseDetailForm() {
               author={author}
               dataCategory="authorProfile"
               authorCourseCount={courseDetail.authorCourseCount}
+              courseReviews={courseReviews}
             />
           )}
 
@@ -197,6 +201,7 @@ function CourseDetailForm() {
             justifyContent={'center'}
             height={'10rem'}
             courseDetail={courseDetail}
+            courseReviews={courseReviews}
             dataCategory="courses"
           />
           {/* 코스 설명 */}
@@ -213,17 +218,18 @@ function CourseDetailForm() {
             justifyContent={'center'}
             height={'30rem'}
             courseDetail={courseDetail}
+            courseReviews={courseReviews}
             dataCategory="averageRate"
           />
           {/* 리뷰 작성 폼 */}
           <CourseReviewRegisterForm courseDetail={courseDetail} />
           {/* 코스 리뷰 */}
           {courseReviews[0] &&
-            courseReviews[0].courseReviewList.map((course, i) => (
+            courseReviews[0].courseReviewList.map((courseReview, i) => (
               <CourseReview
-                key={course.id}
+                key={courseReview.id}
                 courseDetail={courseDetail}
-                course={course}
+                courseReview={courseReview}
                 i={i}
                 onClickOpenDeleteModal={onClickOpenDeleteModal}
                 isClickedCourseReviewChanged={isClickedCourseReviewChanged}

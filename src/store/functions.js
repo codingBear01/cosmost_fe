@@ -163,17 +163,18 @@ const getCoursePointAverage = (courseID, thenCallback, errorCallback) => {
  *  authorID : 코스 작성자 ID를 나타내는 Number
  *  setState : 가져온 값을 state 값으로 변경시켜주기 위한 Function
  */
-const getCourseAuthor = (authorID, setState) => {
+const getCourseAuthor = (id, setState) => {
   const url = `${process.env.REACT_APP_AUTH_IP}/v1/view/info?id=author-id`;
   const config = {
     headers: {
-      Authorization: authorID,
+      Authorization: id,
     },
     timeout: 3000,
   };
   axios
     .get(url, config)
     .then((result) => {
+      console.log(result);
       setState(result.data);
     })
     .catch((error) => {
@@ -186,8 +187,8 @@ const getCourseAuthor = (authorID, setState) => {
  *  thenCallback : 리뷰를 가져오는데 성공했을 때 호출할 콜백
  *  errorCallback : 리뷰를 가져오는데 실패했을 때 호출할 콜백
  */
-const getCourseReviews = (courseID, thenCallback, errorCallback) => {
-  const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?type=review`;
+const getCourseReviews = (courseID, setState) => {
+  const url = `${process.env.REACT_APP_COMMENT2_IP}/v1/comments?type=review`;
   const config = {
     headers: {
       Authorization: courseID,
@@ -195,7 +196,12 @@ const getCourseReviews = (courseID, thenCallback, errorCallback) => {
     timeout: 3000,
   };
 
-  axios.get(url, config).then(thenCallback).catch(errorCallback);
+  axios
+    .get(url, config)
+    .then((response) => setState(response.data))
+    .catch((error) => {
+      new Error(error);
+    });
 };
 
 /** 해당 코스의 좋아요 개수를 가져온 뒤 코스 좋아요 개수를 state로 업데이트 시켜주는 함수.
@@ -203,7 +209,7 @@ const getCourseReviews = (courseID, thenCallback, errorCallback) => {
  *  setState : 업데이트해줄 함수
  */
 const getCourseGoodCount = (courseID, setState) => {
-  const url = `${process.env.REACT_APP_POPULARITY_IP}/v1/popularities/${courseID}?filter=count&type=cosmost`;
+  const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${courseID}?filter=count&type=cosmost`;
   const config = {
     timeout: 3000,
   };
