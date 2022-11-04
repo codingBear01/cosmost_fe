@@ -78,7 +78,7 @@ function CoursesForm() {
               }
             : { timeout: 3000 };
 
-        const result = await axios.get(url, config);
+        const result = await axios.get(url);
         const { data } = result;
 
         setCourses((prev) => prev.concat(data));
