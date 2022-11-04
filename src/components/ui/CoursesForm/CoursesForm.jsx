@@ -25,6 +25,8 @@ function CoursesForm() {
   // 쿼리값이 변경되어 useEffect가 호출되면 변경되는 상태들
   const [queryStringsState, setQueryStringsState] = useState(false);
 
+  const [courseSortType, setCourseSortType] = useState("최신순");
+
   const page = useRef(0);
   const observedTarget = useRef(null);
   const params = useParams();
