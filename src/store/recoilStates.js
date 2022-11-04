@@ -28,3 +28,8 @@ export const userAtom = atom({
   key: 'userAtom',
   default: null,
 });
+
+export const isLoadingAtom = atom({
+  key: 'isLoadingAtom',
+  default: true,
+});

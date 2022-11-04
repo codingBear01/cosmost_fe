@@ -1,8 +1,11 @@
+/* main에 띄워주는 코스 카드들 */
+export { MAIN_COURSES } from './MainCourses';
+
 /* page 이동 시 scrollY 최상단으로 만드는 custom component */
-export { default as GoToTop } from "./GoToTop";
+export { default as GoToTop } from './GoToTop';
 
 /* functions */
-export { sharingByKakao } from "./sharing";
+export { sharingByKakao } from './sharing';
 
 /* recoil states */
 export {
@@ -11,15 +14,8 @@ export {
   loginStateAtom,
   pathnameAtom,
   userAtom,
-} from "./recoilStates";
-
-/* temporary array */
-export {
-  FOLLOWS,
-  MAIN_COURSES,
-  RANKERS,
-  REPORT_HISTORIES,
-} from "./temporaryArray/";
+  isLoadingAtom,
+} from './recoilStates';
 
 /* functions */
 export {
@@ -35,4 +31,7 @@ export {
   getCourseDetail,
   viewAllcourseAverageRatingSort,
   getSingleCourseView,
-} from "./functions";
+} from './functions';
+
+/* temporary array */
+export { FOLLOWS, RANKERS, REPORT_HISTORIES } from './temporaryArray/';
