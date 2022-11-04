@@ -93,7 +93,8 @@ function HistoriesForm({ isReportHistoryPage }) {
       });
   };
   const getReviews = () => {
-    const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?filter=auth&type=review`;
+    // const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments?filter=auth&type=review`;
+    const url = `${process.env.REACT_APP_API}/comments?filter=auth&type=review`;
     const config = {
       headers: {
         Authorization: 2, // 로그인한 사용자의 식별자

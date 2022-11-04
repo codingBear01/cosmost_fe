@@ -40,11 +40,12 @@ function DeleteModal({
     //코스 리뷰 삭제
     else {
       id = courseReviewId;
-      const deleteCourseReviewUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments/${id}/review`;
+      // const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments/${id}/review`;
+      const url = `${process.env.REACT_APP_API}/comments/${id}/review`;
       const config = { timeout: 3000 };
 
       axios
-        .delete(deleteCourseReviewUrl, config)
+        .delete(url, config)
         .then((response) => {
           onClickOpenDeleteModal();
           setIsClickedCourseReviewChanged(!isClickedCourseReviewChanged);

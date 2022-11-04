@@ -66,8 +66,9 @@ function CourseSharingAndLikeButton({ courseDetail, token }) {
       // like: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities`,
       like: `${process.env.REACT_APP_API}/popularities`,
       // unlike: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}/cosmost`,
-      unlike: `${process.env.REACT_APP_API}/v1/popularities/${id}/cosmost`,
+      unlike: `${process.env.REACT_APP_API}/popularities/${id}/cosmost`,
     };
+    const url = URLS[type];
     const body = {
       courseId: id,
       type: 'course',
@@ -78,15 +79,16 @@ function CourseSharingAndLikeButton({ courseDetail, token }) {
       },
       timeout: 3000,
     };
+    console.log(url);
 
     if (type === 'like') {
       axios
-        .post(URLS[type], body, config)
+        .post(url, body, config)
         .then((response) => setIsLikedCourseChanged(!isLikedCourseChanged))
         .catch((error) => new Error(error));
     } else {
       axios
-        .delete(URLS[type], config)
+        .delete(url, config)
         .then((response) => setIsLikedCourseChanged(!isLikedCourseChanged))
         .catch((error) => new Error(error));
     }

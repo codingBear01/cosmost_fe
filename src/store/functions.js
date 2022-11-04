@@ -150,14 +150,17 @@ const printFormData = (formData) => {
  *  thenCallback : 값을 가져오는 데 성공할 시 호출할 콜백함수
  *  errorCallback : 값을 가져오는 데 실패할 시 호출할 콜백함수
  */
-const getCoursePointAverage = (courseID, thenCallback, errorCallback) => {
+const getCourseAverageRate = (courseID, setState) => {
   // const url = `${process.env.REACT_APP_COMMENT1_IP}/v1/view?rate=average&course=${courseID}`;
   const url = `${process.env.REACT_APP_API}/view?rate=average&course=${courseID}`;
   const config = {
     timeout: 3000,
   };
 
-  axios.get(url, config).then(thenCallback).catch(errorCallback);
+  axios
+    .get(url, config)
+    .then((response) => setState(response.data))
+    .catch((error) => new Error(error));
 };
 
 /** 코스 작성자 정보를 가져온 후 가져온 코스 작성자 정보를 state로 업데이트 시켜주는 함수
@@ -165,18 +168,19 @@ const getCoursePointAverage = (courseID, thenCallback, errorCallback) => {
  *  setState : 가져온 값을 state 값으로 변경시켜주기 위한 Function
  */
 const getCourseAuthor = (id, setState) => {
-  const url = `${process.env.REACT_APP_AUTH_IP}/v1/view/info?id=author-id`;
+  // const url = `${process.env.REACT_APP_AUTH_IP}/v1/view/info?id=author-id`;
+  const url = `${process.env.REACT_APP_API_IP}/view/info?id=author-id`;
   const config = {
     headers: {
       Authorization: id,
     },
     timeout: 3000,
   };
+  console.log(id);
   axios
     .get(url, config)
-    .then((result) => {
-      console.log(result);
-      setState(result.data);
+    .then((response) => {
+      setState(response.data);
     })
     .catch((error) => {
       new Error(error);
@@ -239,9 +243,11 @@ const getCourseDetail = (courseID, setState) => {
   axios
     .get(url, config)
     .then((response) => {
+      console.log(response);
       setState(response.data);
     })
     .catch((error) => {
+      new Error(error);
       alert('코스 정보 가져오기 실패');
     });
 };
@@ -278,7 +284,8 @@ const getSingleCourseView = (courseID, setState) => {
     .get(url, config)
     .then((response) => {
       let singleCourseViewData = response.data;
-      getCoursePointAverage(
+      console.log(response);
+      getCourseAverageRate(
         courseID,
         (result) => {
           const cpaArr = result.data;
@@ -295,7 +302,7 @@ const getSingleCourseView = (courseID, setState) => {
               cpaArr = [{ courseId: courseID, courseAvgRate: 0 }];
               break;
             default:
-              console.log(error);
+              new Error(error);
               break;
           }
           singleCourseViewData = {
@@ -307,7 +314,7 @@ const getSingleCourseView = (courseID, setState) => {
       );
     })
     .catch((error) => {
-      console.log('단일 코스의 조회용 데이터 가져오기 실패');
+      new Error(error);
     });
 };
 
@@ -317,7 +324,7 @@ export {
   addNaverMapMarker,
   addNaverMapMarkerInfo,
   printFormData,
-  getCoursePointAverage,
+  getCourseAverageRate,
   getCourseAuthor,
   getCourseReviews,
   getCourseGoodCount,

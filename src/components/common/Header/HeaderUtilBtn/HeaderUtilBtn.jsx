@@ -35,9 +35,9 @@ function HeaderUtilBtn() {
           setUser(resonse.data);
         })
         .catch((error) => {
+          new Error(error);
           //토큰 만료로 실패했다면 토큰 삭제
           localStorage.removeItem('token');
-          console.log(error);
           // navigate("/error");
         });
     }

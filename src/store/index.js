@@ -24,7 +24,7 @@ export {
   addNaverMapMarker,
   addNaverMapMarkerInfo,
   printFormData,
-  getCoursePointAverage,
+  getCourseAverageRate,
   getCourseAuthor,
   getCourseReviews,
   getCourseGoodCount,

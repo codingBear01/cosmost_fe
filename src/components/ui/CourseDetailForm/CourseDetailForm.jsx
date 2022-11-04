@@ -15,6 +15,8 @@ import {
   getCourseDetail,
   getCourseReviews,
   getCourseAuthor,
+  getCourseAverageRate,
+  getCourseGoodCount,
 } from '../../../store';
 /* components */
 import * as S from './styled';
@@ -29,21 +31,26 @@ import {
 import { DeleteModal, ToTopBtn, UtilDiv } from '../..';
 
 function CourseDetailForm() {
-  // URL로부터 전달받은 코스 ID
   const { id } = useParams();
-  // 백엔드로부터 응답받은 데이터
+
+  const navigate = useNavigate();
+
+  /* States */
   const [courseDetail, setCourseDetail] = useState(null);
   const [author, setAuthor] = useState(null);
   const [courseReviews, setCourseReviews] = useState([]);
-  // 내비게이트
-  const navigate = useNavigate();
-
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
   const [clickedElement, setClickedElement] = useState(null);
   const [clickedCourseReviewIndex, setClickedCourseReviewIndex] =
     useState(null);
   const [isClickedCourseReviewChanged, setIsClickedCourseReviewChanged] =
     useState(false);
+  const [courseReviewAverageRate, setCourseAverageRate] = useState(0);
+  const [courseGoodCount, setCourseGoodCount] = useState('');
+
+  /* Variables */
+  const courseRatePercantage =
+    courseReviews[0] && courseReviews[0].rateAllTypeList.reverse();
 
   //로그인 정보
   const token = localStorage.getItem('token');
@@ -121,7 +128,9 @@ function CourseDetailForm() {
       });
 
       getCourseAuthor(courseDetail.authorId, setAuthor);
-      getCourseReviews(courseDetail.id, setCourseReviews);
+      getCourseReviews(id, setCourseReviews);
+      getCourseAverageRate(id, setCourseAverageRate);
+      getCourseGoodCount(id, setCourseGoodCount);
     }
   }, [courseDetail]);
 
@@ -152,24 +161,22 @@ function CourseDetailForm() {
             courseDetail={courseDetail}
             onClickOpenDeleteModal={onClickOpenDeleteModal}
             onClickEditCourse={onClickEditCourse}
+            courseReviewAverageRate={courseReviewAverageRate}
           />
           {/* 좋아요, 리뷰 숫자 */}
           <CourseContentWrap
-            courseDetail={courseDetail}
-            courseReviews={courseReviews}
-            setCourseReviews={setCourseReviews}
             dataCategory="likeAndReview"
+            courseGoodCount={courseGoodCount}
+            courseReviews={courseReviews}
           />
           {/* 카테고리 */}
           <CourseContentWrap
             courseDetail={courseDetail}
-            courseReviews={courseReviews}
             dataCategory="categoryLists"
           />
           {/* 해시태그 */}
           <CourseContentWrap
             courseDetail={courseDetail}
-            courseReviews={courseReviews}
             dataCategory="hashtagList"
           />
           {/* 작성자 정보 */}
@@ -180,7 +187,6 @@ function CourseDetailForm() {
               author={author}
               dataCategory="authorProfile"
               authorCourseCount={courseDetail.authorCourseCount}
-              courseReviews={courseReviews}
             />
           )}
 
@@ -200,9 +206,8 @@ function CourseDetailForm() {
           <CourseContentWrap
             justifyContent={'center'}
             height={'10rem'}
-            courseDetail={courseDetail}
-            courseReviews={courseReviews}
             dataCategory="courses"
+            courseDetail={courseDetail}
           />
           {/* 코스 설명 */}
           <S.CourseDescription>
@@ -217,12 +222,14 @@ function CourseDetailForm() {
           <CourseContentWrap
             justifyContent={'center'}
             height={'30rem'}
-            courseDetail={courseDetail}
-            courseReviews={courseReviews}
             dataCategory="averageRate"
+            courseReviewAverageRate={courseReviewAverageRate}
+            courseRatePercantage={courseRatePercantage}
           />
           {/* 리뷰 작성 폼 */}
-          <CourseReviewRegisterForm courseDetail={courseDetail} />
+          {token && isLoggedIn && (
+            <CourseReviewRegisterForm courseDetail={courseDetail} />
+          )}
           {/* 코스 리뷰 */}
           {courseReviews[0] &&
             courseReviews[0].courseReviewList.map((courseReview, i) => (

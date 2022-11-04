@@ -108,7 +108,8 @@ function CourseReview({
 
     const token =
       'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDgiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzQzNzM4NCwiZXhwIjozNzY2NzQzNzM4NH0.Tz-E2hPqW8zSC94tYcD2GzqMPZKvWWz76UJC2RmGpXw';
-    const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments/${courseId}`;
+    // const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments/${courseId}`;
+    const url = `${process.env.REACT_APP_API}/comments/${courseId}`;
     const body = {
       courseReviewContent: edittedReviewContentRef.current.value,
       rate: edittedReviewRateRef.current.value,
@@ -123,8 +124,6 @@ function CourseReview({
     axios
       .put(url, body, config)
       .then((response) => {
-        console.log(response);
-        console.log('성공');
         edittedReviewContentRef.current.value = '';
         setIsCourseReviewEditTextareaOpened(false);
         setIsClickedCourseReviewChanged(!isClickedCourseReviewChanged);
@@ -193,6 +192,9 @@ function CourseReview({
   useEffect(() => {
     likedCourseReview(courseId);
   }, [isLikedCourseReviewChanged]);
+
+  /** 코스 리뷰 좋아요 개수 */
+  const courseReviewLikeCount = () => {};
 
   return (
     <>

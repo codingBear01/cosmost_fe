@@ -56,7 +56,8 @@ function CourseReviewRegisterForm({ courseDetail }) {
 
     if (!checkCourseReviewValues()) return;
 
-    const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments`;
+    // const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments`;
+    const url = `${process.env.REACT_APP_API}/comments`;
     const temporaryBody = {
       courseId: courseDetail.id,
       reviewerId: 1,

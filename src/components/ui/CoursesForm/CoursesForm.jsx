@@ -55,12 +55,6 @@ function CoursesForm() {
     return url;
   };
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 1500);
-  // }, []);
-
   /* APIs */
   /** params에 따라 다른 코스를 가져오는 api */
   const getCourses = useCallback(
@@ -87,6 +81,7 @@ function CoursesForm() {
 
         const result = await axios.get(url, config);
         const { data } = result;
+        console.log('코스 조회', data);
 
         setIsLoading(false);
         setCourses((prev) => prev.concat(data));
@@ -140,21 +135,14 @@ function CoursesForm() {
         {/* 코스 검색 결괏값 */}
         <S.SearchedCourseContainer>
           {courses.length ? (
-            courses.map(
-              (course, index) =>
-                console.log(
-                  'course, courses.length',
-                  course,
-                  courses.length
-                ) || (
-                  <Link
-                    to={`/course-detail/${course.id || course.courseId}`}
-                    key={course.id || course.courseId}
-                  >
-                    <Course course={course} />
-                  </Link>
-                )
-            )
+            courses.map((course, index) => (
+              <Link
+                to={`/course-detail/${course.id || course.courseId}`}
+                key={course.id || course.courseId}
+              >
+                <Course course={course} />
+              </Link>
+            ))
           ) : (
             <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
           )}

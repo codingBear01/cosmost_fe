@@ -11,11 +11,7 @@ import * as AiIcons from 'react-icons/ai';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
-import {
-  getCourseAuthor,
-  getCoursePointAverage,
-  getSingleCourseView,
-} from '../../../../store';
+import { getCourseAuthor, getSingleCourseView } from '../../../../store';
 
 function Course({ course }) {
   const [courseRate, setCourseRate] = useState('');
@@ -40,7 +36,6 @@ function Course({ course }) {
     courseState && (
       <S.StyledCourse>
         {/* 코스 이미지 */}
-        {console.log('course2', course)}
         <S.CourseFeaturedImage
           src={courseState.readPlaceImgResponseList[0].placeImgUrl}
           alt={courseState.courseTitle}
