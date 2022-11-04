@@ -51,9 +51,11 @@ function CoursesForm() {
     if (type === 'location' || type === 'theme') {
       url = `${process.env.REACT_APP_API}/cosmosts?category=${type}&name-id=${categoryNumber}&sort=id,desc&page=${page.current}&size=4`;
     }
-
+    console.log('함수 안 url');
     return url;
   };
+
+  console.log('컴포넌트 호출');
 
   /* APIs */
   /** params에 따라 다른 코스를 가져오는 api */
