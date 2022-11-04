@@ -1,5 +1,5 @@
 /* libraries */
-import axios from "axios";
+import axios from 'axios';
 
 /** base64ImgSrc 이미지 경로를 바이너리 데이터로 변환한 뒤 변환한 바이너리 데이터와 MIME-Type을 배열로 반환하는 함수. */
 const base64ImgSrcToImgBinaryData = (imgSrc) => {
@@ -7,13 +7,13 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   let Base64DataReg;
   const mimeTypeReg = /data:(.*);/;
 
-  if (imgSrc.slice(0, 3) === "url") {
+  if (imgSrc.slice(0, 3) === 'url') {
     Base64DataReg = /,(.*)\)/;
   } else {
     Base64DataReg = /,(.*)/;
   }
 
-  if (imgSrc !== "none") {
+  if (imgSrc !== 'none') {
     const itemMimeType = imgSrc.match(mimeTypeReg)
       ? imgSrc.match(mimeTypeReg)[1]
       : null;
@@ -48,7 +48,7 @@ const base64ImgSrcToImgBinaryData = (imgSrc) => {
   }
 */
 const createNaverMap = (
-  elementId = "map",
+  elementId = 'map',
   defaultCoordinate = {
     latitude: 35.179816,
     longitude: 129.0750223,
@@ -141,7 +141,7 @@ const addNaverMapMarkerInfo = (map, marker, elementString, style) => {
  */
 const printFormData = (formData) => {
   for (let key of formData.keys()) {
-    console.log(key, ":", formData.get(key));
+    console.log(key, ':', formData.get(key));
   }
 };
 
@@ -151,7 +151,8 @@ const printFormData = (formData) => {
  *  errorCallback : 값을 가져오는 데 실패할 시 호출할 콜백함수
  */
 const getCoursePointAverage = (courseID, thenCallback, errorCallback) => {
-  const url = `${process.env.REACT_APP_COMMENT1_IP}/v1/view?rate=average&course=${courseID}`;
+  // const url = `${process.env.REACT_APP_COMMENT1_IP}/v1/view?rate=average&course=${courseID}`;
+  const url = `${process.env.REACT_APP_API}/view?rate=average&course=${courseID}`;
   const config = {
     timeout: 3000,
   };
@@ -188,7 +189,8 @@ const getCourseAuthor = (id, setState) => {
  *  errorCallback : 리뷰를 가져오는데 실패했을 때 호출할 콜백
  */
 const getCourseReviews = (courseID, setState) => {
-  const url = `${process.env.REACT_APP_COMMENT2_IP}/v1/comments?type=review`;
+  // const url = `${process.env.REACT_APP_COMMENT2_IP}/v1/comments?type=review`;
+  const url = `${process.env.REACT_APP_API}/comments?type=review`;
   const config = {
     headers: {
       Authorization: courseID,
@@ -209,7 +211,8 @@ const getCourseReviews = (courseID, setState) => {
  *  setState : 업데이트해줄 함수
  */
 const getCourseGoodCount = (courseID, setState) => {
-  const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${courseID}?filter=count&type=cosmost`;
+  // const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${courseID}?filter=count&type=cosmost`;
+  const url = `${process.env.REACT_APP_API}/popularities/${courseID}?filter=count&type=cosmost`;
   const config = {
     timeout: 3000,
   };
@@ -229,7 +232,8 @@ const getCourseGoodCount = (courseID, setState) => {
  *  setState : 업데이트해줄 함수
  */
 const getCourseDetail = (courseID, setState) => {
-  const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}`;
+  // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}`;
+  const url = `${process.env.REACT_APP_API}/cosmosts/${courseID}`;
   const config = { timeout: 3000 };
 
   axios
@@ -238,7 +242,7 @@ const getCourseDetail = (courseID, setState) => {
       setState(response.data);
     })
     .catch((error) => {
-      alert("코스 정보 가져오기 실패");
+      alert('코스 정보 가져오기 실패');
     });
 };
 
@@ -247,7 +251,8 @@ const getCourseDetail = (courseID, setState) => {
  *  setState : 업데이트해줄 함수
  */
 const viewAllcourseAverageRatingSort = (page, setState) => {
-  const url = `${process.env.REACT_APP_COSMOST_IP}/v1/view/ranking?order=rate&sort=desc&page=${page}&size=4`;
+  // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/view/ranking?order=rate&sort=desc&page=${page}&size=4`;
+  const url = `${process.env.REACT_APP_API}/view/ranking?order=rate&sort=desc&page=${page}&size=4`;
   const config = { timeout: 3000 };
 
   axios
@@ -256,7 +261,7 @@ const viewAllcourseAverageRatingSort = (page, setState) => {
       setState(response.data);
     })
     .catch((error) => {
-      alert("코스 평균 평점 기준으로 가져오기 실패");
+      alert('코스 평균 평점 기준으로 가져오기 실패');
     });
 };
 
@@ -265,7 +270,8 @@ const viewAllcourseAverageRatingSort = (page, setState) => {
  *  setState : 업데이트해줄 함수
  */
 const getSingleCourseView = (courseID, setState) => {
-  const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}?filter=frame`;
+  // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseID}?filter=frame`;
+  const url = `${process.env.REACT_APP_API}/cosmosts/${courseID}?filter=frame`;
   const config = { timeout: 3000 };
 
   axios
@@ -285,7 +291,7 @@ const getSingleCourseView = (courseID, setState) => {
         (error) => {
           let cpaArr;
           switch (error.response.data) {
-            case "해당 코스의 리뷰가 존재하지 않습니다":
+            case '해당 코스의 리뷰가 존재하지 않습니다':
               cpaArr = [{ courseId: courseID, courseAvgRate: 0 }];
               break;
             default:
@@ -301,7 +307,7 @@ const getSingleCourseView = (courseID, setState) => {
       );
     })
     .catch((error) => {
-      console.log("단일 코스의 조회용 데이터 가져오기 실패");
+      console.log('단일 코스의 조회용 데이터 가져오기 실패');
     });
 };
 

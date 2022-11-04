@@ -133,7 +133,8 @@ function InputEmailForm({ beforeEditUserInfo }) {
     if (!checkInput(e, 'email')) return;
     if (!validateEmailByRegExp(e)) return;
 
-    const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/${PAGE_TYPES[pathname].certificationNumberSendingType}/confirm/${emailRef.current.value}`;
+    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/${PAGE_TYPES[pathname].certificationNumberSendingType}/confirm/${emailRef.current.value}`;
+    const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberSendingType}/confirm/${emailRef.current.value}`;
     const config = { timeout: 3000 };
 
     axios
@@ -155,7 +156,8 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
     if (!checkInput(e, 'number')) return;
 
-    const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
+    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
+    const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
     const config = { timeout: 3000 };
 
     axios
@@ -189,7 +191,8 @@ function InputEmailForm({ beforeEditUserInfo }) {
     if (!checkIsCertificationNumberButtonClicked(e)) return;
 
     const formData = new FormData();
-    const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+    const url = `${process.env.REACT_APP_API}/auths`;
     const config = {
       headers: {
         Authorization: token,
@@ -229,7 +232,8 @@ function InputEmailForm({ beforeEditUserInfo }) {
       .then((response) => {
         //수정된 데이터 다시 가져와서 리다이렉트 하기
         toast.success(response.data);
-        const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+        // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+        const url = `${process.env.REACT_APP_API}/auths`;
         const config = {
           headers: {
             Authorization: token,
