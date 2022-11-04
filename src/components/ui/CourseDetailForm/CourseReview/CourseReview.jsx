@@ -139,8 +139,10 @@ function CourseReview({
     const token =
       'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDgiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzQzNzM4NCwiZXhwIjozNzY2NzQzNzM4NH0.Tz-E2hPqW8zSC94tYcD2GzqMPZKvWWz76UJC2RmGpXw';
     const URLS = {
-      like: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities`,
-      unlike: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}/review`,
+      // like: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities`,
+      like: `${process.env.REACT_APP_API}/popularities`,
+      // unlike: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}/review`,
+      unlike: `${process.env.REACT_APP_API}/popularities/${id}/review`,
     };
     const body = {
       courseReviewId: id,
@@ -174,7 +176,8 @@ function CourseReview({
   const likedCourseReview = (id) => {
     const token =
       'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDgiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzQzNzM4NCwiZXhwIjozNzY2NzQzNzM4NH0.Tz-E2hPqW8zSC94tYcD2GzqMPZKvWWz76UJC2RmGpXw';
-    const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}?type=review`;
+    // const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}?type=review`;
+    const url = `${process.env.REACT_APP_API}/popularities/${id}?type=review`;
     const config = {
       headers: {
         Authorization: token,

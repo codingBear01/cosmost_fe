@@ -225,7 +225,8 @@ function InputUserForm({ state, beforeEditUserInfo }) {
   const checkIsDuplicatedId = (id) => {
     if (!checkIsIdOrNicknameEmpty('id')) return;
 
-    const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=login-id`;
+    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=login-id`;
+    const url = `${process.env.REACT_APP_API}/validation/duplicate?id=login-id`;
     const config = {
       headers: {
         Authorization: id,
@@ -252,7 +253,8 @@ function InputUserForm({ state, beforeEditUserInfo }) {
   const checkIsDuplicatedNickname = (nickname) => {
     if (!checkIsIdOrNicknameEmpty('nickname')) return;
 
-    const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=nickname`;
+    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=nickname`;
+    const url = `${process.env.REACT_APP_API}/validation/duplicate?id=nickname`;
     const config = {
       headers: {
         Authorization: nickname,
@@ -288,7 +290,8 @@ function InputUserForm({ state, beforeEditUserInfo }) {
     });
 
     if (ErrorCheck) {
-      const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+      // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+      const url = `${process.env.REACT_APP_API}/auths`;
       const [profileImgSaveUrl] = base64ImgSrcToImgBinaryData(
         uploadedProfilePicture
       );
@@ -375,7 +378,8 @@ function InputUserForm({ state, beforeEditUserInfo }) {
           .then((response) => {
             //수정된 데이터 다시 가져와서 리다이렉트 하기
             toast.success(response.data);
-            const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+            // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+            const url = `${process.env.REACT_APP_API}/auths`;
             const config = {
               headers: {
                 Authorization: token,

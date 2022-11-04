@@ -6,8 +6,10 @@ import * as S from './styled';
 import { Link } from 'react-router-dom';
 /* CONSTANTS */
 const URLS = {
-  location: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=location`,
-  theme: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=theme`,
+  // location: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=location`,
+  location: `${process.env.REACT_APP_API}/cosmosts?filter=all&category=location`,
+  // theme: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=theme`,
+  theme: `${process.env.REACT_APP_API}/cosmosts?filter=all&category=theme`,
 };
 
 function SelectingCategoryArea({ setCategoryId }) {

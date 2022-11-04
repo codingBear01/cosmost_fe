@@ -24,10 +24,11 @@ function DeleteModal({
     // 코스 삭제
     if (clicked === 'course') {
       id = courseId;
-      const deleteCourseUrl = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${id}`;
+      // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${id}`;
+      const url = `${process.env.REACT_APP_API}/cosmosts/${id}`;
       const config = { timeout: 1000 };
       axios
-        .delete(deleteCourseUrl, config)
+        .delete(url, config)
         .then((response) => {
           onClickOpenDeleteModal();
           toast.success(`${id}번 코스가 삭제되었읍니다!`);

@@ -21,11 +21,10 @@ function CoursesForm() {
   const [courses, setCourses] = useState([]);
   const [isLastPage, setIsLastPage] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
+  const [courseSortType, setCourseSortType] = useState("최신순");
 
   // 쿼리값이 변경되어 useEffect가 호출되면 변경되는 상태들
   const [queryStringsState, setQueryStringsState] = useState(false);
-
-  const [courseSortType, setCourseSortType] = useState("최신순");
 
   const page = useRef(0);
   const observedTarget = useRef(null);
@@ -42,13 +41,15 @@ function CoursesForm() {
     let url;
 
     if (type === "all" || type === "auth") {
-      url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
+      // url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
+      url = `${process.env.REACT_APP_API}/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
     }
     if (type === "keyword" || type === "hastags") {
-      url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?${type}=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
+      // url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?${type}=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
+      url = `${process.env.REACT_APP_API}/cosmosts?${type}=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
     }
     if (type === "location" || type === "theme") {
-      url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?category=${type}&name-id=${categoryNumber}&sort=id,desc&page=${page.current}&size=4`;
+      url = `${process.env.REACT_APP_API}/cosmosts?category=${type}&name-id=${categoryNumber}&sort=id,desc&page=${page.current}&size=4`;
     }
 
     return url;
