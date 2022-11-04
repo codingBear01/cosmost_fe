@@ -2,18 +2,19 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
+
 /* recoil */
-import { useRecoilState } from 'recoil';
-import { isOrderingModalOpenedAtom } from '../../../store';
+import { useRecoilState } from "recoil";
+import { isOrderingModalOpenedAtom } from "../../../store";
 /* components */
-import * as S from './styled';
-import { Course, SelectingCategoryArea } from '.';
-import { OrderingButton, ToTopBtn, UtilDiv } from '../..';
+import * as S from "./styled";
+import { Course, SelectingCategoryArea } from ".";
+import { OrderingButton, ToTopBtn, UtilDiv } from "../..";
 
 function CoursesForm() {
   // const token = localStorage.getItem('token');
   const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo";
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
   );
@@ -28,6 +29,7 @@ function CoursesForm() {
 
   const params = useParams();
   const [queryStrings] = useSearchParams();
+
 
   /* Handlers */
   const onClickOpenOrderingModal = () => {
@@ -84,11 +86,14 @@ function CoursesForm() {
           page.current += 1;
         }
       } catch (error) {
-        new Error(error);
+        console.log("error", error);
       }
     },
     [params.type, categoryId, page.current]
   );
+  // useEffect(()=>{
+  //   queryStrings.get("sort"),
+  // })
 
   /** 쿼리스트링이 변경될 때마다 호출되는 useEffect. IsLastPage와 Course State를 초기화한다.*/
   useEffect(() => {
@@ -113,21 +118,30 @@ function CoursesForm() {
   }, [isLastPage, queryStringsState, page.current]);
 
   return (
-    <UtilDiv width={'76.8rem'} padding={'9rem 0 7rem'} margin={'0 auto'}>
+    <UtilDiv width={"76.8rem"} padding={"9rem 0 7rem"} margin={"0 auto"}>
       {/* 카테고리 선택 영역 */}
       {params.type !== 'mine' && (
         <SelectingCategoryArea setCategoryId={setCategoryId} />
       )}
       {/* 정렬 기준 버튼 */}
-      <OrderingButton onClick={onClickOpenOrderingModal} />
+      <OrderingButton
+        onClick={onClickOpenOrderingModal}
+        sortType={courseSortType}
+      />
       {/* 코스 검색 결괏값 */}
       <S.SearchedCourseContainer>
         {courses.length ? (
-          courses.map((course) => (
-            <Link to={`/course-detail/${course.id}`} key={course.id}>
-              <Course course={course} />
-            </Link>
-          ))
+          courses.map(
+            (course, index) =>
+              console.log("course, courses.length", course, courses.length) || (
+                <Link
+                  to={`/course-detail/${course.id || course.courseId}`}
+                  key={course.id || course.courseId}
+                >
+                  <Course course={course} />
+                </Link>
+              )
+          )
         ) : (
           <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
         )}

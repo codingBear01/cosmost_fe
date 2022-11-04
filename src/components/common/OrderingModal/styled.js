@@ -1,11 +1,11 @@
 /* libraries */
-import styled from 'styled-components';
+import styled from "styled-components";
 /* static data */
-import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
+import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from "../../../style";
 
 export const OrderingModalOverlay = styled.div`
   visibility: ${({ isOrderingModalOpened }) =>
-    isOrderingModalOpened ? 'visible' : 'hidden'};
+    isOrderingModalOpened ? "visible" : "hidden"};
   position: fixed;
   top: 0;
   bottom: 0;
@@ -17,7 +17,7 @@ export const OrderingModalOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.48);
   transition: 0.25s;
   transform: ${({ isOrderingModalOpened }) =>
-    isOrderingModalOpened ? 'translateY(0)' : 'translateY(100%)'};
+    isOrderingModalOpened ? "translateY(0)" : "translateY(100%)"};
 `;
 
 export const StyledOrderingModal = styled.div`
@@ -55,7 +55,7 @@ export const OrderingList = styled.ul`
 `;
 
 export const OrderingItem = styled.li`
-  width: 50%;
+  width: ${({ width }) => width || "50%"};
   padding: 1rem 2rem;
   font-size: ${fs.xl};
   cursor: pointer;

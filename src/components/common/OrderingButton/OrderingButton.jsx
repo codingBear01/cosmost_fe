@@ -1,14 +1,14 @@
 /* hooks */
-import React from 'react';
+import React from "react";
 /* components */
-import * as S from './styled';
+import * as S from "./styled";
 /* icons */
-import * as BiIcons from 'react-icons/bi';
+import * as BiIcons from "react-icons/bi";
 
-function OrderingButton({ onClick }) {
+function OrderingButton({ onClick, sortType }) {
   return (
     <S.StyledOrderingModalButton onClick={onClick}>
-      <span>최신 순</span>
+      <span>{sortType}</span>
       <BiIcons.BiChevronDown />
     </S.StyledOrderingModalButton>
   );

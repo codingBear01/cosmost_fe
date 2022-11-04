@@ -31,7 +31,9 @@ function CourseTitleAndDate({
   const modalRef = useRef();
 
   useEffect(() => {
-    getCoursePointAverage(courseDetail.id, setCoursePointAverageArr);
+    getCoursePointAverage(courseDetail.id, (result) => {
+      setCoursePointAverageArr(result.data);
+    });
   }, []);
 
   useEffect(() => {
