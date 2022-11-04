@@ -8,7 +8,7 @@ import { isOrderingModalOpenedAtom, isLoadingAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Course, SelectingCategoryArea } from '.';
-import { OrderingButton, ToTopBtn, UtilDiv } from '../..';
+import { OrderingButton, ToTopBtn, UtilDiv, Loading } from '../..';
 
 function CoursesForm() {
   // const token = localStorage.getItem('token');
@@ -55,10 +55,17 @@ function CoursesForm() {
     return url;
   };
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 1500);
+  // }, []);
+
   /* APIs */
   /** params에 따라 다른 코스를 가져오는 api */
   const getCourses = useCallback(
     async (type, searchKeyword, categoryNumber) => {
+      setIsLoading(true);
       try {
         const url = returnUrlForGettingCourses(
           type,
@@ -82,6 +89,7 @@ function CoursesForm() {
         const { data } = result;
         console.log(data);
 
+        setIsLoading(false);
         setCourses((prev) => prev.concat(data));
         setIsLastPage(data[data.length - 1].whetherLastPage);
 
@@ -89,14 +97,11 @@ function CoursesForm() {
           page.current += 1;
         }
       } catch (error) {
-        console.log('error', error);
+        new Error(error);
       }
     },
     [params.type, categoryId, page.current]
   );
-  // useEffect(()=>{
-  //   queryStrings.get("sort"),
-  // })
 
   /** 쿼리스트링이 변경될 때마다 호출되는 useEffect. IsLastPage와 Course State를 초기화한다.*/
   useEffect(() => {
@@ -121,37 +126,44 @@ function CoursesForm() {
   }, [isLastPage, queryStringsState, page.current]);
 
   return (
-    <UtilDiv width={'76.8rem'} padding={'9rem 0 7rem'} margin={'0 auto'}>
-      {/* 카테고리 선택 영역 */}
-      {params.type !== 'mine' && (
-        <SelectingCategoryArea setCategoryId={setCategoryId} />
-      )}
-      {/* 정렬 기준 버튼 */}
-      <OrderingButton
-        onClick={onClickOpenOrderingModal}
-        sortType={courseSortType}
-      />
-      {/* 코스 검색 결괏값 */}
-      <S.SearchedCourseContainer>
-        {courses.length ? (
-          courses.map(
-            (course, index) =>
-              console.log('course, courses.length', course, courses.length) || (
-                <Link
-                  to={`/course-detail/${course.id || course.courseId}`}
-                  key={course.id || course.courseId}
-                >
-                  <Course course={course} />
-                </Link>
-              )
-          )
-        ) : (
-          <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
+    <>
+      {isLoading && <Loading />}
+      <UtilDiv width={'76.8rem'} padding={'9rem 0 7rem'} margin={'0 auto'}>
+        {/* 카테고리 선택 영역 */}
+        {params.type !== 'mine' && (
+          <SelectingCategoryArea setCategoryId={setCategoryId} />
         )}
-      </S.SearchedCourseContainer>
-      <div ref={observedTarget}></div>
-      <ToTopBtn />
-    </UtilDiv>
+        {/* 정렬 기준 버튼 */}
+        <OrderingButton
+          onClick={onClickOpenOrderingModal}
+          sortType={courseSortType}
+        />
+        {/* 코스 검색 결괏값 */}
+        <S.SearchedCourseContainer>
+          {courses.length ? (
+            courses.map(
+              (course, index) =>
+                console.log(
+                  'course, courses.length',
+                  course,
+                  courses.length
+                ) || (
+                  <Link
+                    to={`/course-detail/${course.id || course.courseId}`}
+                    key={course.id || course.courseId}
+                  >
+                    <Course course={course} />
+                  </Link>
+                )
+            )
+          ) : (
+            <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
+          )}
+        </S.SearchedCourseContainer>
+        <div ref={observedTarget}></div>
+        <ToTopBtn />
+      </UtilDiv>
+    </>
   );
 }
 
