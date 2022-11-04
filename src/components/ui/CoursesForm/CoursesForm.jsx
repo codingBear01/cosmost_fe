@@ -41,8 +41,20 @@ function CoursesForm() {
     let url;
 
     if (type === "all" || type === "auth") {
+      switch (queryStrings.get("sort")) {
+        // 평점 순 정렬
+        case "rate":
+          url = `${process.env.REACT_APP_API}/view/ranking/rate?page=${page.current}&size=4`;
+          break;
+        case "like":
+          url = `${process.env.REACT_APP_API}/view/ranking/popularity?page=${page.current}&size=4`;
+          break;
+        // 그 외의 정렬
+        default:
+          url = `${process.env.REACT_APP_API}/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
+          break;
+      }
       // url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
-      url = `${process.env.REACT_APP_API}/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
     }
     if (type === "keyword" || type === "hastags") {
       // url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?${type}=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
@@ -111,6 +123,8 @@ function CoursesForm() {
       case "rate":
         setCourseSortType("평점 높은 순");
         break;
+      case "like":
+        setCourseSortType("좋아요 많은 순");
       default:
         setCourseSortType("최신순");
         break;
