@@ -68,9 +68,8 @@ function CoursesForm() {
           categoryNumber
         );
 
-        console.log('호출 url', url);
-
         if (!url) return;
+        console.log('호출 url', url);
 
         const config =
           type === 'auth'
