@@ -58,10 +58,46 @@ function CourseSharingAndLikeButton({ courseDetail, token }) {
   }, [isSharingCourseModalOpened]);
 
   /* APIs */
-  const getIsLikedCourse = () => {
+  /** 코스 좋아요 등록 및 취소 */
+  const handleLikeCourse = (id, type) => {
     const token =
       'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
-    const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${courseDetail.id}?type=cosmost`;
+    const URLS = {
+      // like: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities`,
+      like: `${process.env.REACT_APP_API}/popularities`,
+      // unlike: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}/cosmost`,
+      unlike: `${process.env.REACT_APP_API}/v1/popularities/${id}/cosmost`,
+    };
+    const body = {
+      courseId: id,
+      type: 'course',
+    };
+    const config = {
+      headers: {
+        Authorization: token,
+      },
+      timeout: 3000,
+    };
+
+    if (type === 'like') {
+      axios
+        .post(URLS[type], body, config)
+        .then((response) => setIsLikedCourseChanged(!isLikedCourseChanged))
+        .catch((error) => new Error(error));
+    } else {
+      axios
+        .delete(URLS[type], config)
+        .then((response) => setIsLikedCourseChanged(!isLikedCourseChanged))
+        .catch((error) => new Error(error));
+    }
+  };
+
+  /** 코스 좋아요 여부 확인 */
+  const likedCourse = () => {
+    const token =
+      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
+    // const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${courseDetail.id}?type=cosmost`;
+    const url = `${process.env.REACT_APP_API}/popularities/${courseDetail.id}?type=cosmost`;
     const config = {
       headers: {
         Authorization: token,
@@ -76,52 +112,9 @@ function CourseSharingAndLikeButton({ courseDetail, token }) {
       })
       .catch((error) => new Error(error));
   };
-
   useEffect(() => {
-    getIsLikedCourse();
+    likedCourse();
   }, [isLikedCourseChanged]);
-
-  const likeCourse = () => {
-    const token =
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
-    const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities`;
-    const body = {
-      courseId: courseDetail.id,
-      type: 'course',
-    };
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .post(url, body, config)
-      .then((response) => {
-        setIsLikedCourseChanged(!isLikedCourseChanged);
-      })
-      .catch((error) => new Error(error));
-  };
-
-  const unLikeCourse = () => {
-    const token =
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
-    const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${courseDetail.id}/cosmost`;
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .delete(url, config)
-      .then((response) => {
-        setIsLikedCourseChanged(!isLikedCourseChanged);
-      })
-      .catch((error) => new Error(error));
-  };
 
   return (
     // 공유, 좋아요 버튼
@@ -146,12 +139,18 @@ function CourseSharingAndLikeButton({ courseDetail, token }) {
       </S.ShareAndLikeButton>
       {/* 좋아요 버튼 */}
       {!isLikedCourse[0] && (
-        <S.ShareAndLikeButton type="button" onClick={likeCourse}>
+        <S.ShareAndLikeButton
+          type="button"
+          onClick={() => handleLikeCourse(courseDetail.id, 'like')}
+        >
           <FaIcons.FaRegThumbsUp />
         </S.ShareAndLikeButton>
       )}
       {isLikedCourse[0] && (
-        <S.ShareAndLikeButton type="button" onClick={unLikeCourse}>
+        <S.ShareAndLikeButton
+          type="button"
+          onClick={() => handleLikeCourse(courseDetail.id, 'unlike')}
+        >
           <FaIcons.FaThumbsUp style={{ color: 'white' }} />
         </S.ShareAndLikeButton>
       )}

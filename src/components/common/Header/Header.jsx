@@ -12,17 +12,18 @@ import * as BsIcons from 'react-icons/bs';
 
 function Header() {
   /* States */
-  /* 서치바 Open 여부 state */
   const [isSearchBarOpened, setIsSearchBarOpened] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   /* Handlers */
-  /* 서치바 Open 여부 조작하는 핸들러. 클릭 시 Open state를 반대로 변경 */
+  /** 서치바 Open 여부 조작하는 핸들러 */
   const onClickOpenSearchBar = () => {
     setIsSearchBarOpened(!isSearchBarOpened);
+    setSearchKeyword('');
   };
 
   /* Hooks */
-  /* 서치바 열렸을 때 바깥 영역 스크롤 방지하는 함수 */
+  /** 서치바 열렸을 때 바깥 영역 스크롤 방지하는 함수 */
   useEffect(() => {
     isSearchBarOpened
       ? (document.body.style.overflow = 'hidden')
@@ -52,7 +53,9 @@ function Header() {
         <HeaderSearchBar
           isSearchBarOpened={isSearchBarOpened}
           setIsSearchBarOpened={setIsSearchBarOpened}
-          onClick={onClickOpenSearchBar}
+          searchKeyword={searchKeyword}
+          setSearchKeyword={setSearchKeyword}
+          onClickOpenSearchBar={onClickOpenSearchBar}
         />
       </S.Header>
 

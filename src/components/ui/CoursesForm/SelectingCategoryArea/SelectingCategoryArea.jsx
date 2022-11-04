@@ -6,18 +6,20 @@ import * as S from './styled';
 import { Link } from 'react-router-dom';
 /* CONSTANTS */
 const URLS = {
-  location: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=location`,
-  theme: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=theme`,
+  // location: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=location`,
+  location: `${process.env.REACT_APP_API}/cosmosts?filter=all&category=location`,
+  // theme: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=theme`,
+  theme: `${process.env.REACT_APP_API}/cosmosts?filter=all&category=theme`,
 };
 
-function SelectingCategoryArea({ setCategoryNumber, setCategoryType }) {
+function SelectingCategoryArea({ setCategoryId }) {
   /* States */
   const [categories, setCategories] = useState({
     location: [],
     theme: [],
   });
   const [isClickedCategory, setIsClickedCategory] = useState({
-    entire: true,
+    all: true,
     location: false,
     theme: false,
   });
@@ -45,54 +47,59 @@ function SelectingCategoryArea({ setCategoryNumber, setCategoryType }) {
   const onClickSetClickedCategory = (isClicked) => {
     if (isClicked === 'all') {
       setIsClickedCategory({
-        entire: true,
+        all: true,
         location: false,
         theme: false,
       });
     } else if (isClicked === 'location') {
       setIsClickedCategory({
-        entire: false,
+        all: false,
         location: true,
         theme: false,
       });
     } else {
       setIsClickedCategory({
-        entire: false,
+        all: false,
         location: false,
         theme: true,
       });
     }
 
-    setCategoryType(isClicked);
-    setCategoryNumber(null);
+    setCategoryId(0);
     getCategories(isClicked);
   };
 
   const onClickSetClikedCategoryId = (id) => {
-    setCategoryNumber(id);
+    setCategoryId(id);
   };
 
   return (
     <S.StyledSelectingCategoryArea>
       <S.Categories>
-        <S.Category
-          onClick={() => onClickSetClickedCategory('all')}
-          isClickedCategory={isClickedCategory.entire}
-        >
-          전체
-        </S.Category>
-        <S.Category
-          onClick={() => onClickSetClickedCategory('location')}
-          isClickedCategory={isClickedCategory.location}
-        >
-          지역별
-        </S.Category>
-        <S.Category
-          onClick={() => onClickSetClickedCategory('theme')}
-          isClickedCategory={isClickedCategory.theme}
-        >
-          테마별
-        </S.Category>
+        <Link to="/courses/all">
+          <S.Category
+            onClick={() => onClickSetClickedCategory('all')}
+            isClickedCategory={isClickedCategory.all}
+          >
+            전체
+          </S.Category>
+        </Link>
+        <Link to="/courses/location">
+          <S.Category
+            onClick={() => onClickSetClickedCategory('location')}
+            isClickedCategory={isClickedCategory.location}
+          >
+            지역별
+          </S.Category>
+        </Link>
+        <Link to="/courses/theme">
+          <S.Category
+            onClick={() => onClickSetClickedCategory('theme')}
+            isClickedCategory={isClickedCategory.theme}
+          >
+            테마별
+          </S.Category>
+        </Link>
       </S.Categories>
       <S.SubordinateCategories>
         <ul>

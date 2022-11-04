@@ -27,36 +27,22 @@ function CourseContentWrap({
   justifyContent,
   height,
   courseReviews,
-  setCourseReviews,
   courseDetail,
   author,
   dataCategory,
   authorCourseCount,
 }) {
   const courseID = useParams().id;
+  const courseRatePercantage =
+    courseReviews[0] && courseReviews[0].rateAllTypeList.reverse();
 
-  /* 코스 리뷰 평균 점수를 나타내는 state*/
-  const [courseReviewAvgPoint, setCourseReviewAvgPoint] = useState("");
-
-  /* 코스 평균 평점 state*/
-  const [coursePointAverageArr, setCoursePointAverageArr] = useState("");
-
-  /* 코스 좋아요 수 state*/
-  const [courseGoodCount, setCourseGoodCount] = useState("");
+  /* States */
+  const [courseReviewAvgPoint, setCourseReviewAvgPoint] = useState('');
+  const [coursePointAverageArr, setCoursePointAverageArr] = useState('');
+  const [courseGoodCount, setCourseGoodCount] = useState('');
 
   useEffect(() => {
-    getCourseReviews(courseID, (result) => {
-      setCourseReviews(result.data);
-      setCourseReviewAvgPoint(
-        result.data[0].rateAllTypeList[0]
-          .match(/\[(.*)\]/)[1]
-          .split(", ")
-          .reverse()
-      );
-    });
-    getCoursePointAverage(courseID, (result) => {
-      setCoursePointAverageArr(result.data);
-    });
+    getCoursePointAverage(courseID, setCourseReviewAvgPoint);
     getCourseGoodCount(courseID, setCourseGoodCount);
   }, []);
 
@@ -133,12 +119,12 @@ function CourseContentWrap({
           <S.AverageRate>
             <span>평균 평점</span>
             <span>
-              {coursePointAverageArr && coursePointAverageArr[0]?.courseAvgRate}
+              {courseReviewAvgPoint && courseReviewAvgPoint[0].courseAvgRate}
             </span>
           </S.AverageRate>
           <ul>
-            {courseReviewAvgPoint &&
-              courseReviewAvgPoint.map((item, index) => {
+            {courseRatePercantage &&
+              courseRatePercantage.map((item, index) => {
                 return (
                   <S.CourseRateStarWrap key={index}>
                     <S.CourseRateStar>
@@ -158,12 +144,10 @@ function CourseContentWrap({
                     </S.CourseRateStar>
                     <S.CourseRateStarPercentGaugeWrap>
                       <S.CourseRateStarPercentGauge
-                        width={`${courseReviewAvgPoint[index]}%`}
+                        width={`${item}%`}
                       ></S.CourseRateStarPercentGauge>
                     </S.CourseRateStarPercentGaugeWrap>
-                    <S.CourseRateStarPercent>
-                      {courseReviewAvgPoint[index]}%
-                    </S.CourseRateStarPercent>
+                    <S.CourseRateStarPercent>{item}%</S.CourseRateStarPercent>
                   </S.CourseRateStarWrap>
                 );
               })}

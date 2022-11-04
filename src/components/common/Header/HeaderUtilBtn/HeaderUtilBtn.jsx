@@ -21,7 +21,8 @@ function HeaderUtilBtn() {
   // 사용자 정보 가져오기
   useEffect(() => {
     if (token && isLoggedIn) {
-      const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+      // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+      const url = `${process.env.REACT_APP_API}/v1/auths`;
       const config = {
         headers: {
           Authorization: token,

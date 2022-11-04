@@ -74,7 +74,8 @@ function HistoriesForm({ isReportHistoryPage }) {
   /* APIs */
   /* 접속한 페이지가 신고 내역 페이지라면 나의 신고 내역을 불러오고 아니라면 내가 남긴 리뷰를 불러오는 함수 */
   const getReports = () => {
-    const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards?filter=auth`;
+    // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards?filter=auth`;
+    const url = `${process.env.REACT_APP_API}/boards?filter=auth`;
     const config = {
       headers: {
         Authorization: 1, // 로그인한 사용자의 식별자
@@ -119,7 +120,8 @@ function HistoriesForm({ isReportHistoryPage }) {
 
   /* 삭제 버튼 클릭 시 해당 신고 내역을 삭제하는 함수 */
   const deleteReport = (id) => {
-    const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards/${id}`;
+    // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards/${id}`;
+    const url = `${process.env.REACT_APP_API}/boards/${id}`;
 
     axios
       .delete(url)
