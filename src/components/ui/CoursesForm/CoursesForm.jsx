@@ -82,6 +82,7 @@ function CoursesForm() {
             : { timeout: 3000 };
 
         const result = await axios.get(url);
+        console.log('result', result);
         const { data } = result;
         console.log('통신');
         console.log(data);
