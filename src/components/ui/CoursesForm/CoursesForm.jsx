@@ -51,7 +51,7 @@ function CoursesForm() {
     if (type === 'location' || type === 'theme') {
       url = `${process.env.REACT_APP_API}/cosmosts?category=${type}&name-id=${categoryNumber}&sort=id,desc&page=${page.current}&size=4`;
     }
-    console.log('함수 안 url');
+    console.log('함수 안 url', url);
     return url;
   };
 
@@ -67,6 +67,8 @@ function CoursesForm() {
           searchKeyword,
           categoryNumber
         );
+
+        console.log('호출 url', url);
 
         if (!url) return;
 
