@@ -9,6 +9,7 @@ export { InputDetailAddressForm } from './InputDetailAddressForm/';
 export { InputEmailForm } from './InputEmailForm/';
 export { InputPasswordForm } from './InputPasswordForm/';
 export { InputUserForm } from './InputUserForm';
+export { LoadingForm } from './LoadingForm';
 export { LoginForm } from './LoginForm/';
 export { MainSection } from './MainSection/';
 export { RankersForm } from './RankersForm/';

@@ -2,16 +2,13 @@
 import React from 'react';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { loginStateAtom } from '../../../store';
+import { loginStateAtom, MAIN_COURSES } from '../../../store';
 /* components */
 import * as S from './styled';
 import { MainContentWrap, MainCourse, MainTextWrap } from '.';
 import { Section } from '../..';
 /* icons */
 import * as FaIcons from 'react-icons/fa';
-/* static data */
-import { MAIN_COURSES } from '../../../store/temporaryArray';
-
 function MainPageSection() {
   const token = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
