@@ -22,7 +22,7 @@ function HeaderUtilBtn() {
   useEffect(() => {
     if (token && isLoggedIn) {
       // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
-      const url = `${process.env.REACT_APP_API}/v1/auths`;
+      const url = `${process.env.REACT_APP_API}/auths`;
       const config = {
         headers: {
           Authorization: token,
