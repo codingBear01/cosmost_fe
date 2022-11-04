@@ -146,6 +146,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
         setIsCertificationNumberSent(true);
       })
       .catch((error) => {
+        new Error(error);
         toast.error('인증번호 발송에 실패했습니다.');
       });
   };
@@ -179,6 +180,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
         }
       })
       .catch((error) => {
+        new Error(error);
         toast.error(
           '인증번호 검증을 할 수 없는 상태입니다. 관리자에게 문의하세요.'
         );
@@ -249,14 +251,14 @@ function InputEmailForm({ beforeEditUserInfo }) {
             });
           })
           .catch((error) => {
-            console.log(error);
+            new Error(error);
             toast.error(
               '변경된 이메일 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
             );
           });
       })
       .catch((error) => {
-        console.log(error);
+        new Error(error);
         toast.error('이메일 변경에 실패했습니다. 관리자에게 문의하세요.');
       });
   };

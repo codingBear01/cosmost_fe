@@ -1,10 +1,12 @@
 /* libraries */
 import React from 'react';
-import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import { Button } from '../../';
+import { useNavigate } from 'react-router-dom';
 /* components */
 import * as S from './styled';
+import { Button } from '../../';
+/* APIs */
+import { deleteCourseOrReview } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
 
@@ -16,44 +18,7 @@ function DeleteModal({
   courseReviewId,
   clickedElement,
 }) {
-  /* APIs */
-  /* 코스 혹은 코스 리뷰 삭제 */
-  const onClickDeleteCourseOrReview = (clicked) => {
-    let id;
-
-    // 코스 삭제
-    if (clicked === 'course') {
-      id = courseId;
-      // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${id}`;
-      const url = `${process.env.REACT_APP_API}/cosmosts/${id}`;
-      const config = { timeout: 1000 };
-      axios
-        .delete(url, config)
-        .then((response) => {
-          onClickOpenDeleteModal();
-          toast.success(`${id}번 코스가 삭제되었읍니다!`);
-        })
-        .catch((error) => {
-          toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
-        });
-    }
-    //코스 리뷰 삭제
-    else {
-      id = courseReviewId;
-      const deleteCourseReviewUrl = `${process.env.REACT_APP_COMMENT_IP}/v1/comments/${id}/review`;
-      const config = { timeout: 3000 };
-
-      axios
-        .delete(deleteCourseReviewUrl, config)
-        .then((response) => {
-          onClickOpenDeleteModal();
-          setIsClickedCourseReviewChanged(!isClickedCourseReviewChanged);
-        })
-        .catch((error) => {
-          toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
-        });
-    }
-  };
+  const navigate = useNavigate();
 
   return (
     <S.DeleteModalOverlay>
@@ -92,7 +57,18 @@ function DeleteModal({
             color={color.black}
             bgColor={color.darkRed}
             hoveredBgColor={color.red}
-            onClick={() => onClickDeleteCourseOrReview(clickedElement)}
+            onClick={() =>
+              deleteCourseOrReview(
+                clickedElement,
+                courseId,
+                courseReviewId,
+                onClickOpenDeleteModal,
+                navigate,
+                toast,
+                setIsClickedCourseReviewChanged,
+                isClickedCourseReviewChanged
+              )
+            }
           >
             삭제
           </Button>

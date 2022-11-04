@@ -5,11 +5,12 @@ import { toast, ToastContainer } from 'react-toastify';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilTitle } from '../..';
+/* APIs */
+import { getReportCategories, postReport, updateReport } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
-
 function ReportForm({
   onClick,
   setIsReportFormOpened,
@@ -52,85 +53,10 @@ function ReportForm({
   };
 
   /* APIs */
-  /** 리뷰 작성에 쓰일 신고 카테고리를 불러오는 함수 */
-  const getReportCategories = () => {
-    // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
-    const url = `${process.env.REACT_APP_API}/boards`;
-    const config = { timeout: 3000 };
-
-    axios
-      .get(url, config)
-      .then((response) => {
-        setReportCategories(response.data);
-      })
-      .catch((error) => {
-        new Error(error);
-      });
-  };
+  /** 신고 카테고리를 가져오는 hooks */
   useEffect(() => {
-    getReportCategories();
+    getReportCategories(setReportCategories);
   }, []);
-
-  /* 신고 버튼 클릭 시 작성된 신고 내용을 서버로 전송하는 함수 */
-  const postReport = (e) => {
-    e.preventDefault();
-
-    if (!checkReportInput()) return;
-
-    // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
-    const url = `${process.env.REACT_APP_API}/boards`;
-    const body = {
-      reporterId: 2,
-      reportTitle: reportTitle.current.value,
-      reportContent: reportContent.current.value,
-      createReportCategoryListRequestList: [
-        {
-          reportCategory: +reportCategory.current.value,
-        },
-      ],
-    };
-    const config = { timeout: 3000 };
-
-    axios
-      .post(url, body, config)
-      .then((response) => {
-        setIsReportFormOpened(!isReportFormOpened);
-      })
-      .catch((error) =>
-        toast.error('오류가 발생했습니다. 관리자에게 문의하세요.')
-      );
-  };
-
-  /* 수정 버튼 클릭 시 작성된 신고 수정 내용을 서버로 전송하는 함수 */
-  const updateReport = (e, id) => {
-    e.preventDefault();
-
-    if (!checkReportInput()) return;
-
-    // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards/${id}`;
-    const url = `${process.env.REACT_APP_API}/boards/${id}`;
-    const body = {
-      reportTitle: reportTitle.current.value,
-      reportContent: reportContent.current.value,
-      updateReportCategoryListRequestList: [
-        {
-          id: report.reportCategoryList[0].id,
-          reportCategory: +reportCategory.current.value,
-        },
-      ],
-    };
-    const config = { timeout: 3000 };
-
-    axios
-      .put(url, body, config)
-      .then((response) => {
-        setIsHistoriesChanged(!isHistoriesChanged);
-        setIsReportFormOpened(!isReportFormOpened);
-      })
-      .catch((error) =>
-        toast.error('오류가 발생했습니다. 관리자에게 문의하세요.')
-      );
-  };
 
   /* Hooks */
   /* 신고 모달 열렸을 때 바깥 영역 스크롤 방지하고 스크롤 Y좌표 맨 위로 설정하는 함수 */
@@ -241,7 +167,33 @@ function ReportForm({
               bgColor={color.darkBlue}
               hoveredBgColor={color.navy}
               onClick={
-                !type ? (e) => postReport(e) : (e) => updateReport(e, report.id)
+                !type
+                  ? (e) =>
+                      postReport(
+                        e,
+                        checkReportInput,
+                        reportTitle,
+                        reportContent,
+                        reportCategory,
+                        setIsReportFormOpened,
+                        isReportFormOpened,
+                        toast
+                      )
+                  : (e) =>
+                      updateReport(
+                        e,
+                        report.id,
+                        checkReportInput,
+                        reportTitle,
+                        reportContent,
+                        report,
+                        reportCategory,
+                        setIsHistoriesChanged,
+                        isHistoriesChanged,
+                        setIsReportFormOpened,
+                        isReportFormOpened,
+                        toast
+                      )
               }
             >
               {!type && '신고'}

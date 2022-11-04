@@ -4,6 +4,8 @@ import axios from 'axios';
 /* components */
 import * as S from './styled';
 import { Link } from 'react-router-dom';
+/* APIs */
+import { getCategories } from '../../../../apis';
 /* CONSTANTS */
 const URLS = {
   // location: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=location`,
@@ -23,24 +25,6 @@ function SelectingCategoryArea({ setCategoryId }) {
     location: false,
     theme: false,
   });
-
-  /* APIs */
-  const getCategories = (type) => {
-    const url = URLS[type];
-    const config = { timeout: 3000 };
-
-    axios
-      .get(url, config)
-      .then((response) =>
-        setCategories((prev) => {
-          return {
-            ...prev,
-            [type]: response.data,
-          };
-        })
-      )
-      .catch((error) => new Error(error));
-  };
 
   /* Handlers */
   /**  카테고리 클릭 시 클릭된 카테고리에 밑줄을 표시하기 위한 핸들러 */
@@ -66,7 +50,7 @@ function SelectingCategoryArea({ setCategoryId }) {
     }
 
     setCategoryId(0);
-    getCategories(isClicked);
+    getCategories(isClicked, URLS, setCategories);
   };
 
   const onClickSetClikedCategoryId = (id) => {

@@ -5,11 +5,12 @@ import { toast, ToastContainer } from 'react-toastify';
 /* components */
 import * as S from './styled';
 import { Button } from '../../../';
+/* APIs */
+import { postCourseReview } from '../../../../apis';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../../style';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
-
 /* CONSTANTS */
 const REVIEW_RATE_INDEXES = [0, 1, 2, 3, 4];
 
@@ -49,34 +50,19 @@ function CourseReviewRegisterForm({ courseDetail }) {
     return true;
   };
 
-  /* APIs */
-  /* 코스 리뷰 등록 */
-  const onSubmitPostCourseReview = (e) => {
-    e.preventDefault();
-
-    if (!checkCourseReviewValues()) return;
-
-    const url = `${process.env.REACT_APP_COMMENT_IP}/v1/comments`;
-    const temporaryBody = {
-      courseId: courseDetail.id,
-      reviewerId: 1,
-      courseReviewContent: reviewContentRef.current.value,
-      rate: rateRef.current,
-    };
-    const config = { timeout: 3000 };
-
-    axios
-      .post(url, temporaryBody, config)
-      .then((response) => {
-        reviewContentRef.current.value = '';
-      })
-      .catch((error) => {
-        toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
-      });
-  };
-
   return (
-    <S.StyledCourseReviewRegisterForm onSubmit={onSubmitPostCourseReview}>
+    <S.StyledCourseReviewRegisterForm
+      onSubmit={(e) =>
+        postCourseReview(
+          e,
+          checkCourseReviewValues,
+          courseDetail,
+          reviewContentRef,
+          rateRef,
+          toast
+        )
+      }
+    >
       <ToastContainer
         position="top-center"
         autoClose={500}

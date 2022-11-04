@@ -1,19 +1,19 @@
 /* libraries */
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 /* recoil */
-import { useRecoilState } from "recoil";
-import { isOrderingModalOpenedAtom, isLoadingAtom } from "../../../store";
+import { useRecoilState } from 'recoil';
+import { isOrderingModalOpenedAtom, isLoadingAtom } from '../../../store';
 /* components */
-import * as S from "./styled";
-import { Course, SelectingCategoryArea } from ".";
-import { OrderingButton, ToTopBtn, UtilDiv, Loading } from "../..";
+import * as S from './styled';
+import { Course, SelectingCategoryArea } from '.';
+import { OrderingButton, ToTopBtn, UtilDiv, Loading } from '../..';
 
 function CoursesForm() {
   // const token = localStorage.getItem('token');
   const token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo";
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
   );
@@ -21,7 +21,7 @@ function CoursesForm() {
   const [courses, setCourses] = useState([]);
   const [isLastPage, setIsLastPage] = useState(false);
   const [categoryId, setCategoryId] = useState(0);
-  const [courseSortType, setCourseSortType] = useState("최신순");
+  const [courseSortType, setCourseSortType] = useState('최신순');
 
   // 쿼리값이 변경되어 useEffect가 호출되면 변경되는 상태들
   const [queryStringsState, setQueryStringsState] = useState(false);
@@ -40,13 +40,13 @@ function CoursesForm() {
   const returnUrlForGettingCourses = (type, searchKeyword, categoryNumber) => {
     let url;
 
-    if (type === "all" || type === "auth") {
-      switch (queryStrings.get("sort")) {
+    if (type === 'all' || type === 'auth') {
+      switch (queryStrings.get('sort')) {
         // 평점 순 정렬
-        case "rate":
+        case 'rate':
           url = `${process.env.REACT_APP_API}/view/ranking/rate?page=${page.current}&size=4`;
           break;
-        case "like":
+        case 'like':
           url = `${process.env.REACT_APP_API}/view/ranking/popularity?page=${page.current}&size=4`;
           break;
         // 그 외의 정렬
@@ -56,22 +56,16 @@ function CoursesForm() {
       }
       // url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
     }
-    if (type === "keyword" || type === "hastags") {
+    if (type === 'keyword' || type === 'hastags') {
       // url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?${type}=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
       url = `${process.env.REACT_APP_API}/cosmosts?${type}=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
     }
-    if (type === "location" || type === "theme") {
+    if (type === 'location' || type === 'theme') {
       url = `${process.env.REACT_APP_API}/cosmosts?category=${type}&name-id=${categoryNumber}&sort=id,desc&page=${page.current}&size=4`;
     }
 
     return url;
   };
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 1500);
-  // }, []);
 
   /* APIs */
   /** params에 따라 다른 코스를 가져오는 api */
@@ -88,7 +82,7 @@ function CoursesForm() {
         if (!url) return;
 
         const config =
-          type === "auth"
+          type === 'auth'
             ? {
                 headers: {
                   Authorization: token,
@@ -110,7 +104,7 @@ function CoursesForm() {
         }
       } catch (error) {
         new Error(error);
-        console.log("error", error);
+        console.log('error', error);
       }
     },
     [params.type, categoryId, page.current]
@@ -118,15 +112,15 @@ function CoursesForm() {
 
   //정렬 표시
   useEffect(() => {
-    const sortQuery = queryStrings.get("sort");
+    const sortQuery = queryStrings.get('sort');
     switch (sortQuery) {
-      case "rate":
-        setCourseSortType("평점 높은 순");
+      case 'rate':
+        setCourseSortType('평점 높은 순');
         break;
-      case "like":
-        setCourseSortType("좋아요 많은 순");
+      case 'like':
+        setCourseSortType('좋아요 많은 순');
       default:
-        setCourseSortType("최신순");
+        setCourseSortType('최신순');
         break;
     }
   }, [queryStrings]);
@@ -145,7 +139,7 @@ function CoursesForm() {
 
     const io = new IntersectionObserver((entries, observer) => {
       if (entries[0].isIntersecting) {
-        getCourses(params.type, queryStrings.get("keyword"), categoryId);
+        getCourses(params.type, queryStrings.get('keyword'), categoryId);
       }
     });
     io.observe(observedTarget.current);
@@ -156,9 +150,9 @@ function CoursesForm() {
   return (
     <>
       {isLoading && <Loading />}
-      <UtilDiv width={"76.8rem"} padding={"9rem 0 7rem"} margin={"0 auto"}>
+      <UtilDiv width={'76.8rem'} padding={'9rem 0 7rem'} margin={'0 auto'}>
         {/* 카테고리 선택 영역 */}
-        {params.type !== "mine" && (
+        {params.type !== 'mine' && (
           <SelectingCategoryArea setCategoryId={setCategoryId} />
         )}
         {/* 정렬 기준 버튼 */}
@@ -169,23 +163,16 @@ function CoursesForm() {
         {/* 코스 검색 결괏값 */}
         <S.SearchedCourseContainer>
           {courses.length ? (
-            courses.map(
-              (course, index) =>
-                console.log(
-                  "course, courses.length",
-                  course,
-                  courses.length
-                ) || (
-                  <Link
-                    to={`/course-detail/${course.id || course.courseId}`}
-                    key={course.id || course.courseId}
-                  >
-                    <Course course={course} />
-                  </Link>
-                )
-            )
+            courses.map((course, index) => (
+              <Link
+                to={`/course-detail/${course.id || course.courseId}`}
+                key={course.id || course.courseId}
+              >
+                <Course course={course} />
+              </Link>
+            ))
           ) : (
-            <h1 style={{ margin: "0 auto" }}>검색 결과가 존재하지 않습니다.</h1>
+            <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
           )}
         </S.SearchedCourseContainer>
         <div ref={observedTarget}></div>
