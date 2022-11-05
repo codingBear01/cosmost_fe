@@ -41,6 +41,7 @@ function CoursesForm() {
     let url;
 
     if (type === 'all' || type === 'auth') {
+      
       switch (queryStrings.get('sort')) {
         // 평점 순 정렬
         case 'rate':
@@ -91,6 +92,7 @@ function CoursesForm() {
               }
             : { timeout: 3000 };
 
+        
         const result = await axios.get(url, config);
         const { data } = result;
         console.log(data);
@@ -119,6 +121,7 @@ function CoursesForm() {
         break;
       case 'like':
         setCourseSortType('좋아요 많은 순');
+        break;
       default:
         setCourseSortType('최신순');
         break;

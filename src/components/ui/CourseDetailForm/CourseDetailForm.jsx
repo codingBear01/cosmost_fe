@@ -138,7 +138,7 @@ function CourseDetailForm() {
 
       getCourseAuthor(courseDetail.authorId, setAuthor);
       getCourseReviews(id, setCourseReviews);
-      getCourseAverageRate(id, setCourseAverageRate);
+      getCourseAverageRate(id, (result) => {setCourseAverageRate(result.data)}, (error) => {console.log(error);});
       getCourseLikeCount(id, setCourseGoodCount);
     }
   }, [courseDetail]);

@@ -31,6 +31,8 @@ function Course({ course }) {
     }
   }, [courseState]);
 
+  console.log("courseState", courseState);
+  
   return (
     courseState && (
       <S.StyledCourse>

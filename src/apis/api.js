@@ -8,7 +8,7 @@ import axios from 'axios';
  */
 export const getCourseAuthor = (id, setState) => {
   // const url = `${process.env.REACT_APP_AUTH_IP}/v1/view/info?id=author-id`;
-  const url = `${process.env.REACT_APP_API_IP}/view/info?id=author-id`;
+  const url = `${process.env.REACT_APP_API}/view/info?id=author-id`;
   const config = {
     headers: {
       Authorization: id,
@@ -466,6 +466,8 @@ export const getSingleCourseView = (courseId, setState) => {
   const url = `${process.env.REACT_APP_API}/cosmosts/${courseId}?filter=frame`;
   const config = { timeout: 3000 };
 
+  console.log("url", url);
+
   axios
     .get(url, config)
     .then((response) => {
@@ -604,17 +606,20 @@ export const editCourseReview = (
  *  thenCallback : 값을 가져오는 데 성공할 시 호출할 콜백함수
  *  errorCallback : 값을 가져오는 데 실패할 시 호출할 콜백함수
  */
-export const getCourseAverageRate = (courseID, setState) => {
+export const getCourseAverageRate = (courseID, thenCallback, errorCallback) => {
   // const url = `${process.env.REACT_APP_COMMENT1_IP}/v1/view?rate=average&course=${courseID}`;
+
   const url = `${process.env.REACT_APP_API}/view?rate=average&course=${courseID}`;
   const config = {
     timeout: 3000,
   };
 
+
+
   axios
     .get(url, config)
-    .then((response) => setState(response.data))
-    .catch((error) => new Error(error));
+    .then(thenCallback)
+    .catch(errorCallback);
 };
 
 /** 해당 코스의 좋아요 개수를 가져온 뒤 코스 좋아요 개수를 state로 업데이트 시켜주는 함수.
