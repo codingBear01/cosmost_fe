@@ -52,6 +52,8 @@ function InputEmailForm({ beforeEditUserInfo }) {
   const [isCertificationNumberValidated, setIsCertificationNumberValidated] =
     useState(false);
 
+  const [responseId, setResponseId] = useState(null);
+
   /* Refs */
   const emailRef = useRef();
   const certificationNumberRef = useRef();
@@ -147,6 +149,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
       })
       .catch((error) => {
         new Error(error);
+        console.log(error);
         toast.error('인증번호 발송에 실패했습니다.');
       });
   };
@@ -160,10 +163,21 @@ function InputEmailForm({ beforeEditUserInfo }) {
     // const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
     const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
     const config = { timeout: 3000 };
-
+    console.log("url", url);
     axios
       .get(url, config)
       .then((response) => {
+        console.log("response", response);
+        console.log(PAGE_TYPES[pathname].certificationNumberComparingType);
+
+        //아이디 찾기에서 아이디 찾기에 성공한 경우
+        if(PAGE_TYPES[pathname].certificationNumberComparingType === "id/reissue"){
+          toast.success(`인증번호 검증이 완료되었습니다.`);
+          setIsCertificationNumberValidated(true);
+          setResponseId(response.data);
+          return;
+        }
+
         switch (response.data) {
           case true:
             toast.success(`인증번호 검증이 완료되었습니다.`);
@@ -181,6 +195,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
       })
       .catch((error) => {
         new Error(error);
+        console.log(error);
         toast.error(
           '인증번호 검증을 할 수 없는 상태입니다. 관리자에게 문의하세요.'
         );
@@ -317,11 +332,11 @@ function InputEmailForm({ beforeEditUserInfo }) {
           인증번호 검증
         </Button>
       </UtilInputWrap>
-      {/* 다음으로 버튼 */}
+      {/* 다음으로 버튼*/}
       {!isEditEmailPage && (
         <NextBtn
           to={PAGE_TYPES[pathname].address}
-          state={isFindUserPage ? location.state : { email: email }}
+          state={isFindUserPage ? responseId : { email: email }}
           onClick={onClickTransferNextPage}
         />
       )}
