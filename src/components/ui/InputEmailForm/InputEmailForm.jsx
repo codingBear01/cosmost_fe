@@ -287,7 +287,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
-          // onClick={onClickSendCertificationNumber}
+          onClick={onClickSendCertificationNumber}
         >
           인증번호 발급
         </Button>
@@ -312,7 +312,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
-          // onClick={onClickCompareCertificationNumber}
+          onClick={onClickCompareCertificationNumber}
         >
           인증번호 검증
         </Button>
@@ -322,7 +322,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
         <NextBtn
           to={PAGE_TYPES[pathname].address}
           state={isFindUserPage ? location.state : { email: email }}
-          // onClick={onClickTransferNextPage}
+          onClick={onClickTransferNextPage}
         />
       )}
       {/* 수정 버튼 */}
@@ -334,7 +334,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
-          // onClick={onClickUpdateEmail}
+          onClick={onClickUpdateEmail}
         >
           수정
         </Button>
