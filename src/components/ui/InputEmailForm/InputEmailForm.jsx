@@ -52,7 +52,9 @@ function InputEmailForm({ beforeEditUserInfo }) {
   const [isCertificationNumberValidated, setIsCertificationNumberValidated] =
     useState(false);
 
+  //아이디 찾기에서 전달받은 ID 또는 패스워드 찾기에서 전달받은 ID Key
   const [responseId, setResponseId] = useState(null);
+
 
   /* Refs */
   const emailRef = useRef();
@@ -160,7 +162,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
     if (!checkInput(e, 'number')) return;
 
-    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
     const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
     const config = { timeout: 3000 };
     console.log("url", url);
@@ -172,6 +173,14 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
         //아이디 찾기에서 아이디 찾기에 성공한 경우
         if(PAGE_TYPES[pathname].certificationNumberComparingType === "id/reissue"){
+          toast.success(`인증번호 검증이 완료되었습니다.`);
+          setIsCertificationNumberValidated(true);
+          setResponseId(response.data);
+          return;
+        }
+
+        //패스워드 찾기에서 아이디 찾기에 성공한 경우
+        if(PAGE_TYPES[pathname].certificationNumberComparingType === "pwd/reissue"){
           toast.success(`인증번호 검증이 완료되었습니다.`);
           setIsCertificationNumberValidated(true);
           setResponseId(response.data);

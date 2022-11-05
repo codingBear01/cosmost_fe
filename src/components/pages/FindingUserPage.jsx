@@ -9,7 +9,7 @@ function FindingUserPage() {
   const pathname = location.pathname;
   const isIdPage = pathname.includes('id');
 
-  return <>{isIdPage ? <DisplayFindedIdForm responseId={location.state}/> : <InputPasswordForm />}</>;
+  return <>{isIdPage ? <DisplayFindedIdForm responseId={location.state}/> : <InputPasswordForm responseIdKey={location.state}/>}</>;
 }
 
 export default FindingUserPage;

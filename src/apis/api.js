@@ -30,13 +30,23 @@ export const getCourseAuthor = (id, setState) => {
 export const updateUserAddress = () => {};
 
 /** 사용자 비밀번호 수정 */
-export const updateUserPassword = (e, checkPasswords) => {
+export const updateUserPassword = (e, checkPasswords, newPassword, responseIdKey, navigate) => {
   e.preventDefault();
 
   if (!checkPasswords()) return;
 
-  alert('비밀번호를 변경했습니다!');
-  // navigate(-1);
+  const url = `${process.env.REACT_APP_API}/authorization/pwd/reissue/${responseIdKey}/${newPassword}`
+  const config = {timeout:3000}
+
+  axios.put(url, config)
+  .then((result)=>{
+    alert(result.data);
+    navigate("/login");
+  })
+  .catch((error)=>{
+    console.log(error);
+  })
+
 };
 
 /** 입력된 아이디의 중복 여부를 확인하는 핸들러 */
@@ -129,6 +139,7 @@ export const signUpOrEditUser = (
   // 중복체크
   if (!checkIsDuplicationButtonClicked()) return;
 
+  
   const ErrorCheck = Object.values(inputError).every((element) => {
     return !element;
   });
