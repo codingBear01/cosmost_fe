@@ -25,9 +25,9 @@ function CoursesForm() {
 
   // 쿼리값이 변경되어 useEffect가 호출되면 변경되는 상태들
   const [queryStringsState, setQueryStringsState] = useState(false);
+
   const page = useRef(0);
   const observedTarget = useRef(null);
-
   const params = useParams();
   const [queryStrings] = useSearchParams();
 
@@ -41,8 +41,21 @@ function CoursesForm() {
     let url;
 
     if (type === 'all' || type === 'auth') {
+      
+      switch (queryStrings.get('sort')) {
+        // 평점 순 정렬
+        case 'rate':
+          url = `${process.env.REACT_APP_API}/view/ranking/rate?page=${page.current}&size=4`;
+          break;
+        case 'like':
+          url = `${process.env.REACT_APP_API}/view/ranking/popularity?page=${page.current}&size=4`;
+          break;
+        // 그 외의 정렬
+        default:
+          url = `${process.env.REACT_APP_API}/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
+          break;
+      }
       // url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
-      url = `${process.env.REACT_APP_API}/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
     }
     if (type === 'keyword' || type === 'hastags') {
       // url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?${type}=${searchKeyword}&sort=id,desc&page=${page.current}&size=4`;
@@ -54,12 +67,6 @@ function CoursesForm() {
 
     return url;
   };
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 1500);
-  // }, []);
 
   /* APIs */
   /** params에 따라 다른 코스를 가져오는 api */
@@ -85,7 +92,10 @@ function CoursesForm() {
               }
             : { timeout: 3000 };
 
-        const result = await axios.get(url);
+
+        
+        const result = await axios.get(url, config);
+
         const { data } = result;
         console.log(data);
 
@@ -98,10 +108,27 @@ function CoursesForm() {
         }
       } catch (error) {
         new Error(error);
+        console.log('error', error);
       }
     },
     [params.type, categoryId, page.current]
   );
+
+  //정렬 표시
+  useEffect(() => {
+    const sortQuery = queryStrings.get('sort');
+    switch (sortQuery) {
+      case 'rate':
+        setCourseSortType('평점 높은 순');
+        break;
+      case 'like':
+        setCourseSortType('좋아요 많은 순');
+        break;
+      default:
+        setCourseSortType('최신순');
+        break;
+    }
+  }, [queryStrings]);
 
   /** 쿼리스트링이 변경될 때마다 호출되는 useEffect. IsLastPage와 Course State를 초기화한다.*/
   useEffect(() => {
@@ -141,21 +168,14 @@ function CoursesForm() {
         {/* 코스 검색 결괏값 */}
         <S.SearchedCourseContainer>
           {courses.length ? (
-            courses.map(
-              (course, index) =>
-                console.log(
-                  'course, courses.length',
-                  course,
-                  courses.length
-                ) || (
-                  <Link
-                    to={`/course-detail/${course.id || course.courseId}`}
-                    key={course.id || course.courseId}
-                  >
-                    <Course course={course} />
-                  </Link>
-                )
-            )
+            courses.map((course, index) => (
+              <Link
+                to={`/course-detail/${course.id || course.courseId}`}
+                key={course.id || course.courseId}
+              >
+                <Course course={course} />
+              </Link>
+            ))
           ) : (
             <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
           )}

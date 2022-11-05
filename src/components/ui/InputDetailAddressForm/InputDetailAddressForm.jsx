@@ -12,6 +12,8 @@ import {
   UtilInputWrap,
   UtilTitle,
 } from '../..';
+/* APIs */
+import { updateUserAddress } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 
@@ -34,10 +36,6 @@ function InputDetailAddressForm({ state }) {
       toast.error('상세주소를 입력해주세요.');
     }
   };
-
-  /* APIs */
-  /* 주소 변경 api */
-  const onClickUpdateAddress = () => {};
 
   return (
     <UtilForm>
@@ -78,7 +76,7 @@ function InputDetailAddressForm({ state }) {
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
-          onClick={onClickUpdateAddress}
+          onClick={updateUserAddress}
         >
           수정
         </Button>

@@ -6,6 +6,12 @@ import { toast, ToastContainer } from 'react-toastify';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilForm, UtilInputWrap, UtilTitle } from '../..';
+/* APIs */
+import {
+  checkIsDuplicatedId,
+  checkIsDuplicatedNickname,
+  signUpOrEditUser,
+} from '../../../apis';
 /* static data */
 import { COLOR_LIST as color, GAP_LIST as gap } from '../../../style';
 import { base64ImgSrcToImgBinaryData, printFormData } from '../../../store';
@@ -220,224 +226,8 @@ function InputUserForm({ state, beforeEditUserInfo }) {
     return true;
   };
 
-  /* APIs */
-  /* 입력된 아이디의 중복 여부를 확인하는 핸들러 */
-  const checkIsDuplicatedId = (id) => {
-    if (!checkIsIdOrNicknameEmpty('id')) return;
-
-    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=login-id`;
-    const url = `${process.env.REACT_APP_API}/validation/duplicate?id=login-id`;
-    const config = {
-      headers: {
-        Authorization: id,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .get(url, config)
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success('사용 가능한 아이디입니다.');
-          setIsDuplicatedIdChecked(!isDuplicatedIdChecked);
-        }
-      })
-      .catch((error) => {
-        if (error.response.status === 400) {
-          toast.error('이미 존재하는 아이디입니다.');
-        }
-      });
-  };
-
-  /* 입력된 닉네임의 중복 여부를 확인하는 핸들러 */
-  const checkIsDuplicatedNickname = (nickname) => {
-    if (!checkIsIdOrNicknameEmpty('nickname')) return;
-
-    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=nickname`;
-    const url = `${process.env.REACT_APP_API}/validation/duplicate?id=nickname`;
-    const config = {
-      headers: {
-        Authorization: nickname,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .get(url, config)
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success('사용 가능한 닉네임입니다.');
-          setIsDuplicatedNicknameChecked(true);
-        }
-      })
-      .catch((error) => {
-        if (error.response.status === 400) {
-          toast.error('이미 존재하는 닉네임입니다.');
-        }
-      });
-  };
-
-  /** 회원가입 수행하는 핸들러 */
-  const onSubmitRegisterUser = (e) => {
-    const formData = new FormData();
-    e.preventDefault();
-
-    // 중복체크
-    if (!checkIsDuplicationButtonClicked()) return;
-
-    const ErrorCheck = Object.values(inputError).every((element) => {
-      return !element;
-    });
-
-    if (ErrorCheck) {
-      // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
-      const url = `${process.env.REACT_APP_API}/auths`;
-      const [profileImgSaveUrl] = base64ImgSrcToImgBinaryData(
-        uploadedProfilePicture
-      );
-
-      //회원가입용 Body
-      const signUpBody = {
-        loginId: userInformation.id,
-        loginPwd: userInformation.password,
-        email: userInformation.email,
-        married: userInformation.marriage,
-        nickname: userInformation.nickname,
-        sns: 'NO',
-        address: `${userInformation.address} ${userInformation.detailAddress}`,
-        ageGroup: userInformation.age,
-      };
-      //회원수정에서 프로필 이미지를 변경했을 때의 Body
-      let updateBody;
-      let updateBody2;
-      if (isEditUserPage) {
-        updateBody = {
-          loginId: userInformation.id,
-          loginPwd: userInformation.password,
-          nickname: userInformation.nickname,
-          email: beforeEditUserInfo?.email,
-          address: beforeEditUserInfo.address,
-          role: beforeEditUserInfo.role,
-          sns: beforeEditUserInfo.sns,
-          status: beforeEditUserInfo.status,
-          ageGroup: userInformation.age,
-          married: userInformation.marriage,
-          type: '회원정보 수정',
-        };
-        //회원수정에서 프로필 이미지를 변경하지 않았을 때의 Body
-        updateBody2 = {
-          ...updateBody,
-          profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
-          profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
-          profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
-        };
-      }
-
-      const config = {
-        headers: {
-          Authorization: isEditUserPage ? token : '',
-        },
-        timeout: 3000,
-      };
-      //회원수정
-
-      if (isEditUserPage) {
-        //프로필 이미지가 변경되었다면
-        if (uploadedProfilePicture.slice(0, 4) == 'data') {
-          const updateBodyJson = JSON.stringify(updateBody);
-          const updateBodyBlob = new Blob([updateBodyJson], {
-            type: 'application/json',
-          });
-
-          const [profilePictureBinaryData, profilePictureMimeType] =
-            base64ImgSrcToImgBinaryData(uploadedProfilePicture);
-
-          const profilePictureBlob = new Blob([profilePictureBinaryData], {
-            type: profilePictureMimeType,
-          });
-
-          formData.append('updateAuthRequest', updateBodyBlob);
-          formData.append('file', profilePictureBlob);
-        }
-        //프로필 이미지가 변경되지 않았다면
-        else {
-          const updateBodyJson = JSON.stringify(updateBody2);
-          const updateBodyBlob = new Blob([updateBodyJson], {
-            type: 'application/json',
-          });
-
-          const profilePictureBlob = new Blob(['']);
-
-          formData.append('updateAuthRequest', updateBodyBlob);
-          formData.append('file', profilePictureBlob);
-        }
-
-        // 회원수정
-        axios
-          .put(url, formData, config)
-          .then((response) => {
-            //수정된 데이터 다시 가져와서 리다이렉트 하기
-            toast.success(response.data);
-            // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
-            const url = `${process.env.REACT_APP_API}/auths`;
-            const config = {
-              headers: {
-                Authorization: token,
-              },
-              timeout: 1000,
-            };
-            axios
-              .get(url, config)
-              .then((resonse) => {
-                navigate(`/user/edit/menu`, {
-                  replace: true,
-                  state: resonse.data,
-                });
-              })
-              .catch((error) => {
-                toast.error(
-                  '수정된 데이터를 가져오는데 실패했습니다. 관리자에게 문의하세요'
-                );
-              });
-          })
-          .catch((error) => {
-            toast.error('회원정보 변경에 실패했습니다. 관리자에게 문의하세요.');
-          });
-      }
-      //회원가입
-      else {
-        const signUpBodyJson = JSON.stringify(signUpBody);
-        const signUpBodyBlob = new Blob([signUpBodyJson], {
-          type: 'application/json',
-        });
-        const [profilePictureBinaryData, profilePictureMimeType] =
-          base64ImgSrcToImgBinaryData(uploadedProfilePicture);
-
-        const profilePictureBlob = new Blob([profilePictureBinaryData], {
-          type: profilePictureMimeType,
-        });
-
-        formData.append('createAuthRequest', signUpBodyBlob);
-        formData.append('file', profilePictureBlob);
-
-        printFormData(formData);
-
-        axios
-          .post(url, formData, config)
-          .then((response) => {
-            navigate(`/login`, { replace: true });
-          })
-          .catch((error) => {
-            toast.error('회원가입에 실패했습니다. 관리자에게 문의하세요.');
-          });
-      }
-    } else {
-      toast.warn('모든 값을 입력해주세요.');
-    }
-  };
-
   return (
-    <UtilForm onSubmit={onSubmitRegisterUser}>
+    <UtilForm>
       <ToastContainer
         position="top-center"
         autoClose={1000}
@@ -492,7 +282,15 @@ function InputUserForm({ state, beforeEditUserInfo }) {
                   color={color.white}
                   bgColor={color.darkBlue}
                   hoveredBgColor={color.navy}
-                  onClick={() => checkIsDuplicatedId(userInformation.id)}
+                  onClick={() =>
+                    checkIsDuplicatedId(
+                      userInformation.id,
+                      checkIsIdOrNicknameEmpty,
+                      toast,
+                      setIsDuplicatedIdChecked,
+                      isDuplicatedIdChecked
+                    )
+                  }
                 >
                   중복확인
                 </Button>
@@ -532,7 +330,12 @@ function InputUserForm({ state, beforeEditUserInfo }) {
                 bgColor={color.darkBlue}
                 hoveredBgColor={color.navy}
                 onClick={() =>
-                  checkIsDuplicatedNickname(userInformation.nickname)
+                  checkIsDuplicatedNickname(
+                    userInformation.nickname,
+                    checkIsIdOrNicknameEmpty,
+                    toast,
+                    setIsDuplicatedNicknameChecked
+                  )
                 }
               >
                 중복확인
@@ -678,7 +481,22 @@ function InputUserForm({ state, beforeEditUserInfo }) {
           bgColor={color.darkBlue}
           color={color.white}
           hoveredBgColor={color.navy}
-          onClick={onSubmitRegisterUser}
+          onClick={(e) =>
+            signUpOrEditUser(
+              e,
+              checkIsDuplicationButtonClicked,
+              inputError,
+              base64ImgSrcToImgBinaryData,
+              uploadedProfilePicture,
+              userInformation,
+              isEditUserPage,
+              beforeEditUserInfo,
+              token,
+              toast,
+              navigate,
+              printFormData
+            )
+          }
         >
           회원가입
         </Button>
@@ -693,7 +511,22 @@ function InputUserForm({ state, beforeEditUserInfo }) {
           color={color.white}
           hoveredBgColor={color.navy}
           value={'회원정보 수정'}
-          onClick={onSubmitRegisterUser}
+          onClick={(e) =>
+            signUpOrEditUser(
+              e,
+              checkIsDuplicationButtonClicked,
+              inputError,
+              base64ImgSrcToImgBinaryData,
+              uploadedProfilePicture,
+              userInformation,
+              isEditUserPage,
+              beforeEditUserInfo,
+              token,
+              toast,
+              navigate,
+              printFormData
+            )
+          }
         >
           수정
         </Button>

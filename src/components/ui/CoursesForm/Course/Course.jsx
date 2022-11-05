@@ -6,19 +6,14 @@ import * as S from './styled';
 import { SmallProfilePic } from '../../..';
 /* static data */
 import { FONT_SIZE_LIST as fs } from '../../../../style';
+/* APIs */
+import { getSingleCourseView, getCourseAuthor } from '../../../../apis';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import axios from 'axios';
-import {
-  getCourseAuthor,
-  getCoursePointAverage,
-  getSingleCourseView,
-} from '../../../../store';
 
 function Course({ course }) {
-  const [courseRate, setCourseRate] = useState('');
   const [courseAuthor, setCourseAuthor] = useState('');
   const [courseState, setCourseState] = useState('');
 
@@ -36,11 +31,12 @@ function Course({ course }) {
     }
   }, [courseState]);
 
+  console.log("courseState", courseState);
+  
   return (
     courseState && (
       <S.StyledCourse>
         {/* 코스 이미지 */}
-        {console.log('course2', course)}
         <S.CourseFeaturedImage
           src={courseState.readPlaceImgResponseList[0].placeImgUrl}
           alt={courseState.courseTitle}

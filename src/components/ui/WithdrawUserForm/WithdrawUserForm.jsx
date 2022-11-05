@@ -9,6 +9,8 @@ import { loginStateAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilTitle } from '../..';
+/* APIs */
+import { withdrawUser } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 
@@ -58,45 +60,6 @@ function WithdrawUserForm() {
     }
   }, [isDeleteConfirmationMessageDisplayed]);
 
-  /* APIs */
-  const deleteUser = (e) => {
-    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
-    const url = `${process.env.REACT_APP_API}/auths`;
-    const body = {
-      loginId: '111',
-      loginPwd: passwordRef.current.value,
-      email: '123@naver.com',
-      married: 'SINGLE',
-      nickname: '1',
-      address: '1',
-      ageGroup: '20대',
-      status: 'WITHDRAWL',
-      sns: 'NO',
-      role: 'USER',
-      profileImgOriginName: '1',
-      profileImgSaveName: 's3',
-      profileImgSaveUrl: '1',
-      type: e.target.value,
-    };
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .put(url, body, config)
-      .then((response) => {
-        localStorage.removeItem('token');
-        setIsLoggedIn(false);
-        navigate('/withdrawal-message');
-      })
-      .catch((error) => {
-        new Error(error);
-        toast.error('회원탈퇴에 실패했습니다. 관리자에게 문의하세요.');
-      });
-  };
   return (
     <>
       <ToastContainer
@@ -140,7 +103,9 @@ function WithdrawUserForm() {
           color={color.white}
           bgColor={color.red}
           hoveredBgColor={color.darkRed}
-          onClick={deleteUser}
+          onClick={(e) =>
+            withdrawUser(e, passwordRef, token, setIsLoggedIn, navigate, toast)
+          }
           value="회원 탈퇴"
         >
           한 번 더 누르면 cosMost를 이용하실 수 없습니다.

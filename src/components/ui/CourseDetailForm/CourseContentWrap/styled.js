@@ -97,7 +97,8 @@ export const CourseRateStarPercentGaugeWrap = styled.div`
 export const CourseRateStarPercentGauge = styled.div`
   width: ${({ width }) => width};
   height: 100%;
-  border-radius: ${br.default} 0 0 ${br.default};
+  border-radius: ${({ percentage }) =>
+    percentage === 100 ? `${br.default}` : `${br.default} 0 0 ${br.default}`};
   background-color: ${color.darkYellow};
 `;
 

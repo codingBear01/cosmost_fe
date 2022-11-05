@@ -725,6 +725,7 @@ function CourseRegistrationForm() {
         SetNaverMapState({ ...naverMapState, naverMapMarker: mapMarkerCopy });
       })
       .catch((error) => {
+        new Error(error);
         toast.error(
           '네이버 검색 API와의 통신이 실패했습니다. 관리자에게 문의해주세요'
         );
