@@ -92,8 +92,10 @@ function CoursesForm() {
               }
             : { timeout: 3000 };
 
+
         
         const result = await axios.get(url, config);
+
         const { data } = result;
         console.log(data);
 
