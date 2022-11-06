@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
@@ -7,20 +7,14 @@ import { useRecoilState } from 'recoil';
 import {
   createNaverMap,
   addNaverMapMarker,
+  // Atoms
   loginStateAtom,
   userAtom,
+  isLoadingAtom,
   // custom functions
   displayNaverMapMarkerInfo,
   addNaverMapMarkerInfo,
 } from '../../../store';
-/* APIs */
-import {
-  getCourseAverageRate,
-  getCourseDetail,
-  getCourseLikeCount,
-  getCourseReviews,
-  getCourseAuthor,
-} from '../../../apis';
 /* components */
 import * as S from './styled';
 import {
@@ -31,7 +25,15 @@ import {
   CourseSharingAndLikeButton,
   CourseTitleAndDate,
 } from '.';
-import { DeleteModal, ToTopBtn, UtilDiv } from '../..';
+import { ToTopBtn, UtilDiv, Loading } from '../..';
+/* APIs */
+import {
+  getCourseAverageRate,
+  getCourseDetail,
+  getCourseLikeCount,
+  getCourseReviews,
+  getCourseAuthor,
+} from '../../../apis';
 
 function CourseDetailForm() {
   const { id } = useParams();
@@ -45,6 +47,8 @@ function CourseDetailForm() {
     useState(null);
   const [isClickedCourseReviewChanged, setIsClickedCourseReviewChanged] =
     useState(false);
+  const [isLastPage, setIsLastPage] = useState(false);
+  const [isLoading, setIsLoading] = useRecoilState(isLoadingAtom);
   // Auth
   const [author, setAuthor] = useState(null);
   // Cosmost
@@ -52,12 +56,15 @@ function CourseDetailForm() {
   // Comment
   const [courseReviews, setCourseReviews] = useState([]);
   // Popularity
-  const [courseReviewAverageRate, setCourseAverageRate] = useState(0);
-  const [courseGoodCount, setCourseGoodCount] = useState('');
+  const [courseAverageRate, setCourseAverageRate] = useState(0);
+  const [courseLikeCount, setCourseLikeCount] = useState('');
+  const [courseAverageRatePercentage, setCourseAverageRatePercentage] =
+    useState('');
+  const [courseReviewCount, setCourseReviewCount] = useState('');
 
-  /* Variables */
-  const courseRatePercantage =
-    courseReviews[0] && courseReviews[0].rateAllTypeList.reverse();
+  /* Refs */
+  const page = useRef(0);
+  const observedTarget = useRef();
 
   /* 로그인 정보 */
   const token = localStorage.getItem('token');
@@ -80,66 +87,119 @@ function CourseDetailForm() {
   };
 
   /* APIs */
+  const getCourseReviews = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const url = `${process.env.REACT_APP_API}/comments?type=review&sort=id,desc&page=${page.current}&size=4`;
+      const config = {
+        headers: {
+          Authorization: id,
+        },
+        timeout: 3000,
+      };
+
+      const result = await axios.get(url, config);
+      const { data } = result;
+      console.log(data);
+
+      setCourseReviews((prev) => prev.concat(data[0].courseReviewList));
+      setIsLastPage(
+        data[0].courseReviewList[data[0].courseReviewList.length - 1]
+          .whetherLastPage
+      );
+      setCourseReviewCount(data[0].courseReviewCnt);
+      setCourseAverageRatePercentage(data[0].rateAllTypeList);
+      setIsLoading(false);
+
+      if (!isLastPage) {
+        page.current += 1;
+      }
+    } catch (error) {
+      new Error(error);
+    }
+  }, []);
   useEffect(() => {
     getCourseDetail(id, setCourseDetail);
-  }, []);
+    getCourseReviews();
+  }, [isClickedCourseReviewChanged]);
+
+  /** 무한 스크롤을 위해 observing을 하는 함수 */
+  useEffect(() => {
+    if (!observedTarget.current || isLastPage) return;
+
+    const io = new IntersectionObserver((entries, observer) => {
+      if (entries[0].isIntersecting) {
+        getCourseReviews();
+      }
+    });
+    io.observe(observedTarget.current);
+
+    return () => io.disconnect();
+  }, [courseReviews, isLastPage, isClickedCourseReviewChanged]);
 
   // courseDetail를 성공적으로 가져오면 호출하는 useEffect.
   useEffect(() => {
     if (courseDetail) {
       // 네이버 지도 생성
-      const map = createNaverMap();
-      courseDetail.placeDetailList.map((item, index) => {
-        const marker = addNaverMapMarker(map, {
-          latitude: item.placeYCoordinate,
-          longitude: item.placeXCoordinate,
-          eventList: [
-            {
-              eventName: 'mouseover',
-              eventListener: (e) => {
-                e.pointerEvent.target.title = item.placeName;
-              },
-            },
-            {
-              eventName: 'click',
-              eventListener: (e) => {
-                onClickMarker(e);
-              },
-            },
-          ],
-        });
+      // const map = createNaverMap();
+      // courseDetail.placeDetailList.map((item, index) => {
+      //   const marker = addNaverMapMarker(map, {
+      //     latitude: item.placeYCoordinate,
+      //     longitude: item.placeXCoordinate,
+      //     eventList: [
+      //       {
+      //         eventName: 'mouseover',
+      //         eventListener: (e) => {
+      //           e.pointerEvent.target.title = item.placeName;
+      //         },
+      //       },
+      //       {
+      //         eventName: 'click',
+      //         eventListener: (e) => {
+      //           onClickMarker(e);
+      //         },
+      //       },
+      //     ],
+      //   });
 
-        const markerInfoString = `
-            <div><h3>${item.placeName}</h3><div>${item.placeComment}</div></div>
-        `;
-        const markerInfoStyle = {
-          backgroundColor: '#000',
-          borderColor: '#2db400',
-          borderWidth: 5,
-          anchorSkew: true,
-          anchorColor: '#eee',
-        };
-        const info = addNaverMapMarkerInfo(
-          map,
-          marker,
-          markerInfoString,
-          markerInfoStyle
-        );
+      //   const markerInfoString = `
+      //       <div><h3>${item.placeName}</h3><div>${item.placeComment}</div></div>
+      //   `;
+      //   const markerInfoStyle = {
+      //     backgroundColor: '#000',
+      //     borderColor: '#2db400',
+      //     borderWidth: 5,
+      //     anchorSkew: true,
+      //     anchorColor: '#eee',
+      //   };
+      //   const info = addNaverMapMarkerInfo(
+      //     map,
+      //     marker,
+      //     markerInfoString,
+      //     markerInfoStyle
+      //   );
 
-        // 네이버지도 마커 클릭시 호출할 함수.
-        const onClickMarker = (e) => {
-          if (info.getMap()) {
-            info.close();
-          } else {
-            info.open(map, marker);
-          }
-        };
-      });
+      //   // 네이버지도 마커 클릭시 호출할 함수.
+      //   const onClickMarker = (e) => {
+      //     if (info.getMap()) {
+      //       info.close();
+      //     } else {
+      //       info.open(map, marker);
+      //     }
+      //   };
+      // });
 
       getCourseAuthor(courseDetail.authorId, setAuthor);
-      getCourseReviews(id, setCourseReviews);
-      getCourseAverageRate(id, (result) => {setCourseAverageRate(result.data)}, (error) => {console.log(error);});
-      getCourseLikeCount(id, setCourseGoodCount);
+      getCourseAverageRate(
+        id,
+        (result) => {
+          setCourseAverageRate(result.data);
+        },
+        (error) => {
+          new Error(error);
+        }
+      );
+      getCourseLikeCount(id, setCourseLikeCount);
     }
   }, [courseDetail]);
 
@@ -148,17 +208,6 @@ function CourseDetailForm() {
       <>
         {/* 코스 이미지 carousel */}
         <CourseImageCarousel courseDetail={courseDetail} />
-        {/* 본문 */}
-        {isDeleteModalOpened && (
-          <DeleteModal
-            onClickOpenDeleteModal={onClickOpenDeleteModal}
-            isClickedCourseReviewChanged={isClickedCourseReviewChanged}
-            setIsClickedCourseReviewChanged={setIsClickedCourseReviewChanged}
-            clickedElement={clickedElement}
-            courseId={courseDetail.id}
-            courseReviewId={clickedCourseReviewIndex}
-          />
-        )}
         <UtilDiv
           justifyContent={'center'}
           width={'76.8rem'}
@@ -173,13 +222,13 @@ function CourseDetailForm() {
             loggedInUserId={loggedInUserId}
             onClickOpenDeleteModal={onClickOpenDeleteModal}
             onClickEditCourse={onClickEditCourse}
-            courseReviewAverageRate={courseReviewAverageRate}
+            courseAverageRate={courseAverageRate}
           />
           {/* 좋아요, 리뷰 숫자 */}
           <CourseContentWrap
             dataCategory="likeAndReview"
-            courseGoodCount={courseGoodCount}
-            courseReviews={courseReviews}
+            courseLikeCount={courseLikeCount}
+            courseReviewCount={courseReviewCount}
           />
           {/* 카테고리 */}
           <CourseContentWrap
@@ -199,6 +248,7 @@ function CourseDetailForm() {
               author={author}
               dataCategory="authorProfile"
               authorCourseCount={courseDetail.authorCourseCount}
+              loggedInUserId={loggedInUserId}
             />
           )}
 
@@ -237,22 +287,21 @@ function CourseDetailForm() {
             justifyContent={'center'}
             height={'30rem'}
             dataCategory="averageRate"
-            courseReviewAverageRate={courseReviewAverageRate}
-            courseRatePercantage={courseRatePercantage}
+            courseAverageRate={courseAverageRate}
+            courseAverageRatePercentage={courseAverageRatePercentage}
           />
           {/* 리뷰 작성 폼 */}
-          {(token && isLoggedIn) || id !== user?.id ? (
+          {token && isLoggedIn && (
             <CourseReviewRegisterForm courseDetail={courseDetail} />
-          ) : (
-            <></>
           )}
           {/* 코스 리뷰 */}
           {courseReviews[0] &&
-            courseReviews[0].courseReviewList.map((courseReview, i) => (
+            courseReviews.map((courseReview, i) => (
               <CourseReview
                 key={courseReview.id}
                 courseDetail={courseDetail}
                 courseReview={courseReview}
+                courseReviewId={courseReview.id}
                 i={i}
                 token={token}
                 isLoggedIn={isLoggedIn}
@@ -264,6 +313,8 @@ function CourseDetailForm() {
                 }
               />
             ))}
+          {!courseReviews[0] && isLoading && <Loading />}
+          <div ref={observedTarget} style={{ paddingBottom: '10rem' }}></div>
         </UtilDiv>
         <ToTopBtn />
       </>

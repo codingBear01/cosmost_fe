@@ -12,6 +12,8 @@ export {
   pathnameAtom,
   userAtom,
   isLoadingAtom,
+  queryStringsStateAtom,
+  searchingTypeAtom,
 } from './recoilStates';
 
 /* functions */
@@ -25,6 +27,3 @@ export {
   checkIsLoggedIn,
   compareAuthorIdWithLoggedInUserId,
 } from './functions';
-
-/* temporary array */
-export { FOLLOWS, RANKERS, REPORT_HISTORIES } from './temporaryArray/';

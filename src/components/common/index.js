@@ -1,6 +1,4 @@
 export { Button } from './Button/';
-export { CourseUtillityModal } from './CourseUtillityModal/';
-export { DeleteModal } from './DeleteModal/';
 export { Footer } from './Footer/';
 export { Header } from './Header/';
 export { HistoriesForm } from './HistoriesForm/';

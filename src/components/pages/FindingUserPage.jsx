@@ -5,10 +5,11 @@ import { useLocation } from 'react-router-dom';
 import { DisplayFindedIdForm, InputPasswordForm } from '..';
 
 function FindingUserPage() {
-  const pathname = useLocation().pathname;
+  const location = useLocation();
+  const pathname = location.pathname;
   const isIdPage = pathname.includes('id');
 
-  return <>{isIdPage ? <DisplayFindedIdForm /> : <InputPasswordForm />}</>;
+  return <>{isIdPage ? <DisplayFindedIdForm responseId={location.state}/> : <InputPasswordForm responseIdKey={location.state}/>}</>;
 }
 
 export default FindingUserPage;
