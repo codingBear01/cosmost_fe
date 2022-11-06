@@ -89,6 +89,13 @@ function App() {
               <Route path="id" element={<FindingUserPage />} />
               <Route path="pwd" element={<FindingUserPage />} />
             </Route>
+
+            <Route path="naver">
+              <Route path="email-validation" element={<InputEmail />} />
+              <Route path="address" element={<InputAddress />} />
+              <Route path="detail-address" element={<InputDetailAddress />} />
+              <Route path="sign-up" element={<InputUser />} />
+            </Route>
           </>
           {/* )} */}
           {/* {token && isLoggedIn && ( */}

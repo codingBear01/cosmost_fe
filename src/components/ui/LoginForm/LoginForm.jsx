@@ -90,14 +90,14 @@ function LoginForm() {
   };
 
   useEffect(()=>{
-    var naver_id_login = new window.naver_id_login(process.env.REACT_APP_X_NAVER_CLIENT_ID, "http://localhost:3000");
-    var state = naver_id_login.getUniqState();
-    naver_id_login.setButton("white", 2,40);
-    naver_id_login.setDomain("http://localhost:3000");
-    naver_id_login.setState(state);
-    // naver_id_login.setPopup();
-    naver_id_login.init_naver_id_login();
-
+    // var naver_id_login = new window.naver_id_login(process.env.REACT_APP_X_NAVER_CLIENT_ID, "http://localhost:3000");
+    // var state = naver_id_login.getUniqState();
+    // naver_id_login.setButton("white", 2,40);
+    // naver_id_login.setDomain("http://localhost:3000");
+    // naver_id_login.setState(state);
+    // // naver_id_login.setPopup();
+    // naver_id_login.init_naver_id_login();
+    
 
   },[])
  
@@ -182,7 +182,7 @@ function LoginForm() {
         </Button>
       </Link>
       <div id='naver_id_login'>
-      {/* <Button
+      <Button
         type="button"
         width={'340px'}
         height={'40px'}
@@ -194,7 +194,7 @@ function LoginForm() {
         onClick={onClickLoginWithNaver}
       >
         <SiIcons.SiNaver />
-      </Button> */}
+      </Button>
       </div>
 
     </UtilForm>

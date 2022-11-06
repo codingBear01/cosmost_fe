@@ -18,9 +18,9 @@ function MainPageSection() {
 
   //네이버 로그인 토큰 받기
   useEffect(()=>{
-    var naver_id_login = new window.naver_id_login(process.env.REACT_APP_X_NAVER_CLIENT_ID, "http://localhost:3000");
-    if(naver_id_login.oauthParams.access_token){
-      alert(naver_id_login.oauthParams.access_token);
+    // var naver_id_login = new window.naver_id_login(process.env.REACT_APP_X_NAVER_CLIENT_ID, "http://localhost:3000");
+    // if(naver_id_login.oauthParams.access_token){
+    //   alert(naver_id_login.oauthParams.access_token);
     //   console.log(naver_id_login);
     //   console.log(naver_id_login.getProfileData('nickname'));
     //   console.log(naver_id_login.getProfileData('email'));
@@ -33,9 +33,7 @@ function MainPageSection() {
     //     alert(naver_id_login.getProfileData('nickname'));
     //     alert(naver_id_login.getProfileData('age'));
     //  }
-  
-
-    }
+    // }
   }, [])
 
   return (
