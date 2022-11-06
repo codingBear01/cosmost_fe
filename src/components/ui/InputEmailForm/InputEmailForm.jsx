@@ -46,8 +46,8 @@ function InputEmailForm({ beforeEditUserInfo }) {
      //이메일 수정 시 이메일 인증  
     '/user/edit/email' : {
       address: '/address',
-      certificationNumberSendingType: 'email',
-      certificationNumberComparingType: 'code/confirm',
+      certificationNumberSendingType: 'newemail',
+      certificationNumberComparingType: 'newemail/reissue',
       placeholder : "변경할 이메일을 입력해주세요."
     },
      //네이버 로그인 시 이메일 인증  
@@ -149,6 +149,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
   /* APIs */
   /* 인증번호 발송 api */
   const onClickSendCertificationNumber = (e) => {
+ 
     e.preventDefault();
 
     if (!checkInput(e, 'email')) return;
@@ -156,9 +157,49 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
     // const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/${PAGE_TYPES[pathname].certificationNumberSendingType}/confirm/${emailRef.current.value}`;
     const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberSendingType}/confirm/${emailRef.current.value}`;
-    const config = { timeout: 3000 };
+    
 
-    axios
+    // 이메일 변경해야할 떄 인증 번호 발송
+    if(PAGE_TYPES[pathname].certificationNumberSendingType === "newemail"){
+      const token = localStorage.getItem("token")
+      const data = {
+        loginId: beforeEditUserInfo.loginId,
+        loginPwd: beforeEditUserInfo.loginPwd,
+        married: beforeEditUserInfo.married,
+        nickname: beforeEditUserInfo.nickname,
+        sns: beforeEditUserInfo.sns,
+        address: beforeEditUserInfo.address,
+        ageGroup: beforeEditUserInfo.ageGroup,
+        profileImgOriginName : beforeEditUserInfo.profileImgOriginName,
+        profileImgSaveName : beforeEditUserInfo.profileImgSaveName,
+        profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl
+      }
+      const config = { 
+        headers:{
+          Authorization: token
+        },
+        timeout: 3000 
+      };
+
+      console.log("data", data);
+      axios.put(url,data,config)
+      .then((response) => {
+        toast.success(
+          `${emailRef.current.value}로 인증번호를 발송했습니다. 이메일을 확인해주세요.`
+        );
+        setIsCertificationNumberSent(true);
+      })
+      .catch((error) => {
+        new Error(error);
+        console.log(error);
+        toast.error('인증번호 발송에 실패했습니다.');        
+      })
+    }
+    // 그 외인 경우 인증 번호 발송
+    else{
+      const config = { timeout: 3000 };
+
+      axios
       .get(url, config)
       .then((response) => {
         toast.success(
@@ -171,6 +212,8 @@ function InputEmailForm({ beforeEditUserInfo }) {
         console.log(error);
         toast.error('인증번호 발송에 실패했습니다.');
       });
+    }
+
   };
 
   /* 사용자가 입력한 인증번호가 진짜 인증번호인지 검증하는 핸들러 */
@@ -180,9 +223,47 @@ function InputEmailForm({ beforeEditUserInfo }) {
     if (!checkInput(e, 'number')) return;
 
     const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
-    const config = { timeout: 3000 };
     console.log("url", url);
-    axios
+    
+    // 이메일 변경을 목적으로 보낸 경우 인증번호 검증
+    if(PAGE_TYPES[pathname].certificationNumberComparingType === "newemail/reissue"){
+      const token = localStorage.getItem("token")
+      const data = {
+        loginId: beforeEditUserInfo.loginId,
+        loginPwd: beforeEditUserInfo.loginPwd,
+        married: beforeEditUserInfo.married,
+        nickname: beforeEditUserInfo.nickname,
+        sns: beforeEditUserInfo.sns,
+        address: beforeEditUserInfo.address,
+        ageGroup: beforeEditUserInfo.ageGroup,
+        profileImgOriginName : beforeEditUserInfo.profileImgOriginName,
+        profileImgSaveName : beforeEditUserInfo.profileImgSaveName,
+        profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl
+      }
+      const config = { 
+        headers:{
+          Authorization: token
+        },
+        timeout: 3000 
+      };
+
+      console.log("data", data);
+      axios.put(url, data, config)
+      .then((response) => {
+        alert(response.data);
+        navigate()
+
+      })
+      .catch((error) => {
+        new Error(error);
+        console.log(error);
+        toast.error('인증번호 검증에 실패했습니다.');        
+      })
+    }
+    // 그 외를 목적으로 보낸 경우 인증번호 검증
+    else{
+      const config = { timeout: 3000 };
+      axios
       .get(url, config)
       .then((response) => {
         console.log("response", response);
@@ -226,6 +307,10 @@ function InputEmailForm({ beforeEditUserInfo }) {
           '인증번호 검증을 할 수 없는 상태입니다. 관리자에게 문의하세요.'
         );
       });
+    }
+    
+    
+
   };
 
   /* 이메일 변경 api */

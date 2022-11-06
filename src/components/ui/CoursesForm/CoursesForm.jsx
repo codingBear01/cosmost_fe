@@ -56,14 +56,13 @@ function CoursesForm() {
   /** params type에 따라 다른 url을 반환하는 핸들러 */
   const returnUrlForGettingCourses = (type, searchKeyword, categoryNumber) => {
     let url;
-
     if (
-      (type === 'keyword' && searchingType === 'search') ||
+      (type === 'keyword' && searchingType === 'all') ||
       type === 'hastags'
     ) {
       url = `${
         process.env.REACT_APP_API
-      }/cosmosts?${type}=${searchKeyword}&$sort=${
+      }/cosmosts?${type}=${searchKeyword}&sort=${
         type === 'keyword' ? 'course' : 'id'
       },desc&page=${page.current}&size=4`;
     }
@@ -107,7 +106,7 @@ function CoursesForm() {
           categoryNumber,
           searchingType
         );
-        console.log('url', url);
+        
         if (!url) return;
 
         const config =
@@ -120,10 +119,29 @@ function CoursesForm() {
               }
             : { timeout: 3000 };
 
-        const result = await axios.get(url, config);
-        const { data } = result;
-        console.log(data);
+        let data;
+        
+        while(1){
+          const url = returnUrlForGettingCourses(
+            type,
+            searchKeyword,
+            categoryNumber,
+            searchingType
+          );
+          console.log('url', url);
+          console.log("isLastPage",isLastPage);
+          const result = await axios.get(url, config);
+          data = result.data;
+          if(data.length !== 0 || isLastPage){
+            break;
+          }
+          page.current += 1;
+        }
 
+        // const result = await axios.get(url, config);
+        // const {data} = result;
+
+        
         setCourses((prev) => prev.concat(data));
         setIsLastPage(data[data.length - 1].whetherLastPage);
         setIsLoading(false);
@@ -135,7 +153,7 @@ function CoursesForm() {
         new Error(error);
       }
     },
-    [page.current, categoryId, searchingType, queryStringsState]
+    [page.current, categoryId, searchingType, queryStringsState, isLastPage]
   );
 
   //정렬 표시
@@ -156,7 +174,9 @@ function CoursesForm() {
 
   /** 쿼리스트링이 변경될 때마다 호출되는 useEffect. IsLastPage와 Course State를 초기화한다.*/
   useEffect(() => {
+    console.log("쿼리스트링이 isLastPage", isLastPage);
     setIsLastPage(false);
+    
     setCourses([]);
     setQueryStringsState(!queryStringsState);
     page.current = 0;
@@ -164,10 +184,11 @@ function CoursesForm() {
 
   /** 무한 스크롤을 위해 observing을 하는 함수 */
   useEffect(() => {
+    console.log("무한 스크롤 isLastPage", isLastPage);
+    console.log("AS", !observedTarget.current);
     if (!observedTarget.current || isLastPage) return;
 
     const io = new IntersectionObserver((entries, observer) => {
-      debugger;
       if (entries[0].isIntersecting) {
         getCourses(params.type, queryStrings.get('keyword'), categoryId);
       }
@@ -176,6 +197,8 @@ function CoursesForm() {
 
     return () => io.disconnect();
   }, [isLastPage, page.current, categoryId, searchingType, queryStringsState]);
+
+  console.log("courses", courses)
 
   return (
     <>
@@ -199,7 +222,7 @@ function CoursesForm() {
           {courses.length ? (
             courses.map((course, index) => (
               <Course
-                key={course.id || course.courseId}
+                key={index}
                 course={course}
                 courseId={course.id || course.courseId}
               />
