@@ -64,7 +64,7 @@ function CourseReview({
   const edittedReviewRateRef = useRef();
 
   /* Variables */
-  const courseId = courseReview.id;
+  const courseRatePercantage = courseReview;
 
   /* Handlers */
   /** 클릭된 review의 데이터를 저장하기 위한 핸들러. 클릭 시 해당 review의 index가 state에 저장되며, 리뷰 수정, 삭제 모달의 Open 여부가 반대로 변경되고, modalRef의 current값에 클릭된 타깃이 할당되며 코스 리뷰 수정 textarea가 닫힘. */
@@ -121,7 +121,7 @@ function CourseReview({
   /* APIs */
   /** 코스 리뷰 좋아요 여부 조회 */
   useEffect(() => {
-    likedCourseReview(courseId, setIsLikedCourseReview, token);
+    likedCourseReview(courseReview.id, setIsLikedCourseReview, token);
   }, [isLikedCourseReviewChanged]);
 
   return (
@@ -243,7 +243,7 @@ function CourseReview({
                 type="button"
                 onClick={() =>
                   handleLikeCourseReview(
-                    courseId,
+                    courseReview.id,
                     'like',
                     checkIsLoggedIn,
                     token,
@@ -262,10 +262,25 @@ function CourseReview({
               </S.CourseReviewLikeButton>
             )}
             {isLikedCourseReview[0] &&
-              isLikedCourseReview[0].courseReviewId === courseId && (
+              isLikedCourseReview[0].courseReviewId === courseReview.id && (
                 <S.CourseReviewLikeButton
                   type="button"
-                  onClick={() => handleLikeCourseReview(courseId, 'unlike')}
+                  onClick={() =>
+                    handleLikeCourseReview(
+                      courseReview.id,
+                      'unlike',
+                      checkIsLoggedIn,
+                      token,
+                      isLoggedIn,
+                      navigate,
+                      compareAuthorIdWithLoggedInUserId,
+                      courseReview,
+                      loggedInUserId,
+                      toast,
+                      setIsLikedCourseReviewChanged,
+                      isLikedCourseReviewChanged
+                    )
+                  }
                 >
                   <FaIcons.FaThumbsUp style={{ color: 'white' }} />
                 </S.CourseReviewLikeButton>

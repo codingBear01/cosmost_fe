@@ -25,6 +25,3 @@ export {
   checkIsLoggedIn,
   compareAuthorIdWithLoggedInUserId,
 } from './functions';
-
-/* temporary array */
-export { FOLLOWS, RANKERS, REPORT_HISTORIES } from './temporaryArray/';

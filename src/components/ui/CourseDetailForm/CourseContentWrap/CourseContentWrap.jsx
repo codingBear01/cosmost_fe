@@ -88,8 +88,7 @@ function CourseContentWrap({
                 <AiIcons.AiOutlineArrowRight style={{ fontSize: `${fs.s}` }} />
               )}
             </div>
-          ))
-          }
+          ))}
         </>
       ) : dataCategory === 'averageRate' ? (
         // 코스 평균 평점 및 별 개수별 퍼센테이지
@@ -98,7 +97,6 @@ function CourseContentWrap({
           <S.AverageRate>
             <span>평균 평점</span>
             <span>
-              {console.log("courseReviewAverageRate",courseReviewAverageRate)}
               {courseReviewAverageRate &&
                 courseReviewAverageRate[0].courseAvgRate}
             </span>

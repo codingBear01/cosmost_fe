@@ -441,20 +441,20 @@ export const getCategories = (type, URLS, setCategories) => {
  */
 export const getCourseReviews = (courseId, setState) => {
   // const url = `${process.env.REACT_APP_COMMENT2_IP}/v1/comments?type=review`;
-  const url = `${process.env.REACT_APP_API}/comments?type=review`;
-  const config = {
-    headers: {
-      Authorization: courseId,
-    },
-    timeout: 3000,
-  };
-
-  axios
-    .get(url, config)
-    .then((response) => setState(response.data))
-    .catch((error) => {
-      new Error(error);
-    });
+  // const url = `${process.env.REACT_APP_API}/comments?type=review`;
+  // http://gateway.cosmost.shop/v1/comments?type=review&sort=id,desc&page=1&size=4
+  // const config = {
+  //   headers: {
+  //     Authorization: courseId,
+  //   },
+  //   timeout: 3000,
+  // };
+  // axios
+  //   .get(url, config)
+  //   .then((response) => setState(response.data))
+  //   .catch((error) => {
+  //     new Error(error);
+  //   });
 };
 
 /** 단일 코스의 조회용 데이터를 가져와 state로 업데이트하는 함수
@@ -466,7 +466,7 @@ export const getSingleCourseView = (courseId, setState) => {
   const url = `${process.env.REACT_APP_API}/cosmosts/${courseId}?filter=frame`;
   const config = { timeout: 3000 };
 
-  console.log("url", url);
+  console.log('url', url);
 
   axios
     .get(url, config)
@@ -614,12 +614,7 @@ export const getCourseAverageRate = (courseID, thenCallback, errorCallback) => {
     timeout: 3000,
   };
 
-
-
-  axios
-    .get(url, config)
-    .then(thenCallback)
-    .catch(errorCallback);
+  axios.get(url, config).then(thenCallback).catch(errorCallback);
 };
 
 /** 해당 코스의 좋아요 개수를 가져온 뒤 코스 좋아요 개수를 state로 업데이트 시켜주는 함수.

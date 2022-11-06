@@ -41,7 +41,6 @@ function CoursesForm() {
     let url;
 
     if (type === 'all' || type === 'auth') {
-      
       switch (queryStrings.get('sort')) {
         // 평점 순 정렬
         case 'rate':
@@ -92,8 +91,6 @@ function CoursesForm() {
               }
             : { timeout: 3000 };
 
-
-        
         const result = await axios.get(url, config);
 
         const { data } = result;
@@ -140,6 +137,7 @@ function CoursesForm() {
 
   /** 무한 스크롤을 위해 observing을 하는 함수 */
   useEffect(() => {
+    console.log(observedTarget.current);
     if (!observedTarget.current || isLastPage) return;
 
     const io = new IntersectionObserver((entries, observer) => {

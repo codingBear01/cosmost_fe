@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 /* components */
 import * as S from './styled';
 import { StyledCourseContentWrap } from '../CourseContentWrap/styled';
@@ -115,7 +114,22 @@ function CourseSharingAndLikeButton({
       {isLikedCourse[0] && (
         <S.ShareAndLikeButton
           type="button"
-          onClick={() => handleLikeCourse(courseDetail.id, 'unlike')}
+          onClick={() =>
+            handleLikeCourse(
+              courseDetail.id,
+              'unlike',
+              checkIsLoggedIn,
+              token,
+              isLoggedIn,
+              navigate,
+              compareAuthorIdWithLoggedInUserId,
+              courseDetail,
+              loggedInUserId,
+              toast,
+              setIsLikedCourseChanged,
+              isLikedCourseChanged
+            )
+          }
         >
           <FaIcons.FaThumbsUp style={{ color: 'white' }} />
         </S.ShareAndLikeButton>
