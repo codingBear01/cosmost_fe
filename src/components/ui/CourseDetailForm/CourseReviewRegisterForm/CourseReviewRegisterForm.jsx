@@ -1,7 +1,11 @@
 /* libraries */
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+/* Recoil */
+import { useRecoilState } from 'recoil';
+import { userAtom } from '../../../../store';
 /* components */
 import * as S from './styled';
 import { Button } from '../../../';
@@ -15,7 +19,10 @@ import * as AiIcons from 'react-icons/ai';
 const REVIEW_RATE_INDEXES = [0, 1, 2, 3, 4];
 
 function CourseReviewRegisterForm({ courseDetail }) {
-  /* 리뷰 등록에 쓰이는 states 및 ref */
+  const navigate = useNavigate();
+
+  /* 리뷰 등록용 states 및 ref */
+  const [user] = useRecoilState(userAtom);
   const [isYellowStar, setIsYellowStar] = useState([
     true,
     false,
@@ -27,7 +34,7 @@ function CourseReviewRegisterForm({ courseDetail }) {
   const reviewContentRef = useRef();
 
   /* Handlers */
-  /* 평점을 설정하는 핸들러. 전달한 index 이하의 isYellowStar를 true로 만들고, index + 1을 평점으로 할당한다. */
+  /** 평점을 설정하는 핸들러. 전달한 index 이하의 isYellowStar를 true로 만들고, index + 1을 평점으로 할당한다. */
   const onClickSetReviewRate = (index) => {
     let isYellowStarStates = [...isYellowStar];
     for (let i = 0; i < REVIEW_RATE_INDEXES.length; i++) {
@@ -37,7 +44,7 @@ function CourseReviewRegisterForm({ courseDetail }) {
     rateRef.current = index + 1;
   };
 
-  /* 코스 리뷰 내용 및 평점 유효성 검증 */
+  /** 코스 리뷰 내용 및 평점 유효성 검증 */
   const checkCourseReviewValues = () => {
     if (!reviewContentRef.current.value) {
       toast.error('내용을 입력해주세요.');
@@ -51,18 +58,7 @@ function CourseReviewRegisterForm({ courseDetail }) {
   };
 
   return (
-    <S.StyledCourseReviewRegisterForm
-      onSubmit={(e) =>
-        postCourseReview(
-          e,
-          checkCourseReviewValues,
-          courseDetail,
-          reviewContentRef,
-          rateRef,
-          toast
-        )
-      }
-    >
+    <S.StyledCourseReviewRegisterForm>
       <ToastContainer
         position="top-center"
         autoClose={500}
@@ -99,13 +95,22 @@ function CourseReviewRegisterForm({ courseDetail }) {
         maxLength={500}
       ></S.ReviewRegisterTextarea>
       <Button
-        type={'submit'}
+        type={'button'}
         width={'10rem'}
         height={'4rem'}
         fontSize={fs.s}
         color={color.white}
         bgColor={color.darkBlue}
         hoveredBgColor={color.navy}
+        onClick={() =>
+          postCourseReview(
+            checkCourseReviewValues,
+            courseDetail,
+            reviewContentRef,
+            rateRef,
+            toast
+          )
+        }
       >
         리뷰 남기기
       </Button>

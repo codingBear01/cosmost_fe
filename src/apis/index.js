@@ -9,7 +9,7 @@ export {
   withdrawUser,
   // Cosmost
   getCourseDetail,
-  deleteCourseOrReview,
+  deleteCourse,
   getCategories,
   // Comment
   getSingleCourseView,

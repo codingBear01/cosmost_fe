@@ -25,7 +25,7 @@ import {
   CourseSharingAndLikeButton,
   CourseTitleAndDate,
 } from '.';
-import { DeleteModal, ToTopBtn, UtilDiv, Loading } from '../..';
+import { ToTopBtn, UtilDiv, Loading } from '../..';
 /* APIs */
 import {
   getCourseAverageRate,
@@ -100,6 +100,7 @@ function CourseDetailForm() {
 
       const result = await axios.get(url, config);
       const { data } = result;
+      console.log(data);
 
       setCourseReviews((prev) => prev.concat(data[0].courseReviewList));
       setIsLastPage(
@@ -120,7 +121,7 @@ function CourseDetailForm() {
   useEffect(() => {
     getCourseDetail(id, setCourseDetail);
     getCourseReviews();
-  }, []);
+  }, [isClickedCourseReviewChanged]);
 
   /** 무한 스크롤을 위해 observing을 하는 함수 */
   useEffect(() => {
@@ -134,7 +135,7 @@ function CourseDetailForm() {
     io.observe(observedTarget.current);
 
     return () => io.disconnect();
-  }, [courseReviews, isLastPage]);
+  }, [courseReviews, isLastPage, isClickedCourseReviewChanged]);
 
   // courseDetail를 성공적으로 가져오면 호출하는 useEffect.
   useEffect(() => {
@@ -207,17 +208,6 @@ function CourseDetailForm() {
       <>
         {/* 코스 이미지 carousel */}
         <CourseImageCarousel courseDetail={courseDetail} />
-        {/* 본문 */}
-        {isDeleteModalOpened && (
-          <DeleteModal
-            onClickOpenDeleteModal={onClickOpenDeleteModal}
-            isClickedCourseReviewChanged={isClickedCourseReviewChanged}
-            setIsClickedCourseReviewChanged={setIsClickedCourseReviewChanged}
-            clickedElement={clickedElement}
-            courseId={courseDetail.id}
-            courseReviewId={clickedCourseReviewIndex}
-          />
-        )}
         <UtilDiv
           justifyContent={'center'}
           width={'76.8rem'}
@@ -301,10 +291,8 @@ function CourseDetailForm() {
             courseAverageRatePercentage={courseAverageRatePercentage}
           />
           {/* 리뷰 작성 폼 */}
-          {(token && isLoggedIn) || author?.id !== user?.id ? (
+          {token && isLoggedIn && (
             <CourseReviewRegisterForm courseDetail={courseDetail} />
-          ) : (
-            <></>
           )}
           {/* 코스 리뷰 */}
           {courseReviews[0] &&
@@ -313,6 +301,7 @@ function CourseDetailForm() {
                 key={courseReview.id}
                 courseDetail={courseDetail}
                 courseReview={courseReview}
+                courseReviewId={courseReview.id}
                 i={i}
                 token={token}
                 isLoggedIn={isLoggedIn}
@@ -324,7 +313,7 @@ function CourseDetailForm() {
                 }
               />
             ))}
-          {courseReviews[0] && isLoading && <Loading />}
+          {!courseReviews[0] && isLoading && <Loading />}
           <div ref={observedTarget} style={{ paddingBottom: '10rem' }}></div>
         </UtilDiv>
         <ToTopBtn />

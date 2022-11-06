@@ -104,7 +104,7 @@ function WithdrawUserForm() {
           bgColor={color.red}
           hoveredBgColor={color.darkRed}
           onClick={(e) =>
-            withdrawUser(e, passwordRef, token, setIsLoggedIn, navigate, toast)
+            withdrawUser(e, passwordRef, setIsLoggedIn, navigate, toast)
           }
           value="회원 탈퇴"
         >

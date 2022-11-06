@@ -12,6 +12,8 @@ export {
   pathnameAtom,
   userAtom,
   isLoadingAtom,
+  queryStringsStateAtom,
+  searchingTypeAtom,
 } from './recoilStates';
 
 /* functions */

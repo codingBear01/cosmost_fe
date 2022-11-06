@@ -33,3 +33,13 @@ export const isLoadingAtom = atom({
   key: 'isLoadingAtom',
   default: true,
 });
+
+export const queryStringsStateAtom = atom({
+  key: 'queryStringsStateAtom',
+  default: true,
+});
+
+export const searchingTypeAtom = atom({
+  key: 'searchingTypeAtom',
+  default: 'all',
+});

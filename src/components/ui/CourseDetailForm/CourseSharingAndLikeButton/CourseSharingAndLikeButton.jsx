@@ -63,7 +63,7 @@ function CourseSharingAndLikeButton({
   /* APIs */
   /** 코스 좋아요 여부 조회 */
   useEffect(() => {
-    checkLikedCourse(courseDetail, setIsLikedCourse, token);
+    checkLikedCourse(courseDetail, setIsLikedCourse);
   }, [isLikedCourseChanged]);
 
   return (
@@ -96,7 +96,6 @@ function CourseSharingAndLikeButton({
               courseDetail.id,
               'like',
               checkIsLoggedIn,
-              token,
               isLoggedIn,
               navigate,
               compareAuthorIdWithLoggedInUserId,
@@ -119,7 +118,6 @@ function CourseSharingAndLikeButton({
               courseDetail.id,
               'unlike',
               checkIsLoggedIn,
-              token,
               isLoggedIn,
               navigate,
               compareAuthorIdWithLoggedInUserId,

@@ -1,48 +1,40 @@
 /* libraries */
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 /* components */
 import * as S from './styled';
 import { StyledCourseContentWrap } from './../CourseContentWrap/styled';
-import { CourseUtillityModal } from '../../../';
+/* APIs */
+import { deleteCourse } from '../../../../apis';
 /* icons */
-import * as GrIcons from 'react-icons/gr';
+import * as FiIcons from 'react-icons/fi';
+import * as BsIcons from 'react-icons/bs';
+import * as BiIcons from 'react-icons/bi';
+/* static data */
+import { COLOR_LIST as color } from '../../../../style';
 
 function CourseTitleAndDate({
   courseDetail,
-  onClickOpenDeleteModal,
-  onClickEditCourse,
   courseAverageRate,
   token,
-  isLoggedIn,
   loggedInUserId,
 }) {
-  /* States */
-  /* 코스 및 리뷰 수정, 삭제 Modal Open useState */
-  const [isCourseUtilityModalOpened, setIsCourseUtilityModalOpened] =
-    useState(false);
+  const navigate = useNavigate();
 
-  /* 코스 평균 평점 state*/
+  /* States */
+  const [isDeleteButtonClicked, setIsDeleteButtonClicked] = useState(false);
 
   /* Handlers */
-  /* 코스 및 리뷰 수정, 삭제 Modal의 Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
-  const onClickOpenCourseUtilityModal = () => {
-    setIsCourseUtilityModalOpened(!isCourseUtilityModalOpened);
-  };
-
-  /* 모달 바깥 영역 클릭 시 모달 닫는 함수 */
-  const modalRef = useRef();
-
+  /** 일정 시간 경과 후 삭제 버튼을 닫는 핸들러 */
   useEffect(() => {
-    const closeModal = (e) => {
-      if (!modalRef?.current?.contains(e.target)) {
-        setIsCourseUtilityModalOpened(false);
-      }
-    };
+    const timer = setTimeout(() => {
+      setIsDeleteButtonClicked(false);
+    }, 2000);
 
-    document.addEventListener('click', closeModal);
-
-    return () => document.removeEventListener('click', closeModal);
-  }, [isCourseUtilityModalOpened]);
+    return () => clearTimeout(timer);
+  }, [isDeleteButtonClicked]);
 
   return (
     <StyledCourseContentWrap
@@ -50,6 +42,16 @@ function CourseTitleAndDate({
       courseDetail={courseDetail}
       dataCategory="titleAndDate"
     >
+      <ToastContainer
+        position="top-center"
+        autoClose={500}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       <StyledCourseContentWrap style={{ borderBottom: 'none' }}>
         <S.CourseTitle>{courseDetail.courseTitle}</S.CourseTitle>
         <S.CourseAverageRate>
@@ -58,21 +60,34 @@ function CourseTitleAndDate({
       </StyledCourseContentWrap>
       <S.CourseCreatedDateAndMoreIconWrap>
         <S.CourseCreatedDate>{courseDetail.createAt}</S.CourseCreatedDate>
-        {token && isLoggedIn && loggedInUserId === courseDetail.authorId && (
-          <div ref={modalRef}>
-            <GrIcons.GrMoreVertical onClick={onClickOpenCourseUtilityModal} />
-          </div>
+        {/* 수정, 삭제 버튼 */}
+        {loggedInUserId === courseDetail.authorId && (
+          <S.UtilityButtonWrap>
+            <S.UtilityButton
+              type="button"
+              onClick={() => navigate(`/course-edit/${courseDetail.id}`)}
+            >
+              <FiIcons.FiEdit />
+            </S.UtilityButton>
+            {!isDeleteButtonClicked && (
+              <S.UtilityButton
+                type="button"
+                onClick={() => setIsDeleteButtonClicked(true)}
+              >
+                <BsIcons.BsTrash />
+              </S.UtilityButton>
+            )}
+            {isDeleteButtonClicked && (
+              <S.UtilityButton
+                type="button"
+                onClick={() => deleteCourse(courseDetail.id, navigate, toast)}
+              >
+                <BiIcons.BiErrorAlt style={{ color: `${color.red}` }} />
+              </S.UtilityButton>
+            )}
+          </S.UtilityButtonWrap>
         )}
       </S.CourseCreatedDateAndMoreIconWrap>
-      {isCourseUtilityModalOpened && (
-        <CourseUtillityModal
-          top={'8rem'}
-          right={'2rem'}
-          onClickOpenDeleteModal={onClickOpenDeleteModal}
-          onClickSetClickedCourseReviewEditButton={onClickEditCourse}
-          clickedElement={'course'}
-        />
-      )}
     </StyledCourseContentWrap>
   );
 }

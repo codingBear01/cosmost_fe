@@ -9,7 +9,7 @@ import {
   FONT_SIZE_LIST as fs,
 } from '../../../../style';
 
-export const StyledCourseReviewRegisterForm = styled.form`
+export const StyledCourseReviewRegisterForm = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;

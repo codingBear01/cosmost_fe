@@ -41,7 +41,9 @@ function CourseContentWrap({
 
   /* APIs */
   useEffect(() => {
-    fetchIsFollowed(author?.id, setIsFollowed);
+    if (author) {
+      fetchIsFollowed(author?.id, setIsFollowed);
+    }
   }, [isFollowedChanged]);
 
   return (
