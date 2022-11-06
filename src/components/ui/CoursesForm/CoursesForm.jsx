@@ -100,11 +100,10 @@ function CoursesForm() {
         const result = await axios.get(url, config);
 
         const { data } = result;
-        console.log(data);
 
-        setIsLoading(false);
         setCourses((prev) => prev.concat(data));
         setIsLastPage(data[data.length - 1].whetherLastPage);
+        setIsLoading(false);
 
         if (!isLastPage) {
           page.current += 1;
@@ -185,6 +184,7 @@ function CoursesForm() {
             <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
           )}
         </S.SearchedCourseContainer>
+        {isLoading && <Loading />}
         <div ref={observedTarget}></div>
         <ToTopBtn />
       </UtilDiv>

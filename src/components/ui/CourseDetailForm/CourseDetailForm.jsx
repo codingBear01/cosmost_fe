@@ -15,14 +15,6 @@ import {
   displayNaverMapMarkerInfo,
   addNaverMapMarkerInfo,
 } from '../../../store';
-/* APIs */
-import {
-  getCourseAverageRate,
-  getCourseDetail,
-  getCourseLikeCount,
-  getCourseReviews,
-  getCourseAuthor,
-} from '../../../apis';
 /* components */
 import * as S from './styled';
 import {
@@ -33,7 +25,15 @@ import {
   CourseSharingAndLikeButton,
   CourseTitleAndDate,
 } from '.';
-import { DeleteModal, ToTopBtn, UtilDiv } from '../..';
+import { DeleteModal, ToTopBtn, UtilDiv, Loading } from '../..';
+/* APIs */
+import {
+  getCourseAverageRate,
+  getCourseDetail,
+  getCourseLikeCount,
+  getCourseReviews,
+  getCourseAuthor,
+} from '../../../apis';
 
 function CourseDetailForm() {
   const { id } = useParams();
@@ -88,6 +88,7 @@ function CourseDetailForm() {
 
   /* APIs */
   const getCourseReviews = useCallback(async () => {
+    setIsLoading(true);
     try {
       const url = `${process.env.REACT_APP_API}/comments?type=review&sort=id,desc&page=${page.current}&size=4`;
       const config = {
@@ -107,6 +108,7 @@ function CourseDetailForm() {
       );
       setCourseReviewCount(data[0].courseReviewCnt);
       setCourseAverageRatePercentage(data[0].rateAllTypeList);
+      setIsLoading(false);
 
       if (!isLastPage) {
         page.current += 1;
@@ -322,6 +324,7 @@ function CourseDetailForm() {
                 }
               />
             ))}
+          {courseReviews[0] && isLoading && <Loading />}
           <div ref={observedTarget} style={{ paddingBottom: '10rem' }}></div>
         </UtilDiv>
         <ToTopBtn />

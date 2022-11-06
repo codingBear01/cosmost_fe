@@ -70,7 +70,7 @@ function CourseContentWrap({
           />
           <S.AutorProfileVerticalWrap marginRight={'3rem'}>
             <S.AutorNickname>{author.nickname}</S.AutorNickname>
-            {!isFollowed[0] && (
+            {loggedInUserId && !isFollowed[0] && (
               <Button
                 type="button"
                 width={'70px'}
@@ -91,7 +91,7 @@ function CourseContentWrap({
                 팔로우
               </Button>
             )}
-            {isFollowed[0] && (
+            {loggedInUserId && isFollowed[0] && (
               <Button
                 type="button"
                 width={'70px'}
