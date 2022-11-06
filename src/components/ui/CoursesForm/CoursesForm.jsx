@@ -216,7 +216,7 @@ function CoursesForm() {
             <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
           )}
         </S.SearchedCourseContainer>
-        {isLoading && <Loading />}
+        {isLoading ? <Loading /> : null}
         <div ref={observedTarget}></div>
         <ToTopBtn />
       </UtilDiv>
