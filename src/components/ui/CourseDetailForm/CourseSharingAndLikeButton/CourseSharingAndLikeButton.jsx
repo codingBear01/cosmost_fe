@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 /* components */
 import * as S from './styled';
 import { StyledCourseContentWrap } from '../CourseContentWrap/styled';
@@ -64,7 +63,7 @@ function CourseSharingAndLikeButton({
   /* APIs */
   /** 코스 좋아요 여부 조회 */
   useEffect(() => {
-    checkLikedCourse(courseDetail, setIsLikedCourse, token);
+    checkLikedCourse(courseDetail, setIsLikedCourse);
   }, [isLikedCourseChanged]);
 
   return (
@@ -97,7 +96,6 @@ function CourseSharingAndLikeButton({
               courseDetail.id,
               'like',
               checkIsLoggedIn,
-              token,
               isLoggedIn,
               navigate,
               compareAuthorIdWithLoggedInUserId,
@@ -115,7 +113,21 @@ function CourseSharingAndLikeButton({
       {isLikedCourse[0] && (
         <S.ShareAndLikeButton
           type="button"
-          onClick={() => handleLikeCourse(courseDetail.id, 'unlike')}
+          onClick={() =>
+            handleLikeCourse(
+              courseDetail.id,
+              'unlike',
+              checkIsLoggedIn,
+              isLoggedIn,
+              navigate,
+              compareAuthorIdWithLoggedInUserId,
+              courseDetail,
+              loggedInUserId,
+              toast,
+              setIsLikedCourseChanged,
+              isLikedCourseChanged
+            )
+          }
         >
           <FaIcons.FaThumbsUp style={{ color: 'white' }} />
         </S.ShareAndLikeButton>

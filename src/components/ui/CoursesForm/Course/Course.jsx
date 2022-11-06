@@ -13,7 +13,7 @@ import * as AiIcons from 'react-icons/ai';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-function Course({ course }) {
+function Course({ course, courseId }) {
   const [courseAuthor, setCourseAuthor] = useState('');
   const [courseState, setCourseState] = useState('');
 
@@ -31,16 +31,16 @@ function Course({ course }) {
     }
   }, [courseState]);
 
-  console.log("courseState", courseState);
-  
   return (
     courseState && (
       <S.StyledCourse>
         {/* 코스 이미지 */}
-        <S.CourseFeaturedImage
-          src={courseState.readPlaceImgResponseList[0].placeImgUrl}
-          alt={courseState.courseTitle}
-        />
+        <Link to={`/course-detail/${courseId}`}>
+          <S.CourseFeaturedImage
+            src={courseState.readPlaceImgResponseList[0].placeImgUrl}
+            alt={courseState.courseTitle}
+          />
+        </Link>
         {/* 코스 제목, 평점 */}
         <S.CourseContentWrap justifyContent={'space-between'}>
           <S.CourseTitle>{courseState.courseTitle}</S.CourseTitle>
@@ -58,7 +58,12 @@ function Course({ course }) {
         {/* 코스 해시태그 */}
         <S.CourseContentWrap>
           {courseState.hashtagList.map((hashTag) => (
-            <S.CourseTag key={hashTag.id}>{hashTag?.keyword}</S.CourseTag>
+            <Link
+              key={hashTag.id}
+              to={`/courses/hashtags?keyword=${hashTag.keyword}`}
+            >
+              <S.CourseTag>{hashTag?.keyword}</S.CourseTag>
+            </Link>
           ))}
         </S.CourseContentWrap>
         {/* 코스 작성자, 작성일 */}
@@ -76,10 +81,10 @@ function Course({ course }) {
         </S.CourseContentWrap>
         {/* 코스 순서 */}
         <S.CourseOrderWrap>
-          {courseState.readPlaceDetailResponseList.map((item) => (
+          {courseState.readPlaceDetailResponseList.map((item, index) => (
             <div key={item.id}>
               <S.CourseName>{item.placeName}</S.CourseName>
-              {item.id !== courseState.readPlaceDetailResponseList.length && (
+              {index !== courseState.readPlaceDetailResponseList.length - 1 && (
                 <AiIcons.AiOutlineArrowRight style={{ fontSize: `${fs.s}` }} />
               )}
             </div>

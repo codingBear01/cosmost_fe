@@ -14,7 +14,7 @@ const URLS = {
   theme: `${process.env.REACT_APP_API}/cosmosts?filter=all&category=theme`,
 };
 
-function SelectingCategoryArea({ setCategoryId }) {
+function SelectingCategoryArea({ setCategoryId, setSearchingType }) {
   /* States */
   const [categories, setCategories] = useState({
     location: [],
@@ -49,7 +49,8 @@ function SelectingCategoryArea({ setCategoryId }) {
       });
     }
 
-    setCategoryId(0);
+    setCategoryId(null);
+    setSearchingType(isClicked);
     getCategories(isClicked, URLS, setCategories);
   };
 
@@ -68,22 +69,22 @@ function SelectingCategoryArea({ setCategoryId }) {
             전체
           </S.Category>
         </Link>
-        <Link to="/courses/location">
-          <S.Category
-            onClick={() => onClickSetClickedCategory('location')}
-            isClickedCategory={isClickedCategory.location}
-          >
-            지역별
-          </S.Category>
-        </Link>
-        <Link to="/courses/theme">
-          <S.Category
-            onClick={() => onClickSetClickedCategory('theme')}
-            isClickedCategory={isClickedCategory.theme}
-          >
-            테마별
-          </S.Category>
-        </Link>
+        {/* <Link to="/courses/location"> */}
+        <S.Category
+          onClick={() => onClickSetClickedCategory('location')}
+          isClickedCategory={isClickedCategory.location}
+        >
+          지역별
+        </S.Category>
+        {/* </Link> */}
+        {/* <Link to="/courses/theme"> */}
+        <S.Category
+          onClick={() => onClickSetClickedCategory('theme')}
+          isClickedCategory={isClickedCategory.theme}
+        >
+          테마별
+        </S.Category>
+        {/* </Link> */}
       </S.Categories>
       <S.SubordinateCategories>
         <ul>

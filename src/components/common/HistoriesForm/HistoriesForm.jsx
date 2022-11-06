@@ -50,7 +50,7 @@ function HistoriesForm({ isReportHistoryPage }) {
     if (typeof warningDeleteIconIndex === 'number') {
       const timer = setTimeout(() => {
         setWarningDeleteIconIndex(null);
-      }, 1200);
+      }, 2000);
 
       return () => clearTimeout(timer);
     }
@@ -76,9 +76,9 @@ function HistoriesForm({ isReportHistoryPage }) {
   /* 페이지 종류에 따라 나의 신고 내역 또는 내가 작성한 리뷰 불러오는 hooks */
   useEffect(() => {
     if (isReportHistoryPage) {
-      getMyReports(token, setReports);
+      getMyReports(setReports);
     } else {
-      getMyReviews(token, setReviews);
+      getMyReviews(setReviews);
     }
   }, [isReportHistoryPage, isHistoriesChanged]);
 

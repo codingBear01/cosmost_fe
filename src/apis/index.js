@@ -9,7 +9,7 @@ export {
   withdrawUser,
   // Cosmost
   getCourseDetail,
-  deleteCourseOrReview,
+  deleteCourse,
   getCategories,
   // Comment
   getSingleCourseView,
@@ -25,6 +25,9 @@ export {
   likedCourseReview,
   handleLikeCourse,
   checkLikedCourse,
+  fetchCourseReviewLikeCount,
+  handleFollow,
+  fetchIsFollowed,
   // Board
   getReportCategories,
   getMyReports,
