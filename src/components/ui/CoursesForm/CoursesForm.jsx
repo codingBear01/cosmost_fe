@@ -8,7 +8,13 @@ import { isOrderingModalOpenedAtom, isLoadingAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Course, SelectingCategoryArea } from '.';
-import { OrderingButton, ToTopBtn, UtilDiv, Loading } from '../..';
+import {
+  OrderingButton,
+  ToTopBtn,
+  UtilDiv,
+  Loading,
+  OrderingModal,
+} from '../..';
 
 function CoursesForm() {
   // const token = localStorage.getItem('token');
@@ -152,7 +158,8 @@ function CoursesForm() {
 
   return (
     <>
-      {isLoading && <Loading />}
+      {/* 정렬 기준 모달 */}
+      <OrderingModal />
       <UtilDiv width={'76.8rem'} padding={'9rem 0 7rem'} margin={'0 auto'}>
         {/* 카테고리 선택 영역 */}
         {params.type !== 'mine' && (

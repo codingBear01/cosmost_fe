@@ -25,6 +25,9 @@ export {
   likedCourseReview,
   handleLikeCourse,
   checkLikedCourse,
+  fetchCourseReviewLikeCount,
+  handleFollow,
+  fetchIsFollowed,
   // Board
   getReportCategories,
   getMyReports,

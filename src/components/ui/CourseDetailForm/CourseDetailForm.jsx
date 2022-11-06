@@ -56,9 +56,11 @@ function CourseDetailForm() {
   // Comment
   const [courseReviews, setCourseReviews] = useState([]);
   // Popularity
-  const [courseReviewAverageRate, setCourseAverageRate] = useState(0);
-  const [courseGoodCount, setCourseGoodCount] = useState('');
-  const [course, setcourse] = useState(null);
+  const [courseAverageRate, setCourseAverageRate] = useState(0);
+  const [courseLikeCount, setCourseLikeCount] = useState('');
+  const [courseAverageRatePercentage, setCourseAverageRatePercentage] =
+    useState('');
+  const [courseReviewCount, setCourseReviewCount] = useState('');
 
   /* Refs */
   const page = useRef(0);
@@ -103,6 +105,8 @@ function CourseDetailForm() {
         data[0].courseReviewList[data[0].courseReviewList.length - 1]
           .whetherLastPage
       );
+      setCourseReviewCount(data[0].courseReviewCnt);
+      setCourseAverageRatePercentage(data[0].rateAllTypeList);
 
       if (!isLastPage) {
         page.current += 1;
@@ -192,7 +196,7 @@ function CourseDetailForm() {
           new Error(error);
         }
       );
-      getCourseLikeCount(id, setCourseGoodCount);
+      getCourseLikeCount(id, setCourseLikeCount);
     }
   }, [courseDetail]);
 
@@ -226,13 +230,13 @@ function CourseDetailForm() {
             loggedInUserId={loggedInUserId}
             onClickOpenDeleteModal={onClickOpenDeleteModal}
             onClickEditCourse={onClickEditCourse}
-            courseReviewAverageRate={courseReviewAverageRate}
+            courseAverageRate={courseAverageRate}
           />
           {/* 좋아요, 리뷰 숫자 */}
           <CourseContentWrap
             dataCategory="likeAndReview"
-            courseGoodCount={courseGoodCount}
-            courseReviews={courseReviews}
+            courseLikeCount={courseLikeCount}
+            courseReviewCount={courseReviewCount}
           />
           {/* 카테고리 */}
           <CourseContentWrap
@@ -252,6 +256,7 @@ function CourseDetailForm() {
               author={author}
               dataCategory="authorProfile"
               authorCourseCount={courseDetail.authorCourseCount}
+              loggedInUserId={loggedInUserId}
             />
           )}
 
@@ -290,8 +295,8 @@ function CourseDetailForm() {
             justifyContent={'center'}
             height={'30rem'}
             dataCategory="averageRate"
-            courseReviewAverageRate={courseReviewAverageRate}
-            // courseRatePercantage={courseRatePercantage}
+            courseAverageRate={courseAverageRate}
+            courseAverageRatePercentage={courseAverageRatePercentage}
           />
           {/* 리뷰 작성 폼 */}
           {(token && isLoggedIn) || author?.id !== user?.id ? (

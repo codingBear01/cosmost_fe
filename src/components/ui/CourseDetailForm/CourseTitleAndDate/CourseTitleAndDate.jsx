@@ -11,7 +11,7 @@ function CourseTitleAndDate({
   courseDetail,
   onClickOpenDeleteModal,
   onClickEditCourse,
-  courseReviewAverageRate,
+  courseAverageRate,
   token,
   isLoggedIn,
   loggedInUserId,
@@ -53,8 +53,7 @@ function CourseTitleAndDate({
       <StyledCourseContentWrap style={{ borderBottom: 'none' }}>
         <S.CourseTitle>{courseDetail.courseTitle}</S.CourseTitle>
         <S.CourseAverageRate>
-          ⭐{' '}
-          {courseReviewAverageRate && courseReviewAverageRate[0]?.courseAvgRate}
+          ⭐ {courseAverageRate && courseAverageRate[0]?.courseAvgRate}
         </S.CourseAverageRate>
       </StyledCourseContentWrap>
       <S.CourseCreatedDateAndMoreIconWrap>

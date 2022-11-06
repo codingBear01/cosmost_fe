@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import * as S from './styled';
 import { CourseContent } from '..';
 import { Button, ProfilePic } from '../../..';
+/* APIs */
+import { handleFollow, fetchIsFollowed } from '../../../../apis';
 /* icons */
 import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';
@@ -23,10 +25,25 @@ function CourseContentWrap({
   author,
   dataCategory,
   authorCourseCount,
-  courseGoodCount,
-  courseReviewAverageRate,
-  courseRatePercantage,
+  courseLikeCount,
+  courseAverageRate,
+  courseReviewCount,
+  courseAverageRatePercentage,
+  loggedInUserId,
 }) {
+  /* States */
+  const [isFollowed, setIsFollowed] = useState([]);
+  const [isFollowedChanged, setIsFollowedChanged] = useState(false);
+
+  /* Variables */
+  const courseAverageRateGaugeWidth =
+    courseAverageRatePercentage && courseAverageRatePercentage.reverse();
+
+  /* APIs */
+  useEffect(() => {
+    fetchIsFollowed(author?.id, setIsFollowed);
+  }, [isFollowedChanged]);
+
   return (
     // dataCategory에 따라 다른 컴포넌트 렌더링됨
     <S.StyledCourseContentWrap justifyContent={justifyContent} height={height}>
@@ -35,11 +52,11 @@ function CourseContentWrap({
         <>
           <CourseContent>
             <FaIcons.FaRegThumbsUp />
-            <span>{courseGoodCount.courseThumbsCnt}</span>
+            <span>{courseLikeCount && courseLikeCount}</span>
           </CourseContent>
           <CourseContent>
             <MdIcons.MdOutlineRateReview />
-            <span>{courseReviews && courseReviews[0]?.courseReviewCnt}</span>
+            <span>{courseReviewCount && courseReviewCount}</span>
           </CourseContent>
         </>
       ) : dataCategory === 'authorProfile' ? (
@@ -53,17 +70,48 @@ function CourseContentWrap({
           />
           <S.AutorProfileVerticalWrap marginRight={'3rem'}>
             <S.AutorNickname>{author.nickname}</S.AutorNickname>
-            <Button
-              type={'button'}
-              width={'6rem'}
-              height={'3rem'}
-              fontSize={fs.s}
-              color={color.black}
-              bgColor={color.lightGreen}
-              hoveredBgColor={color.darkGreen}
-            >
-              팔로우
-            </Button>
+            {!isFollowed[0] && (
+              <Button
+                type="button"
+                width={'70px'}
+                height={'30px'}
+                fontSize={'12px'}
+                color={color.black}
+                bgColor={color.darkGreen}
+                hoveredBgColor={color.lightGreen}
+                onClick={() =>
+                  handleFollow(
+                    'follow',
+                    author.id,
+                    setIsFollowedChanged,
+                    isFollowedChanged
+                  )
+                }
+              >
+                팔로우
+              </Button>
+            )}
+            {isFollowed[0] && (
+              <Button
+                type="button"
+                width={'70px'}
+                height={'30px'}
+                fontSize={'12px'}
+                color={color.black}
+                bgColor={color.darkRed}
+                hoveredBgColor={color.red}
+                onClick={() =>
+                  handleFollow(
+                    'unfollow',
+                    author.id,
+                    setIsFollowedChanged,
+                    isFollowedChanged
+                  )
+                }
+              >
+                언팔로우
+              </Button>
+            )}
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <BiIcons.BiCrown />
@@ -97,13 +145,12 @@ function CourseContentWrap({
           <S.AverageRate>
             <span>평균 평점</span>
             <span>
-              {courseReviewAverageRate &&
-                courseReviewAverageRate[0].courseAvgRate}
+              {courseAverageRate && courseAverageRate[0].courseAvgRate}
             </span>
           </S.AverageRate>
           <ul>
-            {courseRatePercantage &&
-              courseRatePercantage.map((item, index) => {
+            {courseAverageRateGaugeWidth &&
+              courseAverageRateGaugeWidth.map((item, index) => {
                 return (
                   <S.CourseRateStarWrap key={index}>
                     <S.CourseRateStar>
@@ -161,7 +208,7 @@ function CourseContentWrap({
               </Link>
             );
           }
-          return [];
+          return <></>;
         })
       )}
     </S.StyledCourseContentWrap>

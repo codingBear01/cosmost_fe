@@ -73,7 +73,7 @@ function FollowsForm({ isFollower }) {
             />
           ))}
       </S.FollowList>
-      <div ref={observedTarget}>dtd</div>
+      <div ref={observedTarget}></div>
     </UtilForm>
   );
 }

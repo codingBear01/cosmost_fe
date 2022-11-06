@@ -11,6 +11,8 @@ import {
   editCourseReview,
   handleLikeCourseReview,
   likedCourseReview,
+  fetchCourseReviewLikeCount,
+  getCourseAuthor,
 } from '../../../../apis';
 /* functions */
 import {
@@ -58,6 +60,8 @@ function CourseReview({
   const [isLikedCourseReviewChanged, setIsLikedCourseReviewChanged] =
     useState(false);
   const [isLikedCourseReview, setIsLikedCourseReview] = useState([]);
+  const [courseReviewLikeCount, setCourseReviewLikeCount] = useState('');
+  const [courseReviewAuthor, setCourseReviewAuthor] = useState('');
 
   /* Refs */
   const edittedReviewContentRef = useRef();
@@ -119,10 +123,16 @@ function CourseReview({
   };
 
   /* APIs */
-  /** 코스 리뷰 좋아요 여부 조회 */
+  /** 코스 리뷰 좋아요 여부, 코스 리뷰 좋아요 개수 조회 */
   useEffect(() => {
     likedCourseReview(courseReview.id, setIsLikedCourseReview, token);
+    fetchCourseReviewLikeCount(courseReview.id, setCourseReviewLikeCount);
   }, [isLikedCourseReviewChanged]);
+
+  /** 코스 리뷰 작성자 정보 조회 */
+  useEffect(() => {
+    getCourseAuthor(courseReview.reviewerId, setCourseReviewAuthor);
+  }, []);
 
   return (
     <>
@@ -140,14 +150,13 @@ function CourseReview({
         {/* 리뷰 작성자 프로필 */}
         <S.CourseReviewAuthorWrap>
           <ProfilePic
-            // src={courseReview.author.profilePictureUrl}
-            alt={courseReview.id}
+            src={courseReviewAuthor && courseReviewAuthor.profileImgSaveUrl}
+            alt={courseReviewAuthor && courseReviewAuthor.nickname}
             width={'8rem'}
             height={'8rem'}
           />
           <S.CourseReviewAuthorNickname>
-            {/* {courseReview.author.nickname} */}
-            닉네임
+            {courseReviewAuthor && courseReviewAuthor.nickname}
           </S.CourseReviewAuthorNickname>
         </S.CourseReviewAuthorWrap>
         <S.CourseReviewContentWrap>
@@ -236,7 +245,7 @@ function CourseReview({
           <S.CourseReviewInnerContentWrap>
             <S.CourseReviewLikeCountWrap>
               <FaIcons.FaRegThumbsUp />
-              <span>{courseReview.likeCount}</span>
+              <span>{courseReviewLikeCount && courseReviewLikeCount}</span>
             </S.CourseReviewLikeCountWrap>
             {!isLikedCourseReview[0] && (
               <S.CourseReviewLikeButton

@@ -7,7 +7,6 @@ import axios from 'axios';
  *  setState : 가져온 값을 state 값으로 변경시켜주기 위한 Function
  */
 export const getCourseAuthor = (id, setState) => {
-  // const url = `${process.env.REACT_APP_AUTH_IP}/v1/view/info?id=author-id`;
   const url = `${process.env.REACT_APP_API}/view/info?id=author-id`;
   const config = {
     headers: {
@@ -622,7 +621,6 @@ export const getCourseAverageRate = (courseID, thenCallback, errorCallback) => {
  *  setState : 업데이트해줄 함수
  */
 export const getCourseLikeCount = (courseID, setState) => {
-  // const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${courseID}?filter=count&type=cosmost`;
   const url = `${process.env.REACT_APP_API}/popularities/${courseID}?filter=count&type=cosmost`;
   const config = {
     timeout: 3000,
@@ -631,7 +629,7 @@ export const getCourseLikeCount = (courseID, setState) => {
   axios
     .get(url, config)
     .then((result) => {
-      setState(result.data);
+      setState(result.data.courseThumbsCnt);
     })
     .catch((error) => {
       new Error(error);
@@ -701,7 +699,17 @@ export const handleLikeCourseReview = (
 };
 
 /** 코스 리뷰 좋아요 개수 조회 */
-const courseReviewLikeCount = () => {};
+export const fetchCourseReviewLikeCount = (id, setState) => {
+  const url = `${process.env.REACT_APP_API}/popularities/${id}?filter=count&type=review`;
+  const config = { timeout: 3000 };
+
+  axios
+    .get(url, config)
+    .then((response) => {
+      setState(response.data.courseReviewThumbsupCount);
+    })
+    .catch((error) => new Error(error));
+};
 
 /** 코스 좋아요 등록 및 취소 */
 export const handleLikeCourse = (
@@ -780,6 +788,67 @@ export const checkLikedCourse = (courseDetail, setIsLikedCourse, token) => {
     .then((response) => {
       setIsLikedCourse(response.data);
     })
+    .catch((error) => new Error(error));
+};
+
+/** 팔로우 혹은 언팔로우 */
+export const handleFollow = (
+  type,
+  followId,
+  setIsFollowedChanged,
+  isFollowedChanged
+) => {
+  const token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
+
+  const URLS = {
+    follow: `${process.env.REACT_APP_API}/popularities`,
+    unfollow: `${process.env.REACT_APP_API}/popularities/${followId}/following`,
+  };
+  const url = URLS[type];
+  const body = {
+    followingId: followId,
+    type: 'follow',
+  };
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    timeout: 3000,
+  };
+
+  if (type === 'follow') {
+    axios
+      .post(url, body, config)
+      .then((response) => {
+        setIsFollowedChanged(!isFollowedChanged);
+      })
+      .catch((error) => new Error(error));
+  } else {
+    axios
+      .delete(url, config)
+      .then((response) => {
+        setIsFollowedChanged(!isFollowedChanged);
+      })
+      .catch((error) => new Error(error));
+  }
+};
+
+/** 상대방과 팔로우 여부 조회 */
+export const fetchIsFollowed = (id, setIsFollowed) => {
+  const token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
+  const url = `${process.env.REACT_APP_API}/popularities/${id}?type=follow`;
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    timeout: 3000,
+  };
+
+  axios
+    .get(url, config)
+    .then((response) => setIsFollowed(response.data))
     .catch((error) => new Error(error));
 };
 
