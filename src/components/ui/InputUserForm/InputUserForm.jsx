@@ -226,6 +226,8 @@ function InputUserForm({ state, beforeEditUserInfo }) {
     return true;
   };
 
+  console.log("beforeEditUserInfo",beforeEditUserInfo);
+
   return (
     <UtilForm>
       <ToastContainer

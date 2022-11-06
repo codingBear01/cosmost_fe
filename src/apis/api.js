@@ -27,26 +27,158 @@ export const getCourseAuthor = (id, setState) => {
 };
 
 /** 사용자 주소 수정 */
-export const updateUserAddress = () => {};
+export const updateUserAddress = (e, token, beforeEditUserInfo, navigate, toast, detailAddress) => {
+  e.preventDefault();
+  const formData = new FormData();
+  const url = `${process.env.REACT_APP_API}/auths`;
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    timeout: 3000,
+  };
+
+  const updateBody2 = {
+    loginId: beforeEditUserInfo.loginId,
+    loginPwd: beforeEditUserInfo.loginPwd,
+    nickname: beforeEditUserInfo.nickname,
+    email: beforeEditUserInfo.email,
+    address: beforeEditUserInfo.address+" "+detailAddress,
+    role: beforeEditUserInfo.role,
+    sns: beforeEditUserInfo.sns,
+    status: beforeEditUserInfo.status,
+    ageGroup: beforeEditUserInfo.ageGroup,
+    married: beforeEditUserInfo.married,
+    type: '회원정보 수정',
+    profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
+    profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
+    profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
+  };
+
+  const updateBodyJson = JSON.stringify(updateBody2);
+  const updateBodyBlob = new Blob([updateBodyJson], {
+    type: 'application/json',
+  });
+
+  const profilePictureBlob = new Blob(['']);
+
+  formData.append('updateAuthRequest', updateBodyBlob);
+  formData.append('file', profilePictureBlob);
+
+  console.log("updateBody2", updateBody2)
+
+  axios
+    .put(url, formData, config)
+    .then((response) => {
+      //수정된 데이터 다시 가져와서 리다이렉트 하기
+      toast.success(response.data);
+      const url = `${process.env.REACT_APP_API}/auths`;
+      const config = {
+        headers: {
+          Authorization: token,
+        },
+        timeout: 1000,
+      };
+      axios
+        .get(url, config)
+        .then((resonse) => {
+          alert("주소 변경에 성공했습니다.");
+          navigate(`/user/edit/menu`, {
+            replace: true,
+            state: resonse.data,
+          });
+        })
+        .catch((error) => {
+          new Error(error);
+          toast.error(
+            '변경된 주소 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
+          );
+        });
+    })
+    .catch((error) => {
+      new Error(error);
+      toast.error('주소 변경에 실패했습니다. 관리자에게 문의하세요.');
+    });
+}
 
 /** 사용자 비밀번호 수정 */
-export const updateUserPassword = (e, checkPasswords, newPassword, responseIdKey, navigate) => {
+export const updateUserPassword = (e, beforeEditUserInfo, checkPasswords, token, oldPassword, newPassword, navigate, toast) => {
   e.preventDefault();
 
   if (!checkPasswords()) return;
 
-  const url = `${process.env.REACT_APP_API}/authorization/pwd/reissue/${responseIdKey}/${newPassword}`
-  const config = {timeout:3000}
+  const formData = new FormData();
+  const url = `${process.env.REACT_APP_API}/auths`;
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    timeout: 3000,
+  };
 
-  axios.put(url, config)
-  .then((result)=>{
-    alert(result.data);
-    navigate("/login");
-  })
-  .catch((error)=>{
-    console.log(error);
-  })
+  const updateBody2 = {
+    loginId: beforeEditUserInfo.loginId,
+    loginPwd: beforeEditUserInfo.loginPwd,
+    oldPwd: oldPassword,
+    newPwd: newPassword,
+    email: beforeEditUserInfo.email,
+    address: beforeEditUserInfo.address,
+    role: beforeEditUserInfo.role,
+    nickname: beforeEditUserInfo.nickname,
+    sns: beforeEditUserInfo.sns,
+    status: beforeEditUserInfo.status,
+    ageGroup: beforeEditUserInfo.ageGroup,
+    married: beforeEditUserInfo.married,
+    profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
+    profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
+    profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
+    type: '비밀번호 수정',
+  };
 
+  const updateBodyJson = JSON.stringify(updateBody2);
+  const updateBodyBlob = new Blob([updateBodyJson], {
+    type: 'application/json',
+  });
+
+  const profilePictureBlob = new Blob(['']);
+
+  formData.append('updateAuthRequest', updateBodyBlob);
+  formData.append('file', profilePictureBlob);
+
+  console.log("updateBody2", updateBody2)
+
+  axios
+    .put(url, formData, config)
+    .then((response) => {
+      //수정된 데이터 다시 가져와서 리다이렉트 하기
+      toast.success(response.data);
+      const url = `${process.env.REACT_APP_API}/auths`;
+      const config = {
+        headers: {
+          Authorization: token,
+        },
+        timeout: 1000,
+      };
+      axios
+        .get(url, config)
+        .then((resonse) => {
+          alert("비밀번호 변경에 성공했습니다.");
+          navigate(`/user/edit/menu`, {
+            replace: true,
+            state: resonse.data,
+          });
+        })
+        .catch((error) => {
+          new Error(error);
+          toast.error(
+            '변경된 비밀번호 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
+          );
+        });
+    })
+    .catch((error) => {
+      new Error(error);
+      toast.error('비밀번호 변경에 실패했습니다. 관리자에게 문의하세요.');
+    });
 };
 
 /** 입력된 아이디의 중복 여부를 확인하는 핸들러 */
@@ -244,6 +376,7 @@ export const signUpOrEditUser = (
           axios
             .get(url, config)
             .then((resonse) => {
+              alert("회원 정보를 수정하였습니다.");
               navigate('/user/edit/menu', {
                 replace: true,
                 state: resonse.data,
@@ -297,30 +430,18 @@ export const signUpOrEditUser = (
 /** 회원탈퇴 */
 export const withdrawUser = (
   e,
+  beforeEditUserInfo,
   passwordRef,
   token,
   setIsLoggedIn,
   navigate,
   toast
 ) => {
-  // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
+
+  e.preventDefault();
+
+  const formData = new FormData();
   const url = `${process.env.REACT_APP_API}/auths`;
-  const body = {
-    loginId: '111',
-    loginPwd: passwordRef.current.value,
-    email: '123@naver.com',
-    married: 'SINGLE',
-    nickname: '1',
-    address: '1',
-    ageGroup: '20대',
-    status: 'WITHDRAWL',
-    sns: 'NO',
-    role: 'USER',
-    profileImgOriginName: '1',
-    profileImgSaveName: 's3',
-    profileImgSaveUrl: '1',
-    type: e.target.value,
-  };
   const config = {
     headers: {
       Authorization: token,
@@ -328,17 +449,88 @@ export const withdrawUser = (
     timeout: 3000,
   };
 
+  const updateBody2 = {
+    loginId: beforeEditUserInfo.loginId,
+    loginPwd: passwordRef.current.value,
+    email: beforeEditUserInfo.email,
+    married: beforeEditUserInfo.married,
+    nickname: beforeEditUserInfo.nickname,
+    address: beforeEditUserInfo.address,
+    ageGroup: beforeEditUserInfo.ageGroup,
+    status: beforeEditUserInfo.status,
+    sns: beforeEditUserInfo.sns,
+    role: beforeEditUserInfo.role,
+    profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
+    profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
+    profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
+    type: '회원 탈퇴',
+  };
+
+  const updateBodyJson = JSON.stringify(updateBody2);
+  const updateBodyBlob = new Blob([updateBodyJson], {
+    type: 'application/json',
+  });
+
+  const profilePictureBlob = new Blob(['']);
+
+  formData.append('updateAuthRequest', updateBodyBlob);
+  formData.append('file', profilePictureBlob);
+
+  console.log("updateBody2", updateBody2)
+
   axios
-    .put(url, body, config)
+    .put(url, formData, config)
     .then((response) => {
       localStorage.removeItem('token');
       setIsLoggedIn(false);
-      navigate('/withdrawal-message');
+      alert("회원 탈퇴하였습니다.")
+      navigate('/');
     })
     .catch((error) => {
       new Error(error);
-      toast.error('회원탈퇴에 실패했습니다. 관리자에게 문의하세요.');
+      toast.error('회원 탈퇴에 실패했습니다. 관리자에게 문의하세요.');
     });
+
+  // const url = `${process.env.REACT_APP_API}/auths`;
+  // const body = {
+    // loginId: beforeEditUserInfo.loginId,
+    // loginPwd: passwordRef.current.value,
+    // email: beforeEditUserInfo.email,
+    // married: beforeEditUserInfo.married,
+    // nickname: beforeEditUserInfo.nickname,
+    // address: beforeEditUserInfo.address,
+    // ageGroup: beforeEditUserInfo.ageGroup,
+    // status: beforeEditUserInfo.status,
+    // sns: beforeEditUserInfo.sns,
+    // role: beforeEditUserInfo.role,
+    // profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
+    // profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
+    // profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
+    // type: '회원 탈퇴',
+  // };
+
+  // const config = {
+  //   headers: {
+  //     Authorization: token,
+  //   },
+  //   timeout: 3000,
+  // };
+
+  // console.log("body", body);
+
+  // axios
+  //   .put(url, body, config)
+  //   .then((response) => {
+  //     localStorage.removeItem('token');
+  //     setIsLoggedIn(false);
+  //     alert("회원 탈퇴하였습니다.")
+  //     navigate('/');
+  //   })
+  //   .catch((error) => {
+  //     new Error(error);
+  //     console.log(error);
+  //     toast.error('회원탈퇴에 실패했습니다. 관리자에게 문의하세요.');
+  //   });
 };
 
 /* Cosmost */

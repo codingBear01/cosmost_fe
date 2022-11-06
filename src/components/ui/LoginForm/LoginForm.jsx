@@ -17,6 +17,7 @@ import * as FcIcons from 'react-icons/fc';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 import { GiToken } from 'react-icons/gi';
+import { useEffect } from 'react';
 
 /* CONSTANTS */
 const { Kakao } = window;
@@ -73,6 +74,10 @@ function LoginForm() {
 
   /* 네이버 로그인 핸들러 */
   const onClickLoginWithNaver = () => {
+
+
+
+
     // const url = `${process.env.REACT_APP_AUTH_IP}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
     const url = `${process.env.REACT_APP_API}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
     const config = {
@@ -83,6 +88,16 @@ function LoginForm() {
     };
     console.log('naver');
   };
+
+  useEffect(()=>{
+    var naver_id_login = new window.naver_id_login(process.env.REACT_APP_X_NAVER_CLIENT_ID, "http://localhost:3000");
+    var state = naver_id_login.getUniqState();
+    naver_id_login.setButton("white", 2,40);
+    naver_id_login.setDomain("YOUR_SERVICE_URL");
+    naver_id_login.setState(state);
+    naver_id_login.setPopup();
+    naver_id_login.init_naver_id_login();
+  },[])
 
   return (
     <UtilForm
@@ -164,7 +179,8 @@ function LoginForm() {
           <span>이메일로 회원가입</span>
         </Button>
       </Link>
-      <Button
+      <div id='naver_id_login'>
+      {/* <Button
         type="button"
         width={'340px'}
         height={'40px'}
@@ -176,7 +192,9 @@ function LoginForm() {
         onClick={onClickLoginWithNaver}
       >
         <SiIcons.SiNaver />
-      </Button>
+      </Button> */}
+      </div>
+
     </UtilForm>
   );
 }

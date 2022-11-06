@@ -30,15 +30,24 @@ function InputEmailForm({ beforeEditUserInfo }) {
   const isFindUserPage = pathname.includes('find');
 
   const PAGE_TYPES = {
+    //회원가입 시 이메일 인증
     '/email-validation': {
       address: '/address',
       certificationNumberSendingType: 'email',
       certificationNumberComparingType: 'code/confirm',
     },
+    //아이디 또는 패스워드 찾을 시 이메일 인증
     '/find/email-validation': {
       address: `/find/${location.state}`,
       certificationNumberSendingType: location.state,
       certificationNumberComparingType: `${location.state}/reissue`,
+    },
+     //이메일 수정 시 이메일 인증  
+    '/user/edit/email' : {
+      address: '/address',
+      certificationNumberSendingType: 'email',
+      certificationNumberComparingType: 'code/confirm',
+      placeholder : "변경할 이메일을 입력해주세요."
     },
   };
 
@@ -217,7 +226,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
     if (!checkIsCertificationNumberButtonClicked(e)) return;
 
     const formData = new FormData();
-    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
     const url = `${process.env.REACT_APP_API}/auths`;
     const config = {
       headers: {
@@ -228,15 +236,15 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
     const updateBody2 = {
       loginId: beforeEditUserInfo.loginId,
-      loginPwd: '',
+      loginPwd: beforeEditUserInfo.loginPwd,
       nickname: beforeEditUserInfo.nickname,
       email: emailRef.current.value,
       address: beforeEditUserInfo.address,
       role: beforeEditUserInfo.role,
       sns: beforeEditUserInfo.sns,
       status: beforeEditUserInfo.status,
-      ageGroup: '',
-      married: '',
+      ageGroup: beforeEditUserInfo.ageGroup,
+      married: beforeEditUserInfo.married,
       type: '회원정보 수정',
       profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
       profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
@@ -253,12 +261,13 @@ function InputEmailForm({ beforeEditUserInfo }) {
     formData.append('updateAuthRequest', updateBodyBlob);
     formData.append('file', profilePictureBlob);
 
+    console.log("updateBody2", updateBody2)
+
     axios
       .put(url, formData, config)
       .then((response) => {
         //수정된 데이터 다시 가져와서 리다이렉트 하기
         toast.success(response.data);
-        // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
         const url = `${process.env.REACT_APP_API}/auths`;
         const config = {
           headers: {
@@ -269,6 +278,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
         axios
           .get(url, config)
           .then((resonse) => {
+            alert("이메일 변경에 성공했습니다.")
             navigate(`/user/edit/menu`, {
               replace: true,
               state: resonse.data,
@@ -287,6 +297,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
       });
   };
 
+  console.log("beforeEditUserInfo", beforeEditUserInfo);
   return (
     <>
       <UtilTitle>이메일 주소 {isEditEmailPage ? '변경' : '인증'}</UtilTitle>
@@ -298,7 +309,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
           ref={emailRef}
           defaultValue={isEditEmailPage ? beforeEditUserInfo.email : ''}
           type="email"
-          placeholder="이메일"
+          placeholder={PAGE_TYPES[pathname].placeholder || "이메일"}
           name="email"
           width={'205px'}
           height={'40px'}

@@ -44,7 +44,7 @@ function MenuListForm({ onClickOpenReportForm }) {
             <span>이메일 변경</span>
           </S.MenuItem>
         </Link>
-        <Link to="/user/edit/address">
+        <Link to="/user/edit/address" state={user}>
           <S.MenuItem>
             <AiIcons.AiOutlineHome />
             <span>주소 변경</span>
@@ -62,7 +62,7 @@ function MenuListForm({ onClickOpenReportForm }) {
             <span>비밀번호 변경</span>
           </S.MenuItem>
         </Link>
-        <Link to="/user/withdrawal">
+        <Link to="/user/withdrawal" state={user}>
           <S.MenuItem style={{ fontSize: '16px' }}>
             <TbIcons.TbUserOff />
             <span>회원 탈퇴</span>
