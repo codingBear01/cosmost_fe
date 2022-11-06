@@ -100,18 +100,18 @@ function InputUserForm({ state, beforeEditUserInfo }) {
       setIsDuplicatedIdChecked(true);
 
       //ID와 닉네임, 프로필 관련 에러가 없음을 나타내는 state 값을 전달
-      setEmptyInputError({
-        ...emptyInputError,
-        idEmpty: false,
-        nicknameEmpty: false,
-        profilePictureUrlEmpty: false,
-      });
-      setInputError({
-        ...inputError,
-        idError: false,
-        nicknameError: false,
-        profilePictureUrlError: false,
-      });
+        setEmptyInputError({
+          ...emptyInputError,
+          idEmpty: false,
+          nicknameEmpty: false,
+          profilePictureUrlEmpty: false,
+        });
+        setInputError({
+          ...inputError,
+          idError: false,
+          nicknameError: false,
+          profilePictureUrlError: false,
+        });
     }
   }, []);
 
@@ -225,6 +225,8 @@ function InputUserForm({ state, beforeEditUserInfo }) {
     }
     return true;
   };
+
+  console.log("beforeEditUserInfo",beforeEditUserInfo);
 
   return (
     <UtilForm>

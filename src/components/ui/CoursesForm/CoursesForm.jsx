@@ -171,7 +171,7 @@ function CoursesForm() {
             courses.map((course, index) => (
               <Link
                 to={`/course-detail/${course.id || course.courseId}`}
-                key={course.id || course.courseId}
+                key={index}
               >
                 <Course course={course} />
               </Link>
