@@ -14,7 +14,7 @@ import { withdrawUser } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 
-function WithdrawUserForm({beforeEditUserInfo}) {
+function WithdrawUserForm({ beforeEditUserInfo }) {
   const navigate = useNavigate();
 
   /* States */
@@ -36,7 +36,7 @@ function WithdrawUserForm({beforeEditUserInfo}) {
       toast.error('비밀번호를 입력해주세요.');
       return false;
     }
-    
+
     return true;
   };
 
@@ -57,7 +57,7 @@ function WithdrawUserForm({beforeEditUserInfo}) {
     }
   }, [isDeleteConfirmationMessageDisplayed]);
 
-  console.log("beforeEditUserInfo", beforeEditUserInfo)
+  console.log('beforeEditUserInfo', beforeEditUserInfo);
 
   return (
     <>
@@ -103,7 +103,15 @@ function WithdrawUserForm({beforeEditUserInfo}) {
           bgColor={color.red}
           hoveredBgColor={color.darkRed}
           onClick={(e) =>
-            withdrawUser(e, beforeEditUserInfo, passwordRef, token, setIsLoggedIn, navigate, toast)
+            withdrawUser(
+              e,
+              beforeEditUserInfo,
+              passwordRef,
+              token,
+              setIsLoggedIn,
+              navigate,
+              toast
+            )
           }
           value="회원 탈퇴"
         >

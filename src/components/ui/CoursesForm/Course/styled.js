@@ -19,7 +19,7 @@ export const StyledCourse = styled.div`
   background-color: ${color.white};
   color: ${color.black};
   ${media.mobile} {
-    width: 95%;
+    width: 50rem;
   }
 `;
 

@@ -1,4 +1,7 @@
-import React, { useRef } from 'react';
+import React from 'react';
+/* Recoil */
+import { useRecoilState } from 'recoil';
+import { queryStringsStateAtom, searchingTypeAtom } from '../../../../store';
 /* components */
 import * as S from './styled';
 import { Icon, Input } from '../../../';
@@ -16,6 +19,12 @@ function HeaderSearchBar({
 }) {
   const navigate = useNavigate();
 
+  /* States */
+  const [queryStringsState, setQueryStringsState] = useRecoilState(
+    queryStringsStateAtom
+  );
+  const [searchingType, setSearchingType] = useRecoilState(searchingTypeAtom);
+
   /** 검색 키워드를 입력했을 때 호출할 핸들러*/
   const onChangeSearchInput = (e) => {
     setSearchKeyword(e.target.value);
@@ -25,6 +34,8 @@ function HeaderSearchBar({
   const handleSearchKeyword = (e) => {
     if (e.type === 'click' || e.code === 'Enter') {
       setIsSearchBarOpened(false);
+      setSearchingType('search');
+      setQueryStringsState(!queryStringsState);
       navigate(`/courses/keyword?keyword=${searchKeyword}`);
     }
   };

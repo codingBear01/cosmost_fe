@@ -493,7 +493,6 @@ function InputUserForm({ state, beforeEditUserInfo }) {
               userInformation,
               isEditUserPage,
               beforeEditUserInfo,
-              token,
               toast,
               navigate,
               printFormData
@@ -523,7 +522,6 @@ function InputUserForm({ state, beforeEditUserInfo }) {
               userInformation,
               isEditUserPage,
               beforeEditUserInfo,
-              token,
               toast,
               navigate,
               printFormData

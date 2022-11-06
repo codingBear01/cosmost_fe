@@ -5,7 +5,7 @@ import * as S from './styled';
 import { UtilDiv } from '../..';
 import { RankersContainer } from '.';
 /* static data */
-import { RANKERS } from '../../../store';
+// import { RANKERS } from '../../../store';
 
 const RANKERS_CONTENTS = [
   {
@@ -33,12 +33,12 @@ function RankersForm() {
       margin={'0 auto'}
       padding={'10rem 0'}
     >
-      {RANKERS_CONTENTS.map((item, i) => (
+      {/* {RANKERS_CONTENTS.map((item, i) => (
         <div key={item.id}>
           <S.RankersType>{item.title}</S.RankersType>
           <RankersContainer i={i} type={item.type} rankers={RANKERS} />
         </div>
-      ))}
+      ))} */}
     </UtilDiv>
   );
 }

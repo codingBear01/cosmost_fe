@@ -38,7 +38,6 @@ const WithHeaderAndFooter = () => {
       <Header />
       <Outlet />
       <Footer />
-      <OrderingModal />
     </>
   );
 };

@@ -27,7 +27,7 @@ function ReportForm({
   const reportCategory = useRef();
 
   /* Handlers */
-  /* 모달창 닫힐 시 입력값 초기화 */
+  /** 모달창 닫힐 시 입력값 초기화 */
   useEffect(() => {
     if (type === 'update') {
       reportTitle.current.value = '';
@@ -98,10 +98,6 @@ function ReportForm({
           </S.ReportHistoryCat>
         ) : (
           <S.ReportFormCats ref={reportCategory}>
-            <option value="default">신고 유형</option>
-            <option value={1}>사용자</option>
-            <option value={2}>코스</option>
-            <option value={3}>리뷰</option>
             {reportCategories &&
               reportCategories.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -159,7 +155,7 @@ function ReportForm({
               취소
             </Button>
             <Button
-              type="submit"
+              type="button"
               width={'8rem'}
               height={'3.5rem'}
               margin={'0 3rem'}
@@ -170,7 +166,6 @@ function ReportForm({
                 !type
                   ? (e) =>
                       postReport(
-                        e,
                         checkReportInput,
                         reportTitle,
                         reportContent,
@@ -181,7 +176,6 @@ function ReportForm({
                       )
                   : (e) =>
                       updateReport(
-                        e,
                         report.id,
                         checkReportInput,
                         reportTitle,
