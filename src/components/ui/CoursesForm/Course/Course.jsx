@@ -73,7 +73,7 @@ function Course({ course, courseId }) {
           {courseState.hashtagList.map((hashTag) => (
             <Link
               key={hashTag.id}
-              to={`/courses/hashtags?keyword=${hashTag.keyword}`}
+              to={`/courses/hashtag?keyword=${hashTag.keyword}`}
             >
               <S.CourseTag>{hashTag?.keyword}</S.CourseTag>
             </Link>

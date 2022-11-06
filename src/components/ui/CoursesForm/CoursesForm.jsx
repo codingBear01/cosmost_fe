@@ -57,7 +57,7 @@ function CoursesForm() {
 
     if (
       (type === 'keyword' && searchingType === 'search') ||
-      type === 'hastags'
+      type === 'hashtag'
     ) {
       url = `${
         process.env.REACT_APP_API
@@ -93,6 +93,7 @@ function CoursesForm() {
       url = `${process.env.REACT_APP_API}/popularities?type=cosmost&sort=id,desc&page=${page.current}&size=4`;
     }
 
+    console.log(type);
     return url;
   };
 
@@ -108,6 +109,8 @@ function CoursesForm() {
           categoryNumber,
           searchingType
         );
+
+        console.log(url);
         if (!url) return;
 
         const config =

@@ -225,7 +225,7 @@ function CourseContentWrap({
             return (
               <Link
                 key={item.id}
-                to={`/courses/hashtags?keyword=${item.keyword}`}
+                to={`/courses/hashtag?keyword=${item.keyword}`}
               >
                 <CourseContent>
                   <p>{`#${item.keyword}`}</p>
