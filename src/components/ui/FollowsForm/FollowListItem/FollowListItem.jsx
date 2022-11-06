@@ -21,6 +21,8 @@ function FollowListItem({ follow, isFollower }) {
   const [isFollowed, setIsFollowed] = useState([]);
   const [isFollowedChanged, setIsFollowedChanged] = useState(false);
 
+  console.log(isFollower);
+
   /* APIs */
   /** 코스 리뷰 작성자 조회 */
   useEffect(() => {

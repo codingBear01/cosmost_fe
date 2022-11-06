@@ -89,6 +89,9 @@ function CoursesForm() {
     ) {
       url = `${process.env.REACT_APP_API}/cosmosts?keyword=${searchKeyword}&category=${searchingType}&name-id=${categoryNumber}&size=4&page=${page.current}&sort=course,desc`;
     }
+    if (type === 'likes') {
+      url = `${process.env.REACT_APP_API}/popularities?type=cosmost&sort=id,desc&page=${page.current}&size=4`;
+    }
 
     return url;
   };
@@ -105,11 +108,10 @@ function CoursesForm() {
           categoryNumber,
           searchingType
         );
-        console.log('url', url);
         if (!url) return;
 
         const config =
-          type === 'auth'
+          type === 'auth' || type === 'likes'
             ? {
                 headers: {
                   Authorization: token,
@@ -180,17 +182,23 @@ function CoursesForm() {
       <OrderingModal />
       <UtilDiv width={'76.8rem'} padding={'9rem 0 7rem'} margin={'0 auto'}>
         {/* 카테고리 선택 영역 */}
-        {params.type !== 'mine' && (
+        {params.type !== 'auth' && params.type !== 'likes' ? (
           <SelectingCategoryArea
             setCategoryId={setCategoryId}
             setSearchingType={setSearchingType}
           />
+        ) : (
+          <></>
         )}
         {/* 정렬 기준 버튼 */}
-        <OrderingButton
-          onClick={onClickOpenOrderingModal}
-          sortType={courseSortType}
-        />
+        {params.type !== 'auth' && params.type !== 'likes' ? (
+          <OrderingButton
+            onClick={onClickOpenOrderingModal}
+            sortType={courseSortType}
+          />
+        ) : (
+          <></>
+        )}
         {/* 코스 검색 결괏값 */}
         <S.SearchedCourseContainer>
           {courses.length ? (
@@ -205,7 +213,7 @@ function CoursesForm() {
             <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
           )}
         </S.SearchedCourseContainer>
-        {courses[0] && isLoading && <Loading />}
+        {isLoading && <Loading />}
         <div ref={observedTarget}></div>
         <ToTopBtn />
       </UtilDiv>

@@ -12,6 +12,7 @@ function Button({
   bgColor,
   hoveredBgColor,
   value,
+  disabled,
   onClick,
   children,
 }) {
