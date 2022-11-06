@@ -1,6 +1,6 @@
 /* libraries */
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 /* components */
@@ -19,8 +19,12 @@ import { COLOR_LIST as color } from '../../../style';
 
 function InputDetailAddressForm({ state }) {
   /* Path */
+  const token = localStorage.getItem("token");
   const path = useLocation().pathname;
-  const isDetailAddressPage = path.includes('detail');
+  const isDetailAddressPage = path.includes('edit');
+  const navigate = useNavigate();
+
+
   const [detailAddress, setDetailAddress] = useState('');
 
   /* Handlers */
@@ -37,6 +41,7 @@ function InputDetailAddressForm({ state }) {
     }
   };
 
+  console.log("path",path);
   return (
     <UtilForm>
       <UtilTitle>상세 주소를 입력해주세요.</UtilTitle>
@@ -59,27 +64,27 @@ function InputDetailAddressForm({ state }) {
           onChange={onChangeDetailAddress}
         />
       </UtilInputWrap>
-      {/* 다음으로 버튼 */}
-      {isDetailAddressPage && (
+        {/* 다음으로 버튼 */}
+        {!isDetailAddressPage && (
         <NextBtn
-          to={'/sign-up'}
-          state={{ ...state, detailAddress }}
-          onClick={onClickCheckInput}
+        to={'/sign-up'}
+        state={{ ...state, detailAddress }}
+        onClick={onClickCheckInput}
         />
-      )}
+        )}
       {/* 수정 버튼 */}
-      {!isDetailAddressPage && (
+      {isDetailAddressPage && (
         <Button
-          type="submit"
-          width={'100%'}
-          height={'40px'}
-          color={color.white}
-          bgColor={color.darkBlue}
-          hoveredBgColor={color.navy}
-          onClick={updateUserAddress}
-        >
-          수정
-        </Button>
+        type="submit"
+        width={'100%'}
+        height={'40px'}
+        color={color.white}
+        bgColor={color.darkBlue}
+        hoveredBgColor={color.navy}
+        onClick={(e) => {updateUserAddress(e,token, state, navigate, toast, detailAddress)}}
+      >
+        수정
+      </Button>
       )}
       <ToastContainer
         position="top-center"

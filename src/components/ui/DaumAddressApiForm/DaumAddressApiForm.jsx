@@ -1,5 +1,5 @@
 /* libraries */
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 /* components */
@@ -13,13 +13,22 @@ import './style.css';
 
 function DaumAddressApiModal({ state }) {
   const navigate = useNavigate();
+  const path = useLocation().pathname;
 
   /* 사용자가 주소창에서 주소를 선택했을 시 호출할 핸들러 
      주소 상세 페이지로 리다이렉트하며 이 때 사용자가 선택한 주소값을 다음 페이지로 전달한다. */
   const onCompleteAddressModal = (result) => {
-    navigate('/detail-address', {
-      state: { ...state, address: result.address },
-    });
+    if(path.includes("edit"))
+      {
+        navigate('/user/edit/detail-address', {
+          state: { ...state, address: result.address },
+        });
+    }
+    else{
+      navigate('/detail-address', {
+        state: { ...state, address: result.address },
+      });
+    }
   };
 
   /*API 모달창에서 현재 위치로 설정 버튼 클릭시 호출할 핸들러
@@ -47,9 +56,18 @@ function DaumAddressApiModal({ state }) {
 
             let result = response.result,
               Address = result.items[1];
-            navigate('/detail-address', {
-              state: { ...state, address: Address.address },
-            });
+
+            if(path.includes("edit"))
+            {
+               navigate('/user/edit/detail-address', {
+                  state: { ...state, address: Address.address },
+                });
+            }
+            else{
+              navigate('/detail-address', {
+                state: { ...state, address: Address.address },
+              });
+            }
           }
         );
       },
@@ -71,7 +89,8 @@ function DaumAddressApiModal({ state }) {
       }
     );
   };
-
+  console.log(state);
+  
   return (
     <S.AddressApiWrap>
       <S.GettingCurrentLocationButtonWrap>
