@@ -479,6 +479,7 @@ export const withdrawUser = (
   e,
   beforeEditUserInfo,
   passwordRef,
+  token,
   setIsLoggedIn,
   navigate,
   toast
@@ -502,7 +503,7 @@ export const withdrawUser = (
     nickname: beforeEditUserInfo.nickname,
     address: beforeEditUserInfo.address,
     ageGroup: beforeEditUserInfo.ageGroup,
-    status: beforeEditUserInfo.status,
+    status: "WITHDRAWL",
     sns: beforeEditUserInfo.sns,
     role: beforeEditUserInfo.role,
     profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
@@ -516,22 +517,26 @@ export const withdrawUser = (
     type: 'application/json',
   });
 
-  const profilePictureBlob = new Blob(['']);
+
 
   formData.append('updateAuthRequest', updateBodyBlob);
-  formData.append('file', profilePictureBlob);
+
 
   console.log('updateBody2', updateBody2);
+
+  console.log("token", token);
 
   axios
     .put(url, formData, config)
     .then((response) => {
+      console.log(response);
       localStorage.removeItem('token');
       setIsLoggedIn(false);
       alert('회원 탈퇴하였습니다.');
       navigate('/');
     })
     .catch((error) => {
+      console.log(error);
       new Error(error);
       toast.error('회원 탈퇴에 실패했습니다. 관리자에게 문의하세요.');
     });
