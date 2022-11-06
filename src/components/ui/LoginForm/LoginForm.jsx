@@ -74,19 +74,19 @@ function LoginForm() {
 
   /* 네이버 로그인 핸들러 */
   const onClickLoginWithNaver = () => {
+    navigate("/naver/email-validation");
 
 
 
-
-    // const url = `${process.env.REACT_APP_AUTH_IP}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
-    const url = `${process.env.REACT_APP_API}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
-    const config = {
-      headers: {
-        Authorization: 'token',
-      },
-      timeout: 3000,
-    };
-    console.log('naver');
+    // // const url = `${process.env.REACT_APP_AUTH_IP}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
+    // const url = `${process.env.REACT_APP_API}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
+    // const config = {
+    //   headers: {
+    //     Authorization: 'token',
+    //   },
+    //   timeout: 3000,
+    // };
+    // console.log('naver');
   };
 
   useEffect(()=>{
@@ -97,7 +97,7 @@ function LoginForm() {
     // naver_id_login.setState(state);
     // // naver_id_login.setPopup();
     // naver_id_login.init_naver_id_login();
-    
+ 
 
   },[])
  

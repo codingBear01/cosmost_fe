@@ -28,6 +28,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
   const isEditEmailPage = pathname.includes('edit');
   const isFindUserPage = pathname.includes('find');
+  const isNaverUserPage = pathname.includes('naver');
 
   const PAGE_TYPES = {
     //회원가입 시 이메일 인증
@@ -48,6 +49,13 @@ function InputEmailForm({ beforeEditUserInfo }) {
       certificationNumberSendingType: 'email',
       certificationNumberComparingType: 'code/confirm',
       placeholder : "변경할 이메일을 입력해주세요."
+    },
+     //네이버 로그인 시 이메일 인증  
+     '/naver/email-validation' : {
+      address: '/naver/address',
+      certificationNumberSendingType: 'email',
+      certificationNumberComparingType: 'code/confirm',
+      placeholder : "네이버 이메일을 입력해주세요."
     },
   };
 
@@ -309,7 +317,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
           ref={emailRef}
           defaultValue={isEditEmailPage ? beforeEditUserInfo.email : ''}
           type="email"
-          placeholder={PAGE_TYPES[pathname].placeholder || "이메일"}
+          placeholder={PAGE_TYPES[pathname]?.placeholder || "이메일"}
           name="email"
           width={'205px'}
           height={'40px'}
@@ -355,7 +363,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
       {/* 다음으로 버튼*/}
       {!isEditEmailPage && (
         <NextBtn
-          to={PAGE_TYPES[pathname].address}
+          to={PAGE_TYPES[pathname]?.address}
           state={isFindUserPage ? responseId : { email: email }}
           onClick={onClickTransferNextPage}
         />

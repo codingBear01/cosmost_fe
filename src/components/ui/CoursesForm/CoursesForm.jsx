@@ -41,6 +41,8 @@ function CoursesForm() {
     queryStringsStateAtom
   );
 
+
+
   const page = useRef(0);
   const observedTarget = useRef(null);
   const params = useParams();
@@ -165,6 +167,7 @@ function CoursesForm() {
     if (!observedTarget.current || isLastPage) return;
 
     const io = new IntersectionObserver((entries, observer) => {
+      debugger;
       if (entries[0].isIntersecting) {
         getCourses(params.type, queryStrings.get('keyword'), categoryId);
       }
