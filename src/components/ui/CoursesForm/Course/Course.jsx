@@ -48,7 +48,7 @@ function Course({ course, courseId }) {
         {/* 코스 제목, 평점 */}
         <S.CourseContentWrap justifyContent={'space-between'}>
           <S.CourseTitle>
-            {courseState.courseTitle.slice(0, 20)}
+            {courseState.courseTitle.substring(0, 20)}
             {courseState.courseTitle.length > 20 && '...'}
           </S.CourseTitle>
           <S.CoursePopularityWrap>
