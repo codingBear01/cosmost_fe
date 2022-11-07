@@ -86,7 +86,6 @@ export const updateUserAddress = (
       axios
         .get(url, config)
         .then((resonse) => {
-          alert('주소 변경에 성공했습니다.');
           navigate(`/user/edit/menu`, {
             replace: true,
             state: resonse.data,
@@ -173,7 +172,6 @@ export const updateUserPassword = (
       axios
         .get(url, config)
         .then((resonse) => {
-          alert('비밀번호 변경에 성공했습니다.');
           navigate(`/user/edit/menu`, {
             replace: true,
             state: resonse.data,
@@ -202,7 +200,6 @@ export const checkIsDuplicatedId = (
 ) => {
   if (!checkIsIdOrNicknameEmpty('id')) return;
 
-  // const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=login-id`;
   const url = `${process.env.REACT_APP_API}/validation/duplicate?id=login-id`;
   const config = {
     headers: {
@@ -288,7 +285,6 @@ export const signUpOrEditUser = (
   });
 
   if (ErrorCheck) {
-    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
     let url;
 
     const [profileImgSaveUrl] = base64ImgSrcToImgBinaryData(
@@ -442,7 +438,6 @@ export const signUpOrEditUser = (
 
       formData.append('file', profilePictureBlob);
 
-      console.log('signUpBody', signUpBody);
       printFormData(formData);
       axios
         .post(url, formData, config)
@@ -456,7 +451,6 @@ export const signUpOrEditUser = (
           }
         })
         .catch((error) => {
-          console.log(error);
           toast.error('회원가입에 실패했습니다. 관리자에게 문의하세요.');
         });
     }
@@ -515,8 +509,7 @@ export const withdrawUser = (
     .then((response) => {
       localStorage.removeItem('token');
       setIsLoggedIn(false);
-      alert('회원 탈퇴하였습니다.');
-      navigate('/');
+      navigate('/withdrawal-message');
     })
     .catch((error) => {
       new Error(error);
@@ -1063,6 +1056,40 @@ export const likedCourseReview = (id, setIsLikedCourseReview, token) => {
   axios
     .get(url, config)
     .then((response) => setIsLikedCourseReview(response.data))
+    .catch((error) => new Error(error));
+};
+
+/** 나의 팔로워 수 조회 */
+export const fetchMyFollowersCount = (token, setMyFollowersCount) => {
+  const url = `${process.env.REACT_APP_API}/popularities?filter=auth&type=follower&sort=id,desc&page=0&size=4`;
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    timeout: 3000,
+  };
+
+  axios
+    .get(url, config)
+    .then((response) => setMyFollowersCount(response.data[0].readMyFollewerCnt))
+    .catch((error) => new Error(error));
+};
+
+/** 나의 팔로잉 수 조회 */
+export const fetchMyFollowingsCount = (token, setMyFollowingsCount) => {
+  const url = `${process.env.REACT_APP_API}/popularities?filter=auth&type=following&sort=id,desc&page=0&size=4`;
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    timeout: 3000,
+  };
+
+  axios
+    .get(url, config)
+    .then((response) =>
+      setMyFollowingsCount(response.data[0].readMyFollowingCnt)
+    )
     .catch((error) => new Error(error));
 };
 

@@ -14,10 +14,10 @@ import {
 /* static data */
 import { COLOR_LIST as color } from '../../../../style';
 
-function FollowListItem({ follow, isFollower }) {
+function FollowListItem({ follow, isFollowing }) {
   const [user, setUser] = useState('');
-  const followId = isFollower ? follow.authId : follow.followingId;
-  const myId = isFollower ? follow.followingId : follow.authId;
+  const followId = isFollowing ? follow.followingId : follow.authId;
+  const myId = isFollowing ? follow.authId : follow.followingId;
   const [isFollowed, setIsFollowed] = useState([]);
   const [isFollowedChanged, setIsFollowedChanged] = useState(false);
 

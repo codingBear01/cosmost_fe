@@ -48,6 +48,6 @@ export const ProfileUtilWrap = styled.div`
 export const UserInfoWrap = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 100%;
 `;

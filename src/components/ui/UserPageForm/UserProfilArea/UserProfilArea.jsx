@@ -8,10 +8,26 @@ import { userAtom } from '../../../../store';
 /* components */
 import * as S from './styled';
 import { Button, ProfilePic } from '../../../';
+/* APIs */
+import {
+  fetchMyFollowersCount,
+  fetchMyFollowingsCount,
+} from '../../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../../style';
 
 function UserProfilArea({ token, user }) {
+  const [myFollowersCount, setMyFollowersCount] = useState(0);
+  const [myFollowingsCount, setMyFollowingsCount] = useState(0);
+
+  /* APIs */
+
+  useEffect(() => {
+    if (token) {
+      fetchMyFollowersCount(token, setMyFollowersCount);
+      fetchMyFollowingsCount(token, setMyFollowingsCount);
+    }
+  }, []);
   return (
     <S.ProfileWrap>
       {/* 프로필 사진 */}
@@ -27,17 +43,13 @@ function UserProfilArea({ token, user }) {
       {/* 유저 정보 */}
       <S.ProfileUtilWrap>
         <S.UserInfoWrap>
-          <Link to="/">
-            <span>랭킹</span>
-            <span>1</span>
-          </Link>
           <Link to="followers">
             <span>팔로워</span>
-            <span>100</span>
+            <span>{myFollowersCount}</span>
           </Link>
           <Link to="followings">
             <span>팔로잉</span>
-            <span>100</span>
+            <span>{myFollowingsCount}</span>
           </Link>
         </S.UserInfoWrap>
         <Link to="/user/edit/menu" state={user}>

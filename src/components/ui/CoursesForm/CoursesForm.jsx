@@ -117,7 +117,6 @@ function CoursesForm() {
         );
 
         if (!url) return;
-        console.log('url', url);
 
         const config =
           type === 'auth' || type === 'likes'
@@ -148,6 +147,8 @@ function CoursesForm() {
 
         const result = await axios.get(url, config);
         const { data } = result;
+        console.log(url);
+        console.log(data);
 
         if (data.length == 0) {
           data.push({ whetherLastPage: false });
@@ -164,7 +165,7 @@ function CoursesForm() {
         new Error(error);
       }
     },
-    [page.current, categoryId, searchingType, queryStringsState, isLastPage]
+    [page.current, queryStrings]
   );
 
   //정렬 표시
@@ -185,18 +186,14 @@ function CoursesForm() {
 
   /** 쿼리스트링이 변경될 때마다 호출되는 useEffect. IsLastPage와 Course State를 초기화한다.*/
   useEffect(() => {
-    console.log('쿼리스트링이 isLastPage', isLastPage);
-    setIsLastPage(false);
-
     setCourses([]);
+    setIsLastPage(false);
     setQueryStringsState(!queryStringsState);
     page.current = 0;
-  }, [params.type, queryStrings, categoryId, searchingType]);
+  }, [queryStrings]);
 
   /** 무한 스크롤을 위해 observing을 하는 함수 */
   useEffect(() => {
-    console.log('무한 스크롤 isLastPage', isLastPage);
-    console.log('AS', !observedTarget.current);
     if (!observedTarget.current || isLastPage) return;
 
     const io = new IntersectionObserver((entries, observer) => {
@@ -212,9 +209,7 @@ function CoursesForm() {
     io.observe(observedTarget.current);
 
     return () => io.disconnect();
-  }, [isLastPage, page.current, categoryId, searchingType, queryStringsState]);
-
-  console.log('courses', courses);
+  }, [page.current, queryStrings]);
 
   return (
     <>
@@ -231,27 +226,31 @@ function CoursesForm() {
           <></>
         )}
         {/* 정렬 기준 버튼 */}
-        {params.type !== 'auth' && params.type !== 'likes' ? (
+        {searchingType === 'all' && (
           <OrderingButton
             onClick={onClickOpenOrderingModal}
             sortType={courseSortType}
           />
-        ) : (
-          <></>
         )}
         {/* 코스 검색 결괏값 */}
         <S.SearchedCourseContainer>
-          {courses.length ? (
+          {(params.type === 'keyword' && !courses[0]) ||
+          (params.type === 'hashtag' && !courses[0]) ? (
+            <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
+          ) : !courses[0] ? (
+            <h1>카테고리를 선택해주세요.</h1>
+          ) : (
+            <></>
+          )}
+          {courses[0] &&
             courses.map((course, index) => (
               <Course
                 key={index}
                 course={course}
                 courseId={course.id || course.courseId}
               />
-            ))
-          ) : (
-            <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
-          )}
+            ))}
+          {/* {!courses[0] && <h1>카테고리를 선택해주세요.</h1>} */}
         </S.SearchedCourseContainer>
         <div ref={observedTarget}></div>
         <ToTopBtn />

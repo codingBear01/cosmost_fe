@@ -63,7 +63,6 @@ function InputPasswordForm({ state, beforeEditUserInfo, responseIdKey }) {
   const onChangeBeforePw = (e) => {
     SetBeforePw(e.target.value);
   };
-  console.log('beforeEditUserInfo', beforeEditUserInfo);
 
   return (
     <UtilForm width={'340px'}>

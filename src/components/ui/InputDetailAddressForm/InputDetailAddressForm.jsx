@@ -21,9 +21,11 @@ function InputDetailAddressForm({ state }) {
   /* Path */
   const token = localStorage.getItem('token');
   const path = useLocation().pathname;
-  const isDetailAddressPage = path.includes('edit');
+  const isEditAddressPage = path.includes('edit');
   const isNaverAddressPage = path.includes('naver');
   const navigate = useNavigate();
+
+  console.log(isEditAddressPage);
 
   const [detailAddress, setDetailAddress] = useState('');
 
@@ -44,6 +46,17 @@ function InputDetailAddressForm({ state }) {
   console.log('path', path);
   return (
     <UtilForm>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        pauseOnHover={false}
+        theme="light"
+        limit={1}
+      />
       <UtilTitle>상세 주소를 입력해주세요.</UtilTitle>
       <UtilInputWrap>
         <Input
@@ -65,21 +78,15 @@ function InputDetailAddressForm({ state }) {
         />
       </UtilInputWrap>
       {/* 네이버 다음으로 버튼 또는 일반 다음으로 버튼*/}
-      {!isDetailAddressPage && isNaverAddressPage ? (
+      {!isEditAddressPage && isNaverAddressPage && (
         <NextBtn
           to={'/naver/sign-up'}
           state={{ ...state, detailAddress }}
           onClick={onClickCheckInput}
         />
-      ) : (
-        <NextBtn
-          to={'/sign-up'}
-          state={{ ...state, detailAddress }}
-          onClick={onClickCheckInput}
-        />
       )}
       {/* 수정 버튼 */}
-      {isDetailAddressPage && (
+      {isEditAddressPage ? (
         <Button
           type="submit"
           width={'100%'}
@@ -93,18 +100,15 @@ function InputDetailAddressForm({ state }) {
         >
           수정
         </Button>
+      ) : !isEditAddressPage && !isNaverAddressPage ? (
+        <NextBtn
+          to={'/sign-up'}
+          state={{ ...state, detailAddress }}
+          onClick={onClickCheckInput}
+        />
+      ) : (
+        <></>
       )}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        draggable
-        pauseOnHover={false}
-        theme="light"
-        limit={1}
-      />
     </UtilForm>
   );
 }

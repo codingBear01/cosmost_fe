@@ -7,7 +7,11 @@ import * as S from './styled';
 import { CourseContent } from '..';
 import { Button, ProfilePic } from '../../..';
 /* APIs */
-import { handleFollow, fetchIsFollowed } from '../../../../apis';
+import {
+  handleFollow,
+  fetchIsFollowed,
+  getCourseAuthor,
+} from '../../../../apis';
 /* icons */
 import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';
@@ -23,7 +27,6 @@ function CourseContentWrap({
   height,
   courseReviews,
   courseDetail,
-  author,
   dataCategory,
   authorCourseCount,
   courseLikeCount,
@@ -31,22 +34,23 @@ function CourseContentWrap({
   courseReviewCount,
   courseAverageRatePercentage,
   loggedInUserId,
+  author,
 }) {
   /* States */
   const [isFollowed, setIsFollowed] = useState([]);
   const [isFollowedChanged, setIsFollowedChanged] = useState(false);
   const [authorsFollowersCount, setAuthorsFollowersCount] = useState(null);
-
   /* Variables */
   const courseAverageRateGaugeWidth =
     courseAverageRatePercentage && courseAverageRatePercentage.reverse();
-  const token = localStorage.getItem('item');
+  const token = localStorage.getItem('token');
 
   /* APIs */
+
   useEffect(() => {
     if (author) {
-      fetchIsFollowed(author?.id, setIsFollowed, token);
       fetchAuthorsFollowersCount();
+      fetchIsFollowed(author?.id, setIsFollowed, token);
     }
   }, [isFollowedChanged]);
 
@@ -55,7 +59,7 @@ function CourseContentWrap({
     const url = `${process.env.REACT_APP_API}/popularities?filter=cosmosts&type=follower&sort=id,desc&page=0&size=4`;
     const config = {
       headers: {
-        Authorization: author.id,
+        Authorization: author?.id,
       },
       timeout: 3000,
     };
@@ -63,10 +67,14 @@ function CourseContentWrap({
     axios
       .get(url, config)
       .then((response) => {
-        setAuthorsFollowersCount(response.data[0].otherUserFollowerCnt);
+        setAuthorsFollowersCount(response.data[0]?.otherUserFollowerCnt);
       })
       .catch((error) => new Error(error));
   };
+  useEffect(() => {
+    fetchAuthorsFollowersCount();
+    fetchIsFollowed(author?.id, setIsFollowed, token);
+  }, [author]);
 
   return (
     // dataCategory에 따라 다른 컴포넌트 렌더링됨
@@ -87,59 +95,65 @@ function CourseContentWrap({
         // 작성자 프로필
         <>
           <ProfilePic
-            src={author.profileImgSaveUrl}
-            alt={author.nickname}
+            src={author?.profileImgSaveUrl}
+            alt={author?.nickname}
             width={'8rem'}
             height={'8rem'}
           />
           <S.AutorProfileVerticalWrap marginRight={'3rem'}>
-            <S.AutorNickname>{author.nickname}</S.AutorNickname>
-            {loggedInUserId && !isFollowed[0] && (
-              <Button
-                type="button"
-                width={'70px'}
-                height={'30px'}
-                fontSize={'12px'}
-                color={color.black}
-                bgColor={color.darkGreen}
-                hoveredBgColor={color.lightGreen}
-                onClick={() =>
-                  handleFollow(
-                    'follow',
-                    author.id,
-                    setIsFollowedChanged,
-                    isFollowedChanged,
-                    token
-                  )
-                }
-              >
-                팔로우
-              </Button>
-            )}
-            {loggedInUserId && isFollowed[0] && (
-              <Button
-                type="button"
-                width={'70px'}
-                height={'30px'}
-                fontSize={'12px'}
-                color={color.black}
-                bgColor={color.darkRed}
-                hoveredBgColor={color.red}
-                onClick={() =>
-                  handleFollow(
-                    'unfollow',
-                    author.id,
-                    setIsFollowedChanged,
-                    isFollowedChanged,
-                    token
-                  )
-                }
-              >
-                언팔로우
-              </Button>
+            <S.AutorNickname>{author?.nickname}</S.AutorNickname>
+            {loggedInUserId ? (
+              <>
+                {!isFollowed[0] && (
+                  <Button
+                    type="button"
+                    width={'70px'}
+                    height={'30px'}
+                    fontSize={'12px'}
+                    color={color.black}
+                    bgColor={color.darkGreen}
+                    hoveredBgColor={color.lightGreen}
+                    onClick={() =>
+                      handleFollow(
+                        'follow',
+                        author.id,
+                        setIsFollowedChanged,
+                        isFollowedChanged,
+                        token
+                      )
+                    }
+                  >
+                    팔로우
+                  </Button>
+                )}
+                {isFollowed[0] && (
+                  <Button
+                    type="button"
+                    width={'70px'}
+                    height={'30px'}
+                    fontSize={'12px'}
+                    color={color.black}
+                    bgColor={color.darkRed}
+                    hoveredBgColor={color.red}
+                    onClick={() =>
+                      handleFollow(
+                        'unfollow',
+                        author.id,
+                        setIsFollowedChanged,
+                        isFollowedChanged,
+                        token
+                      )
+                    }
+                  >
+                    언팔로우
+                  </Button>
+                )}
+              </>
+            ) : (
+              <></>
             )}
           </S.AutorProfileVerticalWrap>
-          <Link to={`/others/followers`} state={author.id}>
+          <Link to={`/others/followers`} state={author?.id}>
             <S.AutorProfileVerticalWrap>
               <BiIcons.BiCrown />
               <span>{author?.ranking}</span>
@@ -147,11 +161,11 @@ function CourseContentWrap({
           </Link>
           <S.AutorProfileVerticalWrap>
             <FiIcons.FiUsers />
-            <span>{authorsFollowersCount}</span>
+            <span>{authorsFollowersCount && authorsFollowersCount}</span>
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <GiIcons.GiRoad />
-            <span>{authorCourseCount}</span>
+            <span>{authorCourseCount && authorCourseCount}</span>
           </S.AutorProfileVerticalWrap>
         </>
       ) : dataCategory === 'courses' ? (
