@@ -15,13 +15,13 @@ export const MAIN_COURSES = [
     alignSelf: 'end',
     title: '인기 있는 코스',
     icon: <FiIcons.FiThumbsUp />,
-    path: '/courses/all?sort=like',
+    path: '/courses/popular',
   },
   {
     id: 3,
     alignSelf: 'start',
     title: '높은 평가 받은 코스',
     icon: <FiIcons.FiStar />,
-    path: '/courses/all?sort=rate',
+    path: '/courses/rate',
   },
 ];

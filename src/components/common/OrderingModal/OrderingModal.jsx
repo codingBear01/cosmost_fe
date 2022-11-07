@@ -1,9 +1,10 @@
 /* libraries */
 import React, { useEffect } from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { isOrderingModalOpenedAtom } from '../../../store';
+import { isOrderingModalOpenedAtom, searchingTypeAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 /* icons */
@@ -11,7 +12,10 @@ import * as AiIcons from 'react-icons/ai';
 
 function OrderingModal() {
   const path = useLocation().pathname;
-  const [queryString, setQueryString] = useSearchParams();
+
+  const navigate = useNavigate();
+
+  const [searchingType, setSearchingType] = useRecoilState(searchingTypeAtom);
 
   /* 정렬 기준 Modal Open 여부 recoilState */
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
@@ -22,6 +26,11 @@ function OrderingModal() {
   /* 정렬 기준 Modal Open 여부 조작하는 핸들러. 클릭 시 Modal의 Open 여부를 반대로 변경 */
   const onClickOpenOrderingModal = () => {
     setIsOrderingModalOpened(!isOrderingModalOpened);
+  };
+
+  const onClickSetSearchingType = (type) => {
+    setSearchingType('all');
+    navigate(`/courses/${type}`);
   };
 
   /* Variables */
@@ -51,40 +60,24 @@ function OrderingModal() {
         <S.OrderingList>
           {!isPathCourseDetail && (
             <>
-              <Link
-                to={
-                  queryString.get('keyword')
-                    ? `/courses/keyword?keyword=${queryString.get('keyword')}`
-                    : '/courses/all'
-                }
-                style={{ width: '50%', color: 'black' }}
+              <S.OrderingItem
+                width="100%"
+                onClick={() => onClickSetSearchingType('all')}
               >
-                <S.OrderingItem width="100%">최신순</S.OrderingItem>
-              </Link>
-              <Link
-                to={
-                  queryString.get('keyword')
-                    ? `/courses/keyword?keyword=${queryString.get(
-                        'keyword'
-                      )}&sort=like`
-                    : '/courses/all?sort=like'
-                }
-                style={{ width: '50%', color: 'black' }}
+                최신순
+              </S.OrderingItem>
+              <S.OrderingItem
+                width="100%"
+                onClick={() => onClickSetSearchingType('popular')}
               >
-                <S.OrderingItem width="100%">좋아요 많은 순</S.OrderingItem>
-              </Link>
-              <Link
-                to={
-                  queryString.get('keyword')
-                    ? `/courses/keyword?keyword=${queryString.get(
-                        'keyword'
-                      )}&sort=rate`
-                    : '/courses/all?sort=rate'
-                }
-                style={{ width: '50%', color: 'black' }}
+                좋아요 많은 순
+              </S.OrderingItem>
+              <S.OrderingItem
+                width="100%"
+                onClick={() => onClickSetSearchingType('rate')}
               >
-                <S.OrderingItem width="100%">평점 높은 순</S.OrderingItem>
-              </Link>
+                평점 높은 순
+              </S.OrderingItem>
             </>
           )}
         </S.OrderingList>

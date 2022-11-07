@@ -8,9 +8,7 @@ import { Link } from 'react-router-dom';
 import { getCategories } from '../../../../apis';
 /* CONSTANTS */
 const URLS = {
-  // location: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=location`,
   location: `${process.env.REACT_APP_API}/cosmosts?filter=all&category=location`,
-  // theme: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=theme`,
   theme: `${process.env.REACT_APP_API}/cosmosts?filter=all&category=theme`,
 };
 
@@ -49,7 +47,7 @@ function SelectingCategoryArea({ setCategoryId, setSearchingType }) {
       });
     }
 
-    setCategoryId(null);
+    setCategoryId(0);
     setSearchingType(isClicked);
     getCategories(isClicked, URLS, setCategories);
   };
@@ -69,22 +67,18 @@ function SelectingCategoryArea({ setCategoryId, setSearchingType }) {
             전체
           </S.Category>
         </Link>
-        {/* <Link to="/courses/location"> */}
         <S.Category
           onClick={() => onClickSetClickedCategory('location')}
           isClickedCategory={isClickedCategory.location}
         >
           지역별
         </S.Category>
-        {/* </Link> */}
-        {/* <Link to="/courses/theme"> */}
         <S.Category
           onClick={() => onClickSetClickedCategory('theme')}
           isClickedCategory={isClickedCategory.theme}
         >
           테마별
         </S.Category>
-        {/* </Link> */}
       </S.Categories>
       <S.SubordinateCategories>
         <ul>
