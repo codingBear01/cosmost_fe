@@ -1,6 +1,11 @@
 /* libraries */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import {
+  Link,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
 import { useRecoilState } from 'recoil';
@@ -27,6 +32,7 @@ function CoursesForm() {
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
   );
+  const location = useLocation();
   const [isLoading, setIsLoading] = useRecoilState(isLoadingAtom);
   const [courses, setCourses] = useState([]);
   const [isLastPage, setIsLastPage] = useState(false);
@@ -39,6 +45,8 @@ function CoursesForm() {
   const [queryStringsState, setQueryStringsState] = useRecoilState(
     queryStringsStateAtom
   );
+
+  console.log(location);
 
   const page = useRef(0);
   const observedTarget = useRef(null);
@@ -62,7 +70,7 @@ function CoursesForm() {
     if (
       (type === 'keyword' &&
         (searchingType === 'all' || searchingType === 'search')) ||
-      type === 'hastags'
+      type === 'hashtag'
     ) {
       url = `${
         process.env.REACT_APP_API
@@ -199,7 +207,15 @@ function CoursesForm() {
     if (!observedTarget.current || isLastPage) return;
 
     const io = new IntersectionObserver((entries, observer) => {
+      // debugger;
       if (entries[0].isIntersecting) {
+        getCourses(
+          params.type,
+          queryStrings.get('keyword'),
+          categoryId,
+          searchingType
+        );
+      } else if (entries[1]?.isIntersecting) {
         getCourses(
           params.type,
           queryStrings.get('keyword'),
@@ -252,7 +268,7 @@ function CoursesForm() {
             <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
           )}
         </S.SearchedCourseContainer>
-        {isLoading ? <Loading /> : null}
+        {courses[0] && isLoading ? <Loading /> : null}
         <div ref={observedTarget}></div>
         <ToTopBtn />
       </UtilDiv>
