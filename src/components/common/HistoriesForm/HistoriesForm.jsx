@@ -9,8 +9,6 @@ import { isReportFormOpenedAtom } from '../../../store';
 import * as S from './styled';
 import { HistoryListItem } from './';
 import { Button, ReportForm, UtilDiv, UtilTitle } from '../..';
-/* APIs */
-import { getMyReports, getMyReviews } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 /* icons */
@@ -34,6 +32,8 @@ function HistoriesForm({ isReportHistoryPage }) {
   /* Refs */
   const page = useRef(0);
   const observedTarget = useRef(null);
+
+  const token = localStorage.getItem('token');
 
   /* Handlers */
   /* 신고 상세 조회 폼의 Open 여부를 조작하는 핸들러. 클릭 시 폼 Open 여부를 반대로 변경하고, 신고 데이터를 폼으로 props 전달하며 formRef.current에 클릭된 신고를 할당한다. */
@@ -65,10 +65,6 @@ function HistoriesForm({ isReportHistoryPage }) {
   /** 신고 내역 혹은 내가 남긴 리뷰 조회 */
   const fetchHistories = useCallback(async (type) => {
     try {
-      // const token = localStorage.getItem('token');
-      const token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
-
       const URLS = {
         report: `${process.env.REACT_APP_API}/boards?filter=auth&sort=id,desc&page=${page.current}&size=4`,
         review: `${process.env.REACT_APP_API}/comments?filter=auth&type=review&sort=id,desc&page=${page.current}&size=4`,

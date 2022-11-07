@@ -18,18 +18,15 @@ function DaumAddressApiModal({ state }) {
   /* 사용자가 주소창에서 주소를 선택했을 시 호출할 핸들러 
      주소 상세 페이지로 리다이렉트하며 이 때 사용자가 선택한 주소값을 다음 페이지로 전달한다. */
   const onCompleteAddressModal = (result) => {
-    if(path.includes("edit"))
-      {
-        navigate('/user/edit/detail-address', {
-          state: { ...state, address: result.address },
-        });
-    }
-    else if(path.includes("naver")){
+    if (path.includes('edit')) {
+      navigate('/user/edit/detail-address', {
+        state: { ...state, address: result.address },
+      });
+    } else if (path.includes('naver')) {
       navigate('/naver/detail-address', {
         state: { ...state, address: result.address },
-      })
-    }
-    else{
+      });
+    } else {
       navigate('/detail-address', {
         state: { ...state, address: result.address },
       });
@@ -62,18 +59,15 @@ function DaumAddressApiModal({ state }) {
             let result = response.result,
               Address = result.items[1];
 
-            if(path.includes("edit"))
-            {
-               navigate('/user/edit/detail-address', {
-                  state: { ...state, address: Address.address },
-                });
-            }
-            else if(path.includes("naver")){
+            if (path.includes('edit')) {
+              navigate('/user/edit/detail-address', {
+                state: { ...state, address: Address.address },
+              });
+            } else if (path.includes('naver')) {
               navigate('/naver/detail-address', {
                 state: { ...state, address: Address.address },
               });
-            }
-            else{
+            } else {
               navigate('/detail-address', {
                 state: { ...state, address: Address.address },
               });
@@ -100,7 +94,7 @@ function DaumAddressApiModal({ state }) {
     );
   };
   console.log(state);
-  
+
   return (
     <S.AddressApiWrap>
       <S.GettingCurrentLocationButtonWrap>
@@ -125,6 +119,7 @@ function DaumAddressApiModal({ state }) {
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
     </S.AddressApiWrap>
   );

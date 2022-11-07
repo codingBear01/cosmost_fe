@@ -8,11 +8,11 @@ import * as S from './styled';
 import { Button, ProfilePic } from '../../../';
 /* APIs */
 import {
-  editCourseReview,
   handleLikeCourseReview,
   likedCourseReview,
   fetchCourseReviewLikeCount,
   getCourseAuthor,
+  updateCourseReview,
 } from '../../../../apis';
 /* functions */
 import {
@@ -116,7 +116,7 @@ function CourseReview({
   /* APIs */
   /** 코스 리뷰 좋아요 여부, 코스 리뷰 좋아요 개수 조회 */
   useEffect(() => {
-    likedCourseReview(courseReview.id, setIsLikedCourseReview);
+    likedCourseReview(courseReview.id, setIsLikedCourseReview, token);
     fetchCourseReviewLikeCount(courseReview.id, setCourseReviewLikeCount);
   }, [isLikedCourseReviewChanged]);
 
@@ -125,37 +125,8 @@ function CourseReview({
     getCourseAuthor(courseReview.reviewerId, setCourseReviewAuthor);
   }, []);
 
-  /** 코스 리뷰 수정 */
-  const updateCourseReview = () => {
-    if (!checkEditCourseReviewValues()) return;
-
-    const token = localStorage.getItem('token');
-    const url = `${process.env.REACT_APP_API}/comments/${courseDetail.id}`;
-    const body = {
-      courseReviewContent: edittedReviewContentRef.current.value,
-      rate: edittedReviewRateRef.current,
-    };
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .put(url, body, config)
-      .then((response) => {
-        setIsCourseReviewEditTextareaOpened(false);
-        setIsCourseReviewEdited(true);
-      })
-      .catch((error) => {
-        new Error(error);
-      });
-  };
-
   /** 코스 리뷰 삭제 */
   const deleteCourseReview = () => {
-    const token = localStorage.getItem('token');
     const url = `${process.env.REACT_APP_API}/comments/${courseDetail.id}/review`;
     const config = {
       headers: {
@@ -188,6 +159,7 @@ function CourseReview({
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
       {isDisplayed && (
         <>
@@ -344,10 +316,10 @@ function CourseReview({
                           type="button"
                           onClick={() =>
                             deleteCourseReview(
-                              courseReview.id,
-                              token,
-                              navigate,
-                              toast
+                              courseDetail,
+                              setIsDisplayed,
+                              toast,
+                              token
                             )
                           }
                         >
@@ -381,7 +353,8 @@ function CourseReview({
                         loggedInUserId,
                         toast,
                         setIsLikedCourseReviewChanged,
-                        isLikedCourseReviewChanged
+                        isLikedCourseReviewChanged,
+                        token
                       )
                     }
                   >
@@ -404,7 +377,8 @@ function CourseReview({
                           loggedInUserId,
                           toast,
                           setIsLikedCourseReviewChanged,
-                          isLikedCourseReviewChanged
+                          isLikedCourseReviewChanged,
+                          token
                         )
                       }
                     >
@@ -451,7 +425,17 @@ function CourseReview({
                     color={color.white}
                     bgColor={color.darkBlue}
                     hoveredBgColor={color.navy}
-                    onClick={() => updateCourseReview()}
+                    onClick={() =>
+                      updateCourseReview(
+                        checkEditCourseReviewValues,
+                        courseDetail,
+                        edittedReviewContentRef,
+                        edittedReviewRateRef,
+                        token,
+                        setIsCourseReviewEditTextareaOpened,
+                        setIsCourseReviewEdited
+                      )
+                    }
                   >
                     수정
                   </Button>

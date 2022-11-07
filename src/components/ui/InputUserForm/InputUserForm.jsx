@@ -81,9 +81,6 @@ function InputUserForm({ state, beforeEditUserInfo }) {
   /* Handlers */
   /* 패스워드 일치 여부를 확인하는 함수 */
   useEffect(() => {
-
-
-
     if (userInformation.password !== userInformation.passwordConfirm) {
       setInputError({ ...inputError, passwordConfirmError: true });
     } else {
@@ -124,8 +121,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
     }
 
     //네이버 회원가입 창이라면
-    if(isNaverUserPage)
-    {
+    if (isNaverUserPage) {
       setIsDuplicatedIdChecked(true);
 
       setEmptyInputError({
@@ -141,7 +137,6 @@ function InputUserForm({ state, beforeEditUserInfo }) {
         passwordError: false,
         passwordConfirmError: false,
       });
-
     }
   }, []);
 
@@ -290,6 +285,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
       <UtilTitle>회원 정보를 입력해주세요.</UtilTitle>
       {/* 프사, 아이디, 닉네임 */}
@@ -320,8 +316,8 @@ function InputUserForm({ state, beforeEditUserInfo }) {
                 type="text"
                 name="id"
                 value={userInformation.id}
-                placeholder={isNaverUserPage ? "아이디 입력불가" : "아이디"}
-                disabled={isEditUserPage || isNaverUserPage ? true:false}
+                placeholder={isNaverUserPage ? '아이디 입력불가' : '아이디'}
+                disabled={isEditUserPage || isNaverUserPage ? true : false}
                 width={'150px'}
                 height={'40px'}
                 margin={'0 10px'}
@@ -453,7 +449,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
           name="password"
           value={userInformation.password}
           disabled={isNaverUserPage}
-          placeholder={isNaverUserPage ? "비밀번호 입력불가" : "비밀번호"}
+          placeholder={isNaverUserPage ? '비밀번호 입력불가' : '비밀번호'}
           width={'340px'}
           height={'40px'}
           margin={'0 10px'}
@@ -475,7 +471,9 @@ function InputUserForm({ state, beforeEditUserInfo }) {
           name="passwordConfirm"
           value={userInformation.passwordConfirm}
           disabled={isNaverUserPage}
-          placeholder={isNaverUserPage ? "비밀번호 재확인 입력불가" : "비밀번호 재확인"}
+          placeholder={
+            isNaverUserPage ? '비밀번호 재확인 입력불가' : '비밀번호 재확인'
+          }
           width={'340px'}
           height={'40px'}
           margin={'0 10px'}
@@ -483,14 +481,13 @@ function InputUserForm({ state, beforeEditUserInfo }) {
           fontSize={'14px'}
         />
       </UtilInputWrap>
-      {isNaverUserPage || (
+      {isNaverUserPage ||
         emptyInputError.passwordConfirmEmpty ||
         (inputError.passwordConfirmError && (
           <S.ErrorMessage>
             앞서 입력한 패스워드와 동일하지 않습니다.
           </S.ErrorMessage>
-        ))
-      )}
+        ))}
       {/* 연령대, 결혼 여부 드롭다운 */}
       <S.UserInfoDropDownWrap>
         <div>
@@ -553,6 +550,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
               printFormData,
               isNaverUserPage,
               setIsLoggedIn,
+              token
             )
           }
         >
