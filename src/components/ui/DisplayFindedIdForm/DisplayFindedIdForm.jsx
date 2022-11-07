@@ -13,15 +13,12 @@ const PAGE_TITLES = {
 
 function DisplayFindedIdForm({ responseId }) {
   const pathname = useLocation().pathname;
-  const str = responseId;
-  const diplayedStr = str.substring(0, Math.floor(str.length / 2));
-  const notDisplayedStr = '*'.repeat(Math.floor(str.length / 2));
 
   return (
     <UtilDiv>
       <UtilTitle>{PAGE_TITLES[pathname]}</UtilTitle>
       <S.FindedUserBox>
-        <span>{diplayedStr + notDisplayedStr}</span>
+        <span>{responseId}</span>
         <Link to="/login">로그인 페이지로</Link>
       </S.FindedUserBox>
     </UtilDiv>
