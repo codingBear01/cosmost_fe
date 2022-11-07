@@ -63,7 +63,7 @@ function CoursesForm() {
     if (
       (type === 'keyword' &&
         (searchingType === 'all' || searchingType === 'search')) ||
-      type === 'hastags'
+      type === 'hashtag'
     ) {
       url = `${
         process.env.REACT_APP_API
