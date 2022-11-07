@@ -48,7 +48,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
       address: '/address',
       certificationNumberSendingType: 'newemail',
       certificationNumberComparingType: 'newemail/reissue',
-      placeholder: '변경할 이메일을 입력해주세요.',
+      placeholder: '네이버 이메일을 입력해주세요.',
     },
     //네이버 로그인 시 이메일 인증
     '/naver/email-validation': {
@@ -86,20 +86,20 @@ function InputEmailForm({ beforeEditUserInfo }) {
   }, []);
 
   /* Handlers */
-  /* 입력된 이메일의 유효성을 검증하는 함수 */
+  /** 입력된 이메일의 유효성을 검증하는 함수 */
   const validateEmailByRegExp = (e) => {
     e.preventDefault();
 
-    const regExpEmail = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
+    const regExpEmail = /^[a-zA-Z0-9]+@naver.com+$/;
 
     if (!regExpEmail.test(emailRef.current.value)) {
-      toast.error('이메일을 올바르게 입력해주세요.');
+      toast.error('이메일은 네이버 이메일만 입력 가능합니다..');
       return false;
     }
     return true;
   };
 
-  /* 입력값 유효성 검증하는 핸들러 */
+  /** 입력값 유효성 검증하는 핸들러 */
   const checkInput = (e, type) => {
     if (
       (type === 'email' && !emailRef.current.value) ||
@@ -124,7 +124,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
     return true;
   };
 
-  /* 인증번호 발송 및 인증번호 확인 버튼을 클릭했는지 확인하는 핸들러 */
+  /** 인증번호 발송 및 인증번호 확인 버튼을 클릭했는지 확인하는 핸들러 */
   const checkIsCertificationNumberButtonClicked = (e) => {
     if (!isCertificationNumberSent) {
       e.preventDefault();
@@ -139,24 +139,23 @@ function InputEmailForm({ beforeEditUserInfo }) {
     return true;
   };
 
-  /* 다음 페이지로 이동하는 핸들러. 입력값의 유효성을 검증하고 인증번호 발송 및 확인 버튼 클릭 여부를 확인한 후 이상이 없으면 주소 입력 페이지로 이동한다. */
+  /** 다음 페이지로 이동하는 핸들러. 입력값의 유효성을 검증하고 인증번호 발송 및 확인 버튼 클릭 여부를 확인한 후 이상이 없으면 주소 입력 페이지로 이동한다. */
   const onClickTransferNextPage = (e) => {
     if (!checkInput(e, 'next')) return;
     if (!checkIsCertificationNumberButtonClicked(e)) return;
   };
 
   /* APIs */
-  /* 인증번호 발송 api */
+  /** 인증번호 발송 api */
   const onClickSendCertificationNumber = (e) => {
     e.preventDefault();
 
     if (!checkInput(e, 'email')) return;
     if (!validateEmailByRegExp(e)) return;
 
-    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/${PAGE_TYPES[pathname].certificationNumberSendingType}/confirm/${emailRef.current.value}`;
     const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberSendingType}/confirm/${emailRef.current.value}`;
 
-    // 이메일 변경해야할 떄 인증 번호 발송
+    // 이메일 변경해야할 때 인증 번호 발송
     if (PAGE_TYPES[pathname].certificationNumberSendingType === 'newemail') {
       const token = localStorage.getItem('token');
       const data = {
@@ -178,7 +177,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
         timeout: 3000,
       };
 
-      console.log('data', data);
       axios
         .put(url, data, config)
         .then((response) => {
@@ -393,7 +391,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
       });
   };
 
-  console.log('beforeEditUserInfo', beforeEditUserInfo);
   return (
     <>
       <ToastContainer
@@ -416,7 +413,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
           ref={emailRef}
           defaultValue={isEditEmailPage ? beforeEditUserInfo.email : ''}
           type="email"
-          placeholder={PAGE_TYPES[pathname]?.placeholder || '이메일'}
+          placeholder={'네이버 이메일을 입력해주세요.'}
           name="email"
           width={'205px'}
           height={'40px'}
