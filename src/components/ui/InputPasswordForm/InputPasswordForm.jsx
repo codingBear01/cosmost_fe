@@ -13,13 +13,13 @@ import { COLOR_LIST as color } from '../../../style';
 import { useEffect } from 'react';
 
 function InputPasswordForm({ state, beforeEditUserInfo, responseIdKey }) {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const pathname = useLocation().pathname;
   const isEditPasswordPage = pathname.includes('edit');
 
   const [newPassword, setNewPassword] = useState('');
   const [isValidatedPassword, setIsValidatedPassword] = useState(false);
-  const [beforePw, SetBeforePw] = useState("");
+  const [beforePw, SetBeforePw] = useState('');
 
   const beforePasswordConfirmation = useRef();
   // const newPassword = useRef();
@@ -38,7 +38,6 @@ function InputPasswordForm({ state, beforeEditUserInfo, responseIdKey }) {
 
   /** 입력된 비밀번호들을 검증하는 핸들러 */
   const checkPasswords = () => {
-
     if (
       (isEditPasswordPage && !beforePasswordConfirmation.current.value) ||
       !newPassword ||
@@ -51,8 +50,10 @@ function InputPasswordForm({ state, beforeEditUserInfo, responseIdKey }) {
       toast.error('새 비밀번호와 새 비밀번호 확인은 동일해야 합니다.');
       return false;
     }
-    if(checkNewPassword() === false){
-      toast.error('비밀번호는 8자 이상 16자 이하, 영대소문자, 숫자, 특수문자만 입력가능합니다.');
+    if (checkNewPassword() === false) {
+      toast.error(
+        '비밀번호는 8자 이상 16자 이하, 영대소문자, 숫자, 특수문자만 입력가능합니다.'
+      );
       return false;
     }
 
@@ -60,9 +61,9 @@ function InputPasswordForm({ state, beforeEditUserInfo, responseIdKey }) {
   };
 
   const onChangeBeforePw = (e) => {
-    SetBeforePw(e.target.value)
-  }
-  console.log("beforeEditUserInfo", beforeEditUserInfo)
+    SetBeforePw(e.target.value);
+  };
+  console.log('beforeEditUserInfo', beforeEditUserInfo);
 
   return (
     <UtilForm width={'340px'}>
@@ -75,6 +76,7 @@ function InputPasswordForm({ state, beforeEditUserInfo, responseIdKey }) {
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
       {isEditPasswordPage && (
         <>
@@ -118,7 +120,18 @@ function InputPasswordForm({ state, beforeEditUserInfo, responseIdKey }) {
         color={color.white}
         hoveredBgColor={color.navy}
         value={'비밀번호 수정'}
-        onClick={(e) => updateUserPassword(e, beforeEditUserInfo, checkPasswords, token, beforePw, newPassword , navigate, toast)}
+        onClick={(e) =>
+          updateUserPassword(
+            e,
+            beforeEditUserInfo,
+            checkPasswords,
+            token,
+            beforePw,
+            newPassword,
+            navigate,
+            toast
+          )
+        }
       >
         변경
       </Button>

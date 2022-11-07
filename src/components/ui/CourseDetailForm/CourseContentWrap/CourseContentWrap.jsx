@@ -40,11 +40,12 @@ function CourseContentWrap({
   /* Variables */
   const courseAverageRateGaugeWidth =
     courseAverageRatePercentage && courseAverageRatePercentage.reverse();
+  const token = localStorage.getItem('item');
 
   /* APIs */
   useEffect(() => {
     if (author) {
-      fetchIsFollowed(author?.id, setIsFollowed);
+      fetchIsFollowed(author?.id, setIsFollowed, token);
       fetchAuthorsFollowersCount();
     }
   }, [isFollowedChanged]);
@@ -107,7 +108,8 @@ function CourseContentWrap({
                     'follow',
                     author.id,
                     setIsFollowedChanged,
-                    isFollowedChanged
+                    isFollowedChanged,
+                    token
                   )
                 }
               >
@@ -128,7 +130,8 @@ function CourseContentWrap({
                     'unfollow',
                     author.id,
                     setIsFollowedChanged,
-                    isFollowedChanged
+                    isFollowedChanged,
+                    token
                   )
                 }
               >

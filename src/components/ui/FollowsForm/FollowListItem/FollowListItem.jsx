@@ -21,7 +21,7 @@ function FollowListItem({ follow, isFollower }) {
   const [isFollowed, setIsFollowed] = useState([]);
   const [isFollowedChanged, setIsFollowedChanged] = useState(false);
 
-  console.log(isFollower);
+  const token = localStorage.getItem('token');
 
   /* APIs */
   /** 코스 리뷰 작성자 조회 */
@@ -30,7 +30,7 @@ function FollowListItem({ follow, isFollower }) {
   }, []);
   /** 코스 리뷰 좋아요 여부 조회 */
   useEffect(() => {
-    fetchIsFollowed(followId, setIsFollowed);
+    fetchIsFollowed(followId, setIsFollowed, token);
   }, [isFollowedChanged]);
 
   return (
@@ -59,7 +59,8 @@ function FollowListItem({ follow, isFollower }) {
               'follow',
               followId,
               setIsFollowedChanged,
-              isFollowedChanged
+              isFollowedChanged,
+              token
             )
           }
         >
@@ -80,7 +81,8 @@ function FollowListItem({ follow, isFollower }) {
               'unfollow',
               followId,
               setIsFollowedChanged,
-              isFollowedChanged
+              isFollowedChanged,
+              token
             )
           }
         >
