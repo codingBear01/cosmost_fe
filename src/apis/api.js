@@ -1,9 +1,6 @@
 /* libraries */
 import axios from 'axios';
 
-/* Variables */
-const token = localStorage.getItem('token');
-
 /* Auth */
 /** 코스 작성자 정보를 가져온 후 가져온 코스 작성자 정보를 state로 업데이트 시켜주는 함수
  *  authorID : 코스 작성자 ID를 나타내는 Number
@@ -802,34 +799,16 @@ export const deleteCourseReview = (
     },
     timeout: 3000,
   };
+
   axios
     .delete(url, config)
     .then((response) => {
+      console.log(response);
       setIsDisplayed(false);
     })
     .catch((error) => {
       new Error(error);
       toast.error('코스 삭제 도중 오류가 발생했습니다. 관리자에게 문의하세요.');
-    });
-};
-
-/** 내가 작성한 리뷰 조회 */
-export const getMyReviews = (setState) => {
-  const url = `${process.env.REACT_APP_API}/comments?filter=auth&type=review`;
-  const config = {
-    headers: {
-      Authorization: token, // 로그인한 사용자의 식별자
-    },
-    timeout: 3000,
-  };
-
-  axios
-    .get(url, config)
-    .then((response) => {
-      setState(response.data);
-    })
-    .catch((error) => {
-      new Error(error);
     });
 };
 
@@ -1073,6 +1052,24 @@ export const fetchIsFollowed = (id, setIsFollowed, token) => {
     .catch((error) => new Error(error));
 };
 
+/** 코스 리뷰 좋아요 여부 확인 */
+export const likedCourseReview = (id, setIsLikedCourseReview, token) => {
+  if (!token) return;
+
+  const url = `${process.env.REACT_APP_API}/popularities/${id}?type=review`;
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    timeout: 3000,
+  };
+
+  axios
+    .get(url, config)
+    .then((response) => setIsLikedCourseReview(response.data))
+    .catch((error) => new Error(error));
+};
+
 /* Board */
 /** 리뷰 작성에 쓰일 신고 카테고리를 불러오는 함수 */
 export const getReportCategories = (setReportCategories) => {
@@ -1090,7 +1087,7 @@ export const getReportCategories = (setReportCategories) => {
     });
 };
 
-/** 신고 버튼 클릭 시 작성된 신고 내용을 서버로 전송하는 함수 */
+/** 신고하기 */
 export const postReport = (
   checkReportInput,
   reportTitle,
@@ -1131,7 +1128,7 @@ export const postReport = (
     });
 };
 
-/** 수정 버튼 클릭 시 작성된 신고 수정 내용을 서버로 전송하는 함수 */
+/** 신고 수정 */
 export const updateReport = (
   id,
   checkReportInput,
@@ -1180,11 +1177,9 @@ export const updateReport = (
     });
 };
 
-/** 코스 리뷰 좋아요 여부 확인 */
-export const likedCourseReview = (id, setIsLikedCourseReview, token) => {
-  if (!token) return;
-
-  const url = `${process.env.REACT_APP_API}/popularities/${id}?type=review`;
+/** 신고 내역 삭제 */
+export const deleteMyReport = (report, token, setIsDisplayed) => {
+  const url = `${process.env.REACT_APP_API}/boards/${report.id}`;
   const config = {
     headers: {
       Authorization: token,
@@ -1193,7 +1188,35 @@ export const likedCourseReview = (id, setIsLikedCourseReview, token) => {
   };
 
   axios
-    .get(url, config)
-    .then((response) => setIsLikedCourseReview(response.data))
+    .delete(url, config)
+    .then((response) => {
+      setIsDisplayed(false);
+    })
     .catch((error) => new Error(error));
+};
+
+/** 신고 답변 조회 */
+export const fetchAnswerAboutMyReport = (
+  report,
+  setAnswerAboutReport,
+  setIsAnswered
+) => {
+  const url = `${process.env.REACT_APP_API}/comments?filter=auth&type=answer`;
+  const config = {
+    headers: {
+      Authorization: report.id,
+    },
+    timeout: 3000,
+  };
+
+  axios
+    .get(url, config)
+    .then((response) => {
+      setAnswerAboutReport(response.data);
+      setIsAnswered(true);
+    })
+    .catch((error) => {
+      setIsAnswered(false);
+      new Error(error);
+    });
 };

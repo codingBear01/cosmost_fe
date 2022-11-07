@@ -192,9 +192,7 @@ function CoursesForm() {
 
   /** 쿼리스트링이 변경될 때마다 호출되는 useEffect. IsLastPage와 Course State를 초기화한다.*/
   useEffect(() => {
-    console.log('쿼리스트링이 isLastPage', isLastPage);
     setIsLastPage(false);
-
     setCourses([]);
     setQueryStringsState(!queryStringsState);
     page.current = 0;
@@ -202,8 +200,6 @@ function CoursesForm() {
 
   /** 무한 스크롤을 위해 observing을 하는 함수 */
   useEffect(() => {
-    console.log('무한 스크롤 isLastPage', isLastPage);
-    console.log('AS', !observedTarget.current);
     if (!observedTarget.current || isLastPage) return;
 
     const io = new IntersectionObserver((entries, observer) => {
@@ -246,7 +242,7 @@ function CoursesForm() {
           <></>
         )}
         {/* 정렬 기준 버튼 */}
-        {params.type !== 'auth' && params.type !== 'likes' ? (
+        {searchingType === 'all' ? (
           <OrderingButton
             onClick={onClickOpenOrderingModal}
             sortType={courseSortType}
