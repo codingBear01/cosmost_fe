@@ -16,6 +16,10 @@ import {
 import { COLOR_LIST as color, GAP_LIST as gap } from '../../../style';
 import { base64ImgSrcToImgBinaryData, printFormData } from '../../../store';
 
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { loginStateAtom } from '../../../store';
+
 const PROFILE_PIC_DEFAULT_URL = '/assets/images/ProfileDefaultImage.png';
 
 const RegExpId = /^[A-Za-z][A-Za-z0-9]{2,15}$/;
@@ -23,8 +27,10 @@ const RegExpNickName = /^[a-zA-Z0-9]{2,16}$/;
 const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
 
 function InputUserForm({ state, beforeEditUserInfo }) {
+  const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
   const path = useLocation().pathname;
   const isEditUserPage = path.includes('edit');
+  const isNaverUserPage = path.includes('naver');
   const token = localStorage.getItem('token');
 
   /* User가 입력한 정보를 나타내는 state */
@@ -75,6 +81,9 @@ function InputUserForm({ state, beforeEditUserInfo }) {
   /* Handlers */
   /* 패스워드 일치 여부를 확인하는 함수 */
   useEffect(() => {
+
+
+
     if (userInformation.password !== userInformation.passwordConfirm) {
       setInputError({ ...inputError, passwordConfirmError: true });
     } else {
@@ -100,18 +109,39 @@ function InputUserForm({ state, beforeEditUserInfo }) {
       setIsDuplicatedIdChecked(true);
 
       //ID와 닉네임, 프로필 관련 에러가 없음을 나타내는 state 값을 전달
-        setEmptyInputError({
-          ...emptyInputError,
-          idEmpty: false,
-          nicknameEmpty: false,
-          profilePictureUrlEmpty: false,
-        });
-        setInputError({
-          ...inputError,
-          idError: false,
-          nicknameError: false,
-          profilePictureUrlError: false,
-        });
+      setEmptyInputError({
+        ...emptyInputError,
+        idEmpty: false,
+        nicknameEmpty: false,
+        profilePictureUrlEmpty: false,
+      });
+      setInputError({
+        ...inputError,
+        idError: false,
+        nicknameError: false,
+        profilePictureUrlError: false,
+      });
+    }
+
+    //네이버 회원가입 창이라면
+    if(isNaverUserPage)
+    {
+      setIsDuplicatedIdChecked(true);
+
+      setEmptyInputError({
+        ...emptyInputError,
+        idEmpty: false,
+        passwordEmpty: false,
+        passwordConfirmEmpty: false,
+        profilePictureUrlEmpty: false,
+      });
+      setInputError({
+        ...inputError,
+        idError: false,
+        passwordError: false,
+        passwordConfirmError: false,
+      });
+
     }
   }, []);
 
@@ -177,12 +207,35 @@ function InputUserForm({ state, beforeEditUserInfo }) {
     setUserInformation({ ...userInformation, [e.target.name]: e.target.value });
   };
 
-  /* 사용자가 프로파일 이미지를 선택했을 때 호출할 핸들러. 선택한 이미지의 URL 경로를 state로 전달한다. */
+  /** 업로드한 파일이 이미지인지 검증하는 핸들러 */
+  const checkIsUploadedFileImage = (fileName) => {
+    const pathPoint = fileName.lastIndexOf('.');
+    const filePoint = fileName.substring(pathPoint + 1, fileName.length);
+    const fileType = filePoint.toLowerCase();
+
+    if (
+      fileType === 'jpg' ||
+      fileType === 'jpeg' ||
+      fileType === 'png' ||
+      fileType === 'gif' ||
+      fileType === 'bmp'
+    ) {
+      return true;
+    }
+    toast.error('이미지 파일만 업로드 가능합니다.');
+    return false;
+  };
+
+  /** 사용자가 프로파일 이미지를 선택했을 때 호출할 핸들러. 선택한 이미지의 URL 경로를 state로 전달한다. */
   const onChangeProfileImg = (e) => {
-    if (e.target.files[0]) {
+    const file = e.target.files[0];
+
+    if (!checkIsUploadedFileImage(file.name)) return;
+
+    if (file) {
       setUserInformation({
         ...userInformation,
-        profilePictureUrl: e.target.files[0],
+        profilePictureUrl: file,
       });
       setIsProfilePictureUploaded(true);
       setInputError({ ...inputError, profilePictureUrlError: false });
@@ -226,8 +279,6 @@ function InputUserForm({ state, beforeEditUserInfo }) {
     return true;
   };
 
-  console.log("beforeEditUserInfo",beforeEditUserInfo);
-
   return (
     <UtilForm>
       <ToastContainer
@@ -258,7 +309,8 @@ function InputUserForm({ state, beforeEditUserInfo }) {
             ref={profileInputRef}
             type="file"
             value={''}
-            onChange={onChangeProfileImg}
+            accept="image/gif, image/jpeg, image/png"
+            onChange={(e) => onChangeProfileImg(e, this)}
           />
         </div>
         <S.UserProfileWrap flexDirection={'column'}>
@@ -268,15 +320,15 @@ function InputUserForm({ state, beforeEditUserInfo }) {
                 type="text"
                 name="id"
                 value={userInformation.id}
-                placeholder="아이디"
-                disabled={isEditUserPage}
+                placeholder={isNaverUserPage ? "아이디 입력불가" : "아이디"}
+                disabled={isEditUserPage || isNaverUserPage ? true:false}
                 width={'150px'}
                 height={'40px'}
                 margin={'0 10px'}
                 fontSize={'14px'}
                 onChange={onChangeUserInformation}
               />
-              {!isEditUserPage && (
+              {!isEditUserPage && !isNaverUserPage && (
                 <Button
                   type="button"
                   width={'80px'}
@@ -400,7 +452,8 @@ function InputUserForm({ state, beforeEditUserInfo }) {
           type="password"
           name="password"
           value={userInformation.password}
-          placeholder="비밀번호"
+          disabled={isNaverUserPage}
+          placeholder={isNaverUserPage ? "비밀번호 입력불가" : "비밀번호"}
           width={'340px'}
           height={'40px'}
           margin={'0 10px'}
@@ -421,7 +474,8 @@ function InputUserForm({ state, beforeEditUserInfo }) {
           type="password"
           name="passwordConfirm"
           value={userInformation.passwordConfirm}
-          placeholder="비밀번호 재확인"
+          disabled={isNaverUserPage}
+          placeholder={isNaverUserPage ? "비밀번호 재확인 입력불가" : "비밀번호 재확인"}
           width={'340px'}
           height={'40px'}
           margin={'0 10px'}
@@ -429,13 +483,14 @@ function InputUserForm({ state, beforeEditUserInfo }) {
           fontSize={'14px'}
         />
       </UtilInputWrap>
-      {emptyInputError.passwordConfirmEmpty ||
+      {isNaverUserPage || (
+        emptyInputError.passwordConfirmEmpty ||
         (inputError.passwordConfirmError && (
           <S.ErrorMessage>
             앞서 입력한 패스워드와 동일하지 않습니다.
           </S.ErrorMessage>
-        ))}
-
+        ))
+      )}
       {/* 연령대, 결혼 여부 드롭다운 */}
       <S.UserInfoDropDownWrap>
         <div>
@@ -495,7 +550,9 @@ function InputUserForm({ state, beforeEditUserInfo }) {
               beforeEditUserInfo,
               toast,
               navigate,
-              printFormData
+              printFormData,
+              isNaverUserPage,
+              setIsLoggedIn,
             )
           }
         >

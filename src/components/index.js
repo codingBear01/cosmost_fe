@@ -38,7 +38,6 @@ export {
   LoadingForm,
   LoginForm,
   MainSection,
-  RankersForm,
   UserPageForm,
   WithdrawUserForm,
 } from './ui/';
@@ -61,7 +60,6 @@ export {
   Login,
   Main,
   Messages,
-  Rankers,
   User,
   WithdrawUser,
 } from './pages/';

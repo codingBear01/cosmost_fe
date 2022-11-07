@@ -280,8 +280,11 @@ export const signUpOrEditUser = (
   beforeEditUserInfo,
   toast,
   navigate,
-  printFormData
+  printFormData,
+  isNaverUserPage,
+  setIsLoggedIn,
 ) => {
+
   const formData = new FormData();
   e.preventDefault();
 
@@ -294,25 +297,43 @@ export const signUpOrEditUser = (
 
   if (ErrorCheck) {
     // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
-    const url = `${process.env.REACT_APP_API}/auths`;
+    let url;
+    
     const [profileImgSaveUrl] = base64ImgSrcToImgBinaryData(
       uploadedProfilePicture
     );
 
-    //회원가입용 Body
-    const signUpBody = {
-      loginId: userInformation.id,
-      loginPwd: userInformation.password,
-      email: userInformation.email,
-      married: userInformation.marriage,
-      nickname: userInformation.nickname,
-      sns: 'NO',
-      address: `${userInformation.address} ${userInformation.detailAddress}`,
-      ageGroup: userInformation.age,
-    };
-    //회원수정에서 프로필 이미지를 변경했을 때의 Body
+    let signUpBody;
+    // 네이버 회원가입용 signUpBody
+    if(isNaverUserPage){
+      url = `${process.env.REACT_APP_API}/signin/naver`;
+      signUpBody = {
+        nickname: userInformation.nickname,
+        email: userInformation.email,
+        ageGroup: userInformation.age,
+        married: userInformation.marriage,
+        address: `${userInformation.address} ${userInformation.detailAddress}`,
+        sns: 'YES',
+      };
+    // 일반 회원가입용 signUpBody 
+    }else{
+      url = `${process.env.REACT_APP_API}/auths`;
+      signUpBody = {
+        loginId: userInformation.id,
+        loginPwd: userInformation.password,
+        email: userInformation.email,
+        married: userInformation.marriage,
+        nickname: userInformation.nickname,
+        sns: 'NO',
+        address: `${userInformation.address} ${userInformation.detailAddress}`,
+        ageGroup: userInformation.age,
+      };
+    }
+
+    
     let updateBody;
     let updateBody2;
+    //회원수정에서 프로필 이미지를 변경했을 때의 Body
     if (isEditUserPage) {
       updateBody = {
         loginId: userInformation.id,
@@ -381,7 +402,6 @@ export const signUpOrEditUser = (
         .then((response) => {
           //수정된 데이터 다시 가져와서 리다이렉트 하기
           toast.success(response.data);
-          // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
           const url = `${process.env.REACT_APP_API}/auths`;
           const config = {
             headers: {
@@ -423,21 +443,32 @@ export const signUpOrEditUser = (
         type: profilePictureMimeType,
       });
 
-      formData.append('createAuthRequest', signUpBodyBlob);
+      if(isNaverUserPage){
+        formData.append('createOAuthRequest', signUpBodyBlob);
+      }else{
+        formData.append('createAuthRequest', signUpBodyBlob);
+      }
+      
       formData.append('file', profilePictureBlob);
 
+      console.log("signUpBody",signUpBody);
       printFormData(formData);
-
       axios
         .post(url, formData, config)
         .then((response) => {
-          navigate(`/login`, { replace: true });
+          if(response.data.accessToken){
+            localStorage.setItem("token", response.data.accessToken);
+            setIsLoggedIn(true);
+            navigate(`/`, { replace: true });
+          }else{
+            navigate(`/login`, { replace: true });
+          }
         })
         .catch((error) => {
-          new Error(error);
+          console.log(error);
           toast.error('회원가입에 실패했습니다. 관리자에게 문의하세요.');
         });
-    }
+      }
   } else {
     toast.warn('모든 값을 입력해주세요.');
   }
@@ -448,6 +479,7 @@ export const withdrawUser = (
   e,
   beforeEditUserInfo,
   passwordRef,
+  token,
   setIsLoggedIn,
   navigate,
   toast
@@ -471,7 +503,7 @@ export const withdrawUser = (
     nickname: beforeEditUserInfo.nickname,
     address: beforeEditUserInfo.address,
     ageGroup: beforeEditUserInfo.ageGroup,
-    status: beforeEditUserInfo.status,
+    status: "WITHDRAWL",
     sns: beforeEditUserInfo.sns,
     role: beforeEditUserInfo.role,
     profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
@@ -485,22 +517,26 @@ export const withdrawUser = (
     type: 'application/json',
   });
 
-  const profilePictureBlob = new Blob(['']);
+
 
   formData.append('updateAuthRequest', updateBodyBlob);
-  formData.append('file', profilePictureBlob);
+
 
   console.log('updateBody2', updateBody2);
+
+  console.log("token", token);
 
   axios
     .put(url, formData, config)
     .then((response) => {
+      console.log(response);
       localStorage.removeItem('token');
       setIsLoggedIn(false);
       alert('회원 탈퇴하였습니다.');
       navigate('/');
     })
     .catch((error) => {
+      console.log(error);
       new Error(error);
       toast.error('회원 탈퇴에 실패했습니다. 관리자에게 문의하세요.');
     });
@@ -723,6 +759,7 @@ export const postCourseReview = (
     .post(url, body, config)
     .then((response) => {
       reviewContentRef.current.value = '';
+      window.location.replace(`/course-detail/${courseDetail.id}`);
     })
     .catch((error) => {
       new Error(error);
@@ -1104,7 +1141,6 @@ export const postReport = (
 
 /** 수정 버튼 클릭 시 작성된 신고 수정 내용을 서버로 전송하는 함수 */
 export const updateReport = (
-  e,
   id,
   checkReportInput,
   reportTitle,
@@ -1115,13 +1151,13 @@ export const updateReport = (
   isHistoriesChanged,
   setIsReportFormOpened,
   isReportFormOpened,
-  toast
+  toast,
+  navigate
 ) => {
-  e.preventDefault();
-
   if (!checkReportInput()) return;
 
-  // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards/${id}`;
+  const token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
   const url = `${process.env.REACT_APP_API}/boards/${id}`;
   const body = {
     reportTitle: reportTitle.current.value,
@@ -1133,13 +1169,20 @@ export const updateReport = (
       },
     ],
   };
-  const config = { timeout: 3000 };
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    timeout: 3000,
+  };
 
   axios
     .put(url, body, config)
     .then((response) => {
+      console.log(response);
       setIsHistoriesChanged(!isHistoriesChanged);
       setIsReportFormOpened(!isReportFormOpened);
+      window.location.replace(`/user/${report.reporterId}/report-histories`);
     })
     .catch((error) => {
       new Error(error);

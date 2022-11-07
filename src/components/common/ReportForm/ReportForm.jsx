@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilTitle } from '../..';
@@ -20,6 +21,8 @@ function ReportForm({
   isHistoriesChanged,
   setIsHistoriesChanged,
 }) {
+  const navigate = useNavigate();
+
   const [reportCategories, setReportCategories] = useState([]);
   /* 신고 작성 관련 ref */
   const reportTitle = useRef();
@@ -88,14 +91,19 @@ function ReportForm({
             {!type && '신고하기'}
             {type === 'detail' && '신고 상세 조회'}
             {type === 'update' && '신고 수정하기'}
+            {type === 'answer' && '신고 답변'}
           </UtilTitle>
           <AiIcons.AiOutlineClose onClick={onClick} />
         </S.ReportFormTitleWrap>
         {/* 신고 상세 조회면 해당 신고의 분류 정보, 신고하기 혹은 수정하기 폼이면 신고 유형 드랍다운 */}
-        {type === 'detail' ? (
-          <S.ReportHistoryCat>
-            분류: {report?.reportCategoryList[0].reportCategoryName}
-          </S.ReportHistoryCat>
+        {type === 'detail' || type === 'answer' ? (
+          <>
+            {type === 'detail' && (
+              <S.ReportHistoryCat>
+                분류: {report?.reportCategoryList[0].reportCategoryName}
+              </S.ReportHistoryCat>
+            )}
+          </>
         ) : (
           <S.ReportFormCats ref={reportCategory}>
             {reportCategories &&
@@ -108,7 +116,7 @@ function ReportForm({
         )}
         {/* 신고 제목 */}
         {/* 신고 상세 조회면 해당 신고의 제목, 신고하기 및 수정하기 폼이면 신고 제목 입력 인풋 */}
-        {type === 'detail' ? (
+        {type === 'detail' || type === 'answer' ? (
           <S.ReportFormTitle>{report?.reportTitle}</S.ReportFormTitle>
         ) : (
           <Input
@@ -121,7 +129,7 @@ function ReportForm({
         )}
         {/* 신고 내용 */}
         {/* 상세 조회면 수정 불가, 신고하기 및 수정하기면 수정 가능 */}
-        {type === 'detail' ? (
+        {type === 'detail' || type === 'answer' ? (
           <S.ReportFormTextArea
             disabled
             value={report?.reportContent}
@@ -140,13 +148,13 @@ function ReportForm({
         )}
         {/* 신고 버튼 */}
         {/* 신고하기, 수정하기면 보이고, 상세 조회는 안 보임*/}
-        {type !== 'detail' && (
+        {type !== 'detail' && type !== 'answer' ? (
           <S.ReportFormBtnWrap>
             <Button
               type="button"
-              width={'8rem'}
-              height={'3.5rem'}
-              marign={'0 3rem'}
+              width={'80px'}
+              height={'35px'}
+              margin={'0 10px'}
               color={color.black}
               bgColor={color.lightGrey}
               hoveredBgColor={color.grey}
@@ -156,9 +164,9 @@ function ReportForm({
             </Button>
             <Button
               type="button"
-              width={'8rem'}
-              height={'3.5rem'}
-              margin={'0 3rem'}
+              width={'80px'}
+              height={'35px'}
+              margin={'0 10px'}
               color={color.white}
               bgColor={color.darkBlue}
               hoveredBgColor={color.navy}
@@ -186,7 +194,8 @@ function ReportForm({
                         isHistoriesChanged,
                         setIsReportFormOpened,
                         isReportFormOpened,
-                        toast
+                        toast,
+                        navigate
                       )
               }
             >
@@ -194,6 +203,8 @@ function ReportForm({
               {type === 'update' && '수정'}
             </Button>
           </S.ReportFormBtnWrap>
+        ) : (
+          <></>
         )}
       </S.ReportForm>
     </S.ReportFormBg>

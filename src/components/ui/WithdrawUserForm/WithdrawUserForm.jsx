@@ -31,7 +31,12 @@ function WithdrawUserForm({ beforeEditUserInfo }) {
   /* Handlers */
   /* 비밀번호 유효성 검증하는 핸들러 */
   const dummyPwd = 'testPwd15';
+
   const checkPassword = () => {
+    //SNS 회원가입한 유저는 패스워드 체크 안함.
+    if(beforeEditUserInfo.sns === "YES")
+      return true;
+
     if (!passwordRef.current.value) {
       toast.error('비밀번호를 입력해주세요.');
       return false;
@@ -77,7 +82,8 @@ function WithdrawUserForm({ beforeEditUserInfo }) {
         type="password"
         width={'360px'}
         height={'40px'}
-        placeholder={'비밀번호를 입력해주세요.'}
+        disabled={beforeEditUserInfo.sns === "YES" ? true:false}
+        placeholder={beforeEditUserInfo.sns === "YES" ? "SNS 회원가입은 비밀번호를 입력할 필요가 없습니다." : '비밀번호를 입력해주세요.'}
       />
       {!isDeleteConfirmationMessageDisplayed && (
         <Button

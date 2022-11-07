@@ -201,7 +201,6 @@ function CourseReview({
                 height={'8rem'}
               />
               <S.CourseReviewAuthorNickname>
-                {courseReview.id}
                 {courseReviewAuthor && courseReviewAuthor.nickname}
               </S.CourseReviewAuthorNickname>
             </S.CourseReviewAuthorWrap>
@@ -210,7 +209,7 @@ function CourseReview({
               <S.CourseReviewInnerContentWrap>
                 <S.CourseReviewStar>
                   {/* 수정 textarea 열렸을 시 보여줄 별들 */}
-                  {isCourseReviewEditTextareaOpened && !isCourseReviewEdited && (
+                  {isCourseReviewEditTextareaOpened && (
                     <>
                       {REVIEW_RATE_INDEXES.map((item) => (
                         <div key={item}>
@@ -227,17 +226,6 @@ function CourseReview({
                       ))}
                     </>
                   )}
-                  {!isCourseReviewEditTextareaOpened &&
-                    isCourseReviewEdited &&
-                    edittedReviewRateRef.current === 5 && (
-                      <>
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                      </>
-                    )}
                   {!isCourseReviewEditTextareaOpened &&
                     isCourseReviewEdited &&
                     edittedReviewRateRef.current === 5 && (
