@@ -63,7 +63,7 @@ function CourseSharingAndLikeButton({
   /* APIs */
   /** 코스 좋아요 여부 조회 */
   useEffect(() => {
-    checkLikedCourse(courseDetail, setIsLikedCourse);
+    checkLikedCourse(courseDetail, setIsLikedCourse, token);
   }, [isLikedCourseChanged]);
 
   return (
@@ -103,7 +103,8 @@ function CourseSharingAndLikeButton({
               loggedInUserId,
               toast,
               setIsLikedCourseChanged,
-              isLikedCourseChanged
+              isLikedCourseChanged,
+              token
             )
           }
         >
@@ -125,7 +126,8 @@ function CourseSharingAndLikeButton({
               loggedInUserId,
               toast,
               setIsLikedCourseChanged,
-              isLikedCourseChanged
+              isLikedCourseChanged,
+              token
             )
           }
         >
@@ -141,6 +143,7 @@ function CourseSharingAndLikeButton({
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
     </StyledCourseContentWrap>
   );

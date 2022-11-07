@@ -34,8 +34,7 @@ function WithdrawUserForm({ beforeEditUserInfo }) {
 
   const checkPassword = () => {
     //SNS 회원가입한 유저는 패스워드 체크 안함.
-    if(beforeEditUserInfo.sns === "YES")
-      return true;
+    if (beforeEditUserInfo.sns === 'YES') return true;
 
     if (!passwordRef.current.value) {
       toast.error('비밀번호를 입력해주세요.');
@@ -75,6 +74,7 @@ function WithdrawUserForm({ beforeEditUserInfo }) {
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
       <UtilTitle>회원탈퇴</UtilTitle>
       <Input
@@ -82,8 +82,12 @@ function WithdrawUserForm({ beforeEditUserInfo }) {
         type="password"
         width={'360px'}
         height={'40px'}
-        disabled={beforeEditUserInfo.sns === "YES" ? true:false}
-        placeholder={beforeEditUserInfo.sns === "YES" ? "SNS 회원가입은 비밀번호를 입력할 필요가 없습니다." : '비밀번호를 입력해주세요.'}
+        disabled={beforeEditUserInfo.sns === 'YES' ? true : false}
+        placeholder={
+          beforeEditUserInfo.sns === 'YES'
+            ? 'SNS 회원가입은 비밀번호를 입력할 필요가 없습니다.'
+            : '비밀번호를 입력해주세요.'
+        }
       />
       {!isDeleteConfirmationMessageDisplayed && (
         <Button

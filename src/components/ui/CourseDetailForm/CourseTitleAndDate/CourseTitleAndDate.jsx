@@ -51,6 +51,7 @@ function CourseTitleAndDate({
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
       <StyledCourseContentWrap style={{ borderBottom: 'none' }}>
         <S.CourseTitle>{courseDetail.courseTitle}</S.CourseTitle>
@@ -80,7 +81,9 @@ function CourseTitleAndDate({
             {isDeleteButtonClicked && (
               <S.UtilityButton
                 type="button"
-                onClick={() => deleteCourse(courseDetail.id, navigate, toast)}
+                onClick={() =>
+                  deleteCourse(courseDetail.id, navigate, toast, token)
+                }
               >
                 <BiIcons.BiErrorAlt style={{ color: `${color.red}` }} />
               </S.UtilityButton>

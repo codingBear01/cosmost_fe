@@ -98,13 +98,14 @@ function LoginForm() {
     >
       <ToastContainer
         position="top-center"
-        autoClose={2000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={true}
         closeOnClick
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
       {/* 아이디, 비밀번호 인풋 */}
       <UtilInputWrap>

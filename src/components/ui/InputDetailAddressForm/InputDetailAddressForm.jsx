@@ -19,12 +19,11 @@ import { COLOR_LIST as color } from '../../../style';
 
 function InputDetailAddressForm({ state }) {
   /* Path */
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const path = useLocation().pathname;
   const isDetailAddressPage = path.includes('edit');
   const isNaverAddressPage = path.includes('naver');
   const navigate = useNavigate();
-
 
   const [detailAddress, setDetailAddress] = useState('');
 
@@ -42,7 +41,7 @@ function InputDetailAddressForm({ state }) {
     }
   };
 
-  console.log("path",path);
+  console.log('path', path);
   return (
     <UtilForm>
       <UtilTitle>상세 주소를 입력해주세요.</UtilTitle>
@@ -65,36 +64,35 @@ function InputDetailAddressForm({ state }) {
           onChange={onChangeDetailAddress}
         />
       </UtilInputWrap>
-        {/* 네이버 다음으로 버튼 또는 일반 다음으로 버튼*/}
-        {!isDetailAddressPage && isNaverAddressPage ? 
-        (
-          <NextBtn
-            to={'/naver/sign-up'}
-            state={{ ...state, detailAddress }}
-            onClick={onClickCheckInput}
-            />
-        )   
-        :
-        (
+      {/* 네이버 다음으로 버튼 또는 일반 다음으로 버튼*/}
+      {!isDetailAddressPage && isNaverAddressPage ? (
         <NextBtn
-        to={'/sign-up'}
-        state={{ ...state, detailAddress }}
-        onClick={onClickCheckInput}
+          to={'/naver/sign-up'}
+          state={{ ...state, detailAddress }}
+          onClick={onClickCheckInput}
         />
-        )}
+      ) : (
+        <NextBtn
+          to={'/sign-up'}
+          state={{ ...state, detailAddress }}
+          onClick={onClickCheckInput}
+        />
+      )}
       {/* 수정 버튼 */}
       {isDetailAddressPage && (
         <Button
-        type="submit"
-        width={'100%'}
-        height={'40px'}
-        color={color.white}
-        bgColor={color.darkBlue}
-        hoveredBgColor={color.navy}
-        onClick={(e) => {updateUserAddress(e,token, state, navigate, toast, detailAddress)}}
-      >
-        수정
-      </Button>
+          type="submit"
+          width={'100%'}
+          height={'40px'}
+          color={color.white}
+          bgColor={color.darkBlue}
+          hoveredBgColor={color.navy}
+          onClick={(e) => {
+            updateUserAddress(e, token, state, navigate, toast, detailAddress);
+          }}
+        >
+          수정
+        </Button>
       )}
       <ToastContainer
         position="top-center"
@@ -105,6 +103,7 @@ function InputDetailAddressForm({ state }) {
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
     </UtilForm>
   );

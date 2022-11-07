@@ -16,7 +16,7 @@ export {
   getCourseReviews,
   getMyReviews,
   postCourseReview,
-  editCourseReview,
+  updateCourseReview,
   // Popularity
   getCourseAverageRate,
   getCoursesSortedByAverageRate,
@@ -30,7 +30,6 @@ export {
   fetchIsFollowed,
   // Board
   getReportCategories,
-  getMyReports,
   postReport,
   updateReport,
 } from './api';
