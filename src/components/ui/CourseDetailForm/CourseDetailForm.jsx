@@ -25,7 +25,7 @@ import {
   CourseSharingAndLikeButton,
   CourseTitleAndDate,
 } from '.';
-import { ToTopBtn, UtilDiv, Loading } from '../..';
+import { ToTopBtn, UtilDiv } from '../..';
 /* APIs */
 import {
   getCourseAverageRate,
@@ -41,13 +41,9 @@ function CourseDetailForm() {
 
   /* States */
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
-  const [clickedElement, setClickedElement] = useState(null);
-  const [clickedCourseReviewIndex, setClickedCourseReviewIndex] =
-    useState(null);
   const [isClickedCourseReviewChanged, setIsClickedCourseReviewChanged] =
     useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
-  const [isLoading, setIsLoading] = useRecoilState(isLoadingAtom);
   // Auth
   const [author, setAuthor] = useState(null);
   // Cosmost
@@ -76,8 +72,6 @@ function CourseDetailForm() {
     코스 삭제 여부 확인 모달창을 활성화하거나 비활성화한다. */
   const onClickOpenDeleteModal = (clicked, i) => {
     setIsDeleteModalOpened(!isDeleteModalOpened);
-    setClickedElement(clicked);
-    setClickedCourseReviewIndex(i);
   };
 
   //코스 수정 버튼 클릭시 호출할 핸들러
@@ -87,7 +81,6 @@ function CourseDetailForm() {
 
   /* APIs */
   const fetchCourseReviews = useCallback(async () => {
-    setIsLoading(true);
     try {
       const url = `${process.env.REACT_APP_API}/comments?type=review&sort=id,desc&page=${page.current}&size=4`;
       const config = {
@@ -99,7 +92,6 @@ function CourseDetailForm() {
 
       const result = await axios.get(url, config);
       const { data } = result;
-      console.log(data);
 
       setCourseReviews((prev) => prev.concat(data[0].courseReviewList));
       setIsLastPage(
@@ -108,7 +100,6 @@ function CourseDetailForm() {
       );
       setCourseReviewCount(data[0].courseReviewCnt);
       setCourseAverageRatePercentage(data[0].rateAllTypeList);
-      setIsLoading(false);
 
       if (!isLastPage) {
         page.current += 1;
@@ -120,7 +111,7 @@ function CourseDetailForm() {
   useEffect(() => {
     getCourseDetail(id, setCourseDetail);
     fetchCourseReviews();
-  }, [isClickedCourseReviewChanged]);
+  }, []);
 
   /** 무한 스크롤을 위해 observing을 하는 함수 */
   useEffect(() => {
@@ -140,58 +131,59 @@ function CourseDetailForm() {
   useEffect(() => {
     if (courseDetail) {
       // 네이버 지도 생성
-      const map = createNaverMap();
-      courseDetail.placeDetailList.map((item, index) => {
-        const marker = addNaverMapMarker(map, {
-          latitude: item.placeYCoordinate,
-          longitude: item.placeXCoordinate,
-          eventList: [
-            {
-              eventName: 'mouseover',
-              eventListener: (e) => {
-                e.pointerEvent.target.title = item.placeName;
-              },
-            },
-            {
-              eventName: 'click',
-              eventListener: (e) => {
-                onClickMarker(e);
-              },
-            },
-          ],
-        });
+      // const map = createNaverMap();
+      // courseDetail.placeDetailList.map((item, index) => {
+      //   const marker = addNaverMapMarker(map, {
+      //     latitude: item.placeYCoordinate,
+      //     longitude: item.placeXCoordinate,
+      //     eventList: [
+      //       {
+      //         eventName: 'mouseover',
+      //         eventListener: (e) => {
+      //           e.pointerEvent.target.title = item.placeName;
+      //         },
+      //       },
+      //       {
+      //         eventName: 'click',
+      //         eventListener: (e) => {
+      //           onClickMarker(e);
+      //         },
+      //       },
+      //     ],
+      //   });
 
-        const markerInfoString = `
-            <div><h3>${item.placeName}</h3><div>${item.placeComment}</div></div>
-        `;
-        const markerInfoStyle = {
-          backgroundColor: '#000',
-          borderColor: '#2db400',
-          borderWidth: 5,
-          anchorSkew: true,
-          anchorColor: '#eee',
-        };
-        const info = addNaverMapMarkerInfo(
-          map,
-          marker,
-          markerInfoString,
-          markerInfoStyle
-        );
+      //   const markerInfoString = `
+      //       <div><h3>${item.placeName}</h3><div>${item.placeComment}</div></div>
+      //   `;
+      //   const markerInfoStyle = {
+      //     backgroundColor: '#000',
+      //     borderColor: '#2db400',
+      //     borderWidth: 5,
+      //     anchorSkew: true,
+      //     anchorColor: '#eee',
+      //   };
+      //   const info = addNaverMapMarkerInfo(
+      //     map,
+      //     marker,
+      //     markerInfoString,
+      //     markerInfoStyle
+      //   );
 
-        // 네이버지도 마커 클릭시 호출할 함수.
-        const onClickMarker = (e) => {
-          if (info.getMap()) {
-            info.close();
-          } else {
-            info.open(map, marker);
-          }
-        };
-      });
+      //   // 네이버지도 마커 클릭시 호출할 함수.
+      //   const onClickMarker = (e) => {
+      //     if (info.getMap()) {
+      //       info.close();
+      //     } else {
+      //       info.open(map, marker);
+      //     }
+      //   };
+      // });
 
       getCourseAuthor(courseDetail.authorId, setAuthor);
       getCourseAverageRate(
         id,
         (result) => {
+          console.log(result);
           setCourseAverageRate(result.data);
         },
         (error) => {
@@ -312,6 +304,9 @@ function CourseDetailForm() {
                 }
               />
             ))}
+          {!courseReviews[0] && (
+            <h1>아직 등록된 리뷰가 없습니다. 첫 리뷰의 주인공이 되어보세요.</h1>
+          )}
           <div ref={observedTarget} style={{ paddingBottom: '10rem' }}></div>
         </UtilDiv>
         <ToTopBtn />

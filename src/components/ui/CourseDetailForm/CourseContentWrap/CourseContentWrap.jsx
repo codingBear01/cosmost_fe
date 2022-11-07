@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useState, useEffect, useParams } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 /* components */
@@ -177,35 +177,86 @@ function CourseContentWrap({
             </span>
           </S.AverageRate>
           <ul>
+            {!courseAverageRateGaugeWidth && (
+              <>
+                <S.CourseRateStarWrap>
+                  <S.CourseRateStar>⭐⭐⭐⭐⭐</S.CourseRateStar>
+                  <S.CourseRateStarPercentGaugeWrap>
+                    <S.CourseRateStarPercentGauge
+                      width={'0%'}
+                    ></S.CourseRateStarPercentGauge>
+                  </S.CourseRateStarPercentGaugeWrap>
+                  <S.CourseRateStarPercent>0%</S.CourseRateStarPercent>
+                </S.CourseRateStarWrap>
+
+                <S.CourseRateStarWrap>
+                  <S.CourseRateStar>⭐⭐⭐⭐</S.CourseRateStar>
+                  <S.CourseRateStarPercentGaugeWrap>
+                    <S.CourseRateStarPercentGauge
+                      width={'0%'}
+                    ></S.CourseRateStarPercentGauge>
+                  </S.CourseRateStarPercentGaugeWrap>
+                  <S.CourseRateStarPercent>0%</S.CourseRateStarPercent>
+                </S.CourseRateStarWrap>
+
+                <S.CourseRateStarWrap>
+                  <S.CourseRateStar>⭐⭐⭐</S.CourseRateStar>
+                  <S.CourseRateStarPercentGaugeWrap>
+                    <S.CourseRateStarPercentGauge
+                      width={'0%'}
+                    ></S.CourseRateStarPercentGauge>
+                  </S.CourseRateStarPercentGaugeWrap>
+                  <S.CourseRateStarPercent>0%</S.CourseRateStarPercent>
+                </S.CourseRateStarWrap>
+
+                <S.CourseRateStarWrap>
+                  <S.CourseRateStar>⭐⭐</S.CourseRateStar>
+                  <S.CourseRateStarPercentGaugeWrap>
+                    <S.CourseRateStarPercentGauge
+                      width={'0%'}
+                    ></S.CourseRateStarPercentGauge>
+                  </S.CourseRateStarPercentGaugeWrap>
+                  <S.CourseRateStarPercent>0%</S.CourseRateStarPercent>
+                </S.CourseRateStarWrap>
+
+                <S.CourseRateStarWrap>
+                  <S.CourseRateStar>⭐ </S.CourseRateStar>
+                  <S.CourseRateStarPercentGaugeWrap>
+                    <S.CourseRateStarPercentGauge
+                      width={'0%'}
+                    ></S.CourseRateStarPercentGauge>
+                  </S.CourseRateStarPercentGaugeWrap>
+                  <S.CourseRateStarPercent>0%</S.CourseRateStarPercent>
+                </S.CourseRateStarWrap>
+              </>
+            )}
             {courseAverageRateGaugeWidth &&
-              courseAverageRateGaugeWidth.map((item, index) => {
-                return (
-                  <S.CourseRateStarWrap key={index}>
-                    <S.CourseRateStar>
-                      {index === 0 ? (
-                        '⭐⭐⭐⭐⭐'
-                      ) : index === 1 ? (
-                        '⭐⭐⭐⭐'
-                      ) : index === 2 ? (
-                        '⭐⭐⭐'
-                      ) : index === 3 ? (
-                        '⭐⭐'
-                      ) : index === 4 ? (
-                        '⭐'
-                      ) : (
-                        <></>
-                      )}
-                    </S.CourseRateStar>
-                    <S.CourseRateStarPercentGaugeWrap>
-                      <S.CourseRateStarPercentGauge
-                        width={`${item}%`}
-                        percentage={item}
-                      ></S.CourseRateStarPercentGauge>
-                    </S.CourseRateStarPercentGaugeWrap>
-                    <S.CourseRateStarPercent>{item}%</S.CourseRateStarPercent>
-                  </S.CourseRateStarWrap>
-                );
-              })}
+              courseAverageRateGaugeWidth.map((item, index) => (
+                <S.CourseRateStarWrap key={index}>
+                  <S.CourseRateStar>
+                    {index === 0 ? (
+                      '⭐⭐⭐⭐⭐'
+                    ) : index === 1 ? (
+                      '⭐⭐⭐⭐'
+                    ) : index === 2 ? (
+                      '⭐⭐⭐'
+                    ) : index === 3 ? (
+                      '⭐⭐'
+                    ) : index === 4 ? (
+                      '⭐'
+                    ) : (
+                      <></>
+                    )}
+                  </S.CourseRateStar>
+                  <S.CourseRateStarPercentGaugeWrap>
+                    <S.CourseRateStarPercentGauge
+                      width={`${item}%`}
+                      percentage={item}
+                    ></S.CourseRateStarPercentGauge>
+                  </S.CourseRateStarPercentGaugeWrap>
+                  <S.CourseRateStarPercent>{item}%</S.CourseRateStarPercent>
+                </S.CourseRateStarWrap>
+              ))}
           </ul>
         </>
       ) : (
