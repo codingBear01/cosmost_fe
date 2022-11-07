@@ -1,7 +1,6 @@
 /* icons */
 import * as GiIcons from 'react-icons/gi';
 import * as FiIcons from 'react-icons/fi';
-import * as MdIcons from 'react-icons/md';
 
 export const MAIN_COURSES = [
   {
@@ -23,13 +22,6 @@ export const MAIN_COURSES = [
     alignSelf: 'start',
     title: '높은 평가 받은 코스',
     icon: <FiIcons.FiStar />,
-    path: '/searched-courses',
-  },
-  {
-    id: 4,
-    alignSelf: 'end',
-    title: '최근 추가된 코스',
-    icon: <MdIcons.MdOutlineAlarmOn />,
     path: '/searched-courses',
   },
 ];
