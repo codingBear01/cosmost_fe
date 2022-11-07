@@ -1,6 +1,11 @@
 /* libraries */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import {
+  Link,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
 import { useRecoilState } from 'recoil';
@@ -27,6 +32,7 @@ function CoursesForm() {
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
   );
+  const location = useLocation();
   const [isLoading, setIsLoading] = useRecoilState(isLoadingAtom);
   const [courses, setCourses] = useState([]);
   const [isLastPage, setIsLastPage] = useState(false);
@@ -39,6 +45,8 @@ function CoursesForm() {
   const [queryStringsState, setQueryStringsState] = useRecoilState(
     queryStringsStateAtom
   );
+
+  console.log(location);
 
   const page = useRef(0);
   const observedTarget = useRef(null);
@@ -62,7 +70,7 @@ function CoursesForm() {
     if (
       (type === 'keyword' &&
         (searchingType === 'all' || searchingType === 'search')) ||
-      type === 'hastags'
+      type === 'hashtag'
     ) {
       url = `${
         process.env.REACT_APP_API
@@ -188,9 +196,7 @@ function CoursesForm() {
 
   /** 쿼리스트링이 변경될 때마다 호출되는 useEffect. IsLastPage와 Course State를 초기화한다.*/
   useEffect(() => {
-    console.log('쿼리스트링이 isLastPage', isLastPage);
     setIsLastPage(false);
-
     setCourses([]);
     setQueryStringsState(!queryStringsState);
     page.current = 0;
@@ -198,12 +204,18 @@ function CoursesForm() {
 
   /** 무한 스크롤을 위해 observing을 하는 함수 */
   useEffect(() => {
-    console.log('무한 스크롤 isLastPage', isLastPage);
-    console.log('AS', !observedTarget.current);
     if (!observedTarget.current || isLastPage) return;
 
     const io = new IntersectionObserver((entries, observer) => {
+      // debugger;
       if (entries[0].isIntersecting) {
+        getCourses(
+          params.type,
+          queryStrings.get('keyword'),
+          categoryId,
+          searchingType
+        );
+      } else if (entries[1]?.isIntersecting) {
         getCourses(
           params.type,
           queryStrings.get('keyword'),
@@ -234,7 +246,7 @@ function CoursesForm() {
           <></>
         )}
         {/* 정렬 기준 버튼 */}
-        {params.type !== 'auth' && params.type !== 'likes' ? (
+        {searchingType === 'all' ? (
           <OrderingButton
             onClick={onClickOpenOrderingModal}
             sortType={courseSortType}
@@ -256,7 +268,7 @@ function CoursesForm() {
             <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
           )}
         </S.SearchedCourseContainer>
-        {isLoading ? <Loading /> : null}
+        {courses[0] && isLoading ? <Loading /> : null}
         <div ref={observedTarget}></div>
         <ToTopBtn />
       </UtilDiv>

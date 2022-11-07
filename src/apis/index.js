@@ -14,9 +14,9 @@ export {
   // Comment
   getSingleCourseView,
   getCourseReviews,
-  getMyReviews,
   postCourseReview,
   updateCourseReview,
+  deleteCourseReview,
   // Popularity
   getCourseAverageRate,
   getCoursesSortedByAverageRate,
@@ -32,4 +32,6 @@ export {
   getReportCategories,
   postReport,
   updateReport,
+  deleteMyReport,
+  fetchAnswerAboutMyReport,
 } from './api';

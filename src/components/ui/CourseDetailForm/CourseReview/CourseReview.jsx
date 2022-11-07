@@ -13,6 +13,7 @@ import {
   fetchCourseReviewLikeCount,
   getCourseAuthor,
   updateCourseReview,
+  deleteCourseReview,
 } from '../../../../apis';
 /* functions */
 import {
@@ -124,29 +125,6 @@ function CourseReview({
   useEffect(() => {
     getCourseAuthor(courseReview.reviewerId, setCourseReviewAuthor);
   }, []);
-
-  /** 코스 리뷰 삭제 */
-  const deleteCourseReview = () => {
-    const url = `${process.env.REACT_APP_API}/comments/${courseDetail.id}/review`;
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-    axios
-      .delete(url, config)
-      .then((response) => {
-        console.log(response);
-        setIsDisplayed(false);
-      })
-      .catch((error) => {
-        new Error(error);
-        toast.error(
-          '코스 삭제 도중 오류가 발생했습니다. 관리자에게 문의하세요.'
-        );
-      });
-  };
 
   return (
     <>
