@@ -59,6 +59,7 @@ function CoursesForm() {
     searchingType
   ) => {
     let url;
+    // debugger;
     if (
       (type === "keyword" &&
         (searchingType === "all" || searchingType === "search")) ||
@@ -116,6 +117,7 @@ function CoursesForm() {
         );
 
         if (!url) return;
+        console.log("url", url);
 
         const config =
           type === "auth" || type === "likes"
@@ -127,27 +129,29 @@ function CoursesForm() {
               }
             : { timeout: 3000 };
 
-        let data;
+        // while (1) {
+        //   const url = returnUrlForGettingCourses(
+        //     type,
+        //     searchKeyword,
+        //     categoryNumber,
+        //     searchingType
+        //   );
+        //   console.log("url", url);
+        //   console.log("isLastPage", isLastPage);
+        //   const result = await axios.get(url, config);
+        //   data = result.data;
+        //   if (data.length !== 0 || isLastPage) {
+        //     break;
+        //   }
+        //   page.current += 1;
+        // }
 
-        while (1) {
-          const url = returnUrlForGettingCourses(
-            type,
-            searchKeyword,
-            categoryNumber,
-            searchingType
-          );
-          console.log("url", url);
-          console.log("isLastPage", isLastPage);
-          const result = await axios.get(url, config);
-          data = result.data;
-          if (data.length !== 0 || isLastPage) {
-            break;
-          }
-          page.current += 1;
+        const result = await axios.get(url, config);
+        const { data } = result;
+
+        if (data.length == 0) {
+          data.push({ whetherLastPage: false });
         }
-
-        // const result = await axios.get(url, config);
-        // const {data} = result;
 
         setCourses((prev) => prev.concat(data));
         setIsLastPage(data[data.length - 1].whetherLastPage);
