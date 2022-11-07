@@ -28,6 +28,8 @@ export {
   fetchCourseReviewLikeCount,
   handleFollow,
   fetchIsFollowed,
+  fetchMyFollowersCount,
+  fetchMyFollowingsCount,
   // Board
   getReportCategories,
   postReport,

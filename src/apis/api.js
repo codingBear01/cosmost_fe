@@ -1061,6 +1061,40 @@ export const likedCourseReview = (id, setIsLikedCourseReview, token) => {
     .catch((error) => new Error(error));
 };
 
+/** 나의 팔로워 수 조회 */
+export const fetchMyFollowersCount = (token, setMyFollowersCount) => {
+  const url = `${process.env.REACT_APP_API}/popularities?filter=auth&type=follower&sort=id,desc&page=0&size=4`;
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    timeout: 3000,
+  };
+
+  axios
+    .get(url, config)
+    .then((response) => setMyFollowersCount(response.data[0].readMyFollewerCnt))
+    .catch((error) => new Error(error));
+};
+
+/** 나의 팔로잉 수 조회 */
+export const fetchMyFollowingsCount = (token, setMyFollowingsCount) => {
+  const url = `${process.env.REACT_APP_API}/popularities?filter=auth&type=following&sort=id,desc&page=0&size=4`;
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    timeout: 3000,
+  };
+
+  axios
+    .get(url, config)
+    .then((response) =>
+      setMyFollowingsCount(response.data[0].readMyFollowingCnt)
+    )
+    .catch((error) => new Error(error));
+};
+
 /* Board */
 /** 리뷰 작성에 쓰일 신고 카테고리를 불러오는 함수 */
 export const getReportCategories = (setReportCategories) => {
