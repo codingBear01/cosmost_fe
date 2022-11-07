@@ -47,7 +47,6 @@ function CourseReview({
   const navigate = useNavigate();
 
   /* States*/
-  const [clickedReviewIndex, setClickedReviewIndex] = useState(null);
   const [
     isCourseReviewEditTextareaOpened,
     setIsCourseReviewEditTextareaOpened,
@@ -65,21 +64,16 @@ function CourseReview({
   const [courseReviewLikeCount, setCourseReviewLikeCount] = useState('');
   const [courseReviewAuthor, setCourseReviewAuthor] = useState('');
   const [isDeleteButtonClicked, setIsDeleteButtonClicked] = useState(false);
-  const [isCourseReviewEdited, setIsCourseReviewEdited] = useState(false);
   const [isDisplayed, setIsDisplayed] = useState(true);
 
   /* Refs */
   const edittedReviewContentRef = useRef();
   const edittedReviewRateRef = useRef();
 
-  /* Variables */
-  const courseRatePercantage = courseReview;
-
   /* Handlers */
   /** 클릭 시 코스 리뷰 수정 textarea Open 여부를 변경하고, 코스 리뷰 버튼의 인덱스를 저장하는 핸들러 */
   const onClickSetClickedCourseReviewEditButton = (i) => {
     setIsCourseReviewEditTextareaOpened(!isCourseReviewEditTextareaOpened);
-    setClickedReviewIndex(i);
   };
 
   /** 평점을 설정하는 핸들러. 전달한 index 이하의 isYellowStar를 true로 만들고, index + 1을 평점으로 할당한다. */
@@ -100,7 +94,7 @@ function CourseReview({
     }
     if (!edittedReviewRateRef.current) {
       edittedReviewRateRef.current = 1;
-      return false;
+      return true;
     }
     return true;
   };
@@ -177,18 +171,6 @@ function CourseReview({
                     </>
                   )}
                   {!isCourseReviewEditTextareaOpened &&
-                    isCourseReviewEdited &&
-                    edittedReviewRateRef.current === 5 && (
-                      <>
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                      </>
-                    )}
-                  {!isCourseReviewEditTextareaOpened &&
-                    !isCourseReviewEdited &&
                     courseReview.rate === 5 && (
                       <>
                         <AiIcons.AiFillStar />
@@ -199,17 +181,6 @@ function CourseReview({
                       </>
                     )}
                   {!isCourseReviewEditTextareaOpened &&
-                    isCourseReviewEdited &&
-                    edittedReviewRateRef.current === 4 && (
-                      <>
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                      </>
-                    )}
-                  {!isCourseReviewEditTextareaOpened &&
-                    !isCourseReviewEdited &&
                     courseReview.rate === 4 && (
                       <>
                         <AiIcons.AiFillStar />
@@ -219,16 +190,6 @@ function CourseReview({
                       </>
                     )}
                   {!isCourseReviewEditTextareaOpened &&
-                    isCourseReviewEdited &&
-                    edittedReviewRateRef.current === 3 && (
-                      <>
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                      </>
-                    )}
-                  {!isCourseReviewEditTextareaOpened &&
-                    !isCourseReviewEdited &&
                     courseReview.rate === 3 && (
                       <>
                         <AiIcons.AiFillStar />
@@ -237,15 +198,6 @@ function CourseReview({
                       </>
                     )}
                   {!isCourseReviewEditTextareaOpened &&
-                    isCourseReviewEdited &&
-                    edittedReviewRateRef.current === 2 && (
-                      <>
-                        <AiIcons.AiFillStar />
-                        <AiIcons.AiFillStar />
-                      </>
-                    )}
-                  {!isCourseReviewEditTextareaOpened &&
-                    !isCourseReviewEdited &&
                     courseReview.rate === 2 && (
                       <>
                         <AiIcons.AiFillStar />
@@ -253,14 +205,6 @@ function CourseReview({
                       </>
                     )}
                   {!isCourseReviewEditTextareaOpened &&
-                    isCourseReviewEdited &&
-                    edittedReviewRateRef.current === 1 && (
-                      <>
-                        <AiIcons.AiFillStar />
-                      </>
-                    )}
-                  {!isCourseReviewEditTextareaOpened &&
-                    !isCourseReviewEdited &&
                     courseReview.rate === 1 && (
                       <>
                         <AiIcons.AiFillStar />
@@ -373,9 +317,7 @@ function CourseReview({
                 ></S.CourseReviewEditTextarea>
               ) : (
                 <S.CourseReviewDescription>
-                  {isCourseReviewEdited &&
-                    edittedReviewContentRef.current?.value}
-                  {!isCourseReviewEdited && courseReview.courseReviewContent}
+                  {courseReview.courseReviewContent}
                 </S.CourseReviewDescription>
               )}
               {/* 리뷰 수정, 취소 버튼 */}
@@ -410,8 +352,7 @@ function CourseReview({
                         edittedReviewContentRef,
                         edittedReviewRateRef,
                         token,
-                        setIsCourseReviewEditTextareaOpened,
-                        setIsCourseReviewEdited
+                        setIsCourseReviewEditTextareaOpened
                       )
                     }
                   >

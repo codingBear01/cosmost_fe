@@ -312,7 +312,6 @@ function CourseDetailForm() {
                 }
               />
             ))}
-          {courseReviews[0] && isLoading ? <Loading /> : null}
           <div ref={observedTarget} style={{ paddingBottom: '10rem' }}></div>
         </UtilDiv>
         <ToTopBtn />

@@ -722,7 +722,6 @@ export const postCourseReview = (
   toast,
   token
 ) => {
-  console.log('dd');
   if (!checkCourseReviewValues()) return;
 
   const url = `${process.env.REACT_APP_API}/comments`;
@@ -758,8 +757,7 @@ export const updateCourseReview = (
   edittedReviewContentRef,
   edittedReviewRateRef,
   token,
-  setIsCourseReviewEditTextareaOpened,
-  setIsCourseReviewEdited
+  setIsCourseReviewEditTextareaOpened
 ) => {
   if (!checkEditCourseReviewValues()) return;
 
@@ -779,7 +777,7 @@ export const updateCourseReview = (
     .put(url, body, config)
     .then((response) => {
       setIsCourseReviewEditTextareaOpened(false);
-      setIsCourseReviewEdited(true);
+      window.location.replace(`/course-detail/${courseDetail.id}`);
     })
     .catch((error) => {
       new Error(error);
