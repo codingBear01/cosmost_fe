@@ -109,18 +109,18 @@ function InputUserForm({ state, beforeEditUserInfo }) {
       setIsDuplicatedIdChecked(true);
 
       //ID와 닉네임, 프로필 관련 에러가 없음을 나타내는 state 값을 전달
-        setEmptyInputError({
-          ...emptyInputError,
-          idEmpty: false,
-          nicknameEmpty: false,
-          profilePictureUrlEmpty: false,
-        });
-        setInputError({
-          ...inputError,
-          idError: false,
-          nicknameError: false,
-          profilePictureUrlError: false,
-        });
+      setEmptyInputError({
+        ...emptyInputError,
+        idEmpty: false,
+        nicknameEmpty: false,
+        profilePictureUrlEmpty: false,
+      });
+      setInputError({
+        ...inputError,
+        idError: false,
+        nicknameError: false,
+        profilePictureUrlError: false,
+      });
     }
 
     //네이버 회원가입 창이라면
@@ -207,12 +207,35 @@ function InputUserForm({ state, beforeEditUserInfo }) {
     setUserInformation({ ...userInformation, [e.target.name]: e.target.value });
   };
 
-  /* 사용자가 프로파일 이미지를 선택했을 때 호출할 핸들러. 선택한 이미지의 URL 경로를 state로 전달한다. */
+  /** 업로드한 파일이 이미지인지 검증하는 핸들러 */
+  const checkIsUploadedFileImage = (fileName) => {
+    const pathPoint = fileName.lastIndexOf('.');
+    const filePoint = fileName.substring(pathPoint + 1, fileName.length);
+    const fileType = filePoint.toLowerCase();
+
+    if (
+      fileType === 'jpg' ||
+      fileType === 'jpeg' ||
+      fileType === 'png' ||
+      fileType === 'gif' ||
+      fileType === 'bmp'
+    ) {
+      return true;
+    }
+    toast.error('이미지 파일만 업로드 가능합니다.');
+    return false;
+  };
+
+  /** 사용자가 프로파일 이미지를 선택했을 때 호출할 핸들러. 선택한 이미지의 URL 경로를 state로 전달한다. */
   const onChangeProfileImg = (e) => {
-    if (e.target.files[0]) {
+    const file = e.target.files[0];
+
+    if (!checkIsUploadedFileImage(file.name)) return;
+
+    if (file) {
       setUserInformation({
         ...userInformation,
-        profilePictureUrl: e.target.files[0],
+        profilePictureUrl: file,
       });
       setIsProfilePictureUploaded(true);
       setInputError({ ...inputError, profilePictureUrlError: false });
@@ -256,8 +279,6 @@ function InputUserForm({ state, beforeEditUserInfo }) {
     return true;
   };
 
-  console.log("beforeEditUserInfo",beforeEditUserInfo);
-
   return (
     <UtilForm>
       <ToastContainer
@@ -288,7 +309,8 @@ function InputUserForm({ state, beforeEditUserInfo }) {
             ref={profileInputRef}
             type="file"
             value={''}
-            onChange={onChangeProfileImg}
+            accept="image/gif, image/jpeg, image/png"
+            onChange={(e) => onChangeProfileImg(e, this)}
           />
         </div>
         <S.UserProfileWrap flexDirection={'column'}>

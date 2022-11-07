@@ -14,6 +14,5 @@ export { default as Loading } from './Loading';
 export { default as Login } from './Login';
 export { default as Main } from './Main';
 export { default as Messages } from './Messages';
-export { default as Rankers } from './Rankers';
 export { default as User } from './User';
 export { default as WithdrawUser } from './WithdrawUser';

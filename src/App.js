@@ -8,7 +8,6 @@ import {
   Header,
   Footer,
   PageContainer,
-  OrderingModal,
   // pages
   CourseDetail,
   CourseRegistration,
@@ -25,7 +24,6 @@ import {
   Login,
   Main,
   Messages,
-  Rankers,
   User,
   WithdrawUser,
 } from './components';
@@ -72,8 +70,12 @@ function App() {
           <Route index element={<Main />} />
           <Route path="course-detail/:id" element={<CourseDetail />} />
           <Route path="courses/:type" element={<Courses />} />
-          <Route path="rankers" element={<Rankers />} />
         </Route>
+
+        <Route element={<WithoutHeaderAndFooter />}>
+          <Route exact path="others/followers" element={<Follows />} />
+        </Route>
+
         <Route element={<WithoutHeaderAndFooter />}>
           {/* {!token && !isLoggedIn && ( */}
           <>

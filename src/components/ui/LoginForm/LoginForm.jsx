@@ -1,26 +1,19 @@
 /* libraries */
-import React, { useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import React, { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 /* recoil */
-import { useRecoilState } from 'recoil';
-import { loginStateAtom } from '../../../store';
+import { useRecoilState } from "recoil";
+import { loginStateAtom } from "../../../store";
 /* components */
-import * as S from './styled';
-import { Button, Icon, Input, UtilForm, UtilInputWrap } from '../../';
+import * as S from "./styled";
+import { Button, Icon, Input, UtilForm, UtilInputWrap } from "../../";
 /* icons */
-import * as AiIcons from 'react-icons/ai';
-import * as RiIcons from 'react-icons/ri';
-import * as SiIcons from 'react-icons/si';
-import * as FcIcons from 'react-icons/fc';
+import * as AiIcons from "react-icons/ai";
 /* static data */
-import { COLOR_LIST as color } from '../../../style';
-import { GiToken } from 'react-icons/gi';
-import { useEffect } from 'react';
-
-/* CONSTANTS */
-const { Kakao } = window;
+import { COLOR_LIST as color } from "../../../style";
+import { useEffect } from "react";
 
 function LoginForm() {
   const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
@@ -33,11 +26,11 @@ function LoginForm() {
   /* 아이디 및 패스워드 입력값을 검증하는 핸들러 */
   const checkIdAndPassword = () => {
     if (!idRef.current.value) {
-      toast.error('아이디를 입력해주세요.');
+      toast.error("아이디를 입력해주세요.");
       return false;
     }
     if (!passwordRef.current.value) {
-      toast.error('비밀번호를 입력해주세요.');
+      toast.error("비밀번호를 입력해주세요.");
       return false;
     }
     return true;
@@ -62,21 +55,19 @@ function LoginForm() {
     axios
       .put(url, body, config)
       .then((response) => {
-        localStorage.setItem('token', response.data);
+        localStorage.setItem("token", response.data);
         setIsLoggedIn(true);
-        navigate('/');
+        navigate("/");
       })
       .catch((error) => {
         new Error(error);
-        toast.error('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');
+        toast.error("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
       });
   };
 
   /* 네이버 로그인 핸들러 */
   const onClickLoginWithNaver = () => {
     navigate("/naver/email-validation");
-
-
 
     // // const url = `${process.env.REACT_APP_AUTH_IP}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
     // const url = `${process.env.REACT_APP_API}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
@@ -89,7 +80,7 @@ function LoginForm() {
     // console.log('naver');
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     // var naver_id_login = new window.naver_id_login(process.env.REACT_APP_X_NAVER_CLIENT_ID, "http://localhost:3000");
     // var state = naver_id_login.getUniqState();
     // naver_id_login.setButton("white", 2,40);
@@ -97,14 +88,12 @@ function LoginForm() {
     // naver_id_login.setState(state);
     // // naver_id_login.setPopup();
     // naver_id_login.init_naver_id_login();
- 
+  }, []);
 
-  },[])
- 
   return (
     <UtilForm
-      justifyContent={'center'}
-      height={'100vh'}
+      justifyContent={"center"}
+      height={"100vh"}
       onSubmit={onSubmitLogin}
     >
       <ToastContainer
@@ -127,9 +116,9 @@ function LoginForm() {
           type="text"
           name="loginId"
           placeholder="아이디"
-          width={'305px'}
-          height={'40px'}
-          margin={'0 0 0 10px'}
+          width={"305px"}
+          height={"40px"}
+          margin={"0 0 0 10px"}
         />
       </UtilInputWrap>
       <UtilInputWrap>
@@ -141,16 +130,16 @@ function LoginForm() {
           type="password"
           name="loginPwd"
           placeholder="비밀번호"
-          width={'305px'}
-          height={'40px'}
-          margin={'0 0 0 10px'}
+          width={"305px"}
+          height={"40px"}
+          margin={"0 0 0 10px"}
         />
       </UtilInputWrap>
       {/* 로그인 버튼 */}
       <Button
         type="submit"
-        width={'340px'}
-        height={'40px'}
+        width={"340px"}
+        height={"40px"}
         color={color.white}
         bgColor={color.darkBlue}
         hoveredBgColor={color.navy}
@@ -159,11 +148,11 @@ function LoginForm() {
       </Button>
       {/* 비밀번호, 아이디 찾기 */}
       <S.LoginFindWrap>
-        <S.LoginServiceLink to="/find/email-validation" state={'pwd'}>
+        <S.LoginServiceLink to="/find/email-validation" state={"pwd"}>
           비밀번호 찾기
         </S.LoginServiceLink>
-        <span style={{ color: 'white' }}>|</span>
-        <S.LoginServiceLink to="/find/email-validation" state={'id'}>
+        <span style={{ color: "white" }}>|</span>
+        <S.LoginServiceLink to="/find/email-validation" state={"id"}>
           아이디 찾기
         </S.LoginServiceLink>
       </S.LoginFindWrap>
@@ -171,9 +160,9 @@ function LoginForm() {
       <Link to="/email-validation">
         <Button
           type="button"
-          width={'340px'}
-          height={'40px'}
-          margin={'0 0 10px 0'}
+          width={"340px"}
+          height={"40px"}
+          margin={"0 0 10px 0"}
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
@@ -181,22 +170,21 @@ function LoginForm() {
           <span>이메일로 회원가입</span>
         </Button>
       </Link>
-      <div id='naver_id_login'>
-      <Button
-        type="button"
-        width={'340px'}
-        height={'40px'}
-        margin={'0 0 10px 0'}
-        fontSize={'20px'}
-        color={color.white}
-        bgColor={color.naverGreen}
-        hoveredBgColor={color.naverDarkGreen}
-        onClick={onClickLoginWithNaver}
-      >
-        <SiIcons.SiNaver />
-      </Button>
+      <div id="naver_id_login">
+        <Button
+          type="button"
+          width={"340px"}
+          height={"40px"}
+          margin={"0 0 10px 0"}
+          fontSize={"20px"}
+          color={color.white}
+          bgColor={color.naverGreen}
+          hoveredBgColor={color.naverDarkGreen}
+          onClick={onClickLoginWithNaver}
+        >
+          <SiIcons.SiNaver />
+        </Button>
       </div>
-
     </UtilForm>
   );
 }

@@ -31,6 +31,7 @@ export const UploadProfilePicBox = styled.div`
   background-image: ${({ bgImgUrl }) => bgImgUrl};
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   color: ${color.white};
   cursor: pointer;
 `;
