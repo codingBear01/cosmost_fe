@@ -528,7 +528,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
       {/* 회원가입 버튼 */}
       {!isEditUserPage && (
         <Button
-          type={'submit'}
+          type={'button'}
           width={'340px'}
           height={'40px'}
           margin={'20px 0 0 0'}
@@ -559,7 +559,7 @@ function InputUserForm({ state, beforeEditUserInfo }) {
       )}
       {isEditUserPage && (
         <Button
-          type={'submit'}
+          type={'button'}
           width={'340px'}
           height={'40px'}
           margin={'20px 0 0 0'}
@@ -579,7 +579,10 @@ function InputUserForm({ state, beforeEditUserInfo }) {
               beforeEditUserInfo,
               toast,
               navigate,
-              printFormData
+              printFormData,
+              isNaverUserPage,
+              setIsLoggedIn,
+              token
             )
           }
         >

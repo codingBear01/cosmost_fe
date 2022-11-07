@@ -86,7 +86,6 @@ export const updateUserAddress = (
       axios
         .get(url, config)
         .then((resonse) => {
-          alert('주소 변경에 성공했습니다.');
           navigate(`/user/edit/menu`, {
             replace: true,
             state: resonse.data,
@@ -173,7 +172,6 @@ export const updateUserPassword = (
       axios
         .get(url, config)
         .then((resonse) => {
-          alert('비밀번호 변경에 성공했습니다.');
           navigate(`/user/edit/menu`, {
             replace: true,
             state: resonse.data,
@@ -202,7 +200,6 @@ export const checkIsDuplicatedId = (
 ) => {
   if (!checkIsIdOrNicknameEmpty('id')) return;
 
-  // const url = `${process.env.REACT_APP_AUTH_IP}/v1/validation/duplicate?id=login-id`;
   const url = `${process.env.REACT_APP_API}/validation/duplicate?id=login-id`;
   const config = {
     headers: {
@@ -288,7 +285,6 @@ export const signUpOrEditUser = (
   });
 
   if (ErrorCheck) {
-    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
     let url;
 
     const [profileImgSaveUrl] = base64ImgSrcToImgBinaryData(

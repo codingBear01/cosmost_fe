@@ -27,17 +27,13 @@ function UserProfilArea({ token, user }) {
       {/* 유저 정보 */}
       <S.ProfileUtilWrap>
         <S.UserInfoWrap>
-          <Link to="/">
-            <span>랭킹</span>
-            <span>1</span>
-          </Link>
           <Link to="followers">
             <span>팔로워</span>
-            <span>100</span>
+            <span></span>
           </Link>
           <Link to="followings">
             <span>팔로잉</span>
-            <span>100</span>
+            <span></span>
           </Link>
         </S.UserInfoWrap>
         <Link to="/user/edit/menu" state={user}>
