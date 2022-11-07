@@ -24,6 +24,7 @@ export const MenuItem = styled.li`
 
   svg {
     align-self: center;
+    margin: auto 0;
     margin-right: 10px;
   }
 `;

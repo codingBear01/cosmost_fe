@@ -2,40 +2,43 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-/* recoil */
-import { useRecoilState } from 'recoil';
-import { loginStateAtom, userAtom } from '../../../../store';
 /* components */
 import * as S from './styled';
 import { StyledCourseContentWrap } from '../CourseContentWrap/styled';
 import { CourseSharingModal } from '../';
+/* APIs */
+import { handleLikeCourse, checkLikedCourse } from '../../../../apis';
+/* functions */
+import {
+  checkIsLoggedIn,
+  compareAuthorIdWithLoggedInUserId,
+} from '../../../../store';
 /* icons */
 import * as BiIcons from 'react-icons/bi';
 import * as FaIcons from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
 
 /* 현재 접속한 페이지 url */
 const currentUrl = window.location.href;
 
-function CourseSharingAndLikeButton({ courseDetail, token }) {
-  const [isLoggedIn] = useRecoilState(loginStateAtom);
+function CourseSharingAndLikeButton({
+  courseDetail,
+  token,
+  isLoggedIn,
+  loggedInUserId,
+}) {
   const navigate = useNavigate();
-  const location = useLocation();
   /* States */
   const [isSharingCourseModalOpened, setIsSharingCourseModalOpened] =
     useState(false);
   const [isLikedCourseChanged, setIsLikedCourseChanged] = useState(false);
   const [isLikedCourse, setIsLikedCourse] = useState([]);
-  const [user] = useRecoilState(userAtom);
-  const loggedInUserId = user?.id;
-  const authorId = courseDetail?.authorId;
 
   /* Handlers */
   /**  코스 공유하기 Modal Open 여부를 조작하는 핸들러. 클릭 시 Open 여부를 반대로 변경 */
   const onClickOpenSharingCourseModal = () => {
     setIsSharingCourseModalOpened(!isSharingCourseModalOpened);
   };
+
   /** 현재 페이지의 url을 복사하는 핸들러 */
   const onClickCopyCurrentPageUrl = () => {
     window.navigator.clipboard.writeText(currentUrl);
@@ -58,62 +61,9 @@ function CourseSharingAndLikeButton({ courseDetail, token }) {
   }, [isSharingCourseModalOpened]);
 
   /* APIs */
-  /** 코스 좋아요 등록 및 취소 */
-  const handleLikeCourse = (id, type) => {
-    const token =
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
-    const URLS = {
-      // like: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities`,
-      like: `${process.env.REACT_APP_API}/popularities`,
-      // unlike: `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${id}/cosmost`,
-      unlike: `${process.env.REACT_APP_API}/v1/popularities/${id}/cosmost`,
-    };
-    const body = {
-      courseId: id,
-      type: 'course',
-    };
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-
-    if (type === 'like') {
-      axios
-        .post(URLS[type], body, config)
-        .then((response) => setIsLikedCourseChanged(!isLikedCourseChanged))
-        .catch((error) => new Error(error));
-    } else {
-      axios
-        .delete(URLS[type], config)
-        .then((response) => setIsLikedCourseChanged(!isLikedCourseChanged))
-        .catch((error) => new Error(error));
-    }
-  };
-
-  /** 코스 좋아요 여부 확인 */
-  const likedCourse = () => {
-    const token =
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
-    // const url = `${process.env.REACT_APP_POPULARITY2_IP}/v1/popularities/${courseDetail.id}?type=cosmost`;
-    const url = `${process.env.REACT_APP_API}/popularities/${courseDetail.id}?type=cosmost`;
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .get(url, config)
-      .then((response) => {
-        setIsLikedCourse(response.data);
-      })
-      .catch((error) => new Error(error));
-  };
+  /** 코스 좋아요 여부 조회 */
   useEffect(() => {
-    likedCourse();
+    checkLikedCourse(courseDetail, setIsLikedCourse, token);
   }, [isLikedCourseChanged]);
 
   return (
@@ -141,7 +91,22 @@ function CourseSharingAndLikeButton({ courseDetail, token }) {
       {!isLikedCourse[0] && (
         <S.ShareAndLikeButton
           type="button"
-          onClick={() => handleLikeCourse(courseDetail.id, 'like')}
+          onClick={() =>
+            handleLikeCourse(
+              courseDetail.id,
+              'like',
+              checkIsLoggedIn,
+              isLoggedIn,
+              navigate,
+              compareAuthorIdWithLoggedInUserId,
+              courseDetail,
+              loggedInUserId,
+              toast,
+              setIsLikedCourseChanged,
+              isLikedCourseChanged,
+              token
+            )
+          }
         >
           <FaIcons.FaRegThumbsUp />
         </S.ShareAndLikeButton>
@@ -149,7 +114,22 @@ function CourseSharingAndLikeButton({ courseDetail, token }) {
       {isLikedCourse[0] && (
         <S.ShareAndLikeButton
           type="button"
-          onClick={() => handleLikeCourse(courseDetail.id, 'unlike')}
+          onClick={() =>
+            handleLikeCourse(
+              courseDetail.id,
+              'unlike',
+              checkIsLoggedIn,
+              isLoggedIn,
+              navigate,
+              compareAuthorIdWithLoggedInUserId,
+              courseDetail,
+              loggedInUserId,
+              toast,
+              setIsLikedCourseChanged,
+              isLikedCourseChanged,
+              token
+            )
+          }
         >
           <FaIcons.FaThumbsUp style={{ color: 'white' }} />
         </S.ShareAndLikeButton>
@@ -163,6 +143,7 @@ function CourseSharingAndLikeButton({ courseDetail, token }) {
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
     </StyledCourseContentWrap>
   );

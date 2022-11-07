@@ -1,27 +1,22 @@
 /* libraries */
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useParams } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 /* components */
-import * as S from "./styled";
-import { CourseContent } from "..";
-import { Button, ProfilePic } from "../../..";
+import * as S from './styled';
+import { CourseContent } from '..';
+import { Button, ProfilePic } from '../../..';
+/* APIs */
+import { handleFollow, fetchIsFollowed } from '../../../../apis';
 /* icons */
-import * as FaIcons from "react-icons/fa";
-import * as MdIcons from "react-icons/md";
-import * as BiIcons from "react-icons/bi";
-import * as FiIcons from "react-icons/fi";
-import * as GiIcons from "react-icons/gi";
-import * as AiIcons from "react-icons/ai";
+import * as FaIcons from 'react-icons/fa';
+import * as MdIcons from 'react-icons/md';
+import * as BiIcons from 'react-icons/bi';
+import * as FiIcons from 'react-icons/fi';
+import * as GiIcons from 'react-icons/gi';
+import * as AiIcons from 'react-icons/ai';
 /* static data */
-import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from "../../../../style";
-import { useState } from "react";
-import { useEffect } from "react";
-import {
-  getCourseGoodCount,
-  getCoursePointAverage,
-  getCourseReviews,
-} from "../../../../store";
-import { useParams } from "react-router-dom";
+import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../../style';
 
 function CourseContentWrap({
   justifyContent,
@@ -31,113 +26,172 @@ function CourseContentWrap({
   author,
   dataCategory,
   authorCourseCount,
+  courseLikeCount,
+  courseAverageRate,
+  courseReviewCount,
+  courseAverageRatePercentage,
+  loggedInUserId,
 }) {
-  const courseID = useParams().id;
-  const courseRatePercantage =
-    courseReviews[0] && courseReviews[0].rateAllTypeList.reverse();
-
   /* States */
-  const [courseReviewAvgPoint, setCourseReviewAvgPoint] = useState('');
-  const [coursePointAverageArr, setCoursePointAverageArr] = useState('');
-  const [courseGoodCount, setCourseGoodCount] = useState('');
+  const [isFollowed, setIsFollowed] = useState([]);
+  const [isFollowedChanged, setIsFollowedChanged] = useState(false);
+  const [authorsFollowersCount, setAuthorsFollowersCount] = useState(null);
 
+  /* Variables */
+  const courseAverageRateGaugeWidth =
+    courseAverageRatePercentage && courseAverageRatePercentage.reverse();
+  const token = localStorage.getItem('item');
+
+  /* APIs */
   useEffect(() => {
-    getCoursePointAverage(courseID, setCourseReviewAvgPoint);
-    getCourseGoodCount(courseID, setCourseGoodCount);
-  }, []);
+    if (author) {
+      fetchIsFollowed(author?.id, setIsFollowed, token);
+      fetchAuthorsFollowersCount();
+    }
+  }, [isFollowedChanged]);
 
-  console.log("courseReviews", courseReviews);
+  /** 코스 작성자 팔로워 숫자 조회 */
+  const fetchAuthorsFollowersCount = () => {
+    const url = `${process.env.REACT_APP_API}/popularities?filter=cosmosts&type=follower&sort=id,desc&page=0&size=4`;
+    const config = {
+      headers: {
+        Authorization: author.id,
+      },
+      timeout: 3000,
+    };
+
+    axios
+      .get(url, config)
+      .then((response) => {
+        setAuthorsFollowersCount(response.data[0].otherUserFollowerCnt);
+      })
+      .catch((error) => new Error(error));
+  };
+
   return (
     // dataCategory에 따라 다른 컴포넌트 렌더링됨
     <S.StyledCourseContentWrap justifyContent={justifyContent} height={height}>
-      {dataCategory === "likeAndReview" ? (
+      {dataCategory === 'likeAndReview' ? (
         // 좋아요, 리뷰 숫자
         <>
           <CourseContent>
             <FaIcons.FaRegThumbsUp />
-            <span>{courseGoodCount.courseThumbsCnt}</span>
+            <span>{courseLikeCount && courseLikeCount}</span>
           </CourseContent>
           <CourseContent>
             <MdIcons.MdOutlineRateReview />
-            <span>{courseReviews && courseReviews[0]?.courseReviewCnt}</span>
+            <span>{courseReviewCount && courseReviewCount}</span>
           </CourseContent>
         </>
-      ) : dataCategory === "authorProfile" ? (
+      ) : dataCategory === 'authorProfile' ? (
         // 작성자 프로필
         <>
           <ProfilePic
             src={author.profileImgSaveUrl}
             alt={author.nickname}
-            width={"8rem"}
-            height={"8rem"}
+            width={'8rem'}
+            height={'8rem'}
           />
-          <S.AutorProfileVerticalWrap marginRight={"3rem"}>
+          <S.AutorProfileVerticalWrap marginRight={'3rem'}>
             <S.AutorNickname>{author.nickname}</S.AutorNickname>
-            <Button
-              type={"button"}
-              width={"6rem"}
-              height={"3rem"}
-              fontSize={fs.s}
-              color={color.black}
-              bgColor={color.lightGreen}
-              hoveredBgColor={color.darkGreen}
-            >
-              팔로우
-            </Button>
+            {loggedInUserId && !isFollowed[0] && (
+              <Button
+                type="button"
+                width={'70px'}
+                height={'30px'}
+                fontSize={'12px'}
+                color={color.black}
+                bgColor={color.darkGreen}
+                hoveredBgColor={color.lightGreen}
+                onClick={() =>
+                  handleFollow(
+                    'follow',
+                    author.id,
+                    setIsFollowedChanged,
+                    isFollowedChanged,
+                    token
+                  )
+                }
+              >
+                팔로우
+              </Button>
+            )}
+            {loggedInUserId && isFollowed[0] && (
+              <Button
+                type="button"
+                width={'70px'}
+                height={'30px'}
+                fontSize={'12px'}
+                color={color.black}
+                bgColor={color.darkRed}
+                hoveredBgColor={color.red}
+                onClick={() =>
+                  handleFollow(
+                    'unfollow',
+                    author.id,
+                    setIsFollowedChanged,
+                    isFollowedChanged,
+                    token
+                  )
+                }
+              >
+                언팔로우
+              </Button>
+            )}
           </S.AutorProfileVerticalWrap>
-          <S.AutorProfileVerticalWrap>
-            <BiIcons.BiCrown />
-            <span>{author?.ranking}</span>
-          </S.AutorProfileVerticalWrap>
+          <Link to={`/others/followers`} state={author.id}>
+            <S.AutorProfileVerticalWrap>
+              <BiIcons.BiCrown />
+              <span>{author?.ranking}</span>
+            </S.AutorProfileVerticalWrap>
+          </Link>
           <S.AutorProfileVerticalWrap>
             <FiIcons.FiUsers />
-            <span>{author?.followers}</span>
+            <span>{authorsFollowersCount}</span>
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <GiIcons.GiRoad />
             <span>{authorCourseCount}</span>
           </S.AutorProfileVerticalWrap>
         </>
-      ) : dataCategory === "courses" ? (
+      ) : dataCategory === 'courses' ? (
         // 코스 순서
         <>
-          {courseDetail?.placeDetailList?.map((item) => (
+          {courseDetail?.placeDetailList?.map((item, index) => (
             <div key={item.id}>
-              <S.CourseName>
-                {item.id}. {item.placeName}
-              </S.CourseName>
-              {item.id !== courseDetail.placeDetailList.length && (
+              <S.CourseName>{item.placeName}</S.CourseName>
+              {index !== courseDetail.placeDetailList.length - 1 && (
                 <AiIcons.AiOutlineArrowRight style={{ fontSize: `${fs.s}` }} />
               )}
             </div>
           ))}
         </>
-      ) : dataCategory === "averageRate" ? (
+      ) : dataCategory === 'averageRate' ? (
         // 코스 평균 평점 및 별 개수별 퍼센테이지
         <>
           {/* 코스 평균 평점 */}
           <S.AverageRate>
             <span>평균 평점</span>
             <span>
-              {courseReviewAvgPoint && courseReviewAvgPoint[0].courseAvgRate}
+              {courseAverageRate && courseAverageRate[0].courseAvgRate}
             </span>
           </S.AverageRate>
           <ul>
-            {courseRatePercantage &&
-              courseRatePercantage.map((item, index) => {
+            {courseAverageRateGaugeWidth &&
+              courseAverageRateGaugeWidth.map((item, index) => {
                 return (
                   <S.CourseRateStarWrap key={index}>
                     <S.CourseRateStar>
                       {index === 0 ? (
-                        "⭐⭐⭐⭐⭐"
+                        '⭐⭐⭐⭐⭐'
                       ) : index === 1 ? (
-                        "⭐⭐⭐⭐"
+                        '⭐⭐⭐⭐'
                       ) : index === 2 ? (
-                        "⭐⭐⭐"
+                        '⭐⭐⭐'
                       ) : index === 3 ? (
-                        "⭐⭐"
+                        '⭐⭐'
                       ) : index === 4 ? (
-                        "⭐"
+                        '⭐'
                       ) : (
                         <></>
                       )}
@@ -145,6 +199,7 @@ function CourseContentWrap({
                     <S.CourseRateStarPercentGaugeWrap>
                       <S.CourseRateStarPercentGauge
                         width={`${item}%`}
+                        percentage={item}
                       ></S.CourseRateStarPercentGauge>
                     </S.CourseRateStarPercentGaugeWrap>
                     <S.CourseRateStarPercent>{item}%</S.CourseRateStarPercent>
@@ -154,9 +209,9 @@ function CourseContentWrap({
           </ul>
         </>
       ) : (
-        courseDetail[`${dataCategory}`].map((item) => {
+        courseDetail[dataCategory].map((item) => {
           // 카테고리
-          if (dataCategory === "categoryLists") {
+          if (dataCategory === 'categoryLists') {
             return (
               <React.Fragment key={item.id}>
                 <CourseContent>
@@ -169,11 +224,11 @@ function CourseContentWrap({
             );
           }
           //해시태그
-          if (dataCategory === "hashtagList") {
+          if (dataCategory === 'hashtagList') {
             return (
               <Link
                 key={item.id}
-                to={`/courses/hashtags?keyword=${item.keyword}`}
+                to={`/courses/hashtag?keyword=${item.keyword}`}
               >
                 <CourseContent>
                   <p>{`#${item.keyword}`}</p>
@@ -181,7 +236,7 @@ function CourseContentWrap({
               </Link>
             );
           }
-          return [];
+          return <></>;
         })
       )}
     </S.StyledCourseContentWrap>

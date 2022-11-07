@@ -49,23 +49,24 @@ function OrderingModal() {
           <span>정렬</span>
         </S.OrderingModalHeader>
         <S.OrderingList>
-          {isPathCourseDetail && (
-            <>
-              <S.OrderingItem>평점 높은 순</S.OrderingItem>
-              <S.OrderingItem>좋아요 많은 순</S.OrderingItem>
-              <S.OrderingItem>최신순</S.OrderingItem>
-            </>
-          )}
           {!isPathCourseDetail && (
             <>
-              <S.OrderingItem>전체</S.OrderingItem>
-              <S.OrderingItem>거리 가까운 순</S.OrderingItem>
-              <S.OrderingItem>좋아요 많은 순</S.OrderingItem>
-
               <Link
                 to={
                   queryString.get("keyword")
-                    ? `/courses/searched?keyword=${queryString.get(
+                    ? `/courses/keyword?keyword=${queryString.get(
+                        "keyword"
+                      )}&sort=like`
+                    : "/courses/all?sort=like"
+                }
+                style={{ width: "50%", color: "black" }}
+              >
+                <S.OrderingItem width="100%">좋아요 많은 순</S.OrderingItem>
+              </Link>
+              <Link
+                to={
+                  queryString.get("keyword")
+                    ? `/courses/keyword?keyword=${queryString.get(
                         "keyword"
                       )}&sort=rate`
                     : "/courses/all?sort=rate"
@@ -74,9 +75,16 @@ function OrderingModal() {
               >
                 <S.OrderingItem width="100%">평점 높은 순</S.OrderingItem>
               </Link>
-
-              <S.OrderingItem>리뷰 많은 순</S.OrderingItem>
-              <S.OrderingItem>최신순</S.OrderingItem>
+              <Link
+                to={
+                  queryString.get("keyword")
+                    ? `/courses/keyword?keyword=${queryString.get("keyword")}`
+                    : "/courses/all"
+                }
+                style={{ width: "50%", color: "black" }}
+              >
+                <S.OrderingItem width="100%">최신순</S.OrderingItem>
+              </Link>
             </>
           )}
         </S.OrderingList>

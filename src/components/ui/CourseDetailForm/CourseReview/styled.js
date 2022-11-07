@@ -63,8 +63,8 @@ export const CourseReviewCreatedDateWrap = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  flex-direction: column;
   span {
-    margin-right: ${gap.s};
     font-size: ${fs.s};
   }
   svg {
@@ -111,4 +111,24 @@ export const CourseReviewEditTextarea = styled.textarea`
 export const CourseReviewEditButtons = styled.div`
   margin-top: 1.5rem;
   align-self: end;
+`;
+
+export const UtilityButtonWrap = styled.div`
+  display: flex;
+  align-items: center;
+  align-self: end;
+  margin-top: 1.5rem;
+  gap: 2rem;
+`;
+
+export const UtilityButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: ${color.white};
+  font-size: ${fs.s};
+
+  svg {
+    font-size: ${fs.xl};
+  }
 `;

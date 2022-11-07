@@ -19,7 +19,7 @@ export const StyledCourse = styled.div`
   background-color: ${color.white};
   color: ${color.black};
   ${media.mobile} {
-    width: 95%;
+    width: 50rem;
   }
 `;
 
@@ -44,9 +44,18 @@ export const CourseTitle = styled.span`
   font-weight: 600;
 `;
 
-export const CourseRate = styled.span`
-  padding: 0.5rem;
-  border: 1px solid ${color.black};
+export const CoursePopularityWrap = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const CourseRate = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 6rem;
+  height: 4rem;
+  // border: 1px solid ${color.black};
   border-radius: ${br.default};
   font-size: ${fs.s};
   font-weight: 600;

@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
@@ -11,15 +11,9 @@ import * as S from './styled';
 import { Button, Icon, Input, UtilForm, UtilInputWrap } from '../../';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
-import * as RiIcons from 'react-icons/ri';
 import * as SiIcons from 'react-icons/si';
-import * as FcIcons from 'react-icons/fc';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
-import { GiToken } from 'react-icons/gi';
-
-/* CONSTANTS */
-const { Kakao } = window;
 
 function LoginForm() {
   const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
@@ -65,23 +59,36 @@ function LoginForm() {
         setIsLoggedIn(true);
         navigate('/');
       })
-      .catch((e) => {
+      .catch((error) => {
+        new Error(error);
         toast.error('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');
       });
   };
 
   /* 네이버 로그인 핸들러 */
   const onClickLoginWithNaver = () => {
-    // const url = `${process.env.REACT_APP_AUTH_IP}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
-    const url = `${process.env.REACT_APP_API}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
-    const config = {
-      headers: {
-        Authorization: 'token',
-      },
-      timeout: 3000,
-    };
-    console.log('naver');
+    navigate('/naver/email-validation');
+
+    // // const url = `${process.env.REACT_APP_AUTH_IP}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
+    // const url = `${process.env.REACT_APP_API}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
+    // const config = {
+    //   headers: {
+    //     Authorization: 'token',
+    //   },
+    //   timeout: 3000,
+    // };
+    // console.log('naver');
   };
+
+  useEffect(() => {
+    // var naver_id_login = new window.naver_id_login(process.env.REACT_APP_X_NAVER_CLIENT_ID, "http://localhost:3000");
+    // var state = naver_id_login.getUniqState();
+    // naver_id_login.setButton("white", 2,40);
+    // naver_id_login.setDomain("http://localhost:3000");
+    // naver_id_login.setState(state);
+    // // naver_id_login.setPopup();
+    // naver_id_login.init_naver_id_login();
+  }, []);
 
   return (
     <UtilForm
@@ -91,13 +98,14 @@ function LoginForm() {
     >
       <ToastContainer
         position="top-center"
-        autoClose={2000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={true}
         closeOnClick
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
       {/* 아이디, 비밀번호 인풋 */}
       <UtilInputWrap>
@@ -163,19 +171,21 @@ function LoginForm() {
           <span>이메일로 회원가입</span>
         </Button>
       </Link>
-      <Button
-        type="button"
-        width={'340px'}
-        height={'40px'}
-        margin={'0 0 10px 0'}
-        fontSize={'20px'}
-        color={color.white}
-        bgColor={color.naverGreen}
-        hoveredBgColor={color.naverDarkGreen}
-        onClick={onClickLoginWithNaver}
-      >
-        <SiIcons.SiNaver />
-      </Button>
+      <div id="naver_id_login">
+        <Button
+          type="button"
+          width={'340px'}
+          height={'40px'}
+          margin={'0 0 10px 0'}
+          fontSize={'20px'}
+          color={color.white}
+          bgColor={color.naverGreen}
+          hoveredBgColor={color.naverDarkGreen}
+          onClick={onClickLoginWithNaver}
+        >
+          <SiIcons.SiNaver />
+        </Button>
+      </div>
     </UtilForm>
   );
 }

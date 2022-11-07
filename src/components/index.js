@@ -1,8 +1,6 @@
 /* 여러 페이지에 중복해서 쓰이는 components */
 export {
   Button,
-  CourseUtillityModal,
-  DeleteModal,
   Footer,
   Header,
   HistoriesForm,
@@ -40,7 +38,6 @@ export {
   LoadingForm,
   LoginForm,
   MainSection,
-  RankersForm,
   UserPageForm,
   WithdrawUserForm,
 } from './ui/';
@@ -63,7 +60,6 @@ export {
   Login,
   Main,
   Messages,
-  Rankers,
   User,
   WithdrawUser,
 } from './pages/';

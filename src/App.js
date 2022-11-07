@@ -8,7 +8,6 @@ import {
   Header,
   Footer,
   PageContainer,
-  OrderingModal,
   // pages
   CourseDetail,
   CourseRegistration,
@@ -25,7 +24,6 @@ import {
   Login,
   Main,
   Messages,
-  Rankers,
   User,
   WithdrawUser,
 } from './components';
@@ -38,7 +36,6 @@ const WithHeaderAndFooter = () => {
       <Header />
       <Outlet />
       <Footer />
-      <OrderingModal />
     </>
   );
 };
@@ -73,8 +70,12 @@ function App() {
           <Route index element={<Main />} />
           <Route path="course-detail/:id" element={<CourseDetail />} />
           <Route path="courses/:type" element={<Courses />} />
-          <Route path="rankers" element={<Rankers />} />
         </Route>
+
+        <Route element={<WithoutHeaderAndFooter />}>
+          <Route exact path="others/followers" element={<Follows />} />
+        </Route>
+
         <Route element={<WithoutHeaderAndFooter />}>
           {/* {!token && !isLoggedIn && ( */}
           <>
@@ -88,6 +89,13 @@ function App() {
               <Route path="email-validation" element={<InputEmail />} />
               <Route path="id" element={<FindingUserPage />} />
               <Route path="pwd" element={<FindingUserPage />} />
+            </Route>
+
+            <Route path="naver">
+              <Route path="email-validation" element={<InputEmail />} />
+              <Route path="address" element={<InputAddress />} />
+              <Route path="detail-address" element={<InputDetailAddress />} />
+              <Route path="sign-up" element={<InputUser />} />
             </Route>
           </>
           {/* )} */}
@@ -111,6 +119,7 @@ function App() {
                 <Route path="menu" element={<EditUserMenu />} />
                 <Route path="email" element={<InputEmail />} />
                 <Route path="address" element={<InputAddress />} />
+                <Route path="detail-address" element={<InputDetailAddress />} />
                 <Route path="password" element={<InputPassword />} />
                 <Route path="my-information" element={<InputUser />} />
               </Route>

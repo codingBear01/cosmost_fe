@@ -23,7 +23,7 @@ export const ReportFormBg = styled.div`
   transition: 0.5s;
 `;
 
-export const ReportForm = styled.form`
+export const ReportForm = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

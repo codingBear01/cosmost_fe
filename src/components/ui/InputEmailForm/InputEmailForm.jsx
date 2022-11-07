@@ -28,17 +28,34 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
   const isEditEmailPage = pathname.includes('edit');
   const isFindUserPage = pathname.includes('find');
+  const isNaverUserPage = pathname.includes('naver');
 
   const PAGE_TYPES = {
+    //회원가입 시 이메일 인증
     '/email-validation': {
       address: '/address',
       certificationNumberSendingType: 'email',
       certificationNumberComparingType: 'code/confirm',
     },
+    //아이디 또는 패스워드 찾을 시 이메일 인증
     '/find/email-validation': {
       address: `/find/${location.state}`,
       certificationNumberSendingType: location.state,
       certificationNumberComparingType: `${location.state}/reissue`,
+    },
+    //이메일 수정 시 이메일 인증
+    '/user/edit/email': {
+      address: '/address',
+      certificationNumberSendingType: 'newemail',
+      certificationNumberComparingType: 'newemail/reissue',
+      placeholder: '네이버 이메일을 입력해주세요.',
+    },
+    //네이버 로그인 시 이메일 인증
+    '/naver/email-validation': {
+      address: '/naver/address',
+      certificationNumberSendingType: 'email',
+      certificationNumberComparingType: 'code/confirm',
+      placeholder: '네이버 이메일을 입력해주세요.',
     },
   };
 
@@ -51,6 +68,9 @@ function InputEmailForm({ beforeEditUserInfo }) {
     useState(false);
   const [isCertificationNumberValidated, setIsCertificationNumberValidated] =
     useState(false);
+
+  //아이디 찾기에서 전달받은 ID 또는 패스워드 찾기에서 전달받은 ID Key
+  const [responseId, setResponseId] = useState(null);
 
   /* Refs */
   const emailRef = useRef();
@@ -66,20 +86,20 @@ function InputEmailForm({ beforeEditUserInfo }) {
   }, []);
 
   /* Handlers */
-  /* 입력된 이메일의 유효성을 검증하는 함수 */
+  /** 입력된 이메일의 유효성을 검증하는 함수 */
   const validateEmailByRegExp = (e) => {
     e.preventDefault();
 
-    const regExpEmail = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
+    const regExpEmail = /^[a-zA-Z0-9]+@naver.com+$/;
 
     if (!regExpEmail.test(emailRef.current.value)) {
-      toast.error('이메일을 올바르게 입력해주세요.');
+      toast.error('이메일은 네이버 이메일만 입력 가능합니다..');
       return false;
     }
     return true;
   };
 
-  /* 입력값 유효성 검증하는 핸들러 */
+  /** 입력값 유효성 검증하는 핸들러 */
   const checkInput = (e, type) => {
     if (
       (type === 'email' && !emailRef.current.value) ||
@@ -104,7 +124,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
     return true;
   };
 
-  /* 인증번호 발송 및 인증번호 확인 버튼을 클릭했는지 확인하는 핸들러 */
+  /** 인증번호 발송 및 인증번호 확인 버튼을 클릭했는지 확인하는 핸들러 */
   const checkIsCertificationNumberButtonClicked = (e) => {
     if (!isCertificationNumberSent) {
       e.preventDefault();
@@ -119,35 +139,76 @@ function InputEmailForm({ beforeEditUserInfo }) {
     return true;
   };
 
-  /* 다음 페이지로 이동하는 핸들러. 입력값의 유효성을 검증하고 인증번호 발송 및 확인 버튼 클릭 여부를 확인한 후 이상이 없으면 주소 입력 페이지로 이동한다. */
+  /** 다음 페이지로 이동하는 핸들러. 입력값의 유효성을 검증하고 인증번호 발송 및 확인 버튼 클릭 여부를 확인한 후 이상이 없으면 주소 입력 페이지로 이동한다. */
   const onClickTransferNextPage = (e) => {
     if (!checkInput(e, 'next')) return;
     if (!checkIsCertificationNumberButtonClicked(e)) return;
   };
 
   /* APIs */
-  /* 인증번호 발송 api */
+  /** 인증번호 발송 api */
   const onClickSendCertificationNumber = (e) => {
     e.preventDefault();
 
     if (!checkInput(e, 'email')) return;
     if (!validateEmailByRegExp(e)) return;
 
-    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/${PAGE_TYPES[pathname].certificationNumberSendingType}/confirm/${emailRef.current.value}`;
     const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberSendingType}/confirm/${emailRef.current.value}`;
-    const config = { timeout: 3000 };
 
-    axios
-      .get(url, config)
-      .then((response) => {
-        toast.success(
-          `${emailRef.current.value}로 인증번호를 발송했습니다. 이메일을 확인해주세요.`
-        );
-        setIsCertificationNumberSent(true);
-      })
-      .catch((error) => {
-        toast.error('인증번호 발송에 실패했습니다.');
-      });
+    // 이메일 변경해야할 때 인증 번호 발송
+    if (PAGE_TYPES[pathname].certificationNumberSendingType === 'newemail') {
+      const token = localStorage.getItem('token');
+      const data = {
+        loginId: beforeEditUserInfo.loginId,
+        loginPwd: beforeEditUserInfo.loginPwd,
+        married: beforeEditUserInfo.married,
+        nickname: beforeEditUserInfo.nickname,
+        sns: beforeEditUserInfo.sns,
+        address: beforeEditUserInfo.address,
+        ageGroup: beforeEditUserInfo.ageGroup,
+        profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
+        profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
+        profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
+      };
+      const config = {
+        headers: {
+          Authorization: token,
+        },
+        timeout: 3000,
+      };
+
+      axios
+        .put(url, data, config)
+        .then((response) => {
+          toast.success(
+            `${emailRef.current.value}로 인증번호를 발송했습니다. 이메일을 확인해주세요.`
+          );
+          setIsCertificationNumberSent(true);
+        })
+        .catch((error) => {
+          new Error(error);
+          console.log(error);
+          toast.error('인증번호 발송에 실패했습니다.');
+        });
+    }
+    // 그 외인 경우 인증 번호 발송
+    else {
+      const config = { timeout: 3000 };
+
+      axios
+        .get(url, config)
+        .then((response) => {
+          toast.success(
+            `${emailRef.current.value}로 인증번호를 발송했습니다. 이메일을 확인해주세요.`
+          );
+          setIsCertificationNumberSent(true);
+        })
+        .catch((error) => {
+          new Error(error);
+          console.log(error);
+          toast.error('인증번호 발송에 실패했습니다.');
+        });
+    }
   };
 
   /* 사용자가 입력한 인증번호가 진짜 인증번호인지 검증하는 핸들러 */
@@ -156,33 +217,101 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
     if (!checkInput(e, 'number')) return;
 
-    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
     const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
-    const config = { timeout: 3000 };
+    console.log('url', url);
 
-    axios
-      .get(url, config)
-      .then((response) => {
-        switch (response.data) {
-          case true:
+    // 이메일 변경을 목적으로 보낸 경우 인증번호 검증
+    if (
+      PAGE_TYPES[pathname].certificationNumberComparingType ===
+      'newemail/reissue'
+    ) {
+      const token = localStorage.getItem('token');
+      const data = {
+        loginId: beforeEditUserInfo.loginId,
+        loginPwd: beforeEditUserInfo.loginPwd,
+        married: beforeEditUserInfo.married,
+        nickname: beforeEditUserInfo.nickname,
+        sns: beforeEditUserInfo.sns,
+        address: beforeEditUserInfo.address,
+        ageGroup: beforeEditUserInfo.ageGroup,
+        profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
+        profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
+        profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
+      };
+      const config = {
+        headers: {
+          Authorization: token,
+        },
+        timeout: 3000,
+      };
+
+      console.log('data', data);
+      axios
+        .put(url, data, config)
+        .then((response) => {
+          alert(response.data);
+          navigate();
+        })
+        .catch((error) => {
+          new Error(error);
+          console.log(error);
+          toast.error('인증번호 검증에 실패했습니다.');
+        });
+    }
+    // 그 외를 목적으로 보낸 경우 인증번호 검증
+    else {
+      const config = { timeout: 3000 };
+      axios
+        .get(url, config)
+        .then((response) => {
+          console.log('response', response);
+          console.log(PAGE_TYPES[pathname].certificationNumberComparingType);
+
+          //아이디 찾기에서 아이디 찾기에 성공한 경우
+          if (
+            PAGE_TYPES[pathname].certificationNumberComparingType ===
+            'id/reissue'
+          ) {
             toast.success(`인증번호 검증이 완료되었습니다.`);
             setIsCertificationNumberValidated(true);
-            break;
-          case false:
-            toast.error(
-              `유효하지 않은 인증번호입니다. 인증번호를 다시 확인해주세요`
-            );
-            break;
-          default:
-            toast.error(`예상치 않은 에러입니다. 관리자에게 문의하세요`);
-            break;
-        }
-      })
-      .catch((error) => {
-        toast.error(
-          '인증번호 검증을 할 수 없는 상태입니다. 관리자에게 문의하세요.'
-        );
-      });
+            setResponseId(response.data);
+            return;
+          }
+
+          //패스워드 찾기에서 아이디 찾기에 성공한 경우
+          if (
+            PAGE_TYPES[pathname].certificationNumberComparingType ===
+            'pwd/reissue'
+          ) {
+            toast.success(`인증번호 검증이 완료되었습니다.`);
+            setIsCertificationNumberValidated(true);
+            setResponseId(response.data);
+            return;
+          }
+
+          switch (response.data) {
+            case true:
+              toast.success(`인증번호 검증이 완료되었습니다.`);
+              setIsCertificationNumberValidated(true);
+              break;
+            case false:
+              toast.error(
+                `유효하지 않은 인증번호입니다. 인증번호를 다시 확인해주세요`
+              );
+              break;
+            default:
+              toast.error(`예상치 않은 에러입니다. 관리자에게 문의하세요`);
+              break;
+          }
+        })
+        .catch((error) => {
+          new Error(error);
+          console.log(error);
+          toast.error(
+            '인증번호 검증을 할 수 없는 상태입니다. 관리자에게 문의하세요.'
+          );
+        });
+    }
   };
 
   /* 이메일 변경 api */
@@ -191,7 +320,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
     if (!checkIsCertificationNumberButtonClicked(e)) return;
 
     const formData = new FormData();
-    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
     const url = `${process.env.REACT_APP_API}/auths`;
     const config = {
       headers: {
@@ -202,15 +330,15 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
     const updateBody2 = {
       loginId: beforeEditUserInfo.loginId,
-      loginPwd: '',
+      loginPwd: beforeEditUserInfo.loginPwd,
       nickname: beforeEditUserInfo.nickname,
       email: emailRef.current.value,
       address: beforeEditUserInfo.address,
       role: beforeEditUserInfo.role,
       sns: beforeEditUserInfo.sns,
       status: beforeEditUserInfo.status,
-      ageGroup: '',
-      married: '',
+      ageGroup: beforeEditUserInfo.ageGroup,
+      married: beforeEditUserInfo.married,
       type: '회원정보 수정',
       profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
       profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
@@ -227,12 +355,13 @@ function InputEmailForm({ beforeEditUserInfo }) {
     formData.append('updateAuthRequest', updateBodyBlob);
     formData.append('file', profilePictureBlob);
 
+    console.log('updateBody2', updateBody2);
+
     axios
       .put(url, formData, config)
       .then((response) => {
         //수정된 데이터 다시 가져와서 리다이렉트 하기
         toast.success(response.data);
-        // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
         const url = `${process.env.REACT_APP_API}/auths`;
         const config = {
           headers: {
@@ -243,26 +372,38 @@ function InputEmailForm({ beforeEditUserInfo }) {
         axios
           .get(url, config)
           .then((resonse) => {
+            alert('이메일 변경에 성공했습니다.');
             navigate(`/user/edit/menu`, {
               replace: true,
               state: resonse.data,
             });
           })
           .catch((error) => {
-            console.log(error);
+            new Error(error);
             toast.error(
               '변경된 이메일 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
             );
           });
       })
       .catch((error) => {
-        console.log(error);
+        new Error(error);
         toast.error('이메일 변경에 실패했습니다. 관리자에게 문의하세요.');
       });
   };
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        pauseOnHover={false}
+        theme="light"
+        limit={1}
+      />
       <UtilTitle>이메일 주소 {isEditEmailPage ? '변경' : '인증'}</UtilTitle>
       <UtilInputWrap>
         <Icon>
@@ -272,7 +413,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
           ref={emailRef}
           defaultValue={isEditEmailPage ? beforeEditUserInfo.email : ''}
           type="email"
-          placeholder="이메일"
+          placeholder={'네이버 이메일을 입력해주세요.'}
           name="email"
           width={'205px'}
           height={'40px'}
@@ -285,7 +426,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
-          // onClick={onClickSendCertificationNumber}
+          onClick={onClickSendCertificationNumber}
         >
           인증번호 발급
         </Button>
@@ -310,17 +451,17 @@ function InputEmailForm({ beforeEditUserInfo }) {
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
-          // onClick={onClickCompareCertificationNumber}
+          onClick={onClickCompareCertificationNumber}
         >
           인증번호 검증
         </Button>
       </UtilInputWrap>
-      {/* 다음으로 버튼 */}
+      {/* 다음으로 버튼*/}
       {!isEditEmailPage && (
         <NextBtn
-          to={PAGE_TYPES[pathname].address}
-          state={isFindUserPage ? location.state : { email: email }}
-          // onClick={onClickTransferNextPage}
+          to={PAGE_TYPES[pathname]?.address}
+          state={isFindUserPage ? responseId : { email: email }}
+          onClick={onClickTransferNextPage}
         />
       )}
       {/* 수정 버튼 */}
@@ -332,21 +473,11 @@ function InputEmailForm({ beforeEditUserInfo }) {
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
-          // onClick={onClickUpdateEmail}
+          onClick={onClickUpdateEmail}
         >
           수정
         </Button>
       )}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
     </>
   );
 }

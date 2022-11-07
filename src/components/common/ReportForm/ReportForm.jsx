@@ -2,14 +2,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilTitle } from '../..';
+/* APIs */
+import { getReportCategories, postReport, updateReport } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
-
 function ReportForm({
   onClick,
   setIsReportFormOpened,
@@ -19,6 +21,10 @@ function ReportForm({
   isHistoriesChanged,
   setIsHistoriesChanged,
 }) {
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem('token');
+
   const [reportCategories, setReportCategories] = useState([]);
   /* 신고 작성 관련 ref */
   const reportTitle = useRef();
@@ -26,7 +32,7 @@ function ReportForm({
   const reportCategory = useRef();
 
   /* Handlers */
-  /* 모달창 닫힐 시 입력값 초기화 */
+  /** 모달창 닫힐 시 입력값 초기화 */
   useEffect(() => {
     if (type === 'update') {
       reportTitle.current.value = '';
@@ -52,85 +58,10 @@ function ReportForm({
   };
 
   /* APIs */
-  /** 리뷰 작성에 쓰일 신고 카테고리를 불러오는 함수 */
-  const getReportCategories = () => {
-    // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
-    const url = `${process.env.REACT_APP_API}/boards`;
-    const config = { timeout: 3000 };
-
-    axios
-      .get(url, config)
-      .then((response) => {
-        setReportCategories(response.data);
-      })
-      .catch((error) => {
-        new Error(error);
-      });
-  };
+  /** 신고 카테고리를 가져오는 hooks */
   useEffect(() => {
-    getReportCategories();
+    getReportCategories(setReportCategories);
   }, []);
-
-  /* 신고 버튼 클릭 시 작성된 신고 내용을 서버로 전송하는 함수 */
-  const postReport = (e) => {
-    e.preventDefault();
-
-    if (!checkReportInput()) return;
-
-    // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
-    const url = `${process.env.REACT_APP_API}/boards`;
-    const body = {
-      reporterId: 2,
-      reportTitle: reportTitle.current.value,
-      reportContent: reportContent.current.value,
-      createReportCategoryListRequestList: [
-        {
-          reportCategory: +reportCategory.current.value,
-        },
-      ],
-    };
-    const config = { timeout: 3000 };
-
-    axios
-      .post(url, body, config)
-      .then((response) => {
-        setIsReportFormOpened(!isReportFormOpened);
-      })
-      .catch((error) =>
-        toast.error('오류가 발생했습니다. 관리자에게 문의하세요.')
-      );
-  };
-
-  /* 수정 버튼 클릭 시 작성된 신고 수정 내용을 서버로 전송하는 함수 */
-  const updateReport = (e, id) => {
-    e.preventDefault();
-
-    if (!checkReportInput()) return;
-
-    // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards/${id}`;
-    const url = `${process.env.REACT_APP_API}/boards/${id}`;
-    const body = {
-      reportTitle: reportTitle.current.value,
-      reportContent: reportContent.current.value,
-      updateReportCategoryListRequestList: [
-        {
-          id: report.reportCategoryList[0].id,
-          reportCategory: +reportCategory.current.value,
-        },
-      ],
-    };
-    const config = { timeout: 3000 };
-
-    axios
-      .put(url, body, config)
-      .then((response) => {
-        setIsHistoriesChanged(!isHistoriesChanged);
-        setIsReportFormOpened(!isReportFormOpened);
-      })
-      .catch((error) =>
-        toast.error('오류가 발생했습니다. 관리자에게 문의하세요.')
-      );
-  };
 
   /* Hooks */
   /* 신고 모달 열렸을 때 바깥 영역 스크롤 방지하고 스크롤 Y좌표 맨 위로 설정하는 함수 */
@@ -154,6 +85,7 @@ function ReportForm({
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
       <S.ReportForm>
         <S.ReportFormTitleWrap>
@@ -162,20 +94,21 @@ function ReportForm({
             {!type && '신고하기'}
             {type === 'detail' && '신고 상세 조회'}
             {type === 'update' && '신고 수정하기'}
+            {type === 'answer' && '신고 답변'}
           </UtilTitle>
           <AiIcons.AiOutlineClose onClick={onClick} />
         </S.ReportFormTitleWrap>
         {/* 신고 상세 조회면 해당 신고의 분류 정보, 신고하기 혹은 수정하기 폼이면 신고 유형 드랍다운 */}
-        {type === 'detail' ? (
-          <S.ReportHistoryCat>
-            분류: {report?.reportCategoryList[0].reportCategoryName}
-          </S.ReportHistoryCat>
+        {type === 'detail' || type === 'answer' ? (
+          <>
+            {type === 'detail' && (
+              <S.ReportHistoryCat>
+                분류: {report?.reportCategoryList[0].reportCategoryName}
+              </S.ReportHistoryCat>
+            )}
+          </>
         ) : (
           <S.ReportFormCats ref={reportCategory}>
-            <option value="default">신고 유형</option>
-            <option value={1}>사용자</option>
-            <option value={2}>코스</option>
-            <option value={3}>리뷰</option>
             {reportCategories &&
               reportCategories.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -186,7 +119,7 @@ function ReportForm({
         )}
         {/* 신고 제목 */}
         {/* 신고 상세 조회면 해당 신고의 제목, 신고하기 및 수정하기 폼이면 신고 제목 입력 인풋 */}
-        {type === 'detail' ? (
+        {type === 'detail' || type === 'answer' ? (
           <S.ReportFormTitle>{report?.reportTitle}</S.ReportFormTitle>
         ) : (
           <Input
@@ -199,7 +132,7 @@ function ReportForm({
         )}
         {/* 신고 내용 */}
         {/* 상세 조회면 수정 불가, 신고하기 및 수정하기면 수정 가능 */}
-        {type === 'detail' ? (
+        {type === 'detail' || type === 'answer' ? (
           <S.ReportFormTextArea
             disabled
             value={report?.reportContent}
@@ -218,13 +151,13 @@ function ReportForm({
         )}
         {/* 신고 버튼 */}
         {/* 신고하기, 수정하기면 보이고, 상세 조회는 안 보임*/}
-        {type !== 'detail' && (
+        {type !== 'detail' && type !== 'answer' ? (
           <S.ReportFormBtnWrap>
             <Button
               type="button"
-              width={'8rem'}
-              height={'3.5rem'}
-              marign={'0 3rem'}
+              width={'80px'}
+              height={'35px'}
+              margin={'0 10px'}
               color={color.black}
               bgColor={color.lightGrey}
               hoveredBgColor={color.grey}
@@ -233,21 +166,49 @@ function ReportForm({
               취소
             </Button>
             <Button
-              type="submit"
-              width={'8rem'}
-              height={'3.5rem'}
-              margin={'0 3rem'}
+              type="button"
+              width={'80px'}
+              height={'35px'}
+              margin={'0 10px'}
               color={color.white}
               bgColor={color.darkBlue}
               hoveredBgColor={color.navy}
               onClick={
-                !type ? (e) => postReport(e) : (e) => updateReport(e, report.id)
+                !type
+                  ? (e) =>
+                      postReport(
+                        checkReportInput,
+                        reportTitle,
+                        reportContent,
+                        reportCategory,
+                        setIsReportFormOpened,
+                        isReportFormOpened,
+                        toast,
+                        token
+                      )
+                  : (e) =>
+                      updateReport(
+                        report.id,
+                        checkReportInput,
+                        reportTitle,
+                        reportContent,
+                        report,
+                        reportCategory,
+                        setIsHistoriesChanged,
+                        isHistoriesChanged,
+                        setIsReportFormOpened,
+                        isReportFormOpened,
+                        toast,
+                        token
+                      )
               }
             >
               {!type && '신고'}
               {type === 'update' && '수정'}
             </Button>
           </S.ReportFormBtnWrap>
+        ) : (
+          <></>
         )}
       </S.ReportForm>
     </S.ReportFormBg>

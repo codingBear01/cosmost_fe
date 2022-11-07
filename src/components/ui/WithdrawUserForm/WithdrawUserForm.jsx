@@ -9,10 +9,12 @@ import { loginStateAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilTitle } from '../..';
+/* APIs */
+import { withdrawUser } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 
-function WithdrawUserForm() {
+function WithdrawUserForm({ beforeEditUserInfo }) {
   const navigate = useNavigate();
 
   /* States */
@@ -29,15 +31,16 @@ function WithdrawUserForm() {
   /* Handlers */
   /* 비밀번호 유효성 검증하는 핸들러 */
   const dummyPwd = 'testPwd15';
+
   const checkPassword = () => {
+    //SNS 회원가입한 유저는 패스워드 체크 안함.
+    if (beforeEditUserInfo.sns === 'YES') return true;
+
     if (!passwordRef.current.value) {
       toast.error('비밀번호를 입력해주세요.');
       return false;
     }
-    if (passwordRef.current.value !== dummyPwd) {
-      toast.error('비밀번호가 일치하지 않습니다.');
-      return false;
-    }
+
     return true;
   };
 
@@ -58,45 +61,8 @@ function WithdrawUserForm() {
     }
   }, [isDeleteConfirmationMessageDisplayed]);
 
-  /* APIs */
-  const deleteUser = (e) => {
-    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
-    const url = `${process.env.REACT_APP_API}/auths`;
-    const body = {
-      loginId: '111',
-      loginPwd: passwordRef.current.value,
-      email: '123@naver.com',
-      married: 'SINGLE',
-      nickname: '1',
-      address: '1',
-      ageGroup: '20대',
-      status: 'WITHDRAWL',
-      sns: 'NO',
-      role: 'USER',
-      profileImgOriginName: '1',
-      profileImgSaveName: 's3',
-      profileImgSaveUrl: '1',
-      type: e.target.value,
-    };
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
+  console.log('beforeEditUserInfo', beforeEditUserInfo);
 
-    axios
-      .put(url, body, config)
-      .then((response) => {
-        localStorage.removeItem('token');
-        setIsLoggedIn(false);
-        navigate('/withdrawal-message');
-      })
-      .catch((error) => {
-        new Error(error);
-        toast.error('회원탈퇴에 실패했습니다. 관리자에게 문의하세요.');
-      });
-  };
   return (
     <>
       <ToastContainer
@@ -108,6 +74,7 @@ function WithdrawUserForm() {
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
       <UtilTitle>회원탈퇴</UtilTitle>
       <Input
@@ -115,7 +82,12 @@ function WithdrawUserForm() {
         type="password"
         width={'360px'}
         height={'40px'}
-        placeholder={'비밀번호를 입력해주세요.'}
+        disabled={beforeEditUserInfo.sns === 'YES' ? true : false}
+        placeholder={
+          beforeEditUserInfo.sns === 'YES'
+            ? 'SNS 회원가입은 비밀번호를 입력할 필요가 없습니다.'
+            : '비밀번호를 입력해주세요.'
+        }
       />
       {!isDeleteConfirmationMessageDisplayed && (
         <Button
@@ -140,7 +112,17 @@ function WithdrawUserForm() {
           color={color.white}
           bgColor={color.red}
           hoveredBgColor={color.darkRed}
-          onClick={deleteUser}
+          onClick={(e) =>
+            withdrawUser(
+              e,
+              beforeEditUserInfo,
+              passwordRef,
+              token,
+              setIsLoggedIn,
+              navigate,
+              toast
+            )
+          }
           value="회원 탈퇴"
         >
           한 번 더 누르면 cosMost를 이용하실 수 없습니다.

@@ -1,9 +1,12 @@
 import React from 'react';
 /* components */
 import { InputPasswordForm } from '..';
+import { useLocation } from "react-router-dom";
 
 function InputPassword() {
-  return <InputPasswordForm />;
+  const location = useLocation();
+
+  return <InputPasswordForm beforeEditUserInfo={location.state}/>;
 }
 
 export default InputPassword;

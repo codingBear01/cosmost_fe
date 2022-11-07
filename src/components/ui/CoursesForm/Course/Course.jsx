@@ -1,56 +1,63 @@
 /* libraries */
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 /* components */
-import * as S from "./styled";
-import { SmallProfilePic } from "../../..";
+import * as S from './styled';
+import { SmallProfilePic } from '../../..';
 /* static data */
-import { FONT_SIZE_LIST as fs } from "../../../../style";
-/* icons */
-import * as AiIcons from "react-icons/ai";
-import { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
+import { FONT_SIZE_LIST as fs } from '../../../../style';
+/* APIs */
 import {
-  getCourseAuthor,
-  getCoursePointAverage,
   getSingleCourseView,
-} from "../../../../store";
+  getCourseAuthor,
+  getCourseLikeCount,
+} from '../../../../apis';
+/* icons */
+import * as AiIcons from 'react-icons/ai';
+import * as FaIcons from 'react-icons/fa';
 
-function Course({ course }) {
-  const [courseRate, setCourseRate] = useState("");
-  const [courseAuthor, setCourseAuthor] = useState("");
-  const [courseState, setCourseState] = useState("");
+function Course({ course, courseId }) {
+  const [courseAuthor, setCourseAuthor] = useState('');
+  const [courseState, setCourseState] = useState('');
+  const [courseLikeCount, setCourseLikeCount] = useState('');
 
+  /* APIs */
   useEffect(() => {
     if (course) {
       const courseId = course.id || course.courseId;
       getSingleCourseView(courseId, setCourseState);
+      getCourseLikeCount(courseId, setCourseLikeCount);
     }
   }, []);
-
   useEffect(() => {
     if (courseState) {
-      //코스 작성자 정보 업데이트
       getCourseAuthor(courseState.authorId, setCourseAuthor);
     }
   }, [courseState]);
-
-  console.log("courseState", courseState);
 
   return (
     courseState && (
       <S.StyledCourse>
         {/* 코스 이미지 */}
-        {console.log("course2", course)}
-        <S.CourseFeaturedImage
-          src={courseState.readPlaceImgResponseList[0].placeImgUrl}
-          alt={courseState.courseTitle}
-        />
+        <Link to={`/course-detail/${courseId}`}>
+          <S.CourseFeaturedImage
+            src={courseState.readPlaceImgResponseList[0].placeImgUrl}
+            alt={courseState.courseTitle}
+          />
+        </Link>
         {/* 코스 제목, 평점 */}
-        <S.CourseContentWrap justifyContent={"space-between"}>
-          <S.CourseTitle>{courseState.courseTitle}</S.CourseTitle>
-          <S.CourseRate>⭐ {courseState.courseAvgRate}</S.CourseRate>
+        <S.CourseContentWrap justifyContent={'space-between'}>
+          <S.CourseTitle>
+            {courseState.courseTitle.substring(0, 20)}
+            {courseState.courseTitle.length > 20 && '...'}
+          </S.CourseTitle>
+          <S.CoursePopularityWrap>
+            <S.CourseRate>
+              <FaIcons.FaRegThumbsUp />
+              {courseLikeCount && courseLikeCount}
+            </S.CourseRate>
+            <S.CourseRate>⭐ {courseState.courseAvgRate}</S.CourseRate>
+          </S.CoursePopularityWrap>
         </S.CourseContentWrap>
         {/* 코스 카테고리 */}
         <S.CourseContentWrap>
@@ -64,11 +71,16 @@ function Course({ course }) {
         {/* 코스 해시태그 */}
         <S.CourseContentWrap>
           {courseState.hashtagList.map((hashTag) => (
-            <S.CourseTag key={hashTag.id}>{hashTag?.keyword}</S.CourseTag>
+            <Link
+              key={hashTag.id}
+              to={`/courses/hashtag?keyword=${hashTag.keyword}`}
+            >
+              <S.CourseTag>{hashTag?.keyword}</S.CourseTag>
+            </Link>
           ))}
         </S.CourseContentWrap>
         {/* 코스 작성자, 작성일 */}
-        <S.CourseContentWrap justifyContent={"space-between"}>
+        <S.CourseContentWrap justifyContent={'space-between'}>
           <S.CourseAuthorWrap>
             <SmallProfilePic
               src={courseAuthor && courseAuthor.profileImgSaveUrl}
@@ -82,10 +94,10 @@ function Course({ course }) {
         </S.CourseContentWrap>
         {/* 코스 순서 */}
         <S.CourseOrderWrap>
-          {courseState.readPlaceDetailResponseList.map((item) => (
+          {courseState.readPlaceDetailResponseList.map((item, index) => (
             <div key={item.id}>
               <S.CourseName>{item.placeName}</S.CourseName>
-              {item.id !== courseState.readPlaceDetailResponseList.length && (
+              {index !== courseState.readPlaceDetailResponseList.length - 1 && (
                 <AiIcons.AiOutlineArrowRight style={{ fontSize: `${fs.s}` }} />
               )}
             </div>

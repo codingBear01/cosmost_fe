@@ -1,7 +1,10 @@
+/* libraries */
 import React from 'react';
+/* components */
+import { LoadingForm } from '../ui';
 
 function Loading() {
-  return <div>Loading</div>;
+  return <LoadingForm />;
 }
 
 export default Loading;

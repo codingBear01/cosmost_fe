@@ -6,25 +6,26 @@ import { toast, ToastContainer } from 'react-toastify';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilForm } from '../..';
+/* APIs */
+import { updateUserPassword } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 import { useEffect } from 'react';
 
-function InputPasswordForm({ state, beforeEditUserInfo }) {
+function InputPasswordForm({ state, beforeEditUserInfo, responseIdKey }) {
+  const token = localStorage.getItem('token');
   const pathname = useLocation().pathname;
   const isEditPasswordPage = pathname.includes('edit');
 
   const [newPassword, setNewPassword] = useState('');
   const [isValidatedPassword, setIsValidatedPassword] = useState(false);
+  const [beforePw, SetBeforePw] = useState('');
 
   const beforePasswordConfirmation = useRef();
   // const newPassword = useRef();
   const newPasswordConfirmation = useRef();
 
   const navigate = useNavigate();
-
-  const beforePw = 'aaaaaaaa';
-
   /* Handlers */
   const checkNewPassword = () => {
     const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
@@ -45,29 +46,24 @@ function InputPasswordForm({ state, beforeEditUserInfo }) {
       toast.error('비밀번호를 입력해주세요.');
       return false;
     }
-    if (
-      isEditPasswordPage &&
-      beforePw !== beforePasswordConfirmation.current.value
-    ) {
-      toast.error('기존 비밀번호와 다릅니다.');
-      return false;
-    }
     if (newPassword !== newPasswordConfirmation.current.value) {
-      toast.error('비밀번호가 불일치합니다.');
+      toast.error('새 비밀번호와 새 비밀번호 확인은 동일해야 합니다.');
       return false;
     }
+    if (checkNewPassword() === false) {
+      toast.error(
+        '비밀번호는 8자 이상 16자 이하, 영대소문자, 숫자, 특수문자만 입력가능합니다.'
+      );
+      return false;
+    }
+
     return true;
   };
 
-  /* APIs */
-  const updatePassword = (e) => {
-    e.preventDefault();
-
-    if (!checkPasswords()) return;
-
-    alert('비밀번호를 변경했습니다!');
-    // navigate(-1);
+  const onChangeBeforePw = (e) => {
+    SetBeforePw(e.target.value);
   };
+  console.log('beforeEditUserInfo', beforeEditUserInfo);
 
   return (
     <UtilForm width={'340px'}>
@@ -80,6 +76,7 @@ function InputPasswordForm({ state, beforeEditUserInfo }) {
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
       {isEditPasswordPage && (
         <>
@@ -88,6 +85,8 @@ function InputPasswordForm({ state, beforeEditUserInfo }) {
             ref={beforePasswordConfirmation}
             type={'password'}
             width={'340px'}
+            onChange={onChangeBeforePw}
+            value={beforePw}
           />
         </>
       )}
@@ -121,7 +120,18 @@ function InputPasswordForm({ state, beforeEditUserInfo }) {
         color={color.white}
         hoveredBgColor={color.navy}
         value={'비밀번호 수정'}
-        onClick={updatePassword}
+        onClick={(e) =>
+          updateUserPassword(
+            e,
+            beforeEditUserInfo,
+            checkPasswords,
+            token,
+            beforePw,
+            newPassword,
+            navigate,
+            toast
+          )
+        }
       >
         변경
       </Button>
