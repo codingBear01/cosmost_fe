@@ -723,6 +723,7 @@ export const postCourseReview = (
     .post(url, body, config)
     .then((response) => {
       reviewContentRef.current.value = '';
+      window.location.replace(`/course-detail/${courseDetail.id}`);
     })
     .catch((error) => {
       new Error(error);
@@ -1104,7 +1105,6 @@ export const postReport = (
 
 /** 수정 버튼 클릭 시 작성된 신고 수정 내용을 서버로 전송하는 함수 */
 export const updateReport = (
-  e,
   id,
   checkReportInput,
   reportTitle,
@@ -1115,13 +1115,13 @@ export const updateReport = (
   isHistoriesChanged,
   setIsReportFormOpened,
   isReportFormOpened,
-  toast
+  toast,
+  navigate
 ) => {
-  e.preventDefault();
-
   if (!checkReportInput()) return;
 
-  // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards/${id}`;
+  const token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
   const url = `${process.env.REACT_APP_API}/boards/${id}`;
   const body = {
     reportTitle: reportTitle.current.value,
@@ -1133,13 +1133,20 @@ export const updateReport = (
       },
     ],
   };
-  const config = { timeout: 3000 };
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    timeout: 3000,
+  };
 
   axios
     .put(url, body, config)
     .then((response) => {
+      console.log(response);
       setIsHistoriesChanged(!isHistoriesChanged);
       setIsReportFormOpened(!isReportFormOpened);
+      window.location.replace(`/user/${report.reporterId}/report-histories`);
     })
     .catch((error) => {
       new Error(error);

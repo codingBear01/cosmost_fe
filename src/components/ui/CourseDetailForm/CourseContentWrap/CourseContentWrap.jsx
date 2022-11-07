@@ -1,5 +1,6 @@
 /* libraries */
 import React, { useState, useEffect, useParams } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
@@ -34,6 +35,7 @@ function CourseContentWrap({
   /* States */
   const [isFollowed, setIsFollowed] = useState([]);
   const [isFollowedChanged, setIsFollowedChanged] = useState(false);
+  const [authorsFollowersCount, setAuthorsFollowersCount] = useState(null);
 
   /* Variables */
   const courseAverageRateGaugeWidth =
@@ -43,8 +45,27 @@ function CourseContentWrap({
   useEffect(() => {
     if (author) {
       fetchIsFollowed(author?.id, setIsFollowed);
+      fetchAuthorsFollowersCount();
     }
   }, [isFollowedChanged]);
+
+  /** 코스 작성자 팔로워 숫자 조회 */
+  const fetchAuthorsFollowersCount = () => {
+    const url = `${process.env.REACT_APP_API}/popularities?filter=cosmosts&type=follower&sort=id,desc&page=0&size=4`;
+    const config = {
+      headers: {
+        Authorization: author.id,
+      },
+      timeout: 3000,
+    };
+
+    axios
+      .get(url, config)
+      .then((response) => {
+        setAuthorsFollowersCount(response.data[0].otherUserFollowerCnt);
+      })
+      .catch((error) => new Error(error));
+  };
 
   return (
     // dataCategory에 따라 다른 컴포넌트 렌더링됨
@@ -115,13 +136,15 @@ function CourseContentWrap({
               </Button>
             )}
           </S.AutorProfileVerticalWrap>
-          <S.AutorProfileVerticalWrap>
-            <BiIcons.BiCrown />
-            <span>{author?.ranking}</span>
-          </S.AutorProfileVerticalWrap>
+          <Link to={`/others/followers`} state={author.id}>
+            <S.AutorProfileVerticalWrap>
+              <BiIcons.BiCrown />
+              <span>{author?.ranking}</span>
+            </S.AutorProfileVerticalWrap>
+          </Link>
           <S.AutorProfileVerticalWrap>
             <FiIcons.FiUsers />
-            <span>{author?.followers}</span>
+            <span>{authorsFollowersCount}</span>
           </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <GiIcons.GiRoad />
@@ -202,7 +225,7 @@ function CourseContentWrap({
             return (
               <Link
                 key={item.id}
-                to={`/courses/hashtags?keyword=${item.keyword}`}
+                to={`/courses/hashtag?keyword=${item.keyword}`}
               >
                 <CourseContent>
                   <p>{`#${item.keyword}`}</p>

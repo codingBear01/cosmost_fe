@@ -63,8 +63,8 @@ export const CourseReviewCreatedDateWrap = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  flex-direction: column;
   span {
-    margin-right: ${gap.s};
     font-size: ${fs.s};
   }
   svg {

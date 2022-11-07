@@ -11,7 +11,7 @@ const PAGE_TITLES = {
   '/find/id': 'cosMoster의 아이디는?',
 };
 
-function DisplayFindedIdForm({responseId}) {
+function DisplayFindedIdForm({ responseId }) {
   const pathname = useLocation().pathname;
   const str = responseId;
   const diplayedStr = str.substring(0, Math.floor(str.length / 2));
