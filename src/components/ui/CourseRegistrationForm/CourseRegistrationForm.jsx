@@ -1191,6 +1191,7 @@ function CourseRegistrationForm() {
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
       <S.UploadCourseImgArea>
         {/* 코스 이미지 업로드 버튼 */}

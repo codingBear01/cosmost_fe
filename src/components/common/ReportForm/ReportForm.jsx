@@ -23,6 +23,8 @@ function ReportForm({
 }) {
   const navigate = useNavigate();
 
+  const token = localStorage.getItem('token');
+
   const [reportCategories, setReportCategories] = useState([]);
   /* 신고 작성 관련 ref */
   const reportTitle = useRef();
@@ -83,6 +85,7 @@ function ReportForm({
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
       <S.ReportForm>
         <S.ReportFormTitleWrap>
@@ -180,7 +183,8 @@ function ReportForm({
                         reportCategory,
                         setIsReportFormOpened,
                         isReportFormOpened,
-                        toast
+                        toast,
+                        token
                       )
                   : (e) =>
                       updateReport(
@@ -195,7 +199,7 @@ function ReportForm({
                         setIsReportFormOpened,
                         isReportFormOpened,
                         toast,
-                        navigate
+                        token
                       )
               }
             >

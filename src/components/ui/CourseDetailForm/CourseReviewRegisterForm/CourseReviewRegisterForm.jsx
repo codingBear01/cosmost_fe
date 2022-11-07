@@ -21,6 +21,8 @@ const REVIEW_RATE_INDEXES = [0, 1, 2, 3, 4];
 function CourseReviewRegisterForm({ courseDetail }) {
   const navigate = useNavigate();
 
+  const token = localStorage.getItem('token');
+
   /* 리뷰 등록용 states 및 ref */
   const [user] = useRecoilState(userAtom);
   const [isYellowStar, setIsYellowStar] = useState([
@@ -68,6 +70,7 @@ function CourseReviewRegisterForm({ courseDetail }) {
         draggable
         pauseOnHover={false}
         theme="light"
+        limit={1}
       />
       <S.ReviewRegisterTitleAndRateWrap>
         <S.ReviewRegisterTitle>리뷰 작성</S.ReviewRegisterTitle>
@@ -108,7 +111,8 @@ function CourseReviewRegisterForm({ courseDetail }) {
             courseDetail,
             reviewContentRef,
             rateRef,
-            toast
+            toast,
+            token
           )
         }
       >
