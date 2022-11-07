@@ -1,76 +1,125 @@
 /* libraries */
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { loginStateAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Button, Icon, Input, UtilForm, UtilInputWrap } from '../../';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
-import * as RiIcons from 'react-icons/ri';
 import * as SiIcons from 'react-icons/si';
-import * as FcIcons from 'react-icons/fc';
 /* static data */
-import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
-import { LOGIN_BTN_LIST as btns } from '../../../data';
-import axios from 'axios';
-import { LoginStateContext } from '../../context';
-
-const LoginApiUrl = 'http://10.10.10.21:8080/v1/signin';
+import { COLOR_LIST as color } from '../../../style';
 
 function LoginForm() {
-  //로그인 토큰
-  const loginTokenState = useContext(LoginStateContext);
-
-  //아이디, 패스워드 state
-  const [inputValue, setInputValue] = useState({
-    loginId: '',
-    loginPwd: '',
-  });
+  const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
+  const idRef = useRef();
+  const passwordRef = useRef();
 
   const navigate = useNavigate();
 
-  /* 아이디와 패스워드를 입력할 때마다 호출될 핸들러 */
-  const onChangeInput = (e) => {
-    setInputValue({
-      ...inputValue,
-      [e.target.name]: e.target.value,
-    });
+  /* Handlers */
+  /* 아이디 및 패스워드 입력값을 검증하는 핸들러 */
+  const checkIdAndPassword = () => {
+    if (!idRef.current.value) {
+      toast.error('아이디를 입력해주세요.');
+      return false;
+    }
+    if (!passwordRef.current.value) {
+      toast.error('비밀번호를 입력해주세요.');
+      return false;
+    }
+    return true;
   };
 
-  /* 로그인을 눌렀을시 호출될 핸들러*/
-  const onSubmitForm = (e) => {
+  /* 로그인을 수행하는 핸들러 */
+  const onSubmitLogin = (e) => {
     e.preventDefault();
+
+    if (!checkIdAndPassword()) return;
+
+    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/signin`;
+    const url = `${process.env.REACT_APP_API}/signin`;
+    const body = {
+      loginId: idRef.current.value,
+      loginPwd: passwordRef.current.value,
+    };
+    const config = { timeout: 3000 };
+
+    //testId1001
+    //testPwd1001
     axios
-      .put(LoginApiUrl, inputValue, { timeout: 1000 })
+      .put(url, body, config)
       .then((response) => {
-        console.log(response);
-        if (response.data.isSuccess) {
-          sessionStorage.setItem('token', response.data.result);
-          navigate('/');
-        } else {
-          alert(response.data.message);
-        }
+        localStorage.setItem('token', response.data);
+        setIsLoggedIn(true);
+        navigate('/');
       })
-      .catch((e) => {
-        alert('서버와 연결이 되지 않았습니다. 관리자에게 문의하세요.');
+      .catch((error) => {
+        new Error(error);
+        toast.error('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');
       });
   };
+
+  /* 네이버 로그인 핸들러 */
+  const onClickLoginWithNaver = () => {
+    navigate('/naver/email-validation');
+
+    // // const url = `${process.env.REACT_APP_AUTH_IP}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
+    // const url = `${process.env.REACT_APP_API}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
+    // const config = {
+    //   headers: {
+    //     Authorization: 'token',
+    //   },
+    //   timeout: 3000,
+    // };
+    // console.log('naver');
+  };
+
+  useEffect(() => {
+    // var naver_id_login = new window.naver_id_login(process.env.REACT_APP_X_NAVER_CLIENT_ID, "http://localhost:3000");
+    // var state = naver_id_login.getUniqState();
+    // naver_id_login.setButton("white", 2,40);
+    // naver_id_login.setDomain("http://localhost:3000");
+    // naver_id_login.setState(state);
+    // // naver_id_login.setPopup();
+    // naver_id_login.init_naver_id_login();
+  }, []);
+
   return (
-    <UtilForm j_content={'center'} onSubmit={onSubmitForm}>
+    <UtilForm
+      justifyContent={'center'}
+      height={'100vh'}
+      onSubmit={onSubmitLogin}
+    >
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        pauseOnHover={false}
+        theme="light"
+        limit={1}
+      />
       {/* 아이디, 비밀번호 인풋 */}
       <UtilInputWrap>
         <Icon>
           <AiIcons.AiOutlineUser />
         </Icon>
         <Input
+          ref={idRef}
           type="text"
           name="loginId"
-          value={inputValue.loginId}
           placeholder="아이디"
-          w={'305px'}
-          h={'40px'}
-          mr={'0 0 0 10px'}
-          onChange={onChangeInput}
+          width={'305px'}
+          height={'40px'}
+          margin={'0 0 0 10px'}
         />
       </UtilInputWrap>
       <UtilInputWrap>
@@ -78,67 +127,65 @@ function LoginForm() {
           <AiIcons.AiOutlineLock />
         </Icon>
         <Input
+          ref={passwordRef}
           type="password"
           name="loginPwd"
-          value={inputValue.loginPwd}
           placeholder="비밀번호"
-          w={'305px'}
-          h={'40px'}
-          mr={'0 0 0 10px'}
-          onChange={onChangeInput}
+          width={'305px'}
+          height={'40px'}
+          margin={'0 0 0 10px'}
         />
       </UtilInputWrap>
       {/* 로그인 버튼 */}
       <Button
         type="submit"
-        w={'340px'}
-        h={'40px'}
-        col={color.white}
-        bg_col={color.darkBlue}
-        hov_bg_col={color.navy}
+        width={'340px'}
+        height={'40px'}
+        color={color.white}
+        bgColor={color.darkBlue}
+        hoveredBgColor={color.navy}
       >
         로그인
       </Button>
       {/* 비밀번호, 아이디 찾기 */}
       <S.LoginFindWrap>
-        <S.LoginServiceLink>비밀번호 찾기</S.LoginServiceLink>
+        <S.LoginServiceLink to="/find/email-validation" state={'pwd'}>
+          비밀번호 찾기
+        </S.LoginServiceLink>
         <span style={{ color: 'white' }}>|</span>
-        <S.LoginServiceLink>아이디 찾기</S.LoginServiceLink>
+        <S.LoginServiceLink to="/find/email-validation" state={'id'}>
+          아이디 찾기
+        </S.LoginServiceLink>
       </S.LoginFindWrap>
       {/* 회원가입 및 SNS 로그인 버튼들 */}
-      <Link to="/sign-up/email-valid">
-        <S.LoginBtns
+      <Link to="/email-validation">
+        <Button
           type="button"
-          col={color.white}
-          bg_col={color.darkBlue}
-          hov_bg_col={color.navy}
+          width={'340px'}
+          height={'40px'}
+          margin={'0 0 10px 0'}
+          color={color.white}
+          bgColor={color.darkBlue}
+          hoveredBgColor={color.navy}
         >
-          <AiIcons.AiOutlineMail />
           <span>이메일로 회원가입</span>
-        </S.LoginBtns>
+        </Button>
       </Link>
-      <S.LoginBtns
-        type="button"
-        bg_col={color.yellow}
-        hov_bg_col={color.darkYellow}
-      >
-        <RiIcons.RiKakaoTalkFill />
-      </S.LoginBtns>
-      <S.LoginBtns
-        type="button"
-        col={color.white}
-        bg_col={color.naverGreen}
-        hov_bg_col={color.naverDarkGreen}
-      >
-        <SiIcons.SiNaver />
-      </S.LoginBtns>
-      <S.LoginBtns
-        type="button"
-        bg_col={color.white}
-        hov_bg_col={color.lightGrey}
-      >
-        <FcIcons.FcGoogle />
-      </S.LoginBtns>
+      <div id="naver_id_login">
+        <Button
+          type="button"
+          width={'340px'}
+          height={'40px'}
+          margin={'0 0 10px 0'}
+          fontSize={'20px'}
+          color={color.white}
+          bgColor={color.naverGreen}
+          hoveredBgColor={color.naverDarkGreen}
+          onClick={onClickLoginWithNaver}
+        >
+          <SiIcons.SiNaver />
+        </Button>
+      </div>
     </UtilForm>
   );
 }

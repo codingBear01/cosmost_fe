@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import {
   COLOR_LIST as color,
-  BORDER_RADIUS_LIST as br,
-  BUTTON_SIZE_LIST as bs,
-  FONT_SIZE_LIST as fs,
   GAP_LIST as gap,
   BREAK_POINTS as media,
 } from './../../../style/';
@@ -21,15 +18,15 @@ export const Header = styled.header`
 `;
 
 export const HeaderContainer = styled.div`
-  visibility: ${({ isSearchBarOpen }) =>
-    isSearchBarOpen ? 'hidden' : 'visible'};
+  visibility: ${({ isSearchBarOpened }) =>
+    isSearchBarOpened ? 'hidden' : 'visible'};
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 76.8rem;
   height: 100%;
   margin: 0 auto;
-  padding: 0 ${gap.l};
+  padding: 0 ${gap.xl};
   transition: all 0.2s ease;
 
   ${media.mobile} {
@@ -44,13 +41,13 @@ export const HeaderUtilWrap = styled.div`
 `;
 
 export const HeaderSearchBarOverlay = styled.div`
-  position: ${({ isSearchBarOpen }) => (isSearchBarOpen ? 'fixed ' : '')};
-  top: ${({ isSearchBarOpen }) => (isSearchBarOpen ? '0' : '')};
-  left: ${({ isSearchBarOpen }) => (isSearchBarOpen ? '0' : '')};
-  width: ${({ isSearchBarOpen }) => (isSearchBarOpen ? '100%' : '')};
-  height: ${({ isSearchBarOpen }) => (isSearchBarOpen ? '100vh' : '')};
-  z-index: ${({ isSearchBarOpen }) => (isSearchBarOpen ? '100' : '')};
-  background: ${({ isSearchBarOpen }) =>
-    isSearchBarOpen ? 'rgba(0, 0, 0, 0.48)' : ''};
+  position: ${({ isSearchBarOpened }) => (isSearchBarOpened ? 'fixed ' : '')};
+  top: ${({ isSearchBarOpened }) => (isSearchBarOpened ? '0' : '')};
+  left: ${({ isSearchBarOpened }) => (isSearchBarOpened ? '0' : '')};
+  width: ${({ isSearchBarOpened }) => (isSearchBarOpened ? '100%' : '')};
+  height: ${({ isSearchBarOpened }) => (isSearchBarOpened ? '100vh' : '')};
+  z-index: ${({ isSearchBarOpened }) => (isSearchBarOpened ? '100' : '')};
+  background: ${({ isSearchBarOpened }) =>
+    isSearchBarOpened ? 'rgba(0, 0, 0, 0.48)' : ''};
   transition: all 0.4s ease;
 `;

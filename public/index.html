@@ -3,18 +3,41 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <!-- Mixed Content 오류 해결용 meta -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
-    <title>COSMOST</title>
+    <!-- KAKAO API -->
+    <script
+      src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js"
+      integrity="sha384-PFHeU/4gvSH8kpvhrigAPfZGBDPs372JceJq3jAXce11bVA6rMvGWzvP4fMQuBGL"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 네이버 지도 -->
     <script
       defer
       type="text/javascript"
       src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=%REACT_APP_NAVER_API_KEY%&submodules=geocoder"
     ></script>
+    <!-- 네이버 로그인 API -->
+    <script
+      type="text/javascript"
+      src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+      charset="utf-8"
+    ></script>
+    <!-- jquery -->
+    <script
+      type="text/javascript"
+      src="http://code.jquery.com/jquery-1.11.3.min.js"
+    ></script>
+    <title>COSMOST</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

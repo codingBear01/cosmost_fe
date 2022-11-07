@@ -2,18 +2,12 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 /* static data */
-import {
-  COLOR_LIST as color,
-  BORDER_RADIUS_LIST as br,
-  BUTTON_SIZE_LIST as bs,
-  FONT_SIZE_LIST as fs,
-  GAP_LIST as gap,
-  BREAK_POINTS as media,
-} from '../../../style';
+import { COLOR_LIST as color, GAP_LIST as gap } from '../../../style';
 
 export const StyledNextBtn = styled(Link)`
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   align-self: end;
   font-size: 16px;
   color: ${color.lightGrey};
@@ -25,5 +19,9 @@ export const StyledNextBtn = styled(Link)`
 
   span {
     margin-right: ${gap.xs};
+  }
+
+  svg {
+    align-self: center;
   }
 `;

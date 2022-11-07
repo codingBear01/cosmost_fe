@@ -1,24 +1,34 @@
-import React, { useState, useContext } from 'react';
-/* context */
-import { LoginStateContext } from './components/context';
+/* libraries */
+import React, { useEffect } from 'react';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { loginStateAtom } from './store';
 /* components */
 import {
   Header,
   Footer,
-  UtilPageContainer,
-  CourseRegisterPage,
-  EmailValidPage,
-  FollowPage,
-  LocationDetailPage,
-  LocationInfoPage,
-  LoginPage,
-  MainPage,
-  HistoryPage,
-  UserInfoPage,
-  UserPage,
+  PageContainer,
+  // pages
+  CourseDetail,
+  CourseRegistration,
+  Courses,
+  EditUserMenu,
+  FindingUserPage,
+  Follows,
+  Histories,
+  InputAddress,
+  InputDetailAddress,
+  InputEmail,
+  InputPassword,
+  InputUser,
+  Login,
+  Main,
+  Messages,
+  User,
+  WithdrawUser,
 } from './components';
 /* router */
-import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 
 const WithHeaderAndFooter = () => {
   return (
@@ -33,51 +43,104 @@ const WithHeaderAndFooter = () => {
 const WithoutHeaderAndFooter = () => {
   return (
     <>
-      <UtilPageContainer>
+      <PageContainer>
         <Outlet />
-      </UtilPageContainer>
+      </PageContainer>
     </>
   );
 };
 
+/* CONSTANTS */
+const { Kakao } = window;
+
 function App() {
-  const loginTokenState = useContext(LoginStateContext);
+  const token = localStorage.getItem('token');
+  const [isLoggedIn] = useRecoilState(loginStateAtom);
+
+  /* 프로젝트 실행 시 Kakao API KEY 값 초기화하는 함수 */
+  useEffect(() => {
+    if (process.env.REACT_APP_KAKAO_KEY)
+      Kakao?.init(process.env.REACT_APP_KAKAO_KEY);
+  }, []);
+
   return (
     <>
       <Routes>
         <Route path="/" element={<WithHeaderAndFooter />}>
-          <Route index element={<MainPage />} />
-          <Route path="/course">
-            <Route path="register" element={<CourseRegisterPage />} />
-          </Route>
+          <Route index element={<Main />} />
+          <Route path="course-detail/:id" element={<CourseDetail />} />
+          <Route path="courses/:type" element={<Courses />} />
         </Route>
+
         <Route element={<WithoutHeaderAndFooter />}>
-          {loginTokenState || (
-            <>
-              <Route path="login" element={<LoginPage />} />
-              <Route path="sign-up">
-                <Route path="email-valid" element={<EmailValidPage />} />
-                <Route path="location-info" element={<LocationInfoPage />} />
-                <Route
-                  path="location-detail"
-                  element={<LocationDetailPage />}
-                />
-                <Route path="user-info" element={<UserInfoPage />} />
-              </Route>
-            </>
-          )}
-          {loginTokenState && (
-            <Route path="user">
-              <Route path=":id" element={<UserPage />} />
-              <Route path=":id/followers" element={<FollowPage />} />
-              <Route path=":id/followings" element={<FollowPage />} />
-              <Route path=":id/report-histories" element={<HistoryPage />} />
-              <Route path=":id/review-histories" element={<HistoryPage />} />
-            </Route>
-          )}
+          <Route exact path="others/followers" element={<Follows />} />
         </Route>
-        {/* 잘못된 경로에 접근시 메인 페이지로 리다이렉트 시킴*/}
-        <Route path="*" element={<Navigate to={'/'} />} />
+
+        <Route element={<WithoutHeaderAndFooter />}>
+          {/* {!token && !isLoggedIn && ( */}
+          <>
+            <Route path="login" element={<Login />} />
+            <Route path="email-validation" element={<InputEmail />} />
+            <Route path="address" element={<InputAddress />} />
+            <Route path="detail-address" element={<InputDetailAddress />} />
+            <Route path="sign-up" element={<InputUser />} />
+
+            <Route path="find">
+              <Route path="email-validation" element={<InputEmail />} />
+              <Route path="id" element={<FindingUserPage />} />
+              <Route path="pwd" element={<FindingUserPage />} />
+            </Route>
+
+            <Route path="naver">
+              <Route path="email-validation" element={<InputEmail />} />
+              <Route path="address" element={<InputAddress />} />
+              <Route path="detail-address" element={<InputDetailAddress />} />
+              <Route path="sign-up" element={<InputUser />} />
+            </Route>
+          </>
+          {/* )} */}
+          {/* {token && isLoggedIn && ( */}
+          <>
+            <Route exact path="user">
+              <Route exact path=":id" element={<User />} />
+              <Route exact path=":id/followers" element={<Follows />} />
+              <Route exact path=":id/followings" element={<Follows />} />
+              <Route
+                exact
+                path=":id/report-histories"
+                element={<Histories />}
+              />
+              <Route
+                exact
+                path=":id/review-histories"
+                element={<Histories />}
+              />
+              <Route exact path="edit">
+                <Route path="menu" element={<EditUserMenu />} />
+                <Route path="email" element={<InputEmail />} />
+                <Route path="address" element={<InputAddress />} />
+                <Route path="detail-address" element={<InputDetailAddress />} />
+                <Route path="password" element={<InputPassword />} />
+                <Route path="my-information" element={<InputUser />} />
+              </Route>
+              <Route path="withdrawal" element={<WithdrawUser />} />
+            </Route>
+
+            <Route
+              path="course-registration"
+              element={<CourseRegistration />}
+            />
+            <Route path="course-edit/:id" element={<CourseRegistration />} />
+          </>
+          {/* )} */}
+        </Route>
+
+        <Route
+          path="withdrawal-message"
+          element={<Messages type={'withdrawal'} />}
+        />
+        <Route path="error" element={<Messages type={'error'} />} />
+        <Route path="*" element={<Messages type={'notFound'} />} />
       </Routes>
     </>
   );

@@ -1,15 +1,7 @@
 /* libraries */
 import styled from 'styled-components';
 /* static data */
-import {
-  COLOR_LIST as color,
-  BORDER_RADIUS_LIST as br,
-  BUTTON_SIZE_LIST as bs,
-  FONT_SIZE_LIST as fs,
-  GAP_LIST as gap,
-  BREAK_POINTS as media,
-  mainTextFadeIn,
-} from '../../../../style';
+import { COLOR_LIST as color, GAP_LIST as gap } from '../../../../style';
 
 export const ProfileWrap = styled.div`
   display: flex;
@@ -39,17 +31,11 @@ export const ProfileUtilWrap = styled.div`
   width: 220px;
   height: 100%;
   margin-left: 10px;
+  padding-top: 10px;
 
   button {
     color: ${color.white};
   }
-`;
-
-export const UserInfoWrap = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
 
   a {
     display: flex;
@@ -57,4 +43,11 @@ export const UserInfoWrap = styled.div`
     flex-direction: column;
     color: ${color.white};
   }
+`;
+
+export const UserInfoWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
 `;

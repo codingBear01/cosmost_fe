@@ -1,57 +1,65 @@
 /* hooks */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-/* recoil */
-import { useRecoilState } from 'recoil';
-import { isLoginAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { HeaderLogo, HeaderSearchBar, HeaderUtilBtn } from './';
 import { Icon } from '../../';
+/* static data */
+import { GAP_LIST as gap } from '../../../style';
 /* icons */
 import * as BsIcons from 'react-icons/bs';
-/* static data */
-import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../style';
 
 function Header() {
-  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
-  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+  /* States */
+  const [isSearchBarOpened, setIsSearchBarOpened] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
-  const onSearchBarOpen = () => {
-    setIsSearchBarOpen(!isSearchBarOpen);
+  /* Handlers */
+  /** 서치바 Open 여부 조작하는 핸들러 */
+  const onClickOpenSearchBar = () => {
+    setIsSearchBarOpened(!isSearchBarOpened);
+    setSearchKeyword('');
   };
+
+  /* Hooks */
+  /** 서치바 열렸을 때 바깥 영역 스크롤 방지하는 함수 */
+  useEffect(() => {
+    isSearchBarOpened
+      ? (document.body.style.overflow = 'hidden')
+      : (document.body.style.overflow = 'unset');
+  }, [isSearchBarOpened]);
 
   return (
     <>
       <S.Header>
-        <S.HeaderContainer isSearchBarOpen={isSearchBarOpen}>
+        <S.HeaderContainer isSearchBarOpened={isSearchBarOpened}>
           <Link to="/">
             <HeaderLogo>cosMost</HeaderLogo>
           </Link>
 
           <S.HeaderUtilWrap>
-            <Icon onClick={onSearchBarOpen}>
+            <Icon
+              marginRight={'3rem'}
+              onClick={onClickOpenSearchBar}
+              style={{ marginRight: '1rem' }}
+            >
               <BsIcons.BsSearch />
             </Icon>
-            <Link to="/login">
-              <HeaderUtilBtn isLogin={isLogin} />
-            </Link>
+            <HeaderUtilBtn />
           </S.HeaderUtilWrap>
         </S.HeaderContainer>
 
         <HeaderSearchBar
-          isSearchBarOpen={isSearchBarOpen}
-          onClick={onSearchBarOpen}
+          isSearchBarOpened={isSearchBarOpened}
+          setIsSearchBarOpened={setIsSearchBarOpened}
+          searchKeyword={searchKeyword}
+          setSearchKeyword={setSearchKeyword}
+          onClickOpenSearchBar={onClickOpenSearchBar}
         />
       </S.Header>
 
-      <S.HeaderSearchBarOverlay isSearchBarOpen={isSearchBarOpen} />
-      {/* <button
-          onClick={() => setIsLogin(!isLogin)}
-          style={{ color: `${color.white}` }}
-        >
-          로긴ㅋ
-        </button> */}
+      <S.HeaderSearchBarOverlay isSearchBarOpened={isSearchBarOpened} />
     </>
   );
 }

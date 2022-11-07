@@ -1,13 +1,45 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 
-/* Login 상태 관련 임시 state */
-export const isLoginAtom = atom({
-  key: 'isLoginAtom',
-  default: false,
-});
+const { persistAtom } = recoilPersist();
 
-/* ReportForm Open 여부 state*/
 export const isReportFormOpenedAtom = atom({
   key: 'isReportFormOpenedAtom',
   default: false,
+});
+
+export const isOrderingModalOpenedAtom = atom({
+  key: 'isOrderingModalOpenedAtom',
+  default: false,
+});
+
+export const loginStateAtom = atom({
+  key: 'loginStateAtom',
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const pathnameAtom = atom({
+  key: 'pathnameAtom',
+  default: window.location.pathname,
+});
+
+export const userAtom = atom({
+  key: 'userAtom',
+  default: null,
+});
+
+export const isLoadingAtom = atom({
+  key: 'isLoadingAtom',
+  default: true,
+});
+
+export const queryStringsStateAtom = atom({
+  key: 'queryStringsStateAtom',
+  default: true,
+});
+
+export const searchingTypeAtom = atom({
+  key: 'searchingTypeAtom',
+  default: 'all',
 });

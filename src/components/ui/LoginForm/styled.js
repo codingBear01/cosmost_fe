@@ -2,14 +2,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 /* static data */
-import {
-  COLOR_LIST as color,
-  BORDER_RADIUS_LIST as br,
-  FONT_SIZE_LIST as fs,
-  GAP_LIST as gap,
-  BREAK_POINTS as media,
-  mainTextFadeIn,
-} from '../../../style';
+import { COLOR_LIST as color, GAP_LIST as gap } from '../../../style';
 
 /* styled components */
 export const LoginFindWrap = styled.div`
@@ -31,32 +24,5 @@ export const LoginServiceLink = styled(Link)`
 
   span {
     color: ${color.white};
-  }
-`;
-
-export const LoginBtns = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 340px;
-  height: 40px;
-  margin-bottom: 10px;
-  border-radius: ${br.default};
-  background-color: ${({ bg_col }) => bg_col};
-  color: ${({ col }) => col};
-  font-weight: 600;
-  transition: all 0.15s ease-in;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${({ hov_bg_col }) => hov_bg_col};
-  }
-
-  svg {
-    font-size: 20px;
-  }
-
-  span {
-    margin-left: 10px;
   }
 `;

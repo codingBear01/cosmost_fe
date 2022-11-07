@@ -1,31 +1,45 @@
-import React from "react";
+import React, { forwardRef } from "react";
 /* components */
 import * as S from "./styled";
 
-function Input({
-  type,
-  name,
-  placeholder,
-  value,
-  disabled,
-  w,
-  h,
-  mr,
-  onChange,
-}) {
-  return (
-    <S.StyledInput
-      type={type}
-      name={name}
-      placeholder={placeholder}
-      value={value}
-      disabled={disabled}
-      w={w}
-      h={h}
-      mr={mr}
-      onChange={onChange}
-    />
-  );
-}
+const Input = forwardRef(
+  (
+    {
+      type,
+      name,
+      placeholder,
+      value,
+      maxLength,
+      disabled,
+      width,
+      height,
+      margin,
+      fontSize,
+      onChange,
+      onKeyDown,
+      required,
+    },
+    ref
+  ) => {
+    return (
+      <S.StyledInput
+        ref={ref}
+        type={type}
+        name={name}
+        placeholder={placeholder}
+        value={value}
+        maxLength={maxLength}
+        disabled={disabled}
+        width={width}
+        height={height}
+        margin={margin}
+        fontSize={fontSize}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+        required={required}
+      />
+    );
+  }
+);
 
 export default Input;
