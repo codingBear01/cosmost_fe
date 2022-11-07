@@ -1,6 +1,11 @@
 /* libraries */
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import axios from "axios";
 /* recoil */
 import { useRecoilState } from "recoil";
@@ -28,6 +33,7 @@ function CoursesForm() {
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
   );
+  const location = useLocation();
   const [isLoading, setIsLoading] = useRecoilState(isLoadingAtom);
   const [courses, setCourses] = useState([]);
   const [isLastPage, setIsLastPage] = useState(false);
@@ -40,6 +46,8 @@ function CoursesForm() {
   const [queryStringsState, setQueryStringsState] = useRecoilState(
     queryStringsStateAtom
   );
+
+  console.log(location);
 
   const page = useRef(0);
   const observedTarget = useRef(null);
@@ -200,7 +208,15 @@ function CoursesForm() {
     if (!observedTarget.current || isLastPage) return;
 
     const io = new IntersectionObserver((entries, observer) => {
+      // debugger;
       if (entries[0].isIntersecting) {
+        getCourses(
+          params.type,
+          queryStrings.get("keyword"),
+          categoryId,
+          searchingType
+        );
+      } else if (entries[1]?.isIntersecting) {
         getCourses(
           params.type,
           queryStrings.get("keyword"),
