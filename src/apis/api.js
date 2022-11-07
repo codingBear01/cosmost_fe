@@ -672,7 +672,6 @@ export const getCourseReviews = (courseId, setState) => {
  *  setState : 업데이트해줄 함수
  */
 export const getSingleCourseView = (courseId, setState) => {
-  // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseId}?filter=frame`;
   const url = `${process.env.REACT_APP_API}/cosmosts/${courseId}?filter=frame`;
   const config = { timeout: 3000 };
 
@@ -818,8 +817,6 @@ export const deleteCourseReview = (
  *  errorCallback : 값을 가져오는 데 실패할 시 호출할 콜백함수
  */
 export const getCourseAverageRate = (courseID, thenCallback, errorCallback) => {
-  // const url = `${process.env.REACT_APP_COMMENT1_IP}/v1/view?rate=average&course=${courseID}`;
-
   const url = `${process.env.REACT_APP_API}/view?rate=average&course=${courseID}`;
   const config = {
     timeout: 3000,
