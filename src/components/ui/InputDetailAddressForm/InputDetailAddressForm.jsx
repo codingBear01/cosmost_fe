@@ -22,6 +22,7 @@ function InputDetailAddressForm({ state }) {
   const token = localStorage.getItem("token");
   const path = useLocation().pathname;
   const isDetailAddressPage = path.includes('edit');
+  const isNaverAddressPage = path.includes('naver');
   const navigate = useNavigate();
 
 
@@ -64,8 +65,17 @@ function InputDetailAddressForm({ state }) {
           onChange={onChangeDetailAddress}
         />
       </UtilInputWrap>
-        {/* 다음으로 버튼 */}
-        {!isDetailAddressPage && (
+        {/* 네이버 다음으로 버튼 또는 일반 다음으로 버튼*/}
+        {!isDetailAddressPage && isNaverAddressPage ? 
+        (
+          <NextBtn
+            to={'/naver/sign-up'}
+            state={{ ...state, detailAddress }}
+            onClick={onClickCheckInput}
+            />
+        )   
+        :
+        (
         <NextBtn
         to={'/sign-up'}
         state={{ ...state, detailAddress }}

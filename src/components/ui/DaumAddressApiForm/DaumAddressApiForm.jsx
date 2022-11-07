@@ -24,6 +24,11 @@ function DaumAddressApiModal({ state }) {
           state: { ...state, address: result.address },
         });
     }
+    else if(path.includes("naver")){
+      navigate('/naver/detail-address', {
+        state: { ...state, address: result.address },
+      })
+    }
     else{
       navigate('/detail-address', {
         state: { ...state, address: result.address },
@@ -62,6 +67,11 @@ function DaumAddressApiModal({ state }) {
                navigate('/user/edit/detail-address', {
                   state: { ...state, address: Address.address },
                 });
+            }
+            else if(path.includes("naver")){
+              navigate('/naver/detail-address', {
+                state: { ...state, address: Address.address },
+              });
             }
             else{
               navigate('/detail-address', {
