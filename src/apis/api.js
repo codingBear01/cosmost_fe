@@ -438,7 +438,6 @@ export const signUpOrEditUser = (
 
       formData.append('file', profilePictureBlob);
 
-      console.log('signUpBody', signUpBody);
       printFormData(formData);
       axios
         .post(url, formData, config)
@@ -452,7 +451,6 @@ export const signUpOrEditUser = (
           }
         })
         .catch((error) => {
-          console.log(error);
           toast.error('회원가입에 실패했습니다. 관리자에게 문의하세요.');
         });
     }

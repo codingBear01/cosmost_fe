@@ -45,7 +45,7 @@ function CourseDetailForm() {
     useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
   // Auth
-  const [author, setAuthor] = useState(null);
+  const [author, setAuthor] = useState('');
   // Cosmost
   const [courseDetail, setCourseDetail] = useState(null);
   // Comment
@@ -179,11 +179,10 @@ function CourseDetailForm() {
       //   };
       // });
 
-      getCourseAuthor(courseDetail.authorId, setAuthor);
+      getCourseAuthor(courseDetail?.authorId, setAuthor);
       getCourseAverageRate(
         id,
         (result) => {
-          console.log(result);
           setCourseAverageRate(result.data);
         },
         (error) => {
@@ -192,7 +191,7 @@ function CourseDetailForm() {
       );
       getCourseLikeCount(id, setCourseLikeCount);
     }
-  }, []);
+  }, [courseDetail]);
 
   return (
     courseDetail && (
@@ -232,16 +231,14 @@ function CourseDetailForm() {
             dataCategory="hashtagList"
           />
           {/* 작성자 정보 */}
-          {author && (
-            <CourseContentWrap
-              justifyContent={'center'}
-              height={'10rem'}
-              author={author}
-              dataCategory="authorProfile"
-              authorCourseCount={courseDetail.authorCourseCount}
-              loggedInUserId={loggedInUserId}
-            />
-          )}
+          <CourseContentWrap
+            justifyContent={'center'}
+            height={'10rem'}
+            dataCategory="authorProfile"
+            authorCourseCount={courseDetail.authorCourseCount}
+            loggedInUserId={loggedInUserId}
+            author={author}
+          />
 
           {/* 코스에 등록된 장소를 표시하는 지도 */}
           <div
