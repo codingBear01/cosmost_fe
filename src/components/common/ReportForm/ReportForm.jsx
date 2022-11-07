@@ -21,11 +21,10 @@ function ReportForm({
   isHistoriesChanged,
   setIsHistoriesChanged,
 }) {
-  const navigate = useNavigate();
-
   const token = localStorage.getItem('token');
 
   const [reportCategories, setReportCategories] = useState([]);
+
   /* 신고 작성 관련 ref */
   const reportTitle = useRef();
   const reportContent = useRef();
@@ -43,7 +42,7 @@ function ReportForm({
 
   const checkReportInput = () => {
     if (reportCategory.current.value === 'default') {
-      toast.error('카테고리를 입력해주세요.');
+      toast.error('카테고리를 선택해주세요.');
       return false;
     }
     if (!reportTitle.current.value) {
@@ -109,6 +108,7 @@ function ReportForm({
           </>
         ) : (
           <S.ReportFormCats ref={reportCategory}>
+            <option value="default">카테고리</option>
             {reportCategories &&
               reportCategories.map((category) => (
                 <option key={category.id} value={category.id}>

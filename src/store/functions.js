@@ -1,6 +1,3 @@
-/* libraries */
-import axios from 'axios';
-
 /* CONSTANTS */
 const { Kakao, location } = window;
 const SHARED_URL = location.href;
@@ -10,9 +7,9 @@ export const sharingByKakao = (data) => {
   Kakao.Share.sendDefault({
     objectType: 'feed',
     content: {
-      title: data.title,
-      description: data.description,
-      imageUrl: data.courseImages[0].imageUrl,
+      title: data.courseTitle,
+      description: data.courseComment,
+      imageUrl: data.placeImgList[0].placeImgUrl,
       link: {
         webUrl: SHARED_URL,
         mobileWebUrl: SHARED_URL,

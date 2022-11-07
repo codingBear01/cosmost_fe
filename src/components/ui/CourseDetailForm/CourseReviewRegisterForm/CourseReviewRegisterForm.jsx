@@ -54,7 +54,7 @@ function CourseReviewRegisterForm({ courseDetail }) {
     }
     if (!rateRef.current) {
       rateRef.current = 1;
-      return false;
+      return true;
     }
     return true;
   };

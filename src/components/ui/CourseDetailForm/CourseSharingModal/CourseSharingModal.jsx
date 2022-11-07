@@ -15,25 +15,21 @@ import { sharingByKakao } from '../../../../store';
 const currentUrl = window.location.href;
 
 function CourseSharingModal({ courseDetail, onClickCopyCurrentPageUrl }) {
-  /* Line 공유 기능에 쓰이는 url */
-  const lineSharingUrl = `https://line.me/R/msg/text/${encodeURIComponent(
-    courseDetail.title
-  )}${currentUrl}`;
-  const twitterSharingUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    courseDetail.title
-  )}&url=${currentUrl}`;
-  const facebookSharingUrl = `http://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:3000/course-detail/1`; // 배포 후 ?u= 뒤를 배포한 url로 변경
+  /* SNS 공유 기능에 쓰이는 url */
+  const URLS = {
+    line: `https://line.me/R/msg/text/${encodeURIComponent(
+      courseDetail.courseTitle
+    )}${currentUrl}`,
+    twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      courseDetail.courseTitle
+    )}&url=${currentUrl}`,
+    facebook: `http://www.facebook.com/sharer/sharer.php?u=https://cosmost-fe.vercel.app/course-detail/${courseDetail.id}`,
+  };
 
   /* Handlers */
-  /* Line 공유 기능에 쓰이는 popup창 생성 핸들러 */
+  /** SNS 공유 기능에 쓰이는 popUp창 생성 핸들러 */
   const onClickOpenPopUpForSharingLink = (sns) => {
-    if (sns === 'line') {
-      window.open(lineSharingUrl, '', 'width=500, height=600');
-    } else if (sns === 'twitter') {
-      window.open(twitterSharingUrl, '', 'width=500, height=600');
-    } else {
-      window.open(facebookSharingUrl, '', 'width=500, height=600');
-    }
+    window.open(URLS[sns], '', 'width=500, height=600');
   };
 
   return (

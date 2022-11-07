@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
 import { Button } from '../../..';
+/* APIs */
+import { deleteMyReport, fetchAnswerAboutMyReport } from '../../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../../style';
 /* icons */
@@ -24,6 +26,8 @@ const HistoryListItem = ({
   const [isAnswered, setIsAnswered] = useState(false);
   const [answerAboutReport, setAnswerAboutReport] = useState(null);
 
+  const token = localStorage.getItem('token');
+
   /* Hooks */
   /** 일정 시간 경과 후 삭제 버튼을 닫는 핸들러 */
   useEffect(() => {
@@ -35,50 +39,9 @@ const HistoryListItem = ({
   }, [isDeleteButtonOpened]);
 
   /* APIs */
-  /** 신고 내역 삭제 */
-  const deleteMyReport = () => {
-    const token =
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
-    const url = `${process.env.REACT_APP_API}/boards/${report.id}`;
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .delete(url, config)
-      .then((response) => {
-        setIsDisplayed(false);
-      })
-      .catch((error) => new Error(error));
-  };
-
-  /** 신고 답변 조회 */
-  const fetchAnswerAboutMyReport = () => {
-    const url = `${process.env.REACT_APP_API}/comments?filter=auth&type=answer`;
-    const config = {
-      headers: {
-        Authorization: report.id,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .get(url, config)
-      .then((response) => {
-        setAnswerAboutReport(response.data);
-        setIsAnswered(true);
-      })
-      .catch((error) => {
-        setIsAnswered(false);
-        new Error(error);
-      });
-  };
   useEffect(() => {
     if (isReportHistoryPage) {
-      fetchAnswerAboutMyReport();
+      fetchAnswerAboutMyReport(report, setAnswerAboutReport, setIsAnswered);
     }
   }, []);
 
@@ -107,7 +70,9 @@ const HistoryListItem = ({
                 />
               )}
               {isDeleteButtonOpened && (
-                <S.WarningDeleteIconWrap onClick={deleteMyReport}>
+                <S.WarningDeleteIconWrap
+                  onClick={() => deleteMyReport(report, token, setIsDisplayed)}
+                >
                   <BiIcons.BiErrorAlt style={{ color: `${color.red}` }} />
                 </S.WarningDeleteIconWrap>
               )}
