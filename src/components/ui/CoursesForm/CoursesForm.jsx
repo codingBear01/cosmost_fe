@@ -52,9 +52,18 @@ function CoursesForm() {
   };
 
   /** params type에 따라 다른 url을 반환하는 핸들러 */
-  const returnUrlForGettingCourses = (type, searchKeyword, categoryNumber) => {
+  const returnUrlForGettingCourses = (
+    type,
+    searchKeyword,
+    categoryNumber,
+    searchingType
+  ) => {
     let url;
-    if ((type === "keyword" && searchingType === "all") || type === "hastags") {
+    if (
+      (type === "keyword" &&
+        (searchingType === "all" || searchingType === "search")) ||
+      type === "hastags"
+    ) {
       url = `${
         process.env.REACT_APP_API
       }/cosmosts?${type}=${searchKeyword}&sort=${
@@ -96,7 +105,7 @@ function CoursesForm() {
   /* APIs */
   /** params에 따라 다른 코스를 가져오는 api */
   const getCourses = useCallback(
-    async (type, searchKeyword, categoryNumber) => {
+    async (type, searchKeyword, categoryNumber, searchingType) => {
       setIsLoading(true);
       try {
         const url = returnUrlForGettingCourses(
@@ -188,7 +197,12 @@ function CoursesForm() {
 
     const io = new IntersectionObserver((entries, observer) => {
       if (entries[0].isIntersecting) {
-        getCourses(params.type, queryStrings.get("keyword"), categoryId);
+        getCourses(
+          params.type,
+          queryStrings.get("keyword"),
+          categoryId,
+          searchingType
+        );
       }
     });
     io.observe(observedTarget.current);
