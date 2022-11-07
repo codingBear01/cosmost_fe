@@ -722,6 +722,7 @@ export const postCourseReview = (
   toast,
   token
 ) => {
+  console.log('dd');
   if (!checkCourseReviewValues()) return;
 
   const url = `${process.env.REACT_APP_API}/comments`;

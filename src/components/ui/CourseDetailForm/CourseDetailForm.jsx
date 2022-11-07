@@ -31,7 +31,6 @@ import {
   getCourseAverageRate,
   getCourseDetail,
   getCourseLikeCount,
-  getCourseReviews,
   getCourseAuthor,
 } from '../../../apis';
 
@@ -87,7 +86,7 @@ function CourseDetailForm() {
   };
 
   /* APIs */
-  const getCourseReviews = useCallback(async () => {
+  const fetchCourseReviews = useCallback(async () => {
     setIsLoading(true);
     try {
       const url = `${process.env.REACT_APP_API}/comments?type=review&sort=id,desc&page=${page.current}&size=4`;
@@ -120,7 +119,7 @@ function CourseDetailForm() {
   }, []);
   useEffect(() => {
     getCourseDetail(id, setCourseDetail);
-    getCourseReviews();
+    fetchCourseReviews();
   }, [isClickedCourseReviewChanged]);
 
   /** 무한 스크롤을 위해 observing을 하는 함수 */
@@ -129,7 +128,7 @@ function CourseDetailForm() {
 
     const io = new IntersectionObserver((entries, observer) => {
       if (entries[0].isIntersecting) {
-        getCourseReviews();
+        fetchCourseReviews();
       }
     });
     io.observe(observedTarget.current);
@@ -141,53 +140,53 @@ function CourseDetailForm() {
   useEffect(() => {
     if (courseDetail) {
       // 네이버 지도 생성
-      const map = createNaverMap();
-      courseDetail.placeDetailList.map((item, index) => {
-        const marker = addNaverMapMarker(map, {
-          latitude: item.placeYCoordinate,
-          longitude: item.placeXCoordinate,
-          eventList: [
-            {
-              eventName: 'mouseover',
-              eventListener: (e) => {
-                e.pointerEvent.target.title = item.placeName;
-              },
-            },
-            {
-              eventName: 'click',
-              eventListener: (e) => {
-                onClickMarker(e);
-              },
-            },
-          ],
-        });
+      // const map = createNaverMap();
+      // courseDetail.placeDetailList.map((item, index) => {
+      //   const marker = addNaverMapMarker(map, {
+      //     latitude: item.placeYCoordinate,
+      //     longitude: item.placeXCoordinate,
+      //     eventList: [
+      //       {
+      //         eventName: 'mouseover',
+      //         eventListener: (e) => {
+      //           e.pointerEvent.target.title = item.placeName;
+      //         },
+      //       },
+      //       {
+      //         eventName: 'click',
+      //         eventListener: (e) => {
+      //           onClickMarker(e);
+      //         },
+      //       },
+      //     ],
+      //   });
 
-        const markerInfoString = `
-            <div><h3>${item.placeName}</h3><div>${item.placeComment}</div></div>
-        `;
-        const markerInfoStyle = {
-          backgroundColor: '#000',
-          borderColor: '#2db400',
-          borderWidth: 5,
-          anchorSkew: true,
-          anchorColor: '#eee',
-        };
-        const info = addNaverMapMarkerInfo(
-          map,
-          marker,
-          markerInfoString,
-          markerInfoStyle
-        );
+      //   const markerInfoString = `
+      //       <div><h3>${item.placeName}</h3><div>${item.placeComment}</div></div>
+      //   `;
+      //   const markerInfoStyle = {
+      //     backgroundColor: '#000',
+      //     borderColor: '#2db400',
+      //     borderWidth: 5,
+      //     anchorSkew: true,
+      //     anchorColor: '#eee',
+      //   };
+      //   const info = addNaverMapMarkerInfo(
+      //     map,
+      //     marker,
+      //     markerInfoString,
+      //     markerInfoStyle
+      //   );
 
-        // 네이버지도 마커 클릭시 호출할 함수.
-        const onClickMarker = (e) => {
-          if (info.getMap()) {
-            info.close();
-          } else {
-            info.open(map, marker);
-          }
-        };
-      });
+      //   // 네이버지도 마커 클릭시 호출할 함수.
+      //   const onClickMarker = (e) => {
+      //     if (info.getMap()) {
+      //       info.close();
+      //     } else {
+      //       info.open(map, marker);
+      //     }
+      //   };
+      // });
 
       getCourseAuthor(courseDetail.authorId, setAuthor);
       getCourseAverageRate(
@@ -201,7 +200,7 @@ function CourseDetailForm() {
       );
       getCourseLikeCount(id, setCourseLikeCount);
     }
-  }, [courseDetail]);
+  }, []);
 
   return (
     courseDetail && (
@@ -313,7 +312,7 @@ function CourseDetailForm() {
                 }
               />
             ))}
-          {isLoading ? <Loading /> : null}
+          {courseReviews[0] && isLoading ? <Loading /> : null}
           <div ref={observedTarget} style={{ paddingBottom: '10rem' }}></div>
         </UtilDiv>
         <ToTopBtn />
