@@ -511,8 +511,7 @@ export const withdrawUser = (
     .then((response) => {
       localStorage.removeItem('token');
       setIsLoggedIn(false);
-      alert('회원 탈퇴하였습니다.');
-      navigate('/');
+      navigate('/withdrawal-message');
     })
     .catch((error) => {
       new Error(error);
