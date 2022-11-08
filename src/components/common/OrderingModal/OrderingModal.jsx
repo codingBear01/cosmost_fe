@@ -30,6 +30,7 @@ function OrderingModal() {
 
   const onClickSetSearchingType = (type) => {
     setSearchingType(type);
+    navigate(`/courses/${type}`);
   };
 
   /* Variables */
