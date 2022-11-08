@@ -41,5 +41,5 @@ export const queryStringsStateAtom = atom({
 
 export const searchingTypeAtom = atom({
   key: 'searchingTypeAtom',
-  default: 'all',
+  default: 'search',
 });

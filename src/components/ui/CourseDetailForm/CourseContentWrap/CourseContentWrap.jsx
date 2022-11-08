@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { searchingTypeAtom } from '../../../../store';
 /* components */
 import * as S from './styled';
 import { CourseContent } from '..';
@@ -40,6 +43,7 @@ function CourseContentWrap({
   const [isFollowed, setIsFollowed] = useState([]);
   const [isFollowedChanged, setIsFollowedChanged] = useState(false);
   const [authorsFollowersCount, setAuthorsFollowersCount] = useState(null);
+  const [, setSearchingType] = useRecoilState(searchingTypeAtom);
   /* Variables */
   const courseAverageRateGaugeWidth =
     courseAverageRatePercentage && courseAverageRatePercentage.reverse();
@@ -294,6 +298,7 @@ function CourseContentWrap({
               <Link
                 key={item.id}
                 to={`/courses/hashtag?keyword=${item.keyword}`}
+                onClick={() => setSearchingType('search')}
               >
                 <CourseContent>
                   <p>{`#${item.keyword}`}</p>

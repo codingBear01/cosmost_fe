@@ -1,45 +1,27 @@
 /* libraries */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import {
-  isOrderingModalOpenedAtom,
-  isLoadingAtom,
-  queryStringsStateAtom,
-  searchingTypeAtom,
-} from '../../../store';
+import { isOrderingModalOpenedAtom, searchingTypeAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Course, SelectingCategoryArea } from '.';
-import {
-  OrderingButton,
-  ToTopBtn,
-  UtilDiv,
-  Loading,
-  OrderingModal,
-} from '../..';
+import { OrderingButton, ToTopBtn, UtilDiv, OrderingModal } from '../..';
+/* static data */
+import { COLOR_LIST as color } from '../../../style';
 
 function CoursesForm() {
-  // const token = localStorage.getItem('token');
-  const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
+  const token = localStorage.getItem('token');
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
   );
-  const [isLoading, setIsLoading] = useRecoilState(isLoadingAtom);
   const [courses, setCourses] = useState([]);
   const [isLastPage, setIsLastPage] = useState(false);
   const [categoryId, setCategoryId] = useState(null);
   const [courseSortType, setCourseSortType] = useState('최신순');
-  // const [searchingType, setsearchingType] = useState('all');
   const [searchingType, setSearchingType] = useRecoilState(searchingTypeAtom);
-
-  // 쿼리값이 변경되어 useEffect가 호출되면 변경되는 상태들
-  const [queryStringsState, setQueryStringsState] = useRecoilState(
-    queryStringsStateAtom
-  );
 
   const page = useRef(0);
   const observedTarget = useRef(null);
@@ -59,55 +41,53 @@ function CoursesForm() {
     searchingType
   ) => {
     let url;
-    // debugger;
-    if (
-      (type === 'keyword' &&
-        (searchingType === 'all' || searchingType === 'search')) ||
-      type === 'hashtag'
-    ) {
-      url = `${
-        process.env.REACT_APP_API
-      }/cosmosts?${type}=${searchKeyword}&sort=${
-        type === 'keyword' ? 'course' : 'id'
-      },desc&page=${page.current}&size=4`;
+    console.log('type', type);
+    console.log('searchingType', searchingType);
+    if (type === 'all') {
+      url = `${process.env.REACT_APP_API}/cosmosts?filter=all&sort=id,desc&page=${page.current}&size=4`;
     }
-    if (type === 'all' || type === 'auth') {
-      switch (queryStrings.get('sort')) {
-        // 평점 순 정렬
-        case 'rate':
-          url = `${process.env.REACT_APP_API}/view/ranking/rate?page=${page.current}&size=4`;
-          break;
-        case 'like':
-          url = `${process.env.REACT_APP_API}/view/ranking/popularity?page=${page.current}&size=4`;
-          break;
-        // 그 외의 정렬
-        default:
-          url = `${process.env.REACT_APP_API}/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
-          break;
-      }
+    if (searchingType === 'popular' || searchingType === 'rate') {
+      url = `${process.env.REACT_APP_API}/view/ranking/${
+        type === 'popular' ? 'popularity' : 'rate'
+      }?page=${page.current}&size=4`;
+    }
+    if (type === 'mine' || type === 'likes') {
+      console.log(type === 'mine' ? 'mine' : 'likes');
+      url = `
+      ${
+        type === 'mine'
+          ? `${process.env.REACT_APP_API}/cosmosts?filter=auth&page=${page.current}&size=4`
+          : `${process.env.REACT_APP_API}/popularities?type=cosmost&sort=id,desc&page=${page.current}&size=4`
+      }`;
     }
     if (searchingType === 'location' || searchingType === 'theme') {
       url = `${process.env.REACT_APP_API}/cosmosts?category=${searchingType}&name-id=${categoryNumber}&sort=id,desc&page=${page.current}&size=4`;
     }
     if (
-      (type === 'keyword' && searchingType === 'location') ||
-      (type === 'keyword' && searchingType === 'theme')
+      (searchingType === 'search' && type === 'keyword') ||
+      (searchingType === 'search' && type === 'hashtag')
     ) {
-      url = `${process.env.REACT_APP_API}/cosmosts?keyword=${searchKeyword}&category=${searchingType}&name-id=${categoryNumber}&size=4&page=${page.current}&sort=course,desc`;
+      url = `${process.env.REACT_APP_API}/cosmosts?${
+        type === 'keyword' ? 'keyword' : 'hashtag'
+      }=${searchKeyword}&sort=${
+        type === 'keyword' ? 'course' : 'id'
+      },desc&page=${page.current}&size=4`;
     }
-    if (type === 'likes') {
-      url = `${process.env.REACT_APP_API}/popularities?type=cosmost&sort=id,desc&page=${page.current}&size=4`;
+    if (
+      (searchingType === 'location' && type === 'keyword') ||
+      (searchingType === 'theme' && type === 'keyword')
+    ) {
+      url = `${process.env.REACT_APP_API}/cosmosts?keyword=${searchKeyword}&category=${searchingType}&name-id=${categoryNumber}&sort=course,desc&page=${page.current}&size=4'`;
     }
 
-    console.log(type);
     return url;
   };
 
   /* APIs */
   /** params에 따라 다른 코스를 가져오는 api */
+
   const getCourses = useCallback(
     async (type, searchKeyword, categoryNumber, searchingType) => {
-      setIsLoading(true);
       try {
         const url = returnUrlForGettingCourses(
           type,
@@ -119,7 +99,7 @@ function CoursesForm() {
         if (!url) return;
 
         const config =
-          type === 'auth' || type === 'likes'
+          type === 'mine' || type === 'likes'
             ? {
                 headers: {
                   Authorization: token,
@@ -128,35 +108,18 @@ function CoursesForm() {
               }
             : { timeout: 3000 };
 
-        // while (1) {
-        //   const url = returnUrlForGettingCourses(
-        //     type,
-        //     searchKeyword,
-        //     categoryNumber,
-        //     searchingType
-        //   );
-        //   console.log("url", url);
-        //   console.log("isLastPage", isLastPage);
-        //   const result = await axios.get(url, config);
-        //   data = result.data;
-        //   if (data.length !== 0 || isLastPage) {
-        //     break;
-        //   }
-        //   page.current += 1;
-        // }
-
         const result = await axios.get(url, config);
         const { data } = result;
-        console.log(url);
-        console.log(data);
+        console.log('url', url);
+        console.log('config', config);
+        console.log('data', data);
 
-        if (data.length == 0) {
-          data.push({ whetherLastPage: false });
+        if (data.length === 0) {
+          data.push({ whetherLastPage: true });
         }
 
         setCourses((prev) => prev.concat(data));
         setIsLastPage(data[data.length - 1].whetherLastPage);
-        setIsLoading(false);
 
         if (!isLastPage) {
           page.current += 1;
@@ -165,32 +128,37 @@ function CoursesForm() {
         new Error(error);
       }
     },
-    [page.current, queryStrings]
+    [page.current, params.type, courses]
   );
 
   //정렬 표시
   useEffect(() => {
-    const sortQuery = queryStrings.get('sort');
-    switch (sortQuery) {
+    switch (searchingType) {
       case 'rate':
         setCourseSortType('평점 높은 순');
         break;
-      case 'like':
+      case 'popular':
         setCourseSortType('좋아요 많은 순');
         break;
       default:
         setCourseSortType('최신순');
         break;
     }
-  }, [queryStrings]);
+  }, [searchingType]);
 
   /** 쿼리스트링이 변경될 때마다 호출되는 useEffect. IsLastPage와 Course State를 초기화한다.*/
   useEffect(() => {
     setCourses([]);
     setIsLastPage(false);
-    setQueryStringsState(!queryStringsState);
     page.current = 0;
-  }, [queryStrings]);
+    // setQueryStringsState(!queryStringsState);
+  }, [
+    params.type,
+    categoryId,
+    searchingType,
+    queryStrings.get('keyword'),
+    searchingType,
+  ]);
 
   /** 무한 스크롤을 위해 observing을 하는 함수 */
   useEffect(() => {
@@ -209,7 +177,15 @@ function CoursesForm() {
     io.observe(observedTarget.current);
 
     return () => io.disconnect();
-  }, [page.current, queryStrings]);
+  }, [
+    // page.current,
+    params.type,
+    categoryId,
+    searchingType,
+    queryStrings.get('keyword'),
+    searchingType,
+    courses,
+  ]);
 
   return (
     <>
@@ -217,7 +193,7 @@ function CoursesForm() {
       <OrderingModal />
       <UtilDiv width={'76.8rem'} padding={'9rem 0 7rem'} margin={'0 auto'}>
         {/* 카테고리 선택 영역 */}
-        {params.type !== 'auth' && params.type !== 'likes' ? (
+        {params.type === 'all' || params.type === 'keyword' ? (
           <SelectingCategoryArea
             setCategoryId={setCategoryId}
             setSearchingType={setSearchingType}
@@ -225,20 +201,34 @@ function CoursesForm() {
         ) : (
           <></>
         )}
+        {params.type === 'keyword' || params.type === 'hashtag' ? (
+          <h1 style={{ alignSelf: 'start', marginLeft: '3rem' }}>
+            <span style={{ color: `${color.lightBlue}`, fontSize: '3rem' }}>
+              '{params.type === 'hashtag' && '#'}
+              {queryStrings.get('keyword')}'
+            </span>
+            에 대한 검색 결과
+          </h1>
+        ) : (
+          <></>
+        )}
         {/* 정렬 기준 버튼 */}
-        {searchingType === 'all' && (
+        {(params.type === 'all' && searchingType === 'all') ||
+        (params.type === 'all' && searchingType === 'search') ||
+        (params.type === 'popular' && searchingType === 'popular') ||
+        (params.type === 'rate' && searchingType === 'rate') ? (
           <OrderingButton
             onClick={onClickOpenOrderingModal}
             sortType={courseSortType}
           />
+        ) : (
+          <></>
         )}
         {/* 코스 검색 결괏값 */}
         <S.SearchedCourseContainer>
-          {(params.type === 'keyword' && !courses[0]) ||
-          (params.type === 'hashtag' && !courses[0]) ? (
+          {(params.type === 'keyword' && !courses[0]?.courseTitle) ||
+          (params.type === 'hashtag' && !courses[0]?.courseTitle) ? (
             <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
-          ) : !courses[0] ? (
-            <h1>카테고리를 선택해주세요.</h1>
           ) : (
             <></>
           )}
@@ -250,7 +240,6 @@ function CoursesForm() {
                 courseId={course.id || course.courseId}
               />
             ))}
-          {/* {!courses[0] && <h1>카테고리를 선택해주세요.</h1>} */}
         </S.SearchedCourseContainer>
         <div ref={observedTarget}></div>
         <ToTopBtn />
