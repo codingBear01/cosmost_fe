@@ -42,7 +42,6 @@ function LoginForm() {
 
     if (!checkIdAndPassword()) return;
 
-    // const url = `${process.env.REACT_APP_AUTH_IP}/v1/signin`;
     const url = `${process.env.REACT_APP_API}/signin`;
     const body = {
       loginId: idRef.current.value,
@@ -50,8 +49,6 @@ function LoginForm() {
     };
     const config = { timeout: 3000 };
 
-    //testId1001
-    //testPwd1001
     axios
       .put(url, body, config)
       .then((response) => {
@@ -64,31 +61,6 @@ function LoginForm() {
         toast.error('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');
       });
   };
-
-  /* 네이버 로그인 핸들러 */
-  const onClickLoginWithNaver = () => {
-    navigate('/naver/email-validation');
-
-    // // const url = `${process.env.REACT_APP_AUTH_IP}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
-    // const url = `${process.env.REACT_APP_API}/oauth2/authorization/naver?redirect_uri=http://localhost:9001/login/oauth2/code/social`;
-    // const config = {
-    //   headers: {
-    //     Authorization: 'token',
-    //   },
-    //   timeout: 3000,
-    // };
-    // console.log('naver');
-  };
-
-  useEffect(() => {
-    // var naver_id_login = new window.naver_id_login(process.env.REACT_APP_X_NAVER_CLIENT_ID, "http://localhost:3000");
-    // var state = naver_id_login.getUniqState();
-    // naver_id_login.setButton("white", 2,40);
-    // naver_id_login.setDomain("http://localhost:3000");
-    // naver_id_login.setState(state);
-    // // naver_id_login.setPopup();
-    // naver_id_login.init_naver_id_login();
-  }, []);
 
   return (
     <UtilForm
@@ -157,7 +129,7 @@ function LoginForm() {
           아이디 찾기
         </S.LoginServiceLink>
       </S.LoginFindWrap>
-      {/* 회원가입 및 SNS 로그인 버튼들 */}
+      {/* 회원가입 버튼 */}
       <Link to="/email-validation">
         <Button
           type="button"
@@ -171,21 +143,6 @@ function LoginForm() {
           <span>일반 회원가입</span>
         </Button>
       </Link>
-      <div id="naver_id_login">
-        <Button
-          type="button"
-          width={'340px'}
-          height={'40px'}
-          margin={'0 0 10px 0'}
-          fontSize={'20px'}
-          color={color.white}
-          bgColor={color.naverGreen}
-          hoveredBgColor={color.naverDarkGreen}
-          onClick={onClickLoginWithNaver}
-        >
-          <SiIcons.SiNaver />
-        </Button>
-      </div>
     </UtilForm>
   );
 }
