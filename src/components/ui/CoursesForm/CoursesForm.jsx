@@ -187,8 +187,6 @@ function CoursesForm() {
     courses,
   ]);
 
-  console.log(courses);
-
   return (
     <>
       {/* 정렬 기준 모달 */}

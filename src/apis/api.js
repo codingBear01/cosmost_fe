@@ -610,7 +610,7 @@ export const deleteCourse = (id, navigate, toast, token) => {
   axios
     .delete(url, config)
     .then((response) => {
-      navigate(-1);
+      navigate('/');
     })
     .catch((error) => {
       new Error(error);
