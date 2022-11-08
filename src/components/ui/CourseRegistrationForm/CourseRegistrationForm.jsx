@@ -1141,17 +1141,16 @@ function CourseRegistrationForm() {
 
     if (location.state) {
       const url = `${process.env.REACT_APP_API}/cosmosts/${location.state.id}`;
-      console.log(url);
-      console.log(config);
+      console.log('수정');
       axios
         .put(url, formData, config)
         .then((response) => {
-          console.log('수정');
-          // navigate(`/course-detail/${location.state.id}`);
+          navigate(`/course-detail/${location.state.id}`);
         })
         .catch((error) => new Error(error));
       return;
     } else {
+      console.log('등록');
       const url = `${process.env.REACT_APP_API}/cosmosts`;
       axios
         .post(url, formData, config)
@@ -1592,7 +1591,8 @@ function CourseRegistrationForm() {
           hoveredBgColor={color.navy}
           onClick={onClickRegisterCourse}
         >
-          등록
+          {location.state && '수정'}
+          {!location.state && '등록'}
         </Button>
       </S.CourseRegistrationButtonWrap>
     </UtilDiv>
