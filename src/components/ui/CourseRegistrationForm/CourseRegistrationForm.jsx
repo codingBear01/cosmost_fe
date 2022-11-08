@@ -1169,13 +1169,13 @@ function CourseRegistrationForm() {
       const url = `${process.env.REACT_APP_API}/cosmosts/${location.state.id}`;
       console.log('수정');
       console.log(formData);
-      // axios
-      //   .put(url, formData, config)
-      //   .then((response) => {
-      //     navigate(`/course-detail/${location.state.id}`);
-      //   })
-      //   .catch((error) => new Error(error));
-      // return;
+      axios
+        .put(url, formData, config)
+        .then((response) => {
+          navigate(`/course-detail/${location.state.id}`);
+        })
+        .catch((error) => new Error(error));
+      return;
     } else {
       const url = `${process.env.REACT_APP_API}/cosmosts`;
       axios
