@@ -293,12 +293,13 @@ function CourseRegistrationForm() {
 
     //코스이미지를 기존에 등록한 코스 이미지로 업데이트
     let placeImgListTemp = Object.assign({}, registeredCourseImgState);
-    beforeCourseInfo.placeImgList.map((item, index) => {
-      placeImgListTemp = {
-        ...placeImgListTemp,
-        ['imgSrc' + index]: `url(${item.placeImgUrl})`,
-      };
-    });
+    beforeCourseInfo.placeImgList.map(
+      (item, index) =>
+        (placeImgListTemp = {
+          ...placeImgListTemp,
+          ['imgSrc' + index]: `url(${item.placeImgUrl})`,
+        })
+    );
     setRegisteredCourseImgState(placeImgListTemp);
 
     //코스 설명과 코스 제목을 기존에 등록한 코스 설명으로 업데이트
@@ -311,10 +312,10 @@ function CourseRegistrationForm() {
 
     beforeCourseInfo.hashtagList.map((item, index) => {
       tempAddHashTags[index] = item.keyword;
-      hashtagListTemp = {
+      return (hashtagListTemp = {
         ...hashtagListTemp,
         addHashTags: tempAddHashTags,
-      };
+      });
     });
     setHashTagAdd(hashtagListTemp);
 
@@ -706,7 +707,6 @@ function CourseRegistrationForm() {
         SetNaverMapState({ ...naverMapState, naverMapMarker: mapMarkerCopy });
       })
       .catch((error) => {
-        console.log(error);
         toast.error(
           '네이버 검색 API와의 통신이 실패했습니다. 관리자에게 문의해주세요'
         );
@@ -968,6 +968,10 @@ function CourseRegistrationForm() {
       inputHashTag: hashTagAdd.inputHashTag,
       addHashTags: tempAddHashTags,
     });
+    setHashTagAdd((prev) => ({
+      inputHashTag: '',
+      addHashTags: prev.addHashTags,
+    }));
   };
 
   // 사용자가 장소에 대한 코멘트를 입력했을 때 호출되는 핸들러
@@ -1015,7 +1019,6 @@ function CourseRegistrationForm() {
     return true;
   };
 
-  console.log('location.state', location.state);
   // 사용자가 코스 등록 버튼을 클릭할 때 호출되는 핸들러
   const onClickRegisterCourse = (e) => {
     const formData = new FormData();
@@ -1059,7 +1062,8 @@ function CourseRegistrationForm() {
             location.state.placeDetailList[index].placeXCoordinate,
           placeYCoordinate:
             location.state.placeDetailList[index].placeYCoordinate,
-          placeOrder: location.state.placeDetailList[index].placeOrder,
+          placeOrder:
+            location.state.placeDetailList[index].placeOrder.toString(),
           placeComment: location.state.placeDetailList[index].placeComment,
         };
       });
@@ -1110,8 +1114,8 @@ function CourseRegistrationForm() {
         courseTitle: courseTitleRef.current.value,
         courseComment: courseDescriptonRef.current.value,
         courseStatus: location.state.courseStatus,
-        updatedPlaceDetailRequestList,
-        updatedHashtagRequestList,
+        createPlaceDetailRequestList: updatedPlaceDetailRequestList,
+        createHashtagRequestList: updatedHashtagRequestList,
         updateCategoryListRequestList,
 
         createPlaceImgRequestList: createPlaceImgRequestListState,
@@ -1167,8 +1171,16 @@ function CourseRegistrationForm() {
 
     if (location.state) {
       const url = `${process.env.REACT_APP_API}/cosmosts/${location.state.id}`;
-      console.log('수정');
-      console.log(formData);
+
+      console.log('hashtags', hashTagAdd);
+      // console.log('수정');
+      // console.log('token', token);
+      // console.log('config', config);
+      // console.log('sendData', sendData);
+      // console.log('url', url);
+      // console.log(updatedPlaceDetailRequestList);
+      // console.log(updatedHashtagRequestList);
+
       axios
         .put(url, formData, config)
         .then((response) => {
@@ -1541,6 +1553,7 @@ function CourseRegistrationForm() {
               height={'3rem'}
               margin={'0 2rem 0 0'}
               fontSize={fs.m}
+              value={hashTagAdd.inputHashTag}
               onChange={onChangeHashTag}
             />
             <Button

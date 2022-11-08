@@ -1,6 +1,6 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef } from 'react';
 /* components */
-import * as S from "./styled";
+import * as S from './styled';
 
 const Input = forwardRef(
   (
@@ -18,6 +18,7 @@ const Input = forwardRef(
       onChange,
       onKeyDown,
       required,
+      style,
     },
     ref
   ) => {
@@ -37,6 +38,7 @@ const Input = forwardRef(
         onChange={onChange}
         onKeyDown={onKeyDown}
         required={required}
+        style={style}
       />
     );
   }

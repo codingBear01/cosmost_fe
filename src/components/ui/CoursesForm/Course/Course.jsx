@@ -25,8 +25,6 @@ function Course({ course, courseId }) {
   const [courseLikeCount, setCourseLikeCount] = useState('');
   const [, setSearchingType] = useRecoilState(searchingTypeAtom);
 
-  console.log('courseId', courseId);
-
   /* APIs */
   useEffect(() => {
     if (course) {

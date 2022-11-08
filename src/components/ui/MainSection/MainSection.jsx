@@ -9,29 +9,10 @@ import { MainContentWrap, MainCourse, MainTextWrap } from '.';
 import { Section } from '../..';
 /* icons */
 import * as FaIcons from 'react-icons/fa';
-import { useEffect } from 'react';
+
 function MainPageSection() {
   const token = localStorage.getItem('token');
   const [isLoggedIn] = useRecoilState(loginStateAtom);
-
-  //네이버 로그인 토큰 받기
-  useEffect(() => {
-    // var naver_id_login = new window.naver_id_login(process.env.REACT_APP_X_NAVER_CLIENT_ID, "http://localhost:3000");
-    // if(naver_id_login.oauthParams.access_token){
-    //   alert(naver_id_login.oauthParams.access_token);
-    //   console.log(naver_id_login);
-    //   console.log(naver_id_login.getProfileData('nickname'));
-    //   console.log(naver_id_login.getProfileData('email'));
-    //   console.log(naver_id_login.getProfileData('age'));
-    //   naver_id_login.get_naver_userprofile("naverSignInCallback()");
-    //   function naverSignInCallback() {
-    //     var naver_id_login = new window.naver_id_login(process.env.REACT_APP_X_NAVER_CLIENT_ID, "http://localhost:3000");
-    //     alert(naver_id_login.getProfileData('email'));
-    //     alert(naver_id_login.getProfileData('nickname'));
-    //     alert(naver_id_login.getProfileData('age'));
-    //  }
-    // }
-  }, []);
 
   return (
     <Section height={'100vh'} paddingBottom={'7rem'}>

@@ -25,8 +25,6 @@ function InputDetailAddressForm({ state }) {
   const isNaverAddressPage = path.includes('naver');
   const navigate = useNavigate();
 
-  console.log(isEditAddressPage);
-
   const [detailAddress, setDetailAddress] = useState('');
 
   /* Handlers */
@@ -43,7 +41,6 @@ function InputDetailAddressForm({ state }) {
     }
   };
 
-  console.log('path', path);
   return (
     <UtilForm>
       <ToastContainer

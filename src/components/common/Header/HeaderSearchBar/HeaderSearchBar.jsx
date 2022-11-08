@@ -46,14 +46,15 @@ function HeaderSearchBar({
         <BsIcons.BsSearch />
       </Icon>
       <Input
-        type="search"
+        type="text"
         placeholder="키워드를 입력하세요."
         width={'60rem'}
-        height={'2.5rem'}
+        height={'5rem'}
         margin={'0 2rem'}
         value={searchKeyword}
         onChange={onChangeSearchInput}
         onKeyDown={handleSearchKeyword}
+        style={{ alignSelf: 'end' }}
       />
       <Icon onClick={onClickOpenSearchBar}>
         <AiIcons.AiOutlineClose />

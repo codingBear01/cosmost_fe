@@ -213,14 +213,13 @@ function InputEmailForm({ beforeEditUserInfo }) {
     }
   };
 
-  /* 사용자가 입력한 인증번호가 진짜 인증번호인지 검증하는 핸들러 */
+  /** 사용자가 입력한 인증번호가 진짜 인증번호인지 검증하는 핸들러 */
   const onClickCompareCertificationNumber = (e) => {
     e.preventDefault();
 
     if (!checkInput(e, 'number')) return;
 
     const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
-    console.log('url', url);
 
     // 이메일 변경을 목적으로 보낸 경우 인증번호 검증
     if (
@@ -252,7 +251,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
         .then((response) => {})
         .catch((error) => {
           new Error(error);
-          console.log(error);
           toast.error('인증번호 검증에 실패했습니다.');
         });
     }
@@ -301,7 +299,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
         })
         .catch((error) => {
           new Error(error);
-          console.log(error);
           toast.error(
             '인증번호 검증을 할 수 없는 상태입니다. 관리자에게 문의하세요.'
           );
@@ -349,8 +346,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
     formData.append('updateAuthRequest', updateBodyBlob);
     formData.append('file', profilePictureBlob);
-
-    console.log('updateBody2', updateBody2);
 
     axios
       .put(url, formData, config)

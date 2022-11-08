@@ -61,8 +61,6 @@ function WithdrawUserForm({ beforeEditUserInfo }) {
     }
   }, [isDeleteConfirmationMessageDisplayed]);
 
-  console.log('beforeEditUserInfo', beforeEditUserInfo);
-
   return (
     <>
       <ToastContainer

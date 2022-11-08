@@ -13,6 +13,7 @@ export const StyledCourseContentWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: ${({ justifyContent }) => justifyContent};
+  flex-wrap: ${({ flexWrap }) => flexWrap};
   width: 100%;
   padding: 2rem 1rem;
   border-bottom: 1px solid ${color.white};

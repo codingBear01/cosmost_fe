@@ -76,11 +76,9 @@ function HistoriesForm({ isReportHistoryPage }) {
         },
         timeout: 3000,
       };
-      console.log(url);
 
       const result = await axios.get(url, config);
       const { data } = result;
-      console.log('data', data);
 
       isReportHistoryPage
         ? setMyReports((prev) => prev.concat(data))

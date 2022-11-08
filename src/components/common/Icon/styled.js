@@ -11,10 +11,10 @@ export const StyledHeaderIcon = styled.button`
   height: 2.5rem;
   margin: auto 0;
   margin-right: ${({ marginRight }) => marginRight};
-  font-size: 2.5rem;
   color: ${color.white};
 
   svg {
     margin-right: 0;
+    font-size: 20px;
   }
 `;

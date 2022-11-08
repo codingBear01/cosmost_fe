@@ -794,7 +794,6 @@ export const deleteCourseReview = (
   axios
     .delete(url, config)
     .then((response) => {
-      console.log(response);
       setIsDisplayed(false);
     })
     .catch((error) => {
@@ -809,8 +808,10 @@ export const deleteCourseReview = (
  *  thenCallback : 값을 가져오는 데 성공할 시 호출할 콜백함수
  *  errorCallback : 값을 가져오는 데 실패할 시 호출할 콜백함수
  */
-export const getCourseAverageRate = (courseID, thenCallback, errorCallback) => {
-  const url = `${process.env.REACT_APP_API}/view?rate=average&course=${courseID}`;
+export const getCourseAverageRate = (courseId, thenCallback, errorCallback) => {
+  if (!courseId) return;
+
+  const url = `${process.env.REACT_APP_API}/view?rate=average&course=${courseId}`;
   const config = {
     timeout: 3000,
   };
@@ -822,8 +823,10 @@ export const getCourseAverageRate = (courseID, thenCallback, errorCallback) => {
  *  courseID : 코스 ID를 나타내는 Number
  *  setState : 업데이트해줄 함수
  */
-export const getCourseLikeCount = (courseID, setState) => {
-  const url = `${process.env.REACT_APP_API}/popularities/${courseID}?filter=count&type=cosmost`;
+export const getCourseLikeCount = (courseId, setState) => {
+  if (!courseId) return;
+
+  const url = `${process.env.REACT_APP_API}/popularities/${courseId}?filter=count&type=cosmost`;
   const config = {
     timeout: 3000,
   };
@@ -1189,7 +1192,6 @@ export const updateReport = (
   axios
     .put(url, body, config)
     .then((response) => {
-      console.log(response);
       setIsHistoriesChanged(!isHistoriesChanged);
       setIsReportFormOpened(!isReportFormOpened);
       window.location.replace(`/user/${report.reporterId}/report-histories`);

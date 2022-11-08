@@ -41,8 +41,7 @@ function CoursesForm() {
     searchingType
   ) => {
     let url;
-    console.log('type', type);
-    console.log('searchingType', searchingType);
+
     if (type === 'all') {
       url = `${process.env.REACT_APP_API}/cosmosts?filter=all&sort=id,desc&page=${page.current}&size=4`;
     }
@@ -52,7 +51,6 @@ function CoursesForm() {
       }?page=${page.current}&size=4`;
     }
     if (type === 'mine' || type === 'likes') {
-      console.log(type === 'mine' ? 'mine' : 'likes');
       url = `
       ${
         type === 'mine'
@@ -110,9 +108,6 @@ function CoursesForm() {
 
         const result = await axios.get(url, config);
         const { data } = result;
-        console.log('url', url);
-        console.log('config', config);
-        console.log('data', data);
 
         if (data.length === 0) {
           data.push({ whetherLastPage: true });

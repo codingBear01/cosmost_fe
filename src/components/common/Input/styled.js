@@ -13,7 +13,7 @@ export const StyledInput = styled.input`
   background: transparent;
   border-bottom: 1px solid ${color.white};
   outline: none;
-  font-size: ${({ fontSize }) => (fontSize ? fontSize : `${fs.s}`)};
+  font-size: 14px;
   color: ${color.white};
 
   &::placeholder {

@@ -23,6 +23,7 @@ import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../../style';
 function CourseContentWrap({
   justifyContent,
   height,
+  flexWrap,
   courseDetail,
   dataCategory,
   authorCourseCount,
@@ -76,7 +77,11 @@ function CourseContentWrap({
 
   return (
     // dataCategory에 따라 다른 컴포넌트 렌더링됨
-    <S.StyledCourseContentWrap justifyContent={justifyContent} height={height}>
+    <S.StyledCourseContentWrap
+      justifyContent={justifyContent}
+      height={height}
+      flexWrap={flexWrap}
+    >
       {dataCategory === 'likeAndReview' ? (
         // 좋아요, 리뷰 숫자
         <>
@@ -289,6 +294,7 @@ function CourseContentWrap({
                 key={item.id}
                 to={`/courses/hashtag?keyword=${item.keyword}`}
                 onClick={() => setSearchingType('search')}
+                style={{ marginTop: '1rem' }}
               >
                 <CourseContent>
                   <p>{`#${item.keyword}`}</p>
