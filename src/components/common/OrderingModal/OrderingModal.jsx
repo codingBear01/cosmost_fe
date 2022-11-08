@@ -29,8 +29,7 @@ function OrderingModal() {
   };
 
   const onClickSetSearchingType = (type) => {
-    setSearchingType('all');
-    navigate(`/courses/${type}`);
+    setSearchingType(type);
   };
 
   /* Variables */

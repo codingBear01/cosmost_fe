@@ -20,12 +20,9 @@ import {
   Loading,
   OrderingModal,
 } from '../..';
-import { MdMail } from 'react-icons/md';
 
 function CoursesForm() {
-  // const token = localStorage.getItem('token');
-  const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzM4ODU3MSwiZXhwIjozNzY2NzM4ODU3MX0.cO_Te3glaePLtb3-VZr_XfpM-zJbN7_JUxPfjA3zWYo';
+  const token = localStorage.getItem('token');
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(
     isOrderingModalOpenedAtom
   );
@@ -60,55 +57,49 @@ function CoursesForm() {
     let url;
     console.log('type', type);
     console.log('searchingType', searchingType);
-    if (type === 'all' && searchingType === 'all') {
+    if (searchingType === 'all') {
       url = `${process.env.REACT_APP_API}/cosmosts?filter=all&sort=id,desc&page=${page.current}&size=4`;
     }
-    // if (type === 'all' && searchingType === 'all'){}
-
-    // if (
-    //   (type === 'keyword' &&
-    //     (searchingType === 'all' || searchingType === 'search')) ||
-    //   type === 'hashtag'
-    // ) {
-    //   url = `${
-    //     process.env.REACT_APP_API
-    //   }/cosmosts?${type}=${searchKeyword}&sort=${
-    //     type === 'keyword' ? 'course' : 'id'
-    //   },desc&page=${page.current}&size=4`;
-    // }
-    // if (type === 'all' || type === 'auth') {
-    //   switch (queryStrings.get('sort')) {
-    //     // 평점 순 정렬
-    //     case 'rate':
-    //       url = `${process.env.REACT_APP_API}/view/ranking/rate?page=${page.current}&size=4`;
-    //       break;
-    //     case 'like':
-    //       url = `${process.env.REACT_APP_API}/view/ranking/popularity?page=${page.current}&size=4`;
-    //       break;
-    //     // 그 외의 정렬
-    //     default:
-    //       url = `${process.env.REACT_APP_API}/cosmosts?filter=${type}&sort=id,desc&page=${page.current}&size=4`;
-    //       break;
-    //   }
-    // }
-    // if (searchingType === 'location' || searchingType === 'theme') {
-    //   url = `${process.env.REACT_APP_API}/cosmosts?category=${searchingType}&name-id=${categoryNumber}&sort=id,desc&page=${page.current}&size=4`;
-    // }
-    // if (
-    //   (type === 'keyword' && searchingType === 'location') ||
-    //   (type === 'keyword' && searchingType === 'theme')
-    // ) {
-    //   url = `${process.env.REACT_APP_API}/cosmosts?keyword=${searchKeyword}&category=${searchingType}&name-id=${categoryNumber}&size=4&page=${page.current}&sort=course,desc`;
-    // }
-    // if (type === 'likes') {
-    //   url = `${process.env.REACT_APP_API}/popularities?type=cosmost&sort=id,desc&page=${page.current}&size=4`;
-    // }
+    if (searchingType === 'popular' || searchingType === 'rate') {
+      url = `${process.env.REACT_APP_API}/view/ranking/${
+        type === 'popular' ? 'popularity' : 'rate'
+      }?page=${page.current}&size=4`;
+    }
+    if (type === 'mine' || type === 'likes') {
+      console.log(type === 'mine' ? 'mine' : 'likes');
+      url = `
+      ${
+        type === 'mine'
+          ? `${process.env.REACT_APP_API}/cosmosts?filter=auth&page=${page.current}&size=4`
+          : `${process.env.REACT_APP_API}/popularities?type=cosmost&sort=id,desc&page=${page.current}&size=4`
+      }`;
+    }
+    if (searchingType === 'location' || searchingType === 'theme') {
+      url = `${process.env.REACT_APP_API}/cosmosts?category=${searchingType}&name-id=${categoryNumber}&sort=id,desc&page=${page.current}&size=4`;
+    }
+    if (
+      (searchingType === 'search' && type === 'keyword') ||
+      (searchingType === 'search' && type === 'hashtag')
+    ) {
+      url = `${process.env.REACT_APP_API}/cosmosts?${
+        type === 'keyword' ? 'keyword' : 'hashtag'
+      }=${searchKeyword}&sort=${
+        type === 'keyword' ? 'course' : 'id'
+      },desc&page=${page.current}&size=4`;
+    }
+    if (
+      (searchingType === 'location' && type === 'keyword') ||
+      (searchingType === 'theme' && type === 'keyword')
+    ) {
+      url = `${process.env.REACT_APP_API}/cosmosts?keyword=${searchKeyword}&category=${searchingType}&name-id=${categoryNumber}&sort=course,desc&page=${page.current}&size=4'`;
+    }
 
     return url;
   };
 
   /* APIs */
   /** params에 따라 다른 코스를 가져오는 api */
+
   const getCourses = useCallback(
     async (type, searchKeyword, categoryNumber, searchingType) => {
       try {
@@ -151,28 +142,29 @@ function CoursesForm() {
         const result = await axios.get(url, config);
         const { data } = result;
         console.log('url', url);
+        console.log('config', config);
         console.log('data', data);
 
-        // if (data.length == 0) {
-        //   data.push({ whetherLastPage: false });
-        // }
+        if (data.length === 0) {
+          data.push({ whetherLastPage: true });
+        }
 
-        // setCourses((prev) => prev.concat(data));
-        // setIsLastPage(data[data.length - 1].whetherLastPage);
+        setCourses((prev) => prev.concat(data));
+        setIsLastPage(data[data.length - 1].whetherLastPage);
 
-        // if (!isLastPage) {
-        //   page.current += 1;
-        // }
+        if (!isLastPage) {
+          page.current += 1;
+        }
       } catch (error) {
         new Error(error);
       }
     },
-    [page.current, params.type, categoryId, searchingType]
+    [page.current, params.type, courses]
   );
 
   //정렬 표시
   useEffect(() => {
-    switch (params.type) {
+    switch (searchingType) {
       case 'rate':
         setCourseSortType('평점 높은 순');
         break;
@@ -186,12 +178,18 @@ function CoursesForm() {
   }, [params.type]);
 
   /** 쿼리스트링이 변경될 때마다 호출되는 useEffect. IsLastPage와 Course State를 초기화한다.*/
-  // useEffect(() => {
-  //   setCourses([]);
-  //   setIsLastPage(false);
-  //   setQueryStringsState(!queryStringsState);
-  //   page.current = 0;
-  // }, [page.current, queryStrings, categoryId, courseSortType, searchingType]);
+  useEffect(() => {
+    setCourses([]);
+    setIsLastPage(false);
+    page.current = 0;
+    // setQueryStringsState(!queryStringsState);
+  }, [
+    params.type,
+    categoryId,
+    searchingType,
+    queryStrings.get('keyword'),
+    searchingType,
+  ]);
 
   /** 무한 스크롤을 위해 observing을 하는 함수 */
   useEffect(() => {
@@ -210,7 +208,15 @@ function CoursesForm() {
     io.observe(observedTarget.current);
 
     return () => io.disconnect();
-  }, [page.current]);
+  }, [
+    // page.current,
+    params.type,
+    categoryId,
+    searchingType,
+    queryStrings.get('keyword'),
+    searchingType,
+    courses,
+  ]);
 
   return (
     <>
@@ -227,7 +233,7 @@ function CoursesForm() {
           <></>
         )}
         {/* 정렬 기준 버튼 */}
-        {searchingType === 'all' && (
+        {params.type === 'all' && (
           <OrderingButton
             onClick={onClickOpenOrderingModal}
             sortType={courseSortType}

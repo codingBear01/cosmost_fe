@@ -23,7 +23,7 @@ function HeaderSearchBar({
   const [queryStringsState, setQueryStringsState] = useRecoilState(
     queryStringsStateAtom
   );
-  const [searchingType, setSearchingType] = useRecoilState(searchingTypeAtom);
+  const [, setSearchingType] = useRecoilState(searchingTypeAtom);
 
   /** 검색 키워드를 입력했을 때 호출할 핸들러*/
   const onChangeSearchInput = (e) => {
