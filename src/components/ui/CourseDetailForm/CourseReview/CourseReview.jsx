@@ -35,14 +35,9 @@ const REVIEW_RATE_INDEXES = [0, 1, 2, 3, 4];
 function CourseReview({
   courseDetail,
   courseReview,
-  courseReviewId,
   i,
   token,
-  isLoggedIn,
   loggedInUserId,
-  onClickOpenDeleteModal,
-  isClickedCourseReviewChanged,
-  setIsClickedCourseReviewChanged,
 }) {
   const navigate = useNavigate();
 
@@ -268,7 +263,6 @@ function CourseReview({
                         courseReview.id,
                         'like',
                         checkIsLoggedIn,
-                        isLoggedIn,
                         navigate,
                         compareAuthorIdWithLoggedInUserId,
                         courseReview,
@@ -292,7 +286,6 @@ function CourseReview({
                           courseReview.id,
                           'unlike',
                           checkIsLoggedIn,
-                          isLoggedIn,
                           navigate,
                           compareAuthorIdWithLoggedInUserId,
                           courseReview,

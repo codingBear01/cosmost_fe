@@ -1,18 +1,16 @@
 /* libraries */
 import React from 'react';
-/* recoil */
-import { useRecoilState } from 'recoil';
-import { loginStateAtom, MAIN_COURSES } from '../../../store';
 /* components */
 import * as S from './styled';
 import { MainContentWrap, MainCourse, MainTextWrap } from '.';
 import { Section } from '../..';
 /* icons */
 import * as FaIcons from 'react-icons/fa';
+/* static data */
+import { MAIN_COURSES } from '../../../store';
 
 function MainPageSection() {
   const token = localStorage.getItem('token');
-  const [isLoggedIn] = useRecoilState(loginStateAtom);
 
   return (
     <Section height={'100vh'} paddingBottom={'7rem'}>
@@ -21,16 +19,14 @@ function MainPageSection() {
           {/* 메인 텍스트 */}
           <MainTextWrap />
           {/* 코스 등록 버튼 */}
-          <S.CourseRegisterBtn
-            to={token && isLoggedIn ? '/course-registration' : '/login'}
-          >
+          <S.CourseRegisterBtn to={token ? '/course-registration' : '/login'}>
             나만의 코스 공유하기
             <FaIcons.FaChevronRight />
           </S.CourseRegisterBtn>
         </MainContentWrap>
         {/* 메인 코스 */}
         {MAIN_COURSES &&
-          MAIN_COURSES.map((item, i) => (
+          MAIN_COURSES.map((item) => (
             <MainContentWrap key={item.id} padding={'0 10rem'}>
               <MainCourse item={item} />
             </MainContentWrap>

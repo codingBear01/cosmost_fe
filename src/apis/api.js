@@ -271,7 +271,6 @@ export const signUpOrEditUser = (
   navigate,
   printFormData,
   isNaverUserPage,
-  setIsLoggedIn,
   token
 ) => {
   const formData = new FormData();
@@ -444,7 +443,6 @@ export const signUpOrEditUser = (
         .then((response) => {
           if (response.data.accessToken) {
             localStorage.setItem('token', response.data.accessToken);
-            setIsLoggedIn(true);
             navigate(`/`, { replace: true });
           } else {
             navigate(`/login`, { replace: true });
@@ -465,7 +463,6 @@ export const withdrawUser = (
   beforeEditUserInfo,
   passwordRef,
   token,
-  setIsLoggedIn,
   navigate,
   toast
 ) => {
@@ -508,54 +505,12 @@ export const withdrawUser = (
     .put(url, formData, config)
     .then((response) => {
       localStorage.removeItem('token');
-      setIsLoggedIn(false);
       navigate('/withdrawal-message');
     })
     .catch((error) => {
       new Error(error);
       toast.error('회원 탈퇴에 실패했습니다. 관리자에게 문의하세요.');
     });
-
-  // const url = `${process.env.REACT_APP_API}/auths`;
-  // const body = {
-  // loginId: beforeEditUserInfo.loginId,
-  // loginPwd: passwordRef.current.value,
-  // email: beforeEditUserInfo.email,
-  // married: beforeEditUserInfo.married,
-  // nickname: beforeEditUserInfo.nickname,
-  // address: beforeEditUserInfo.address,
-  // ageGroup: beforeEditUserInfo.ageGroup,
-  // status: beforeEditUserInfo.status,
-  // sns: beforeEditUserInfo.sns,
-  // role: beforeEditUserInfo.role,
-  // profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
-  // profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
-  // profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
-  // type: '회원 탈퇴',
-  // };
-
-  // const config = {
-  //   headers: {
-  //     Authorization: token,
-  //   },
-  //   timeout: 3000,
-  // };
-
-  // console.log("body", body);
-
-  // axios
-  //   .put(url, body, config)
-  //   .then((response) => {
-  //     localStorage.removeItem('token');
-  //     setIsLoggedIn(false);
-  //     alert("회원 탈퇴하였습니다.")
-  //     navigate('/');
-  //   })
-  //   .catch((error) => {
-  //     new Error(error);
-  //     console.log(error);
-  //     toast.error('회원탈퇴에 실패했습니다. 관리자에게 문의하세요.');
-  //   });
 };
 
 /* Cosmost */
@@ -846,7 +801,6 @@ export const handleLikeCourseReview = (
   id,
   type,
   checkIsLoggedIn,
-  isLoggedIn,
   navigate,
   compareAuthorIdWithLoggedInUserId,
   courseReview,
@@ -856,7 +810,7 @@ export const handleLikeCourseReview = (
   isLikedCourseReviewChanged,
   token
 ) => {
-  if (!checkIsLoggedIn(token, isLoggedIn, navigate)) return;
+  if (!checkIsLoggedIn(token, navigate)) return;
 
   if (
     !compareAuthorIdWithLoggedInUserId(
@@ -917,7 +871,6 @@ export const handleLikeCourse = (
   id,
   type,
   checkIsLoggedIn,
-  isLoggedIn,
   navigate,
   compareAuthorIdWithLoggedInUserId,
   courseDetail,
@@ -927,7 +880,7 @@ export const handleLikeCourse = (
   isLikedCourseChanged,
   token
 ) => {
-  if (!checkIsLoggedIn(token, isLoggedIn, navigate)) return;
+  if (!checkIsLoggedIn(token, navigate)) return;
 
   if (
     !compareAuthorIdWithLoggedInUserId(

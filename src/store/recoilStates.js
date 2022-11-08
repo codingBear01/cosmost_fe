@@ -13,12 +13,6 @@ export const isOrderingModalOpenedAtom = atom({
   default: false,
 });
 
-export const loginStateAtom = atom({
-  key: 'loginStateAtom',
-  default: false,
-  effects_UNSTABLE: [persistAtom],
-});
-
 export const pathnameAtom = atom({
   key: 'pathnameAtom',
   default: window.location.pathname,

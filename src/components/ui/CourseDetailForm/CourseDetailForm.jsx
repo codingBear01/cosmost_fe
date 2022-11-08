@@ -8,7 +8,6 @@ import {
   createNaverMap,
   addNaverMapMarker,
   // Atoms
-  loginStateAtom,
   userAtom,
   // custom functions
   displayNaverMapMarkerInfo,
@@ -63,13 +62,12 @@ function CourseDetailForm() {
   /* 로그인 정보 */
   const token = localStorage.getItem('token');
   const [user] = useRecoilState(userAtom);
-  const [isLoggedIn] = useRecoilState(loginStateAtom);
   const loggedInUserId = user?.id;
 
   /* Handlers */
   /** 코스 삭제 버튼 클릭시 호출할 핸들러
     코스 삭제 여부 확인 모달창을 활성화하거나 비활성화한다. */
-  const onClickOpenDeleteModal = (clicked, i) => {
+  const onClickOpenDeleteModal = () => {
     setIsDeleteModalOpened(!isDeleteModalOpened);
   };
 
@@ -130,53 +128,53 @@ function CourseDetailForm() {
   useEffect(() => {
     if (courseDetail) {
       // // 네이버 지도 생성
-      // const map = createNaverMap();
-      // courseDetail.placeDetailList.map((item, index) => {
-      //   const marker = addNaverMapMarker(map, {
-      //     latitude: item.placeYCoordinate,
-      //     longitude: item.placeXCoordinate,
-      //     eventList: [
-      //       {
-      //         eventName: 'mouseover',
-      //         eventListener: (e) => {
-      //           e.pointerEvent.target.title = item.placeName;
-      //         },
-      //       },
-      //       {
-      //         eventName: 'click',
-      //         eventListener: (e) => {
-      //           onClickMarker(e);
-      //         },
-      //       },
-      //     ],
-      //   });
+      const map = createNaverMap();
+      courseDetail.placeDetailList.map((item, index) => {
+        const marker = addNaverMapMarker(map, {
+          latitude: item.placeYCoordinate,
+          longitude: item.placeXCoordinate,
+          eventList: [
+            {
+              eventName: 'mouseover',
+              eventListener: (e) => {
+                e.pointerEvent.target.title = item.placeName;
+              },
+            },
+            {
+              eventName: 'click',
+              eventListener: (e) => {
+                onClickMarker(e);
+              },
+            },
+          ],
+        });
 
-      //   const markerInfoString = `
-      //       <div><h3>${item.placeName}</h3><div>${item.placeComment}</div></div>
-      //   `;
-      //   const markerInfoStyle = {
-      //     backgroundColor: '#000',
-      //     borderColor: '#2db400',
-      //     borderWidth: 5,
-      //     anchorSkew: true,
-      //     anchorColor: '#eee',
-      //   };
-      //   const info = addNaverMapMarkerInfo(
-      //     map,
-      //     marker,
-      //     markerInfoString,
-      //     markerInfoStyle
-      //   );
+        const markerInfoString = `
+            <div><h3>${item.placeName}</h3><div>${item.placeComment}</div></div>
+        `;
+        const markerInfoStyle = {
+          backgroundColor: '#000',
+          borderColor: '#2db400',
+          borderWidth: 5,
+          anchorSkew: true,
+          anchorColor: '#eee',
+        };
+        const info = addNaverMapMarkerInfo(
+          map,
+          marker,
+          markerInfoString,
+          markerInfoStyle
+        );
 
-      //   // 네이버지도 마커 클릭시 호출할 함수.
-      //   const onClickMarker = (e) => {
-      //     if (info.getMap()) {
-      //       info.close();
-      //     } else {
-      //       info.open(map, marker);
-      //     }
-      //   };
-      // });
+        // 네이버지도 마커 클릭시 호출할 함수.
+        const onClickMarker = (e) => {
+          if (info.getMap()) {
+            info.close();
+          } else {
+            info.open(map, marker);
+          }
+        };
+      });
 
       getCourseAuthor(courseDetail?.authorId, setAuthor);
       getCourseAverageRate(
@@ -207,7 +205,6 @@ function CourseDetailForm() {
           <CourseTitleAndDate
             courseDetail={courseDetail}
             token={token}
-            isLoggedIn={isLoggedIn}
             loggedInUserId={loggedInUserId}
             onClickOpenDeleteModal={onClickOpenDeleteModal}
             onClickEditCourse={onClickEditCourse}
@@ -247,11 +244,6 @@ function CourseDetailForm() {
             // alt="locations"
             id="map"
           />
-          {/* { 
-            courseDetail.placeDetailList.map((itme, index) => {
-              createNaverMap("map", null, [{}])
-            }) 
-          } */}
           {/* 코스에 등록된 장소 순서 */}
           <CourseContentWrap
             justifyContent={'center'}
@@ -267,7 +259,6 @@ function CourseDetailForm() {
           <CourseSharingAndLikeButton
             courseDetail={courseDetail}
             token={token}
-            isLoggedIn={isLoggedIn}
             loggedInUserId={loggedInUserId}
           />
           {/* 코스 평균 평점 및 별 개수별 퍼센테이지 */}
@@ -292,7 +283,6 @@ function CourseDetailForm() {
                 courseReviewId={courseReview.id}
                 i={i}
                 token={token}
-                isLoggedIn={isLoggedIn}
                 loggedInUserId={loggedInUserId}
                 onClickOpenDeleteModal={onClickOpenDeleteModal}
                 isClickedCourseReviewChanged={isClickedCourseReviewChanged}

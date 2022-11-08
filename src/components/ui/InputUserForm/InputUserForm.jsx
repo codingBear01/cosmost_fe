@@ -16,10 +16,6 @@ import {
 import { COLOR_LIST as color, GAP_LIST as gap } from '../../../style';
 import { base64ImgSrcToImgBinaryData, printFormData } from '../../../store';
 
-/* recoil */
-import { useRecoilState } from 'recoil';
-import { loginStateAtom } from '../../../store';
-
 const PROFILE_PIC_DEFAULT_URL = '/assets/images/ProfileDefaultImage.png';
 
 const RegExpId = /^[A-Za-z][A-Za-z0-9]{2,15}$/;
@@ -27,7 +23,6 @@ const RegExpNickName = /^[a-zA-Z0-9]{2,16}$/;
 const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
 
 function InputUserForm({ state, beforeEditUserInfo }) {
-  const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
   const path = useLocation().pathname;
   const isEditUserPage = path.includes('edit');
   const isNaverUserPage = path.includes('naver');
@@ -549,7 +544,6 @@ function InputUserForm({ state, beforeEditUserInfo }) {
               navigate,
               printFormData,
               isNaverUserPage,
-              setIsLoggedIn,
               token
             )
           }
@@ -581,7 +575,6 @@ function InputUserForm({ state, beforeEditUserInfo }) {
               navigate,
               printFormData,
               isNaverUserPage,
-              setIsLoggedIn,
               token
             )
           }

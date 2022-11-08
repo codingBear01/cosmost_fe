@@ -1,13 +1,8 @@
 /* libraries */
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-/* recoil */
-import { useRecoilState } from 'recoil';
-import { loginStateAtom } from '../../../store';
 /* components */
-import * as S from './styled';
 import { Button, Input, UtilTitle } from '../..';
 /* APIs */
 import { withdrawUser } from '../../../apis';
@@ -24,18 +19,11 @@ function WithdrawUserForm({ beforeEditUserInfo }) {
   ] = useState(false);
   const token = localStorage.getItem('token');
 
-  const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
   /* Refs */
   const passwordRef = useRef();
 
   /* Handlers */
-  /* 비밀번호 유효성 검증하는 핸들러 */
-  const dummyPwd = 'testPwd15';
-
   const checkPassword = () => {
-    //SNS 회원가입한 유저는 패스워드 체크 안함.
-    if (beforeEditUserInfo.sns === 'YES') return true;
-
     if (!passwordRef.current.value) {
       toast.error('비밀번호를 입력해주세요.');
       return false;
@@ -46,7 +34,6 @@ function WithdrawUserForm({ beforeEditUserInfo }) {
 
   const onClickDisplayDeleteConfirmationMessage = () => {
     if (!checkPassword()) return;
-
     setIsDeleteConfirmationMessageDisplayed(true);
   };
 
@@ -80,12 +67,7 @@ function WithdrawUserForm({ beforeEditUserInfo }) {
         type="password"
         width={'360px'}
         height={'40px'}
-        disabled={beforeEditUserInfo.sns === 'YES' ? true : false}
-        placeholder={
-          beforeEditUserInfo.sns === 'YES'
-            ? 'SNS 회원가입은 비밀번호를 입력할 필요가 없습니다.'
-            : '비밀번호를 입력해주세요.'
-        }
+        placeholder="비밀번호를 입력해주세요."
       />
       {!isDeleteConfirmationMessageDisplayed && (
         <Button
@@ -116,7 +98,6 @@ function WithdrawUserForm({ beforeEditUserInfo }) {
               beforeEditUserInfo,
               passwordRef,
               token,
-              setIsLoggedIn,
               navigate,
               toast
             )
