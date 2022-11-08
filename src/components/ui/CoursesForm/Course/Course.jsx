@@ -1,6 +1,9 @@
 /* libraries */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { searchingTypeAtom } from '../../../../store';
 /* components */
 import * as S from './styled';
 import { SmallProfilePic } from '../../..';
@@ -20,6 +23,7 @@ function Course({ course, courseId }) {
   const [courseAuthor, setCourseAuthor] = useState('');
   const [courseState, setCourseState] = useState('');
   const [courseLikeCount, setCourseLikeCount] = useState('');
+  const [, setSearchingType] = useRecoilState(searchingTypeAtom);
 
   /* APIs */
   useEffect(() => {
@@ -74,6 +78,7 @@ function Course({ course, courseId }) {
             <Link
               key={hashTag.id}
               to={`/courses/hashtag?keyword=${hashTag.keyword}`}
+              onClick={() => setSearchingType('search')}
             >
               <S.CourseTag>{hashTag?.keyword}</S.CourseTag>
             </Link>

@@ -8,9 +8,7 @@ import { Link } from 'react-router-dom';
 import { getCategories } from '../../../../apis';
 /* CONSTANTS */
 const URLS = {
-  // location: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=location`,
   location: `${process.env.REACT_APP_API}/cosmosts?filter=all&category=location`,
-  // theme: `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts?filter=all&category=theme`,
   theme: `${process.env.REACT_APP_API}/cosmosts?filter=all&category=theme`,
 };
 
@@ -29,7 +27,7 @@ function SelectingCategoryArea({ setCategoryId, setSearchingType }) {
   /* Handlers */
   /**  카테고리 클릭 시 클릭된 카테고리에 밑줄을 표시하기 위한 핸들러 */
   const onClickSetClickedCategory = (isClicked) => {
-    if (isClicked === 'all') {
+    if (isClicked === 'search') {
       setIsClickedCategory({
         all: true,
         location: false,
@@ -49,42 +47,37 @@ function SelectingCategoryArea({ setCategoryId, setSearchingType }) {
       });
     }
 
-    setCategoryId(null);
+    setCategoryId(0);
     setSearchingType(isClicked);
     getCategories(isClicked, URLS, setCategories);
   };
 
-  const onClickSetClikedCategoryId = (id) => {
+  const onClickSetClikedCategoryId = (id, type) => {
     setCategoryId(id);
+    setSearchingType(type);
   };
 
   return (
     <S.StyledSelectingCategoryArea>
       <S.Categories>
-        <Link to="/courses/all">
-          <S.Category
-            onClick={() => onClickSetClickedCategory('all')}
-            isClickedCategory={isClickedCategory.all}
-          >
-            전체
-          </S.Category>
-        </Link>
-        {/* <Link to="/courses/location"> */}
+        <S.Category
+          onClick={() => onClickSetClickedCategory('search')}
+          isClickedCategory={isClickedCategory.all}
+        >
+          전체
+        </S.Category>
         <S.Category
           onClick={() => onClickSetClickedCategory('location')}
           isClickedCategory={isClickedCategory.location}
         >
           지역별
         </S.Category>
-        {/* </Link> */}
-        {/* <Link to="/courses/theme"> */}
         <S.Category
           onClick={() => onClickSetClickedCategory('theme')}
           isClickedCategory={isClickedCategory.theme}
         >
           테마별
         </S.Category>
-        {/* </Link> */}
       </S.Categories>
       <S.SubordinateCategories>
         <ul>
@@ -94,7 +87,7 @@ function SelectingCategoryArea({ setCategoryId, setSearchingType }) {
               <li
                 key={item.id}
                 value={item.id}
-                onClick={() => onClickSetClikedCategoryId(item.id)}
+                onClick={() => onClickSetClikedCategoryId(item.id, 'location')}
               >
                 <S.SubordinateCategory>
                   {item.locationCategoryName}
@@ -107,7 +100,7 @@ function SelectingCategoryArea({ setCategoryId, setSearchingType }) {
               <li
                 key={item.id}
                 value={item.id}
-                onClick={() => onClickSetClikedCategoryId(item.id)}
+                onClick={() => onClickSetClikedCategoryId(item.id, 'theme')}
               >
                 <S.SubordinateCategory>
                   {item.themeCategoryName}
