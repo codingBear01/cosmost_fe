@@ -1,46 +1,29 @@
 /* libraries */
-import React, { useState, useRef, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useDrag, useDrop } from "react-dnd";
-import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useDrag, useDrop } from 'react-dnd';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 /* components */
-import * as S from "./styled";
-import { Button, Input, UtilDiv } from "../..";
+import * as S from './styled';
+import { Button, Input, UtilDiv } from '../..';
 /* icons */
-import * as AiIcons from "react-icons/ai";
-import * as BsIcons from "react-icons/bs";
-import { Icon } from "../..";
+import * as AiIcons from 'react-icons/ai';
+import * as BsIcons from 'react-icons/bs';
+import { Icon } from '../..';
 /* static data */
 import {
   COLOR_LIST as color,
   FONT_SIZE_LIST as fs,
   BORDER_RADIUS_LIST as br,
-} from "../../../style";
-
+} from '../../../style';
+/* functions */
 import {
-  CATEGORIES,
   base64ImgSrcToImgBinaryData,
   addNaverMapMarker,
   createNaverMap,
   printFormData,
-} from "../../../store";
-
-import styled from "styled-components";
-import { FaSleigh } from "react-icons/fa";
-import { GiConsoleController } from "react-icons/gi";
-import { MdOutlineNotInterested } from "react-icons/md";
-import { RiCreativeCommonsZeroLine } from "react-icons/ri";
-import { HeaderSearchBar } from "../../common/Header";
-
-// 등록한 코스이미지 및 해시태그를 삭제하는 X 버튼을 나타내는 컴포넌트
-const ItemRemoveButton = styled(AiIcons.AiOutlineClose)`
-  position: absolute;
-  top: ${({ top }) => top || "0"};
-  right: ${({ right }) => right || "0"};
-  width: 2rem;
-  height: 2rem;
-`;
+} from '../../../store';
 
 function CourseRegistrationForm() {
   const navigate = useNavigate();
@@ -56,14 +39,16 @@ function CourseRegistrationForm() {
 
   // 등록된 코스 이미지 경로를 나타내는 state
   const [registeredCourseImgState, setRegisteredCourseImgState] = useState({
-    imgSrc0: "none",
-    imgSrc1: "none",
-    imgSrc2: "none",
-    imgSrc3: "none",
-    imgSrc4: "none",
+    imgSrc0: 'none',
+    imgSrc1: 'none',
+    imgSrc2: 'none',
+    imgSrc3: 'none',
+    imgSrc4: 'none',
   });
 
   const location = useLocation();
+
+  console.log(location);
 
   // 백엔드로부터 가져온 카테고리 목록를 나타내는 state
   const [categoryLocalList, setCategoryLocalList] = useState([]);
@@ -84,17 +69,17 @@ function CourseRegistrationForm() {
 
   //네이버 검색 API에 전달할 쿼리(지역구, 키워드)를 나타내는 state
   const [naverMapQuery, SetNaverMapQuery] = useState({
-    addressGu: "중구",
-    keyword: "",
+    addressGu: '중구',
+    keyword: '',
   });
 
   //지도에서 장소추가 에서 추가한 장소 5개를 나타내는 state
   const [placeAdd, setPlaceAdd] = useState({
-    choicePlace0: "",
-    choicePlace1: "",
-    choicePlace2: "",
-    choicePlace3: "",
-    choicePlace4: "",
+    choicePlace0: '',
+    choicePlace1: '',
+    choicePlace2: '',
+    choicePlace3: '',
+    choicePlace4: '',
   });
 
   //지도에서 장소추가 에서 추가한 장소 5개의 좌표를 나타내는 state
@@ -107,11 +92,11 @@ function CourseRegistrationForm() {
   ]);
 
   //지도에서 장소추가 에서 추가한 장소 5개의 코멘트를 나타내는 state
-  const [placeAddComment, setPlaceAddComment] = useState(["", "", "", "", ""]);
+  const [placeAddComment, setPlaceAddComment] = useState(['', '', '', '', '']);
 
   //해시태그에서 사용자가 입력한 해시태그와 등록된 해시태그 5개를 나타내는 state
   const [hashTagAdd, setHashTagAdd] = useState({
-    inputHashTag: "",
+    inputHashTag: '',
     addHashTags: Array.from(Array(5)),
   });
 
@@ -125,31 +110,31 @@ function CourseRegistrationForm() {
 
   // 드래그 관련 state와 ref
   const [{ isDragging0 }, drag0] = useDrag(() => ({
-    type: "0",
+    type: '0',
     collect: (monitor) => ({
       isDragging0: monitor.isDragging(),
     }),
   }));
   const [{ isDragging1 }, drag1] = useDrag(() => ({
-    type: "0",
+    type: '0',
     collect: (monitor) => ({
       isDragging1: monitor.isDragging(),
     }),
   }));
   const [{ isDragging2 }, drag2] = useDrag(() => ({
-    type: "0",
+    type: '0',
     collect: (monitor) => ({
       isDragging2: monitor.isDragging(),
     }),
   }));
   const [{ isDragging3 }, drag3] = useDrag(() => ({
-    type: "0",
+    type: '0',
     collect: (monitor) => ({
       isDragging3: monitor.isDragging(),
     }),
   }));
   const [{ isDragging4 }, drag4] = useDrag(() => ({
-    type: "0",
+    type: '0',
     collect: (monitor) => ({
       isDragging4: monitor.isDragging(),
     }),
@@ -157,7 +142,7 @@ function CourseRegistrationForm() {
   // 드랍 관련 state와 ref
   const [{ isOver0 }, drop0] = useDrop(
     () => ({
-      accept: "0",
+      accept: '0',
       drop: (item, monitor) => {
         const SourceID =
           monitor.internalMonitor.store.getState().dragOperation.sourceId;
@@ -174,7 +159,7 @@ function CourseRegistrationForm() {
 
   const [{ isOver1 }, drop1] = useDrop(
     () => ({
-      accept: "0",
+      accept: '0',
       drop: (item, monitor) => {
         const SourceID =
           monitor.internalMonitor.store.getState().dragOperation.sourceId;
@@ -191,7 +176,7 @@ function CourseRegistrationForm() {
 
   const [{ isOver2 }, drop2] = useDrop(
     () => ({
-      accept: "0",
+      accept: '0',
       drop: (item, monitor) => {
         const SourceID =
           monitor.internalMonitor.store.getState().dragOperation.sourceId;
@@ -209,7 +194,7 @@ function CourseRegistrationForm() {
   );
   const [{ isOver3 }, drop3] = useDrop(
     () => ({
-      accept: "0",
+      accept: '0',
       drop: (item, monitor) => {
         const SourceID =
           monitor.internalMonitor.store.getState().dragOperation.sourceId;
@@ -227,7 +212,7 @@ function CourseRegistrationForm() {
   );
   const [{ isOver4 }, drop4] = useDrop(
     () => ({
-      accept: "0",
+      accept: '0',
       drop: (item, monitor) => {
         const SourceID =
           monitor.internalMonitor.store.getState().dragOperation.sourceId;
@@ -257,7 +242,7 @@ function CourseRegistrationForm() {
         setCategoryLocalList(CategoryLocalArr);
       })
       .catch((e) => {
-        alert("코스 카테고리의 지역값을 가져오지 못했습니다.");
+        alert('코스 카테고리의 지역값을 가져오지 못했습니다.');
       });
   };
   /*백엔드와의 API 통신을 위한 함수
@@ -273,7 +258,7 @@ function CourseRegistrationForm() {
         setCategoryThemeList(CategoryThemeArr);
       })
       .catch((e) => {
-        alert("코스 카테고리의 테마값을 가져오지 못했습니다.");
+        alert('코스 카테고리의 테마값을 가져오지 못했습니다.');
       });
   };
 
@@ -313,7 +298,7 @@ function CourseRegistrationForm() {
     beforeCourseInfo.placeImgList.map((item, index) => {
       placeImgListTemp = {
         ...placeImgListTemp,
-        ["imgSrc" + index]: `url(${item.placeImgUrl})`,
+        ['imgSrc' + index]: `url(${item.placeImgUrl})`,
       };
     });
     setRegisteredCourseImgState(placeImgListTemp);
@@ -343,7 +328,7 @@ function CourseRegistrationForm() {
     beforeCourseInfo.placeDetailList.map((item, index) => {
       placeAddTemp = {
         ...placeAddTemp,
-        ["choicePlace" + index]: item.placeName,
+        ['choicePlace' + index]: item.placeName,
       };
       placeAddCoordinateTemp[index] = {
         x: item.placeXCoordinate,
@@ -379,14 +364,14 @@ function CourseRegistrationForm() {
      중간의 빈 칸을 없애는 코드. */
   useEffect(() => {
     Object.values(registeredCourseImgState).every((item, index, Array) => {
-      if (item === "none") {
+      if (item === 'none') {
         if (index === Array.length - 1) {
           return false;
-        } else if (Array[index + 1] !== "none") {
+        } else if (Array[index + 1] !== 'none') {
           setRegisteredCourseImgState({
             ...registeredCourseImgState,
-            ["imgSrc" + index]: Array[index + 1],
-            ["imgSrc" + (index + 1)]: Array[index],
+            ['imgSrc' + index]: Array[index + 1],
+            ['imgSrc' + (index + 1)]: Array[index],
           });
           return false;
         }
@@ -401,9 +386,9 @@ function CourseRegistrationForm() {
     if (naverMapState.naverMapEnable) {
       const map = createNaverMap();
       SetNaverMapState({ ...naverMapState, naverMapHandle: map });
-      document.querySelector("body").style.overflow = "hidden";
+      document.querySelector('body').style.overflow = 'hidden';
     } else {
-      document.querySelector("body").style.overflow = "visible";
+      document.querySelector('body').style.overflow = 'visible';
     }
   }, [naverMapState.naverMapEnable]);
 
@@ -459,9 +444,9 @@ function CourseRegistrationForm() {
   const DropCourseImg = (targetId, SourceID, registeredCourseImgState) => {
     switch (targetId[targetId.length - 1]) {
       //0번칸 드랍
-      case "5":
+      case '5':
         switch (SourceID[SourceID.length - 1]) {
-          case "1":
+          case '1':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc0: registeredCourseImgState.imgSrc1,
@@ -469,7 +454,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(0, 1);
             break;
-          case "2":
+          case '2':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc0: registeredCourseImgState.imgSrc2,
@@ -477,7 +462,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(0, 2);
             break;
-          case "3":
+          case '3':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc0: registeredCourseImgState.imgSrc3,
@@ -485,7 +470,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(0, 3);
             break;
-          case "4":
+          case '4':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc0: registeredCourseImgState.imgSrc4,
@@ -498,9 +483,9 @@ function CourseRegistrationForm() {
         }
         break;
       //1번칸 드랍
-      case "6":
+      case '6':
         switch (SourceID[SourceID.length - 1]) {
-          case "0":
+          case '0':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc1: registeredCourseImgState.imgSrc0,
@@ -508,7 +493,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(1, 0);
             break;
-          case "2":
+          case '2':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc1: registeredCourseImgState.imgSrc2,
@@ -516,7 +501,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(1, 2);
             break;
-          case "3":
+          case '3':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc1: registeredCourseImgState.imgSrc3,
@@ -525,7 +510,7 @@ function CourseRegistrationForm() {
             DropCourseImgState(1, 3);
             break;
 
-          case "4":
+          case '4':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc1: registeredCourseImgState.imgSrc4,
@@ -538,9 +523,9 @@ function CourseRegistrationForm() {
         }
         break;
       //2번칸 드랍
-      case "7":
+      case '7':
         switch (SourceID[SourceID.length - 1]) {
-          case "0":
+          case '0':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc2: registeredCourseImgState.imgSrc0,
@@ -548,7 +533,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(2, 0);
             break;
-          case "1":
+          case '1':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc2: registeredCourseImgState.imgSrc1,
@@ -556,7 +541,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(2, 1);
             break;
-          case "3":
+          case '3':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc2: registeredCourseImgState.imgSrc3,
@@ -564,7 +549,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(2, 3);
             break;
-          case "4":
+          case '4':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc2: registeredCourseImgState.imgSrc4,
@@ -577,9 +562,9 @@ function CourseRegistrationForm() {
         }
         break;
       //3번칸 드랍
-      case "8":
+      case '8':
         switch (SourceID[SourceID.length - 1]) {
-          case "0":
+          case '0':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc3: registeredCourseImgState.imgSrc0,
@@ -587,7 +572,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(3, 0);
             break;
-          case "1":
+          case '1':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc3: registeredCourseImgState.imgSrc1,
@@ -595,7 +580,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(3, 1);
             break;
-          case "2":
+          case '2':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc3: registeredCourseImgState.imgSrc2,
@@ -603,7 +588,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(3, 2);
             break;
-          case "4":
+          case '4':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc3: registeredCourseImgState.imgSrc4,
@@ -616,9 +601,9 @@ function CourseRegistrationForm() {
         }
         break;
       //4번칸 드랍
-      case "9":
+      case '9':
         switch (SourceID[SourceID.length - 1]) {
-          case "0":
+          case '0':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc4: registeredCourseImgState.imgSrc0,
@@ -626,7 +611,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(4, 0);
             break;
-          case "1":
+          case '1':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc4: registeredCourseImgState.imgSrc1,
@@ -634,7 +619,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(4, 1);
             break;
-          case "2":
+          case '2':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc4: registeredCourseImgState.imgSrc2,
@@ -642,7 +627,7 @@ function CourseRegistrationForm() {
             });
             DropCourseImgState(4, 2);
             break;
-          case "3":
+          case '3':
             setRegisteredCourseImgState({
               ...registeredCourseImgState,
               imgSrc4: registeredCourseImgState.imgSrc3,
@@ -664,7 +649,7 @@ function CourseRegistrationForm() {
     //map copy 하기
     let mapMarkerCopy = Array.from(mapMarker);
     const { naver } = window;
-    const URL = "/v1/search/local.json";
+    const URL = '/v1/search/local.json';
 
     //기존에 지도에 등록된 마커 초기화
     mapMarkerCopy.forEach((Marker) => {
@@ -676,14 +661,14 @@ function CourseRegistrationForm() {
     axios
       .get(URL, {
         headers: {
-          "X-Naver-Client-Id": process.env.REACT_APP_X_NAVER_CLIENT_ID,
-          "X-Naver-Client-Secret": process.env.REACT_APP_X_NAVER_CLIENT_SECRET,
+          'X-Naver-Client-Id': process.env.REACT_APP_X_NAVER_CLIENT_ID,
+          'X-Naver-Client-Secret': process.env.REACT_APP_X_NAVER_CLIENT_SECRET,
         },
         params: {
           query,
           display: 5,
           start: 1,
-          sort: "comment",
+          sort: 'comment',
         },
       })
       .then(({ data }) => {
@@ -696,16 +681,16 @@ function CourseRegistrationForm() {
 
           const eventList = [
             {
-              eventName: "mouseover",
+              eventName: 'mouseover',
               eventListener: (e) => {
                 const title = `${item.address} ${item.title}`
-                  .replaceAll(/<[/]*b>/g, "")
-                  .replaceAll(/&amp;/g, "&");
+                  .replaceAll(/<[/]*b>/g, '')
+                  .replaceAll(/&amp;/g, '&');
                 e.pointerEvent.target.title = title;
               },
             },
             {
-              eventName: "click",
+              eventName: 'click',
               eventListener: (e) => {
                 onClickMarker(e, item);
               },
@@ -725,7 +710,7 @@ function CourseRegistrationForm() {
       .catch((error) => {
         console.log(error);
         toast.error(
-          "네이버 검색 API와의 통신이 실패했습니다. 관리자에게 문의해주세요"
+          '네이버 검색 API와의 통신이 실패했습니다. 관리자에게 문의해주세요'
         );
       });
   };
@@ -733,10 +718,10 @@ function CourseRegistrationForm() {
   //네이버 지도에 등록된 마커를 클릭했을 때 호출할 이벤트 핸들러.
   const onClickMarker = (e, markerItem) => {
     const title = `${markerItem.title}`
-      .replaceAll(/<[/]*b>/g, "")
-      .replaceAll(/&amp;/g, "&");
+      .replaceAll(/<[/]*b>/g, '')
+      .replaceAll(/&amp;/g, '&');
     Object.values(placeAdd).every((item, index) => {
-      if (item === "") {
+      if (item === '') {
         setPlaceAdd({
           ...placeAdd,
           [`choicePlace${index}`]: title,
@@ -769,10 +754,10 @@ function CourseRegistrationForm() {
     마지막 코스 이미지가 등록되지 않았다면 input[type=file]에 클릭 이벤트를 발생시킨다.*/
   const onClickUploadCourseImg = (e) => {
     e.preventDefault();
-    if (registeredCourseImgState.imgSrc4 === "none") {
+    if (registeredCourseImgState.imgSrc4 === 'none') {
       courseImgInputRef.current.click();
     } else {
-      toast.error("코스 이미지는 5장까지만 추가 가능합니다.");
+      toast.error('코스 이미지는 5장까지만 추가 가능합니다.');
     }
   };
 
@@ -782,12 +767,12 @@ function CourseRegistrationForm() {
     const FileReaderObject = new FileReader();
     FileReaderObject.onload = () => {
       Object.values(registeredCourseImgState).every((item, index) => {
-        if (item === "none") {
+        if (item === 'none') {
           setRegisteredCourseImgState({
             ...registeredCourseImgState,
-            ["imgSrc" + index]: `url(${FileReaderObject.result})`,
+            ['imgSrc' + index]: `url(${FileReaderObject.result})`,
           });
-          e.target.value = "";
+          e.target.value = '';
           const createPlaceImgRequestListStateTemp = Array.from(
             createPlaceImgRequestListState
           );
@@ -806,7 +791,7 @@ function CourseRegistrationForm() {
   const onClickRemoveCourseItem = (e, index) => {
     setRegisteredCourseImgState({
       ...registeredCourseImgState,
-      ["imgSrc" + index]: `none`,
+      ['imgSrc' + index]: `none`,
     });
 
     if (location.state) {
@@ -870,10 +855,10 @@ function CourseRegistrationForm() {
     let tempPlaceAddObject = {};
 
     tempPlaceAddArr.splice(index, 1);
-    tempPlaceAddArr.push("");
+    tempPlaceAddArr.push('');
 
     tempPlaceAddArr.forEach((item, index) => {
-      tempPlaceAddObject["choicePlace" + index] = item;
+      tempPlaceAddObject['choicePlace' + index] = item;
     });
 
     setPlaceAdd(tempPlaceAddObject);
@@ -887,7 +872,7 @@ function CourseRegistrationForm() {
 
     let tempPlaceAddComment = Array.from(placeAddComment);
     tempPlaceAddComment.splice(index, 1);
-    tempPlaceAddComment.push("");
+    tempPlaceAddComment.push('');
     setPlaceAddComment(tempPlaceAddComment);
   };
 
@@ -964,8 +949,8 @@ function CourseRegistrationForm() {
   // 해시태그 추가 버튼 클릭시 호출할 핸들러
   const onClickAddHashTagButton = (e) => {
     e.preventDefault();
-    if (hashTagAdd.inputHashTag === "") {
-      toast.error("빈 값은 등록할 수 없습니다.");
+    if (hashTagAdd.inputHashTag === '') {
+      toast.error('빈 값은 등록할 수 없습니다.');
       return;
     }
     const tempAddHashTags = Array.from(hashTagAdd.addHashTags);
@@ -977,7 +962,7 @@ function CourseRegistrationForm() {
     });
 
     if (result) {
-      toast.error("해시태그는 5개까지만 추가 가능합니다.");
+      toast.error('해시태그는 5개까지만 추가 가능합니다.');
       return;
     }
 
@@ -997,35 +982,35 @@ function CourseRegistrationForm() {
   // 사용자가 코스 등록 시 입력한 값들의 유효성을 검증하는 핸들러
   const validateCourseRegistrationInput = (input, imgs) => {
     if (imgs[0] === null) {
-      toast.error("이미지를 1개 이상 추가해주세요");
+      toast.error('이미지를 1개 이상 추가해주세요');
       return false;
     }
 
     if (input.createPlaceDetailRequestList.length === 0) {
-      toast.error("장소를 1곳 이상 추가해주세요");
+      toast.error('장소를 1곳 이상 추가해주세요');
       return false;
     }
 
     for (let i = 0; i < input.createPlaceDetailRequestList.length; i++) {
       const item = input.createPlaceDetailRequestList[i];
       if (!item.placeComment) {
-        toast.error("장소에 대한 한줄평을 1개 이상 입력해주세요");
+        toast.error('장소에 대한 한줄평을 1개 이상 입력해주세요');
         return false;
       }
     }
 
     if (input.createHashtagRequestList.length === 0) {
-      toast.error("해시태그를 1개 이상 추가해주세요");
+      toast.error('해시태그를 1개 이상 추가해주세요');
       return false;
     }
 
     if (!courseTitleRef.current.value) {
-      toast.error("코스 제목을 작성해주세요");
+      toast.error('코스 제목을 작성해주세요');
       return false;
     }
 
     if (!courseDescriptonRef.current.value) {
-      toast.error("코스 설명을 작성해주세요");
+      toast.error('코스 설명을 작성해주세요');
       return false;
     }
 
@@ -1039,11 +1024,11 @@ function CourseRegistrationForm() {
     const createHashtagRequestList = [];
     const createCategoryListRequestList = [];
     const createPlaceImgRequestList = [];
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     const config = {
       headers: {
         Authorization: token,
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
       timeout: 1000,
     };
@@ -1087,7 +1072,7 @@ function CourseRegistrationForm() {
     }
 
     Object.values(registeredCourseImgState).forEach((item, index) => {
-      if (item !== "none") {
+      if (item !== 'none') {
         createPlaceImgRequestList.push({ placeImgOrder: index });
       }
     });
@@ -1119,7 +1104,7 @@ function CourseRegistrationForm() {
     }
 
     const sendJson = JSON.stringify(sendData);
-    const jsonblob = new Blob([sendJson], { type: "application/json" });
+    const jsonblob = new Blob([sendJson], { type: 'application/json' });
     const imageblobs = [];
 
     Object.values(registeredCourseImgState).forEach((item, index) => {
@@ -1133,45 +1118,45 @@ function CourseRegistrationForm() {
     });
 
     if (location.state) {
-      formData.append("updateCourseRequest", jsonblob);
+      formData.append('updateCourseRequest', jsonblob);
     } else {
-      formData.append("createCourseRequest", jsonblob);
+      formData.append('createCourseRequest', jsonblob);
     }
 
     imageblobs.forEach((item, index) => {
       if (item) {
-        if (item.type !== "null") {
-          formData.append("file", item);
+        if (item.type !== 'null') {
+          formData.append('file', item);
         }
       }
     });
 
-    if (formData.get("file") === null) {
-      formData.append("file", "");
+    if (formData.get('file') === null) {
+      formData.append('file', '');
     }
 
     if (!validateCourseRegistrationInput(sendData, imageblobs)) return;
 
     printFormData(formData);
+
     if (location.state) {
-      // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${location.state.id}`;
       const url = `${process.env.REACT_APP_API}/cosmosts/${location.state.id}`;
+      console.log(url);
+      console.log(config);
       axios
         .put(url, formData, config)
         .then((response) => {
-          alert("코스가 성공적으로 수정되었습니다.");
-          navigate(`/course-detail/${location.state.id}`);
+          console.log('수정');
+          // navigate(`/course-detail/${location.state.id}`);
         })
         .catch((error) => new Error(error));
-
       return;
     } else {
-      // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts`;
       const url = `${process.env.REACT_APP_API}/cosmosts`;
       axios
         .post(url, formData, config)
         .then((response) => {
-          alert("코스가 성공적으로 등록되었습니다.");
+          navigate('/courses/mine');
         })
         .catch((error) => new Error(error));
       return;
@@ -1179,7 +1164,7 @@ function CourseRegistrationForm() {
   };
 
   return (
-    <UtilDiv width={"76.8rem"} padding={"7rem 0 0 0"}>
+    <UtilDiv width={'76.8rem'} padding={'7rem 0 0 0'}>
       <ToastContainer
         position="top-center"
         autoClose={500}
@@ -1196,10 +1181,10 @@ function CourseRegistrationForm() {
         <S.UploadImgButtonWrap>
           <Button
             type="button"
-            width={"9rem"}
-            height={"9rem"}
-            margin={""}
-            fontSize={"3rem"}
+            width={'9rem'}
+            height={'9rem'}
+            margin={''}
+            fontSize={'3rem'}
             color={color.white}
             bgColor={color.darkBlue}
             hoveredBgColor={color.navy}
@@ -1215,119 +1200,119 @@ function CourseRegistrationForm() {
         </S.UploadImgButtonWrap>
         {/* 업로드된 코스 이미지들 */}
         <S.UploadedCourseImgsWrap>
-          <div ref={registeredCourseImgState.imgSrc0 === "none" ? null : drop0}>
+          <div ref={registeredCourseImgState.imgSrc0 === 'none' ? null : drop0}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc0}
-              ref={registeredCourseImgState.imgSrc0 === "none" ? null : drag0}
-              opacity={isDragging0 ? "0" : "1"}
+              ref={registeredCourseImgState.imgSrc0 === 'none' ? null : drag0}
+              opacity={isDragging0 ? '0' : '1'}
             >
-              {registeredCourseImgState.imgSrc0 === "none" || (
+              {registeredCourseImgState.imgSrc0 === 'none' || (
                 <S.ItemRemoveButton
-                  top={"-1rem"}
-                  right={"-1rem"}
+                  top={'-1rem'}
+                  right={'-1rem'}
                   onClick={(e) => onClickRemoveCourseItem(e, 0)}
                 />
               )}
               {isOver0 && (
                 <div
                   style={{
-                    height: "100%",
-                    backgroundColor: "rgba(0,0,0,.5)",
+                    height: '100%',
+                    backgroundColor: 'rgba(0,0,0,.5)',
                   }}
                 ></div>
               )}
-              {registeredCourseImgState.imgSrc0 === "none" || (
+              {registeredCourseImgState.imgSrc0 === 'none' || (
                 <S.FeaturedImageText>대표사진</S.FeaturedImageText>
               )}
             </S.CoursePreviewImg>
           </div>
-          <div ref={registeredCourseImgState.imgSrc1 === "none" ? null : drop1}>
+          <div ref={registeredCourseImgState.imgSrc1 === 'none' ? null : drop1}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc1}
-              ref={registeredCourseImgState.imgSrc1 === "none" ? null : drag1}
-              opacity={isDragging1 ? "0" : "1"}
+              ref={registeredCourseImgState.imgSrc1 === 'none' ? null : drag1}
+              opacity={isDragging1 ? '0' : '1'}
             >
-              {registeredCourseImgState.imgSrc1 === "none" || (
+              {registeredCourseImgState.imgSrc1 === 'none' || (
                 <S.ItemRemoveButton
-                  top={"-1rem"}
-                  right={"-1rem"}
+                  top={'-1rem'}
+                  right={'-1rem'}
                   onClick={(e) => onClickRemoveCourseItem(e, 1)}
                 />
               )}
               {isOver1 && (
                 <div
                   style={{
-                    height: "100%",
-                    backgroundColor: "rgba(0,0,0,.5)",
+                    height: '100%',
+                    backgroundColor: 'rgba(0,0,0,.5)',
                   }}
                 ></div>
               )}
             </S.CoursePreviewImg>
           </div>
-          <div ref={registeredCourseImgState.imgSrc2 === "none" ? null : drop2}>
+          <div ref={registeredCourseImgState.imgSrc2 === 'none' ? null : drop2}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc2}
-              ref={registeredCourseImgState.imgSrc2 === "none" ? null : drag2}
-              opacity={isDragging2 ? "0" : "1"}
+              ref={registeredCourseImgState.imgSrc2 === 'none' ? null : drag2}
+              opacity={isDragging2 ? '0' : '1'}
             >
-              {registeredCourseImgState.imgSrc2 === "none" || (
+              {registeredCourseImgState.imgSrc2 === 'none' || (
                 <S.ItemRemoveButton
-                  top={"-1rem"}
-                  right={"-1rem"}
+                  top={'-1rem'}
+                  right={'-1rem'}
                   onClick={(e) => onClickRemoveCourseItem(e, 2)}
                 />
               )}
               {isOver2 && (
                 <div
                   style={{
-                    height: "100%",
-                    backgroundColor: "rgba(0,0,0,.5)",
+                    height: '100%',
+                    backgroundColor: 'rgba(0,0,0,.5)',
                   }}
                 ></div>
               )}
             </S.CoursePreviewImg>
           </div>
-          <div ref={registeredCourseImgState.imgSrc3 === "none" ? null : drop3}>
+          <div ref={registeredCourseImgState.imgSrc3 === 'none' ? null : drop3}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc3}
-              ref={registeredCourseImgState.imgSrc3 === "none" ? null : drag3}
-              opacity={isDragging3 ? "0" : "1"}
+              ref={registeredCourseImgState.imgSrc3 === 'none' ? null : drag3}
+              opacity={isDragging3 ? '0' : '1'}
             >
-              {registeredCourseImgState.imgSrc3 === "none" || (
+              {registeredCourseImgState.imgSrc3 === 'none' || (
                 <S.ItemRemoveButton
-                  top={"-1rem"}
-                  right={"-1rem"}
+                  top={'-1rem'}
+                  right={'-1rem'}
                   onClick={(e) => onClickRemoveCourseItem(e, 3)}
                 />
               )}
               {isOver3 && (
                 <div
                   style={{
-                    height: "100%",
-                    backgroundColor: "rgba(0,0,0,.5)",
+                    height: '100%',
+                    backgroundColor: 'rgba(0,0,0,.5)',
                   }}
                 ></div>
               )}
             </S.CoursePreviewImg>
           </div>
-          <div ref={registeredCourseImgState.imgSrc4 === "none" ? null : drop4}>
+          <div ref={registeredCourseImgState.imgSrc4 === 'none' ? null : drop4}>
             <S.CoursePreviewImg
               backgroundImage={registeredCourseImgState.imgSrc4}
-              ref={registeredCourseImgState.imgSrc4 === "none" ? null : drag4}
-              opacity={isDragging4 ? "0" : "1"}
+              ref={registeredCourseImgState.imgSrc4 === 'none' ? null : drag4}
+              opacity={isDragging4 ? '0' : '1'}
             >
-              {registeredCourseImgState.imgSrc4 === "none" || (
+              {registeredCourseImgState.imgSrc4 === 'none' || (
                 <S.ItemRemoveButton
-                  top={"-1rem"}
-                  right={"-1rem"}
+                  top={'-1rem'}
+                  right={'-1rem'}
                   onClick={(e) => onClickRemoveCourseItem(e, 4)}
                 />
               )}
               {isOver4 && (
                 <div
                   style={{
-                    height: "100%",
-                    backgroundColor: "rgba(0,0,0,.5)",
+                    height: '100%',
+                    backgroundColor: 'rgba(0,0,0,.5)',
                   }}
                 ></div>
               )}
@@ -1381,7 +1366,7 @@ function CourseRegistrationForm() {
               <S.NaverMapForm onSubmit={onChangeNaverMapQuery}>
                 <S.NaverMapHeader>
                   <S.CourseCategorySelect
-                    marginRight={"0"}
+                    marginRight={'0'}
                     name="addressGu"
                     value={naverMapQuery.addressGu}
                     onChange={onChangeNaverMapQuery}
@@ -1398,8 +1383,8 @@ function CourseRegistrationForm() {
                     name="keyword"
                     value={naverMapQuery.keyword}
                     onChange={onChangeNaverMapQuery}
-                    width={"30rem"}
-                    height={"100%"}
+                    width={'30rem'}
+                    height={'100%'}
                   />
                   <S.NaverMapHeaderButtonBox>
                     <Icon onClick={onClickNaverMapSearch}>
@@ -1413,8 +1398,8 @@ function CourseRegistrationForm() {
                 <div
                   id="map"
                   style={{
-                    width: "100%",
-                    height: "40rem",
+                    width: '100%',
+                    height: '40rem',
                     borderRadius: `${br.default}`,
                   }}
                 ></div>
@@ -1424,7 +1409,7 @@ function CourseRegistrationForm() {
 
           <S.AddedLocationOrHashTagsWrap>
             {placeAdd.choicePlace0 && (
-              <div style={{ position: "relative" }}>
+              <div style={{ position: 'relative' }}>
                 <S.CourseDetailInfoText>
                   {placeAdd.choicePlace0}
                 </S.CourseDetailInfoText>
@@ -1438,7 +1423,7 @@ function CourseRegistrationForm() {
               </div>
             )}
             {placeAdd.choicePlace1 && (
-              <div style={{ position: "relative" }}>
+              <div style={{ position: 'relative' }}>
                 <S.CourseDetailInfoText>
                   {placeAdd.choicePlace1}
                 </S.CourseDetailInfoText>
@@ -1452,7 +1437,7 @@ function CourseRegistrationForm() {
               </div>
             )}
             {placeAdd.choicePlace2 && (
-              <div style={{ position: "relative" }}>
+              <div style={{ position: 'relative' }}>
                 <S.CourseDetailInfoText>
                   {placeAdd.choicePlace2}
                 </S.CourseDetailInfoText>
@@ -1466,7 +1451,7 @@ function CourseRegistrationForm() {
               </div>
             )}
             {placeAdd.choicePlace3 && (
-              <div style={{ position: "relative" }}>
+              <div style={{ position: 'relative' }}>
                 <S.CourseDetailInfoText>
                   {placeAdd.choicePlace3}
                 </S.CourseDetailInfoText>
@@ -1480,7 +1465,7 @@ function CourseRegistrationForm() {
               </div>
             )}
             {placeAdd.choicePlace4 && (
-              <div style={{ position: "relative" }}>
+              <div style={{ position: 'relative' }}>
                 <S.CourseDetailInfoText>
                   {placeAdd.choicePlace4}
                 </S.CourseDetailInfoText>
@@ -1498,7 +1483,7 @@ function CourseRegistrationForm() {
         {/* 추가한 장소에 대한 코멘트 */}
         <S.PlaceCommentWrap>
           {placeAdd.choicePlace0 && (
-            <span style={{ marginBottom: "1rem", fontSize: `${fs.m}` }}>
+            <span style={{ marginBottom: '1rem', fontSize: `${fs.m}` }}>
               장소 한줄평
             </span>
           )}
@@ -1511,7 +1496,7 @@ function CourseRegistrationForm() {
                   onChange={(e) => {
                     onChangePlaceAddComment(e, index);
                   }}
-                  margin={"1rem 0"}
+                  margin={'1rem 0'}
                   maxLength={100}
                 />
               )}
@@ -1528,15 +1513,15 @@ function CourseRegistrationForm() {
               type="text"
               placeholder="해시태그"
               maxLength={15}
-              height={"3rem"}
-              margin={"0 2rem 0 0"}
+              height={'3rem'}
+              margin={'0 2rem 0 0'}
               fontSize={fs.m}
               onChange={onChangeHashTag}
             />
             <Button
               type="submit"
-              width={"3rem"}
-              height={"3rem"}
+              width={'3rem'}
+              height={'3rem'}
               color={color.white}
               onClick={onClickAddHashTagButton}
             >
@@ -1545,7 +1530,7 @@ function CourseRegistrationForm() {
           </S.InputHashTagWrap>
           <S.AddedLocationOrHashTagsWrap>
             {hashTagAdd.addHashTags.map((item, index) => (
-              <div key={index} style={{ position: "relative" }}>
+              <div key={index} style={{ position: 'relative' }}>
                 {item && (
                   <>
                     <S.CourseDetailInfoText>#{item}</S.CourseDetailInfoText>
@@ -1565,12 +1550,12 @@ function CourseRegistrationForm() {
         {/* 코스 제목 */}
         <Input
           ref={courseTitleRef}
-          type={"text"}
-          placeholder={"제목"}
+          type={'text'}
+          placeholder={'제목'}
           maxLength={30}
-          width={"45rem"}
-          height={"5rem"}
-          margin={"2rem 0 0 0"}
+          width={'45rem'}
+          height={'5rem'}
+          margin={'2rem 0 0 0'}
           fontSize={fs.m}
         />
         {/* 코스 설명 영역 */}
@@ -1585,9 +1570,9 @@ function CourseRegistrationForm() {
       <S.CourseRegistrationButtonWrap>
         <Button
           type="button"
-          width={"12rem"}
-          height={"5rem"}
-          margin={"0 4rem 0 0"}
+          width={'12rem'}
+          height={'5rem'}
+          margin={'0 4rem 0 0'}
           fontSize={fs.m}
           color={color.black}
           bgColor={color.lightGrey}
@@ -1598,9 +1583,9 @@ function CourseRegistrationForm() {
         </Button>
         <Button
           type="submit"
-          width={"12rem"}
-          height={"5rem"}
-          margin={"0 0 0 4rem"}
+          width={'12rem'}
+          height={'5rem'}
+          margin={'0 0 0 4rem'}
           fontSize={fs.m}
           color={color.white}
           bgColor={color.darkBlue}

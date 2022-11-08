@@ -19,7 +19,9 @@ export const UploadCourseImgArea = styled.div`
   padding: 0 3rem;
 `;
 
-export const UploadImgButtonWrap = styled.div``;
+export const UploadImgButtonWrap = styled.div`
+  align-self: start;
+`;
 
 export const UploadImgInput = styled.input`
   display: none;
@@ -27,9 +29,11 @@ export const UploadImgInput = styled.input`
 
 export const UploadedCourseImgsWrap = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   width: 100%;
   margin-left: 3rem;
+  gap: 1.5rem;
 `;
 
 export const CoursePreviewImg = styled.div`

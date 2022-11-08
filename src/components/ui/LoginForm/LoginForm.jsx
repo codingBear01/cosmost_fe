@@ -168,7 +168,7 @@ function LoginForm() {
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
         >
-          <span>이메일로 회원가입</span>
+          <span>일반 회원가입</span>
         </Button>
       </Link>
       <div id="naver_id_login">

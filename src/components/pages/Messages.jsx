@@ -69,7 +69,7 @@ function Messages({ type }) {
       {type !== 'withdrawal' && (
         <>
           <StyledText fontSize={'5rem'}>{MESSAGES[type]}</StyledText>
-          <StyledButton onClick={() => navigate(-1)}>이전으로</StyledButton>
+          <StyledButton onClick={() => navigate('/')}>메인으로</StyledButton>
         </>
       )}
     </StyledDiv>

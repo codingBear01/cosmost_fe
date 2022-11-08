@@ -10,15 +10,10 @@ import * as S from './styled';
 import { CourseContent } from '..';
 import { Button, ProfilePic } from '../../..';
 /* APIs */
-import {
-  handleFollow,
-  fetchIsFollowed,
-  getCourseAuthor,
-} from '../../../../apis';
+import { handleFollow, fetchIsFollowed } from '../../../../apis';
 /* icons */
 import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';
-import * as BiIcons from 'react-icons/bi';
 import * as FiIcons from 'react-icons/fi';
 import * as GiIcons from 'react-icons/gi';
 import * as AiIcons from 'react-icons/ai';
@@ -28,7 +23,6 @@ import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../../style';
 function CourseContentWrap({
   justifyContent,
   height,
-  courseReviews,
   courseDetail,
   dataCategory,
   authorCourseCount,
@@ -106,7 +100,7 @@ function CourseContentWrap({
           />
           <S.AutorProfileVerticalWrap marginRight={'3rem'}>
             <S.AutorNickname>{author?.nickname}</S.AutorNickname>
-            {loggedInUserId ? (
+            {token && author.id !== loggedInUserId ? (
               <>
                 {!isFollowed[0] && (
                   <Button
@@ -157,16 +151,12 @@ function CourseContentWrap({
               <></>
             )}
           </S.AutorProfileVerticalWrap>
-          <Link to={`/others/followers`} state={author?.id}>
+          <Link to={`/others/followers`} state={author && author}>
             <S.AutorProfileVerticalWrap>
-              <BiIcons.BiCrown />
-              <span>{author?.ranking}</span>
+              <FiIcons.FiUsers />
+              <span>{authorsFollowersCount && authorsFollowersCount}</span>
             </S.AutorProfileVerticalWrap>
           </Link>
-          <S.AutorProfileVerticalWrap>
-            <FiIcons.FiUsers />
-            <span>{authorsFollowersCount && authorsFollowersCount}</span>
-          </S.AutorProfileVerticalWrap>
           <S.AutorProfileVerticalWrap>
             <GiIcons.GiRoad />
             <span>{authorCourseCount && authorCourseCount}</span>
