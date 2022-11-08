@@ -12,14 +12,16 @@ const carouselSettings = {
 };
 
 function CourseImgCarousel({ courseDetail }) {
+  const indices = courseDetail.placeImgList.map((item) => item.placeImgOrder);
+
   return (
     <S.CarouselArea>
       <S.CarouselWrap {...carouselSettings}>
         {courseDetail &&
-          courseDetail.placeImgList.map((item) => (
+          courseDetail.placeImgList.map((item, index) => (
             <S.CarouselImage
               key={item.id}
-              src={item.placeImgUrl}
+              src={courseDetail.placeImgList[indices[index]].placeImgUrl}
               alt={item.placeImgSaveName}
             />
           ))}

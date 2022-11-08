@@ -1166,14 +1166,12 @@ function CourseRegistrationForm() {
       formData.append('file', '');
     }
 
-    // if (!validateCourseRegistrationInput(sendData, imageblobs)) return;
+    if (!validateCourseRegistrationInput(sendData, imageblobs)) return;
 
     printFormData(formData);
 
     if (location.state) {
       const url = `${process.env.REACT_APP_API}/cosmosts/${location.state.id}`;
-
-      console.log('수정 sendData', sendData);
 
       axios
         .put(url, formData, config)
@@ -1184,8 +1182,6 @@ function CourseRegistrationForm() {
       return;
     } else {
       const url = `${process.env.REACT_APP_API}/cosmosts`;
-
-      console.log('등록 sendData', sendData);
 
       axios
         .post(url, formData, config)
