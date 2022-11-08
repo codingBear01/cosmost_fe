@@ -1,6 +1,6 @@
 /* libraries */
 import React, { useEffect } from 'react';
-import { Link, Navigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 /* recoil */
 import { useRecoilState } from 'recoil';
@@ -15,7 +15,7 @@ function OrderingModal() {
 
   const navigate = useNavigate();
 
-  const [searchingType, setSearchingType] = useRecoilState(searchingTypeAtom);
+  const [, setSearchingType] = useRecoilState(searchingTypeAtom);
 
   /* 정렬 기준 Modal Open 여부 recoilState */
   const [isOrderingModalOpened, setIsOrderingModalOpened] = useRecoilState(

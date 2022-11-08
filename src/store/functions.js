@@ -142,7 +142,7 @@ export const addNaverMapMarker = (map = null, markerInfo = null) => {
       map: map,
     });
 
-    markerInfo.eventList.map((item, index) => {
+    markerInfo.eventList.map((item) => {
       naver.maps.Event.addListener(
         registeredMarker,
         item.eventName,

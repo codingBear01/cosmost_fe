@@ -3,15 +3,7 @@ import React, { useState, useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 /* components */
-import {
-  Button,
-  Icon,
-  Input,
-  NextBtn,
-  UtilDiv,
-  UtilInputWrap,
-  UtilTitle,
-} from '../..';
+import { Button, Icon, Input, NextBtn, UtilInputWrap, UtilTitle } from '../..';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 import * as BsIcons from 'react-icons/bs';
@@ -28,7 +20,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
   const isEditEmailPage = pathname.includes('edit');
   const isFindUserPage = pathname.includes('find');
-  const isNaverUserPage = pathname.includes('naver');
 
   const PAGE_TYPES = {
     //회원가입 시 이메일 인증
@@ -48,13 +39,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
       address: '/address',
       certificationNumberSendingType: 'newemail',
       certificationNumberComparingType: 'newemail/reissue',
-      placeholder: '네이버 이메일을 입력해주세요.',
-    },
-    //네이버 로그인 시 이메일 인증
-    '/naver/email-validation': {
-      address: '/naver/address',
-      certificationNumberSendingType: 'email',
-      certificationNumberComparingType: 'code/confirm',
       placeholder: '네이버 이메일을 입력해주세요.',
     },
   };

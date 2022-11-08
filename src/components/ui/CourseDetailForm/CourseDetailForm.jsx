@@ -10,7 +10,6 @@ import {
   // Atoms
   userAtom,
   // custom functions
-  displayNaverMapMarkerInfo,
   addNaverMapMarkerInfo,
 } from '../../../store';
 /* components */
