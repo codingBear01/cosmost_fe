@@ -48,8 +48,6 @@ function CourseRegistrationForm() {
 
   const location = useLocation();
 
-  console.log(location);
-
   // 백엔드로부터 가져온 카테고리 목록를 나타내는 state
   const [categoryLocalList, setCategoryLocalList] = useState([]);
   const [categoryThemeList, setCategoryThemeList] = useState([]);
@@ -986,12 +984,12 @@ function CourseRegistrationForm() {
       return false;
     }
 
-    if (input.createPlaceDetailRequestList.length === 0) {
+    if (input.createPlaceDetailRequestList?.length === 0) {
       toast.error('장소를 1곳 이상 추가해주세요');
       return false;
     }
 
-    for (let i = 0; i < input.createPlaceDetailRequestList.length; i++) {
+    for (let i = 0; i < input.createPlaceDetailRequestList?.length; i++) {
       const item = input.createPlaceDetailRequestList[i];
       if (!item.placeComment) {
         toast.error('장소에 대한 한줄평을 1개 이상 입력해주세요');
@@ -999,7 +997,7 @@ function CourseRegistrationForm() {
       }
     }
 
-    if (input.createHashtagRequestList.length === 0) {
+    if (input.createHashtagRequestList?.length === 0) {
       toast.error('해시태그를 1개 이상 추가해주세요');
       return false;
     }
@@ -1017,6 +1015,7 @@ function CourseRegistrationForm() {
     return true;
   };
 
+  console.log('location.state', location.state);
   // 사용자가 코스 등록 버튼을 클릭할 때 호출되는 핸들러
   const onClickRegisterCourse = (e) => {
     const formData = new FormData();
@@ -1035,6 +1034,8 @@ function CourseRegistrationForm() {
 
     e.preventDefault();
 
+    /* DOM을 직접 참조하여 value를 가져옴. */
+    // 장소 정보
     Object.values(placeAdd).forEach((item, index) => {
       if (item) {
         createPlaceDetailRequestList.push({
@@ -1046,7 +1047,25 @@ function CourseRegistrationForm() {
         });
       }
     });
+    const updatedPlaceDetailRequestList = Array.from(
+      createPlaceDetailRequestList
+    );
+    if (location.state) {
+      updatedPlaceDetailRequestList.forEach((item, index, array) => {
+        array[index] = {
+          ...item,
+          placeName: location.state.placeDetailList[index].placeName,
+          placeXCoordinate:
+            location.state.placeDetailList[index].placeXCoordinate,
+          placeYCoordinate:
+            location.state.placeDetailList[index].placeYCoordinate,
+          placeOrder: location.state.placeDetailList[index].placeOrder,
+          placeComment: location.state.placeDetailList[index].placeComment,
+        };
+      });
+    }
 
+    // 해시태그 정보
     hashTagAdd.addHashTags.forEach((item, index) => {
       if (item) {
         createHashtagRequestList.push({
@@ -1054,17 +1073,24 @@ function CourseRegistrationForm() {
         });
       }
     });
+    const updatedHashtagRequestList = Array.from(createHashtagRequestList);
+    if (location.state) {
+      updatedHashtagRequestList.forEach((item, index, array) => {
+        array[index] = {
+          ...item,
+          keyword: array[index].keyword,
+        };
+      });
+    }
 
-    //DOM을 직접 참조하여 value를 가져옴.
+    // 카테고리 정보
     createCategoryListRequestList.push({
       locationCategory: +locationCategoryRef.current.value,
       themeCategory: +themeCategoryRef.current.value,
     });
-
     const updateCategoryListRequestList = Array.from(
       createCategoryListRequestList
     );
-
     if (location.state) {
       updateCategoryListRequestList.forEach((item, index, array) => {
         array[index] = { ...item, id: location.state.categoryLists[index].id };
@@ -1084,8 +1110,8 @@ function CourseRegistrationForm() {
         courseTitle: courseTitleRef.current.value,
         courseComment: courseDescriptonRef.current.value,
         courseStatus: location.state.courseStatus,
-        createPlaceDetailRequestList,
-        createHashtagRequestList,
+        updatedPlaceDetailRequestList,
+        updatedHashtagRequestList,
         updateCategoryListRequestList,
 
         createPlaceImgRequestList: createPlaceImgRequestListState,
@@ -1142,15 +1168,15 @@ function CourseRegistrationForm() {
     if (location.state) {
       const url = `${process.env.REACT_APP_API}/cosmosts/${location.state.id}`;
       console.log('수정');
-      axios
-        .put(url, formData, config)
-        .then((response) => {
-          navigate(`/course-detail/${location.state.id}`);
-        })
-        .catch((error) => new Error(error));
-      return;
+      console.log(formData);
+      // axios
+      //   .put(url, formData, config)
+      //   .then((response) => {
+      //     navigate(`/course-detail/${location.state.id}`);
+      //   })
+      //   .catch((error) => new Error(error));
+      // return;
     } else {
-      console.log('등록');
       const url = `${process.env.REACT_APP_API}/cosmosts`;
       axios
         .post(url, formData, config)
