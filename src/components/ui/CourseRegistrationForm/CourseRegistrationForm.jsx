@@ -1173,11 +1173,7 @@ function CourseRegistrationForm() {
     if (location.state) {
       const url = `${process.env.REACT_APP_API}/cosmosts/${location.state.id}`;
 
-      // console.log('수정');
-      // console.log('token', token);
-      // console.log('config', config);
-      // console.log('sendData', sendData);
-      // console.log('url', url);
+      console.log('수정 sendData', sendData);
 
       axios
         .put(url, formData, config)
