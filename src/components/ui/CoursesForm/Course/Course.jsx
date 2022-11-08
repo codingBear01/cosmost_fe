@@ -79,7 +79,7 @@ function Course({ course, courseId }) {
               to={`/courses/hashtag?keyword=${hashTag.keyword}`}
               onClick={() => setSearchingType('search')}
             >
-              <S.CourseTag>{hashTag?.keyword}</S.CourseTag>
+              <S.CourseTag>#{hashTag?.keyword}</S.CourseTag>
             </Link>
           ))}
         </S.CourseContentWrap>
