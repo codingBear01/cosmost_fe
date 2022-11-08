@@ -664,7 +664,7 @@ function CourseRegistrationForm() {
     //map copy 하기
     let mapMarkerCopy = Array.from(mapMarker);
     const { naver } = window;
-    const URL = "/v1/search/local.json";
+    const URL = "https://openapi.naver.com/v1/search/local.json";
 
     //기존에 지도에 등록된 마커 초기화
     mapMarkerCopy.forEach((Marker) => {
