@@ -4,7 +4,6 @@ const SHARED_URL = location.href;
 
 /** Kakao 공유하기 함수 */
 export const sharingByKakao = (data) => {
-  console.log(data);
   Kakao.Share.sendDefault({
     objectType: 'feed',
     content: {

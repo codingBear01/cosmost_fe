@@ -91,7 +91,7 @@ function CourseContentWrap({
           </CourseContent>
           <CourseContent>
             <MdIcons.MdOutlineRateReview />
-            <span>{courseReviewCount && courseReviewCount}</span>
+            <span>{courseReviewCount ? courseReviewCount : 0}</span>
           </CourseContent>
         </>
       ) : dataCategory === 'authorProfile' ? (

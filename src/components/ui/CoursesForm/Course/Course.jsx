@@ -44,7 +44,7 @@ function Course({ course, courseId }) {
         {/* 코스 이미지 */}
         <Link to={`/course-detail/${courseId}`}>
           <S.CourseFeaturedImage
-            src={courseState.readPlaceImgResponseList[0].placeImgUrl}
+            src={courseState.readPlaceImgResponseList[0]?.placeImgUrl}
             alt={courseState.courseTitle}
           />
         </Link>
