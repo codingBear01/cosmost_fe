@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/v1/search/local.json",
+      "destination": "https://openapi.naver.com/v1/search/local.json"
+    }
+  ]
+}
