@@ -77,62 +77,65 @@ function App() {
         </Route>
 
         <Route element={<WithoutHeaderAndFooter />}>
-          {/* {!token && !isLoggedIn && ( */}
-          <>
-            <Route path="login" element={<Login />} />
-            <Route path="email-validation" element={<InputEmail />} />
-            <Route path="address" element={<InputAddress />} />
-            <Route path="detail-address" element={<InputDetailAddress />} />
-            <Route path="sign-up" element={<InputUser />} />
-
-            <Route path="find">
-              <Route path="email-validation" element={<InputEmail />} />
-              <Route path="id" element={<FindingUserPage />} />
-              <Route path="pwd" element={<FindingUserPage />} />
-            </Route>
-
-            <Route path="naver">
+          {!token && !isLoggedIn && (
+            <>
+              <Route path="login" element={<Login />} />
               <Route path="email-validation" element={<InputEmail />} />
               <Route path="address" element={<InputAddress />} />
               <Route path="detail-address" element={<InputDetailAddress />} />
               <Route path="sign-up" element={<InputUser />} />
-            </Route>
-          </>
-          {/* )} */}
-          {/* {token && isLoggedIn && ( */}
-          <>
-            <Route exact path="user">
-              <Route exact path=":id" element={<User />} />
-              <Route exact path=":id/followers" element={<Follows />} />
-              <Route exact path=":id/followings" element={<Follows />} />
-              <Route
-                exact
-                path=":id/report-histories"
-                element={<Histories />}
-              />
-              <Route
-                exact
-                path=":id/review-histories"
-                element={<Histories />}
-              />
-              <Route exact path="edit">
-                <Route path="menu" element={<EditUserMenu />} />
-                <Route path="email" element={<InputEmail />} />
+
+              <Route path="find">
+                <Route path="email-validation" element={<InputEmail />} />
+                <Route path="id" element={<FindingUserPage />} />
+                <Route path="pwd" element={<FindingUserPage />} />
+              </Route>
+
+              <Route path="naver">
+                <Route path="email-validation" element={<InputEmail />} />
                 <Route path="address" element={<InputAddress />} />
                 <Route path="detail-address" element={<InputDetailAddress />} />
-                <Route path="password" element={<InputPassword />} />
-                <Route path="my-information" element={<InputUser />} />
+                <Route path="sign-up" element={<InputUser />} />
               </Route>
-              <Route path="withdrawal" element={<WithdrawUser />} />
-            </Route>
+            </>
+          )}
+          {token && isLoggedIn && (
+            <>
+              <Route exact path="user">
+                <Route exact path=":id" element={<User />} />
+                <Route exact path=":id/followers" element={<Follows />} />
+                <Route exact path=":id/followings" element={<Follows />} />
+                <Route
+                  exact
+                  path=":id/report-histories"
+                  element={<Histories />}
+                />
+                <Route
+                  exact
+                  path=":id/review-histories"
+                  element={<Histories />}
+                />
+                <Route exact path="edit">
+                  <Route path="menu" element={<EditUserMenu />} />
+                  <Route path="email" element={<InputEmail />} />
+                  <Route path="address" element={<InputAddress />} />
+                  <Route
+                    path="detail-address"
+                    element={<InputDetailAddress />}
+                  />
+                  <Route path="password" element={<InputPassword />} />
+                  <Route path="my-information" element={<InputUser />} />
+                </Route>
+                <Route path="withdrawal" element={<WithdrawUser />} />
+              </Route>
 
-            <Route
-              path="course-registration"
-              element={<CourseRegistration />}
-            />
-            <Route path="course-edit/:id" element={<CourseRegistration />} />
-          </>
-          {/* )} */}
+              <Route
+                path="course-registration"
+                element={<CourseRegistration />}
+              />
+              <Route path="course-edit/:id" element={<CourseRegistration />} />
+            </>
+          )}
         </Route>
 
         <Route

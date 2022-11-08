@@ -187,6 +187,8 @@ function CoursesForm() {
     courses,
   ]);
 
+  console.log(courses);
+
   return (
     <>
       {/* 정렬 기준 모달 */}
@@ -211,6 +213,24 @@ function CoursesForm() {
           </h1>
         ) : (
           <></>
+        )}
+        {params.type === 'likes' && (
+          <h1 style={{ alignSelf: 'start', marginLeft: '3rem' }}>
+            내가{' '}
+            <span style={{ color: `${color.lightBlue}`, fontSize: '3rem' }}>
+              좋아요
+            </span>{' '}
+            한 코스
+          </h1>
+        )}
+        {params.type === 'mine' && (
+          <h1 style={{ alignSelf: 'start', marginLeft: '3rem' }}>
+            내가{' '}
+            <span style={{ color: `${color.lightBlue}`, fontSize: '3rem' }}>
+              등록한
+            </span>{' '}
+            코스
+          </h1>
         )}
         {/* 정렬 기준 버튼 */}
         {(params.type === 'all' && searchingType === 'all') ||
@@ -237,7 +257,7 @@ function CoursesForm() {
               <Course
                 key={index}
                 course={course}
-                courseId={course.id || course.courseId}
+                courseId={course?.courseId ? course.courseId : course.id}
               />
             ))}
         </S.SearchedCourseContainer>

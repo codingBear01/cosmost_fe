@@ -4,8 +4,9 @@ const SHARED_URL = location.href;
 
 /** Kakao 공유하기 함수 */
 export const sharingByKakao = (data) => {
+  console.log(data);
   Kakao.Share.sendDefault({
-    objectType: "feed",
+    objectType: 'feed',
     content: {
       title: data.courseTitle,
       description: data.courseComment,
@@ -17,7 +18,7 @@ export const sharingByKakao = (data) => {
     },
     buttons: [
       {
-        title: "자세히 보기",
+        title: '자세히 보기',
         link: {
           webUrl: SHARED_URL,
           mobileWebUrl: SHARED_URL,
@@ -34,13 +35,13 @@ export const base64ImgSrcToImgBinaryData = (imgSrc) => {
   let Base64DataReg;
   const mimeTypeReg = /data:(.*);/;
 
-  if (imgSrc.slice(0, 3) === "url") {
+  if (imgSrc.slice(0, 3) === 'url') {
     Base64DataReg = /,(.*)\)/;
   } else {
     Base64DataReg = /,(.*)/;
   }
 
-  if (imgSrc !== "none") {
+  if (imgSrc !== 'none') {
     const itemMimeType = imgSrc.match(mimeTypeReg)
       ? imgSrc.match(mimeTypeReg)[1]
       : null;
@@ -70,7 +71,7 @@ export const base64ImgSrcToImgBinaryData = (imgSrc) => {
 /** FormData에 등록된 key와 value를 출력하는 함수 */
 export const printFormData = (formData) => {
   for (let key of formData.keys()) {
-    console.log(key, ":", formData.get(key));
+    console.log(key, ':', formData.get(key));
   }
 };
 
@@ -83,7 +84,7 @@ export const printFormData = (formData) => {
   }
 */
 export const createNaverMap = (
-  elementId = "map",
+  elementId = 'map',
   defaultCoordinate = {
     latitude: 35.179816,
     longitude: 129.0750223,
@@ -177,10 +178,10 @@ export const checkIsLoggedIn = (token, isLoggedIn, transferToLoginPage) => {
   if (!token || !isLoggedIn) {
     if (
       window.confirm(
-        "좋아요를 하기 전에 로그인해주세요. 로그인 창으로 이동하시겠습니까?"
+        '좋아요를 하기 전에 로그인해주세요. 로그인 창으로 이동하시겠습니까?'
       )
     ) {
-      transferToLoginPage("/login");
+      transferToLoginPage('/login');
     }
     return false;
   }
@@ -189,7 +190,7 @@ export const checkIsLoggedIn = (token, isLoggedIn, transferToLoginPage) => {
 
 export const compareAuthorIdWithLoggedInUserId = (authorId, userId, toast) => {
   if (authorId === userId) {
-    toast.warn("자신의 글은 좋아요할 수 없습니다.");
+    toast.warn('자신의 글은 좋아요할 수 없습니다.');
     return false;
   }
   return true;

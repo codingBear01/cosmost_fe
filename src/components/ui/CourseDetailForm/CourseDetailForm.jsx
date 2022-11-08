@@ -1,9 +1,9 @@
 /* libraries */
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 /* recoil */
-import { useRecoilState } from "recoil";
+import { useRecoilState } from 'recoil';
 import {
   createNaverMap,
   addNaverMapMarker,
@@ -14,9 +14,9 @@ import {
   // custom functions
   displayNaverMapMarkerInfo,
   addNaverMapMarkerInfo,
-} from "../../../store";
+} from '../../../store';
 /* components */
-import * as S from "./styled";
+import * as S from './styled';
 import {
   CourseContentWrap,
   CourseImageCarousel,
@@ -24,15 +24,15 @@ import {
   CourseReviewRegisterForm,
   CourseSharingAndLikeButton,
   CourseTitleAndDate,
-} from ".";
-import { ToTopBtn, UtilDiv } from "../..";
+} from '.';
+import { ToTopBtn, UtilDiv } from '../..';
 /* APIs */
 import {
   getCourseAverageRate,
   getCourseDetail,
   getCourseLikeCount,
   getCourseAuthor,
-} from "../../../apis";
+} from '../../../apis';
 
 function CourseDetailForm() {
   const { id } = useParams();
@@ -45,24 +45,24 @@ function CourseDetailForm() {
     useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
   // Auth
-  const [author, setAuthor] = useState("");
+  const [author, setAuthor] = useState('');
   // Cosmost
   const [courseDetail, setCourseDetail] = useState(null);
   // Comment
   const [courseReviews, setCourseReviews] = useState([]);
   // Popularity
   const [courseAverageRate, setCourseAverageRate] = useState(0);
-  const [courseLikeCount, setCourseLikeCount] = useState("");
+  const [courseLikeCount, setCourseLikeCount] = useState('');
   const [courseAverageRatePercentage, setCourseAverageRatePercentage] =
-    useState("");
-  const [courseReviewCount, setCourseReviewCount] = useState("");
+    useState('');
+  const [courseReviewCount, setCourseReviewCount] = useState('');
 
   /* Refs */
   const page = useRef(0);
   const observedTarget = useRef();
 
   /* 로그인 정보 */
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const [user] = useRecoilState(userAtom);
   const [isLoggedIn] = useRecoilState(loginStateAtom);
   const loggedInUserId = user?.id;
@@ -130,54 +130,54 @@ function CourseDetailForm() {
   // courseDetail를 성공적으로 가져오면 호출하는 useEffect.
   useEffect(() => {
     if (courseDetail) {
-      // 네이버 지도 생성
-      const map = createNaverMap();
-      courseDetail.placeDetailList.map((item, index) => {
-        const marker = addNaverMapMarker(map, {
-          latitude: item.placeYCoordinate,
-          longitude: item.placeXCoordinate,
-          eventList: [
-            {
-              eventName: "mouseover",
-              eventListener: (e) => {
-                e.pointerEvent.target.title = item.placeName;
-              },
-            },
-            {
-              eventName: "click",
-              eventListener: (e) => {
-                onClickMarker(e);
-              },
-            },
-          ],
-        });
+      // // 네이버 지도 생성
+      // const map = createNaverMap();
+      // courseDetail.placeDetailList.map((item, index) => {
+      //   const marker = addNaverMapMarker(map, {
+      //     latitude: item.placeYCoordinate,
+      //     longitude: item.placeXCoordinate,
+      //     eventList: [
+      //       {
+      //         eventName: "mouseover",
+      //         eventListener: (e) => {
+      //           e.pointerEvent.target.title = item.placeName;
+      //         },
+      //       },
+      //       {
+      //         eventName: "click",
+      //         eventListener: (e) => {
+      //           onClickMarker(e);
+      //         },
+      //       },
+      //     ],
+      //   });
 
-        const markerInfoString = `
-            <div><h3>${item.placeName}</h3><div>${item.placeComment}</div></div>
-        `;
-        const markerInfoStyle = {
-          backgroundColor: "#000",
-          borderColor: "#2db400",
-          borderWidth: 5,
-          anchorSkew: true,
-          anchorColor: "#eee",
-        };
-        const info = addNaverMapMarkerInfo(
-          map,
-          marker,
-          markerInfoString,
-          markerInfoStyle
-        );
+      //   const markerInfoString = `
+      //       <div><h3>${item.placeName}</h3><div>${item.placeComment}</div></div>
+      //   `;
+      //   const markerInfoStyle = {
+      //     backgroundColor: "#000",
+      //     borderColor: "#2db400",
+      //     borderWidth: 5,
+      //     anchorSkew: true,
+      //     anchorColor: "#eee",
+      //   };
+      //   const info = addNaverMapMarkerInfo(
+      //     map,
+      //     marker,
+      //     markerInfoString,
+      //     markerInfoStyle
+      //   );
 
-        // 네이버지도 마커 클릭시 호출할 함수.
-        const onClickMarker = (e) => {
-          if (info.getMap()) {
-            info.close();
-          } else {
-            info.open(map, marker);
-          }
-        };
-      });
+      //   // 네이버지도 마커 클릭시 호출할 함수.
+      //   const onClickMarker = (e) => {
+      //     if (info.getMap()) {
+      //       info.close();
+      //     } else {
+      //       info.open(map, marker);
+      //     }
+      //   };
+      // });
 
       getCourseAuthor(courseDetail?.authorId, setAuthor);
       getCourseAverageRate(
@@ -199,10 +199,10 @@ function CourseDetailForm() {
         {/* 코스 이미지 carousel */}
         <CourseImageCarousel courseDetail={courseDetail} />
         <UtilDiv
-          justifyContent={"center"}
-          width={"76.8rem"}
-          padding={"0 0 7rem 0"}
-          margin={"0 auto"}
+          justifyContent={'center'}
+          width={'76.8rem'}
+          padding={'0 0 7rem 0'}
+          margin={'0 auto'}
         >
           {/* 코스 제목 및 날짜, 더보기 버튼 */}
           <CourseTitleAndDate
@@ -232,8 +232,8 @@ function CourseDetailForm() {
           />
           {/* 작성자 정보 */}
           <CourseContentWrap
-            justifyContent={"center"}
-            height={"10rem"}
+            justifyContent={'center'}
+            height={'10rem'}
             dataCategory="authorProfile"
             authorCourseCount={courseDetail.authorCourseCount}
             loggedInUserId={loggedInUserId}
@@ -242,7 +242,7 @@ function CourseDetailForm() {
 
           {/* 코스에 등록된 장소를 표시하는 지도 */}
           <div
-            style={{ width: "100%", height: "46rem" }}
+            style={{ width: '100%', height: '46rem' }}
             // src="https://file.mk.co.kr/meet/neds/2020/11/image_readtop_2020_1206310_16061899354442297.jpg"
             // alt="locations"
             id="map"
@@ -254,8 +254,8 @@ function CourseDetailForm() {
           } */}
           {/* 코스에 등록된 장소 순서 */}
           <CourseContentWrap
-            justifyContent={"center"}
-            height={"10rem"}
+            justifyContent={'center'}
+            height={'10rem'}
             dataCategory="courses"
             courseDetail={courseDetail}
           />
@@ -272,14 +272,14 @@ function CourseDetailForm() {
           />
           {/* 코스 평균 평점 및 별 개수별 퍼센테이지 */}
           <CourseContentWrap
-            justifyContent={"center"}
-            height={"30rem"}
+            justifyContent={'center'}
+            height={'30rem'}
             dataCategory="averageRate"
             courseAverageRate={courseAverageRate}
             courseAverageRatePercentage={courseAverageRatePercentage}
           />
           {/* 리뷰 작성 폼 */}
-          {token && isLoggedIn && (
+          {loggedInUserId !== author.id && (
             <CourseReviewRegisterForm courseDetail={courseDetail} />
           )}
           {/* 코스 리뷰 */}
@@ -304,7 +304,7 @@ function CourseDetailForm() {
           {!courseReviews[0] && (
             <h1>아직 등록된 리뷰가 없습니다. 첫 리뷰의 주인공이 되어보세요.</h1>
           )}
-          <div ref={observedTarget} style={{ paddingBottom: "10rem" }}></div>
+          <div ref={observedTarget} style={{ paddingBottom: '10rem' }}></div>
         </UtilDiv>
         <ToTopBtn />
       </>

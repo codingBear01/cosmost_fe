@@ -66,7 +66,11 @@ function CourseTitleAndDate({
           <S.UtilityButtonWrap>
             <S.UtilityButton
               type="button"
-              onClick={() => navigate(`/course-edit/${courseDetail.id}`)}
+              onClick={() =>
+                navigate(`/course-edit/${courseDetail.id}`, {
+                  state: courseDetail,
+                })
+              }
             >
               <FiIcons.FiEdit />
             </S.UtilityButton>

@@ -6,11 +6,15 @@ import axios from 'axios';
 import * as S from './styled';
 import { UtilForm, UtilTitle } from '../..';
 import { FollowListItem } from './';
+/* static data */
+import { COLOR_LIST as color } from '../../../style';
 
-function FollowsForm({ state }) {
+function FollowsForm() {
   const token = localStorage.getItem('token');
 
-  const authorId = useLocation().state;
+  const author = useLocation().state;
+  const authorId = author.id;
+  const authorNickname = author.nickname;
   const path = useLocation().pathname;
   const isFollowing = path.includes('followings');
 
@@ -84,7 +88,23 @@ function FollowsForm({ state }) {
 
   return (
     <UtilForm padding={'15.4rem 10rem'}>
-      <UtilTitle>{isFollowing ? '팔로잉' : '팔로워'}</UtilTitle>
+      <UtilTitle>
+        {authorNickname && (
+          <>
+            <span
+              style={{
+                color: `${color.lightBlue}`,
+                fontSize: '30px',
+                fontWeight: '600',
+              }}
+            >
+              {authorNickname}
+            </span>{' '}
+            님의{' '}
+          </>
+        )}
+        {isFollowing ? '팔로잉' : '팔로워'}
+      </UtilTitle>
       <S.FollowList>
         {follows[0] &&
           follows.map((follow, i) => (
@@ -92,6 +112,7 @@ function FollowsForm({ state }) {
               key={follow.id}
               follow={follow}
               isFollowing={isFollowing}
+              token={token}
             />
           ))}
       </S.FollowList>

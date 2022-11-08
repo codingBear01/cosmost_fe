@@ -187,7 +187,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
         })
         .catch((error) => {
           new Error(error);
-          console.log(error);
           toast.error('인증번호 발송에 실패했습니다.');
         });
     }
@@ -198,6 +197,10 @@ function InputEmailForm({ beforeEditUserInfo }) {
       axios
         .get(url, config)
         .then((response) => {
+          if (response.data === '이메일이 중복됩니다.') {
+            toast.error('이미 존재하는 이메일입니다.');
+            return;
+          }
           toast.success(
             `${emailRef.current.value}로 인증번호를 발송했습니다. 이메일을 확인해주세요.`
           );
@@ -205,7 +208,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
         })
         .catch((error) => {
           new Error(error);
-          console.log(error);
           toast.error('인증번호 발송에 실패했습니다.');
         });
     }
@@ -245,13 +247,9 @@ function InputEmailForm({ beforeEditUserInfo }) {
         timeout: 3000,
       };
 
-      console.log('data', data);
       axios
         .put(url, data, config)
-        .then((response) => {
-          alert(response.data);
-          navigate();
-        })
+        .then((response) => {})
         .catch((error) => {
           new Error(error);
           console.log(error);
@@ -264,9 +262,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
       axios
         .get(url, config)
         .then((response) => {
-          console.log('response', response);
-          console.log(PAGE_TYPES[pathname].certificationNumberComparingType);
-
           //아이디 찾기에서 아이디 찾기에 성공한 경우
           if (
             PAGE_TYPES[pathname].certificationNumberComparingType ===
@@ -453,7 +448,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
           hoveredBgColor={color.navy}
           onClick={onClickCompareCertificationNumber}
         >
-          인증번호 검증
+          인증번호 확인
         </Button>
       </UtilInputWrap>
       {/* 다음으로 버튼*/}
