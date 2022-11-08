@@ -1062,8 +1062,7 @@ function CourseRegistrationForm() {
             location.state.placeDetailList[index].placeXCoordinate,
           placeYCoordinate:
             location.state.placeDetailList[index].placeYCoordinate,
-          placeOrder:
-            location.state.placeDetailList[index].placeOrder.toString(),
+          placeOrder: location.state.placeDetailList[index].placeOrder,
           placeComment: location.state.placeDetailList[index].placeComment,
         };
       });
@@ -1118,7 +1117,9 @@ function CourseRegistrationForm() {
         createHashtagRequestList: updatedHashtagRequestList,
         updateCategoryListRequestList,
 
-        createPlaceImgRequestList: createPlaceImgRequestListState,
+        createPlaceImgRequestList: !createPlaceImgRequestListState
+          ? []
+          : createPlaceImgRequestListState,
         deletePlaceImgRequestList: deletePlaceImgRequestListState,
         updatePlaceImgRequestList: updatePlaceImgRequestListState,
       };
@@ -1172,14 +1173,11 @@ function CourseRegistrationForm() {
     if (location.state) {
       const url = `${process.env.REACT_APP_API}/cosmosts/${location.state.id}`;
 
-      console.log('hashtags', hashTagAdd);
-      // console.log('수정');
-      // console.log('token', token);
-      // console.log('config', config);
-      // console.log('sendData', sendData);
-      // console.log('url', url);
-      // console.log(updatedPlaceDetailRequestList);
-      // console.log(updatedHashtagRequestList);
+      console.log('수정');
+      console.log('token', token);
+      console.log('config', config);
+      console.log('sendData', sendData);
+      console.log('url', url);
 
       axios
         .put(url, formData, config)
@@ -1190,13 +1188,16 @@ function CourseRegistrationForm() {
       return;
     } else {
       const url = `${process.env.REACT_APP_API}/cosmosts`;
-      axios
-        .post(url, formData, config)
-        .then((response) => {
-          navigate('/courses/mine');
-        })
-        .catch((error) => new Error(error));
-      return;
+
+      console.log('등록 sendData', sendData);
+
+      // axios
+      //   .post(url, formData, config)
+      //   .then((response) => {
+      //     navigate('/courses/mine');
+      //   })
+      //   .catch((error) => new Error(error));
+      // return;
     }
   };
 
