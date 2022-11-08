@@ -69,7 +69,7 @@ function App() {
         </Route>
 
         <Route element={<WithoutHeaderAndFooter />}>
-          <Route exact path="others/followers" element={<Follows />} />
+          <Route path="others/followers" element={<Follows />} />
         </Route>
 
         <Route element={<WithoutHeaderAndFooter />}>
@@ -86,32 +86,17 @@ function App() {
                 <Route path="id" element={<FindingUserPage />} />
                 <Route path="pwd" element={<FindingUserPage />} />
               </Route>
-
-              <Route path="naver">
-                <Route path="email-validation" element={<InputEmail />} />
-                <Route path="address" element={<InputAddress />} />
-                <Route path="detail-address" element={<InputDetailAddress />} />
-                <Route path="sign-up" element={<InputUser />} />
-              </Route>
             </>
           )}
           {token && (
             <>
-              <Route exact path="user">
-                <Route exact path=":id" element={<User />} />
-                <Route exact path=":id/followers" element={<Follows />} />
-                <Route exact path=":id/followings" element={<Follows />} />
-                <Route
-                  exact
-                  path=":id/report-histories"
-                  element={<Histories />}
-                />
-                <Route
-                  exact
-                  path=":id/review-histories"
-                  element={<Histories />}
-                />
-                <Route exact path="edit">
+              <Route path="user">
+                <Route path=":id" element={<User />} />
+                <Route path=":id/followers" element={<Follows />} />
+                <Route path=":id/followings" element={<Follows />} />
+                <Route path=":id/report-histories" element={<Histories />} />
+                <Route path=":id/review-histories" element={<Histories />} />
+                <Route path="edit">
                   <Route path="menu" element={<EditUserMenu />} />
                   <Route path="email" element={<InputEmail />} />
                   <Route path="address" element={<InputAddress />} />
