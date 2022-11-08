@@ -16,7 +16,7 @@ export const MAIN_COURSES = [
     alignSelf: 'end',
     title: '인기 있는 코스',
     icon: <FiIcons.FiThumbsUp />,
-    path: '/courses/all',
+    path: '/courses/popular',
     type: 'popular',
   },
   {
@@ -24,7 +24,7 @@ export const MAIN_COURSES = [
     alignSelf: 'start',
     title: '높은 평가 받은 코스',
     icon: <FiIcons.FiStar />,
-    path: '/courses/all',
+    path: '/courses/rate',
     type: 'rate',
   },
 ];
