@@ -1166,18 +1166,18 @@ function CourseRegistrationForm() {
       formData.append('file', '');
     }
 
-    if (!validateCourseRegistrationInput(sendData, imageblobs)) return;
+    // if (!validateCourseRegistrationInput(sendData, imageblobs)) return;
 
     printFormData(formData);
 
     if (location.state) {
       const url = `${process.env.REACT_APP_API}/cosmosts/${location.state.id}`;
 
-      console.log('수정');
-      console.log('token', token);
-      console.log('config', config);
-      console.log('sendData', sendData);
-      console.log('url', url);
+      // console.log('수정');
+      // console.log('token', token);
+      // console.log('config', config);
+      // console.log('sendData', sendData);
+      // console.log('url', url);
 
       axios
         .put(url, formData, config)
@@ -1191,13 +1191,13 @@ function CourseRegistrationForm() {
 
       console.log('등록 sendData', sendData);
 
-      // axios
-      //   .post(url, formData, config)
-      //   .then((response) => {
-      //     navigate('/courses/mine');
-      //   })
-      //   .catch((error) => new Error(error));
-      // return;
+      axios
+        .post(url, formData, config)
+        .then((response) => {
+          navigate('/courses/mine');
+        })
+        .catch((error) => new Error(error));
+      return;
     }
   };
 
