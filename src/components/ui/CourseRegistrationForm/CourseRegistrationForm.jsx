@@ -1051,7 +1051,6 @@ function CourseRegistrationForm() {
         });
       }
     });
-    console.log(updatedPlaceDetailRequestList);
     const updatedPlaceDetailRequestList = Array.from(
       createPlaceDetailRequestList
     );
@@ -1069,6 +1068,7 @@ function CourseRegistrationForm() {
         };
       });
     }
+    console.log(updatedPlaceDetailRequestList);
 
     // 해시태그 정보
     hashTagAdd.addHashTags.forEach((item, index) => {
@@ -1184,10 +1184,7 @@ function CourseRegistrationForm() {
       return;
     } else {
       const url = `${process.env.REACT_APP_API}/cosmosts`;
-      console.log('등록');
-      console.log(sendData);
-      console.log(url);
-      console.log(config);
+
       axios
         .post(url, formData, config)
         .then((response) => {
