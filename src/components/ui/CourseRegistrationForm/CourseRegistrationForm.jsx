@@ -1051,6 +1051,7 @@ function CourseRegistrationForm() {
         });
       }
     });
+    console.log(updatedPlaceDetailRequestList);
     const updatedPlaceDetailRequestList = Array.from(
       createPlaceDetailRequestList
     );
@@ -1167,7 +1168,7 @@ function CourseRegistrationForm() {
       formData.append('file', '');
     }
 
-    // if (!validateCourseRegistrationInput(sendData, imageblobs)) return;
+    if (!validateCourseRegistrationInput(sendData, imageblobs)) return;
 
     printFormData(formData);
 
