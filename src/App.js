@@ -26,7 +26,7 @@ import {
   WithdrawUser,
 } from './components';
 /* router */
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 
 const WithHeaderAndFooter = () => {
   return (
@@ -52,7 +52,8 @@ const WithoutHeaderAndFooter = () => {
 const { Kakao } = window;
 
 function App() {
-  const token = localStorage.getItem('token');
+  const location = useLocation();
+  const token = location.state;
 
   /* 프로젝트 실행 시 Kakao API KEY 값 초기화하는 함수 */
   useEffect(() => {
