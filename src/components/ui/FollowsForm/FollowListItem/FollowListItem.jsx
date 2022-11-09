@@ -38,7 +38,6 @@ function FollowListItem({ follow, isFollowing, token }) {
           width={'60px'}
           height={'60px'}
         />
-        <span>{followId}</span>
         <span>{user.nickname}</span>
       </Link>
       {token && (

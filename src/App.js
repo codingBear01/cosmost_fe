@@ -22,6 +22,7 @@ import {
   Main,
   Messages,
   User,
+  UserInformation,
   WithdrawUser,
 } from './components';
 /* router */
@@ -96,6 +97,7 @@ function App() {
                 <Route path=":id/followings" element={<Follows />} />
                 <Route path=":id/report-histories" element={<Histories />} />
                 <Route path=":id/review-histories" element={<Histories />} />
+                <Route path=":id/information" element={<UserInformation />} />
                 <Route path="edit">
                   <Route path="menu" element={<EditUserMenu />} />
                   <Route path="email" element={<InputEmail />} />

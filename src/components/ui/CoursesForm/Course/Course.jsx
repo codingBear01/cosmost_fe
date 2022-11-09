@@ -98,12 +98,23 @@ function Course({ course, courseId }) {
         </S.CourseContentWrap>
         {/* 코스 순서 */}
         <S.CourseOrderWrap>
-          {courseState.readPlaceDetailResponseList.map((item, index) => (
-            <div key={item.id}>
-              <S.CourseName>{item.placeName}</S.CourseName>
-              {index !== courseState.readPlaceDetailResponseList.length - 1 && (
-                <AiIcons.AiOutlineArrowRight style={{ fontSize: `${fs.s}` }} />
-              )}
+          {courseState.readPlaceDetailResponseList.map((item, index, arr) => (
+            <div
+              key={item.id}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <S.CourseName key={item.id}>
+                {item.placeName}{' '}
+                {arr.length - 1 !== index && (
+                  <AiIcons.AiOutlineArrowRight
+                    key={item.id}
+                    style={{ fontSize: `${fs.s}` }}
+                  />
+                )}
+              </S.CourseName>
             </div>
           ))}
         </S.CourseOrderWrap>
