@@ -149,8 +149,6 @@ export const updateUserPassword = (
     timeout: 3000,
   };
 
-  console.log(beforeEditUserInfo);
-
   const updateBody2 = {
     loginId: beforeEditUserInfo.loginId,
     loginPwd: beforeEditUserInfo.loginPwd,
@@ -523,9 +521,7 @@ export const withdrawUser = (
   });
 
   formData.append('updateAuthRequest', updateBodyBlob);
-  console.log(url);
-  console.log(token);
-  console.log(updateBody2);
+
   axios
     .put(url, formData, config)
     .then((response) => {

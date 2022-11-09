@@ -11,7 +11,6 @@ import * as BsIcons from 'react-icons/bs';
 import { COLOR_LIST as color } from '../../../style';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { GiCoinsPile } from 'react-icons/gi';
 
 function InputEmailForm({ beforeEditUserInfo }) {
   /* 페이지 분기용 variables */
@@ -360,28 +359,28 @@ function InputEmailForm({ beforeEditUserInfo }) {
       .then((response) => {
         //수정된 데이터 다시 가져와서 리다이렉트 하기
         toast.success(response.data);
-        // const url = `${process.env.REACT_APP_API}/auths`;
-        // const config = {
-        //   headers: {
-        //     Authorization: token,
-        //   },
-        //   timeout: 1000,
-        // };
-        // axios
-        //   .get(url, config)
-        //   .then((resonse) => {
-        //     alert('이메일 변경에 성공했습니다.');
-        //     navigate(`/user/edit/menu`, {
-        //       replace: true,
-        //       state: resonse.data,
-        //     });
-        //   })
-        //   .catch((error) => {
-        //     new Error(error);
-        //     toast.error(
-        //       '변경된 이메일 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
-        //     );
-        //   });
+        const url = `${process.env.REACT_APP_API}/auths`;
+        const config = {
+          headers: {
+            Authorization: token,
+          },
+          timeout: 1000,
+        };
+        axios
+          .get(url, config)
+          .then((resonse) => {
+            alert('이메일 변경에 성공했습니다.');
+            navigate(`/user/edit/menu`, {
+              replace: true,
+              state: resonse.data,
+            });
+          })
+          .catch((error) => {
+            new Error(error);
+            toast.error(
+              '변경된 이메일 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
+            );
+          });
       })
       .catch((error) => {
         new Error(error);
