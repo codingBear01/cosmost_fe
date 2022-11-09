@@ -1,72 +1,39 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# cosMost - 프론트 엔드
+<img src="https://user-images.githubusercontent.com/95178119/200802709-f0a5f6fa-08f8-4709-97e4-242d54615ec2.png"  width="400" height="300">
 
-## Available Scripts
+## Description
+> 스파로스 아카데미 1기 2차 기업연계 프로젝트
 
-In the project directory, you can run:
+> 2022.09.00. ~ 2022.11.11.
 
-### `npm start`
+## About Project
+⚒ Languages & Platforms
+배지들
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+⚒ Tools
+tools~
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## System Spec
+시스템 사양 표
 
-### `npm test`
+## Distributing Roles
+|Part|Name & Repo|Roles|
+|:---:|:---:|:---:|
+|BE|김승후 [@shockim3710](https://github.com/shockim3710)|팀장 및 기술 총괄, 코스 CRUD, 코스 검색 및 정렬 관련 서비스 개발|
+|BE|홍찬영 [@ChanYoungHong](https://github.com/ChanYoungHong)|신고, 좋아요, 리뷰 관련 서비스 개발|
+|BE|권재현 [@K-J-HYEON](https://github.com/K-J-HYEON)|회원 관련 서비스 개발|
+|FE|강명모 [@codingBear01](https://github.com/codingBear01)|UI/UX 기획 및 퍼블리싱 총괄, 신고, 좋아요, 리뷰, 회원 관련 api 기능 구현|
+|FE|최영수 [@InvincibleGaren](https://github.com/InvincibleGaren)|코스, 회원, 네이버 지도 관련 api 기능 구현|
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🗃 Repos.
+#### [BE Repo.](https://github.com/orgs/CosMost-BE/repositories)
+#### [FE Repo.](https://github.com/codingBear01/cosmost_fe)
 
-### `npm run build`
+## ER Diagram
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Requirements Specification
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## API Definition
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-# This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-# cosmost_fe
+## 구현 영상
