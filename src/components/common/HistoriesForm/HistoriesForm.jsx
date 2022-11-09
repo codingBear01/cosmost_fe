@@ -3,7 +3,11 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { isReportFormOpenedAtom } from '../../../store';
+import {
+  isReportFormOpenedAtom,
+  reportTitleAtom,
+  reportContentAtom,
+} from '../../../store';
 /* components */
 import * as S from './styled';
 import { HistoryListItem } from './';
@@ -21,6 +25,9 @@ function HistoriesForm({ isReportHistoryPage }) {
   const [myReviews, setMyReviews] = useState([]);
   const [isLastPage, setIsLastPage] = useState(false);
 
+  const [reportTitle, setReportTitle] = useRecoilState(reportTitleAtom);
+  const [reportContent, setReportContent] = useRecoilState(reportContentAtom);
+
   /* Refs */
   const page = useRef(0);
   const observedTarget = useRef(null);
@@ -34,6 +41,8 @@ function HistoriesForm({ isReportHistoryPage }) {
     setReport(item);
     setOpeningReportFormType(type);
     formRef.current = e.target;
+    setReportTitle('');
+    setReportContent('');
   };
 
   /* Hooks */
@@ -116,6 +125,10 @@ function HistoriesForm({ isReportHistoryPage }) {
           report={report}
           isHistoriesChanged={isHistoriesChanged}
           setIsHistoriesChanged={setIsHistoriesChanged}
+          reportTitle={reportTitle}
+          reportContent={reportContent}
+          setReportTitle={setReportTitle}
+          setReportContent={setReportContent}
         />
         {isReportHistoryPage
           ? myReports[0] &&

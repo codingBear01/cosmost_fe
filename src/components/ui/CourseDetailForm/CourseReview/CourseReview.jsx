@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+/* recoil */
+import { useRecoilState } from 'recoil';
 /* components */
 import * as S from './styled';
 import { Button, ProfilePic } from '../../../';
@@ -18,6 +20,7 @@ import {
 import {
   checkIsLoggedIn,
   compareAuthorIdWithLoggedInUserId,
+  isLoggedInAtom,
 } from '../../../../store';
 /* static data */
 import { COLOR_LIST as color, FONT_SIZE_LIST as fs } from '../../../../style';
@@ -59,6 +62,7 @@ function CourseReview({
   const [courseReviewAuthor, setCourseReviewAuthor] = useState('');
   const [isDeleteButtonClicked, setIsDeleteButtonClicked] = useState(false);
   const [isDisplayed, setIsDisplayed] = useState(true);
+  const [isLoggedIn] = useRecoilState(isLoggedInAtom);
 
   /* Refs */
   const edittedReviewContentRef = useRef();
@@ -209,7 +213,7 @@ function CourseReview({
                   {/* 코스 리뷰 작성일 */}
                   <span>{courseReview.createdAt}</span>
                   {/* 수정, 삭제 버튼 */}
-                  {loggedInUserId === courseReview.reviewerId && (
+                  {isLoggedIn && loggedInUserId === courseReview.reviewerId && (
                     <S.UtilityButtonWrap>
                       <S.UtilityButton
                         type="button"
@@ -312,7 +316,7 @@ function CourseReview({
                   {courseReview.courseReviewContent}
                 </S.CourseReviewDescription>
               )}
-              {/* 리뷰 수정, 취소 버튼 */}
+              {/* 리뷰 수정, 삭제 버튼 */}
               {isCourseReviewEditTextareaOpened && (
                 <S.CourseReviewEditButtons>
                   <Button

@@ -1,8 +1,6 @@
 /* libraries */
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 /* components */
 import * as S from './styled';
 import { Button, Input, UtilTitle } from '../..';
@@ -20,22 +18,22 @@ function ReportForm({
   report,
   isHistoriesChanged,
   setIsHistoriesChanged,
+  reportTitle,
+  reportContent,
+  setReportTitle,
+  setReportContent,
 }) {
   const token = localStorage.getItem('token');
 
   const [reportCategories, setReportCategories] = useState([]);
 
   /* 신고 작성 관련 ref */
-  const reportTitle = useRef();
-  const reportContent = useRef();
   const reportCategory = useRef();
 
   /* Handlers */
   /** 모달창 닫힐 시 입력값 초기화 */
   useEffect(() => {
     if (type === 'update') {
-      reportTitle.current.value = '';
-      reportContent.current.value = '';
       reportCategory.current.value = 'default';
     }
   }, [isReportFormOpened, type]);
@@ -45,15 +43,24 @@ function ReportForm({
       toast.error('카테고리를 선택해주세요.');
       return false;
     }
-    if (!reportTitle.current.value) {
+    if (!reportTitle) {
       toast.error('제목을 입력해주세요.');
       return false;
     }
-    if (!reportContent.current.value) {
+    if (!reportContent) {
       toast.error('내용을 입력해주세요.');
       return false;
     }
     return true;
+  };
+
+  /** 신고 제목 혹은 내용 onChange */
+  const onChangeReportInput = (e, _type) => {
+    if (_type === 'title') {
+      setReportTitle(e.target.value);
+    } else {
+      setReportContent(e.target.value);
+    }
   };
 
   /* APIs */
@@ -123,11 +130,12 @@ function ReportForm({
           <S.ReportFormTitle>{report?.reportTitle}</S.ReportFormTitle>
         ) : (
           <Input
-            ref={reportTitle}
             type="text"
             placeholder={type === 'update' ? report.reportTitle : '제목'}
+            value={reportTitle}
             width={'45rem'}
             height={'4rem'}
+            onChange={(e) => onChangeReportInput(e, 'title')}
           />
         )}
         {/* 신고 내용 */}
@@ -139,14 +147,15 @@ function ReportForm({
           ></S.ReportFormTextArea>
         ) : (
           <S.ReportFormTextArea
-            ref={reportContent}
             type={'text'}
             placeholder={
               type === 'update'
                 ? report.reportContent
                 : '신고 내용을 입력해주세요.'
             }
+            value={reportContent}
             maxLength={500}
+            onChange={(e) => onChangeReportInput(e, 'content')}
           ></S.ReportFormTextArea>
         )}
         {/* 신고 버튼 */}

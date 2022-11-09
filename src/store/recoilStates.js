@@ -43,3 +43,13 @@ export const isLoggedInAtom = atom({
   default: false,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const reportTitleAtom = atom({
+  key: 'reportTitleAtom',
+  default: '',
+});
+
+export const reportContentAtom = atom({
+  key: 'reportContentAtom',
+  default: '',
+});

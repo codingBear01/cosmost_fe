@@ -1,10 +1,14 @@
 /* libraries */
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { isReportFormOpenedAtom } from '../../../store';
+import {
+  isReportFormOpenedAtom,
+  reportTitleAtom,
+  reportContentAtom,
+} from '../../../store';
 /* components */
 import { UserProfilArea } from '.';
 import { ReportForm, UtilDiv, UtilTitle, MenuListForm } from '../..';
@@ -19,6 +23,9 @@ function UserInfoForm() {
     state: '',
   });
 
+  const [reportTitle, setReportTitle] = useRecoilState(reportTitleAtom);
+  const [reportContent, setReportContent] = useRecoilState(reportContentAtom);
+
   /** 모달창 Open 여부 state */
   const [isReportFormOpened, setIsReportFormOpened] = useRecoilState(
     isReportFormOpenedAtom
@@ -27,6 +34,8 @@ function UserInfoForm() {
   /** 신고 모달창 Open 여부 조작하는 핸들러 */
   const onClickOpenReportForm = () => {
     setIsReportFormOpened(!isReportFormOpened);
+    setReportTitle('');
+    setReportContent('');
   };
 
   /* APIs */
@@ -76,6 +85,10 @@ function UserInfoForm() {
           onClick={onClickOpenReportForm}
           setIsReportFormOpened={setIsReportFormOpened}
           isReportFormOpened={isReportFormOpened}
+          reportTitle={reportTitle}
+          reportContent={reportContent}
+          setReportTitle={setReportTitle}
+          setReportContent={setReportContent}
         />
       </UtilDiv>
     )
