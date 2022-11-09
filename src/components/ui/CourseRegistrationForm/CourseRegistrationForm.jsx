@@ -897,6 +897,7 @@ function CourseRegistrationForm() {
   const onClickNaverMapClose = (e) => {
     e.preventDefault();
     SetNaverMapState({ ...naverMapState, naverMapEnable: false });
+    SetNaverMapQuery({ ...naverMapQuery, keyword: '' });
   };
 
   /* 네이버 지도에서 지역구 또는 키워드가 변경되었을 시 호출할 이벤트 핸들러*/
@@ -915,7 +916,6 @@ function CourseRegistrationForm() {
       query,
       naverMapState.naverMapMarker
     );
-    SetNaverMapQuery({ ...naverMapQuery, keyword: '' });
   };
 
   // 등록된 장소 개수를 계산하는 변수
