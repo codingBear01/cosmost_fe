@@ -1108,8 +1108,8 @@ export const postReport = (
 
   const url = `${process.env.REACT_APP_API}/boards`;
   const body = {
-    reportTitle: reportTitle.current.value,
-    reportContent: reportContent.current.value,
+    reportTitle: reportTitle,
+    reportContent: reportContent,
     createReportCategoryListRequestList: [
       {
         reportCategory: +reportCategory.current.value,
@@ -1153,8 +1153,8 @@ export const updateReport = (
 
   const url = `${process.env.REACT_APP_API}/boards/${id}`;
   const body = {
-    reportTitle: reportTitle.current.value,
-    reportContent: reportContent.current.value,
+    reportTitle: reportTitle,
+    reportContent: reportContent,
     updateReportCategoryListRequestList: [
       {
         id: report.reportCategoryList[0].id,

@@ -14,7 +14,7 @@ import { sharingByKakao } from '../../../../store';
 function CourseSharingModal({ courseDetail, onClickCopyCurrentPageUrl }) {
   /* 현재 접속한 페이지 url */
   const currentUrl = window.location.href;
-  console.log(currentUrl);
+
   /* SNS 공유 기능에 쓰이는 url */
   const URLS = {
     line: `https://line.me/R/msg/text/${encodeURIComponent(

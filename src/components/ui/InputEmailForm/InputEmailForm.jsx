@@ -161,11 +161,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
         timeout: 3000,
       };
 
-      console.log("이메일 변경");
-      console.log(url);
-      console.log(token);
-      console.log(data);
-
       axios
         .put(url, data, config)
         .then((response) => {
@@ -182,9 +177,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
     // 그 외인 경우 인증 번호 발송
     else {
       const config = { timeout: 3000 };
-
-      console.log("회원가입");
-      console.log(url);
 
       axios
         .get(url, config)
@@ -213,8 +205,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
     const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
 
-    console.log(url);
-    console.log(PAGE_TYPES[pathname].certificationNumberComparingType);
     // 이메일 변경을 목적으로 보낸 경우 인증번호 검증
     if (
       PAGE_TYPES[pathname].certificationNumberComparingType ===
@@ -241,10 +231,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
         },
         timeout: 3000,
       };
-
-      console.log("beforeEditUserInfo", beforeEditUserInfo);
-      console.log("data", data);
-      console.log(token);
 
       axios
         .put(url, data, config)
@@ -369,10 +355,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
     formData.append("updateAuthRequest", updateBodyBlob);
     formData.append("file", profilePictureBlob);
-
-    console.log("수정");
-    console.log(url);
-    console.log(updateBody2);
 
     axios
       .put(url, formData, config)

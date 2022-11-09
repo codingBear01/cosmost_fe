@@ -17,7 +17,6 @@ function UserProfilArea({ token, user }) {
   const [myFollowersCount, setMyFollowersCount] = useState(0);
   const [myFollowingsCount, setMyFollowingsCount] = useState(0);
 
-  console.log(user);
   /* APIs */
   useEffect(() => {
     if (token) {

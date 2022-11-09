@@ -25,7 +25,6 @@ function MenuListForm({ onClickOpenReportForm }) {
   const isEditUserPage = path.includes('edit');
 
   const [, setIsLoggedIn] = useRecoilState(isLoggedInAtom);
-
   /* Handlers */
   const onClickLogOut = () => {
     localStorage.removeItem('token');

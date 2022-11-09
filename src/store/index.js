@@ -14,6 +14,8 @@ export {
   isLoggedInAtom,
   queryStringsStateAtom,
   searchingTypeAtom,
+  reportTitleAtom,
+  reportContentAtom,
 } from './recoilStates';
 
 /* functions */

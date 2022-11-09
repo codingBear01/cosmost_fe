@@ -34,15 +34,13 @@ function FollowListItem({ follow, isFollowing, token }) {
 
   return (
     <S.StyledFollowListItem>
-      <Link to={`/user/${followId}`}>
-        <ProfilePic
-          src={author.profileImgSaveUrl}
-          alt={author.nickname}
-          width={'60px'}
-          height={'60px'}
-        />
-        <span>{author.nickname}</span>
-      </Link>
+      <ProfilePic
+        src={author.profileImgSaveUrl}
+        alt={author.nickname}
+        width={'60px'}
+        height={'60px'}
+      />
+      <span>{author.nickname}</span>
       {token && user.id !== author.id && (
         <>
           {!isFollowed[0] && (

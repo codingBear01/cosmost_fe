@@ -1068,7 +1068,6 @@ function CourseRegistrationForm() {
         };
       });
     }
-    console.log(updatedPlaceDetailRequestList);
 
     // 해시태그 정보
     hashTagAdd.addHashTags.forEach((item, index) => {

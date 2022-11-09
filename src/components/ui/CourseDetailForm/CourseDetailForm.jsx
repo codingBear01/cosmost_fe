@@ -130,58 +130,58 @@ function CourseDetailForm() {
   // courseDetail를 성공적으로 가져오면 호출하는 useEffect.
   useEffect(() => {
     if (courseDetail) {
-      // // 네이버 지도 생성
-      // const map = createNaverMap();
-      // courseDetail.placeDetailList.map((item, index) => {
-      //   const marker = addNaverMapMarker(map, {
-      //     latitude: item.placeYCoordinate,
-      //     longitude: item.placeXCoordinate,
-      //     eventList: [
-      //       {
-      //         eventName: 'mouseover',
-      //         eventListener: (e) => {
-      //           e.pointerEvent.target.title = item.placeName;
-      //         },
-      //       },
-      //       {
-      //         eventName: 'click',
-      //         eventListener: (e) => {
-      //           onClickMarker(e);
-      //         },
-      //       },
-      //     ],
-      //   });
+      // 네이버 지도 생성
+      const map = createNaverMap();
+      courseDetail.placeDetailList.map((item, index) => {
+        const marker = addNaverMapMarker(map, {
+          latitude: item.placeYCoordinate,
+          longitude: item.placeXCoordinate,
+          eventList: [
+            {
+              eventName: 'mouseover',
+              eventListener: (e) => {
+                e.pointerEvent.target.title = item.placeName;
+              },
+            },
+            {
+              eventName: 'click',
+              eventListener: (e) => {
+                onClickMarker(e);
+              },
+            },
+          ],
+        });
 
-      //   const markerInfoString = `
-      //     <div>
-      //       <h3>장소 이름: ${item.placeName}</h3>
-      //       <span style="font-size: 15px; font-weight: 600;">한줄평: ${item.placeComment}</span>
-      //     </div>
-      //   `;
-      //   const markerInfoStyle = {
-      //     maxWidth: 150,
-      //     backgroundColor: `${color.navy}`,
-      //     borderColor: `${color.lightBlue}`,
-      //     borderWidth: 2,
-      //     anchorSkew: true,
-      //     anchorColor: `${color.navy}`,
-      //   };
-      //   const info = addNaverMapMarkerInfo(
-      //     map,
-      //     marker,
-      //     markerInfoString,
-      //     markerInfoStyle
-      //   );
+        const markerInfoString = `
+          <div>
+            <h3>장소 이름: ${item.placeName}</h3>
+            <span style="font-size: 15px; font-weight: 600;">한줄평: ${item.placeComment}</span>
+          </div>
+        `;
+        const markerInfoStyle = {
+          maxWidth: 150,
+          backgroundColor: `${color.navy}`,
+          borderColor: `${color.lightBlue}`,
+          borderWidth: 2,
+          anchorSkew: true,
+          anchorColor: `${color.navy}`,
+        };
+        const info = addNaverMapMarkerInfo(
+          map,
+          marker,
+          markerInfoString,
+          markerInfoStyle
+        );
 
-      //   // 네이버지도 마커 클릭시 호출할 함수.
-      //   const onClickMarker = (e) => {
-      //     if (info.getMap()) {
-      //       info.close();
-      //     } else {
-      //       info.open(map, marker);
-      //     }
-      //   };
-      // });
+        // 네이버지도 마커 클릭시 호출할 함수.
+        const onClickMarker = (e) => {
+          if (info.getMap()) {
+            info.close();
+          } else {
+            info.open(map, marker);
+          }
+        };
+      });
 
       getCourseAuthor(courseDetail?.authorId, setAuthor);
       getCourseAverageRate(
