@@ -9,6 +9,7 @@ import {
   addNaverMapMarker,
   // Atoms
   userAtom,
+  isLoggedInAtom,
   // custom functions
   addNaverMapMarkerInfo,
 } from '../../../store';
@@ -61,6 +62,7 @@ function CourseDetailForm() {
   /* 로그인 정보 */
   const token = localStorage.getItem('token');
   const [user] = useRecoilState(userAtom);
+  const [isLoggedIn] = useRecoilState(isLoggedInAtom);
   const loggedInUserId = user?.id;
 
   /* Handlers */
@@ -264,12 +266,9 @@ function CourseDetailForm() {
             courseAverageRatePercentage={courseAverageRatePercentage}
           />
           {/* 리뷰 작성 폼 */}
-          {!token ? (
-            <></>
-          ) : (
+          {isLoggedIn && author?.id !== user?.id && (
             <CourseReviewRegisterForm courseDetail={courseDetail} />
           )}
-
           {/* 코스 리뷰 */}
           {courseReviews[0] &&
             courseReviews.map((courseReview, i) => (

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { searchingTypeAtom } from '../../../../store';
+import { searchingTypeAtom, isLoggedInAtom } from '../../../../store';
 /* components */
 import * as S from './styled';
 import { CourseContent } from '..';
@@ -39,14 +39,10 @@ function CourseContentWrap({
   const [isFollowedChanged, setIsFollowedChanged] = useState(false);
   const [authorsFollowersCount, setAuthorsFollowersCount] = useState(null);
   const [, setSearchingType] = useRecoilState(searchingTypeAtom);
+  const [isLoggedIn] = useRecoilState(isLoggedInAtom);
+
   /* Variables */
-  const courseAverageRateGaugeWidth =
-    courseAverageRatePercentage &&
-    courseAverageRatePercentage.map((item, i, arr) => {
-      console.log();
-    });
   const token = localStorage.getItem('token');
-  console.log(courseAverageRateGaugeWidth);
 
   /* APIs */
 
@@ -109,7 +105,7 @@ function CourseContentWrap({
           />
           <S.AutorProfileVerticalWrap marginRight={'3rem'}>
             <S.AutorNickname>{author?.nickname}</S.AutorNickname>
-            {token && author.id !== loggedInUserId ? (
+            {isLoggedIn && author.id !== loggedInUserId ? (
               <>
                 {!isFollowed[0] && (
                   <Button
@@ -163,7 +159,7 @@ function CourseContentWrap({
           <Link to={`/others/followers`} state={author && author}>
             <S.AutorProfileVerticalWrap>
               <FiIcons.FiUsers />
-              <span>{authorsFollowersCount && authorsFollowersCount}</span>
+              <span>{authorsFollowersCount ? authorsFollowersCount : 0}</span>
             </S.AutorProfileVerticalWrap>
           </Link>
           <S.AutorProfileVerticalWrap>

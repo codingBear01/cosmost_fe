@@ -235,12 +235,12 @@ function CourseRegistrationForm() {
 
     axios
       .get(url, config)
-      .then((data) => {
-        const CategoryLocalArr = data.data;
+      .then((response) => {
+        const CategoryLocalArr = response.data;
         setCategoryLocalList(CategoryLocalArr);
       })
-      .catch((e) => {
-        alert('코스 카테고리의 지역값을 가져오지 못했습니다.');
+      .catch((error) => {
+        new Error(error);
       });
   };
   /*백엔드와의 API 통신을 위한 함수
@@ -251,12 +251,12 @@ function CourseRegistrationForm() {
 
     axios
       .get(url, config)
-      .then((data) => {
-        const CategoryThemeArr = data.data;
+      .then((response) => {
+        const CategoryThemeArr = response.data;
         setCategoryThemeList(CategoryThemeArr);
       })
-      .catch((e) => {
-        alert('코스 카테고리의 테마값을 가져오지 못했습니다.');
+      .catch((error) => {
+        new Error(error);
       });
   };
 

@@ -1,5 +1,8 @@
 /* libraries */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from 'react';
+/* reocoil */
+import { useRecoilState } from 'recoil';
+import { isLoggedInAtom } from './store';
 /* components */
 import {
   Header,
@@ -24,10 +27,9 @@ import {
   User,
   UserInformation,
   WithdrawUser,
-} from "./components";
+} from './components';
 /* router */
-import { Routes, Route, Outlet, useLocation } from "react-router-dom";
-import { GiConsoleController } from "react-icons/gi";
+import { Routes, Route, Outlet } from 'react-router-dom';
 
 const WithHeaderAndFooter = () => {
   return (
@@ -53,8 +55,7 @@ const WithoutHeaderAndFooter = () => {
 const { Kakao } = window;
 
 function App() {
-  const location = useLocation();
-  const token = location.state;
+  const [isLoggedIn] = useRecoilState(isLoggedInAtom);
 
   /* 프로젝트 실행 시 Kakao API KEY 값 초기화하는 함수 */
   useEffect(() => {
@@ -76,22 +77,7 @@ function App() {
         </Route>
 
         <Route element={<WithoutHeaderAndFooter />}>
-          {!token && (
-            <>
-              <Route path="login" element={<Login />} />
-              <Route path="email-validation" element={<InputEmail />} />
-              <Route path="address" element={<InputAddress />} />
-              <Route path="detail-address" element={<InputDetailAddress />} />
-              <Route path="sign-up" element={<InputUser />} />
-
-              <Route path="find">
-                <Route path="email-validation" element={<InputEmail />} />
-                <Route path="id" element={<FindingUserPage />} />
-                <Route path="pwd" element={<FindingUserPage />} />
-              </Route>
-            </>
-          )}
-          {token && (
+          {isLoggedIn ? (
             <>
               <Route path="user">
                 <Route path=":id" element={<User />} />
@@ -120,15 +106,29 @@ function App() {
               />
               <Route path="course-edit/:id" element={<CourseRegistration />} />
             </>
+          ) : (
+            <>
+              <Route path="login" element={<Login />} />
+              <Route path="email-validation" element={<InputEmail />} />
+              <Route path="address" element={<InputAddress />} />
+              <Route path="detail-address" element={<InputDetailAddress />} />
+              <Route path="sign-up" element={<InputUser />} />
+
+              <Route path="find">
+                <Route path="email-validation" element={<InputEmail />} />
+                <Route path="id" element={<FindingUserPage />} />
+                <Route path="pwd" element={<FindingUserPage />} />
+              </Route>
+            </>
           )}
         </Route>
 
         <Route
           path="withdrawal-message"
-          element={<Messages type={"withdrawal"} />}
+          element={<Messages type={'withdrawal'} />}
         />
-        <Route path="error" element={<Messages type={"error"} />} />
-        <Route path="*" element={<Messages type={"notFound"} />} />
+        <Route path="error" element={<Messages type={'error'} />} />
+        <Route path="*" element={<Messages type={'notFound'} />} />
       </Routes>
     </>
   );
