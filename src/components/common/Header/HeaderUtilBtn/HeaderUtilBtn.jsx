@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { userAtom } from '../../../../store';
+import { userAtom, isLoggedInAtom } from '../../../../store';
 /* components */
 import { SmallProfilePic, Icon } from '../../../';
 /* icons */
@@ -13,6 +13,7 @@ import * as AiIcons from 'react-icons/ai';
 function HeaderUtilBtn() {
   // 사용자 정보
   const [user, setUser] = useRecoilState(userAtom);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInAtom);
   const token = localStorage.getItem('token');
 
   // 사용자 정보 가져오기
@@ -47,7 +48,7 @@ function HeaderUtilBtn() {
           <SmallProfilePic src={user.profileImgSaveUrl} alt={'profile_pic'} />
         </Link>
       ) : (
-        <Link to="/login">
+        <Link to="/login" onClick={() => setIsLoggedIn(false)}>
           <Icon>
             <AiIcons.AiOutlineLogin />
           </Icon>

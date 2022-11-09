@@ -2,6 +2,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { isLoggedInAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 /* static data */
@@ -21,9 +24,12 @@ function MenuListForm({ onClickOpenReportForm }) {
   const user = useLocation().state;
   const isEditUserPage = path.includes('edit');
 
+  const [, setIsLoggedIn] = useRecoilState(isLoggedInAtom);
+
   /* Handlers */
   const onClickLogOut = () => {
     localStorage.removeItem('token');
+    setIsLoggedIn(false);
     navigate('/');
   };
 

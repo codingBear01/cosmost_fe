@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { searchingTypeAtom } from '../../../../store';
+import { searchingTypeAtom, isLoggedInAtom } from '../../../../store';
 /* components */
 import * as S from './styled';
 import { CourseContent } from '..';
@@ -39,6 +39,8 @@ function CourseContentWrap({
   const [isFollowedChanged, setIsFollowedChanged] = useState(false);
   const [authorsFollowersCount, setAuthorsFollowersCount] = useState(null);
   const [, setSearchingType] = useRecoilState(searchingTypeAtom);
+  const [isLoggedIn] = useRecoilState(isLoggedInAtom);
+
   /* Variables */
   const token = localStorage.getItem('token');
 
@@ -103,7 +105,7 @@ function CourseContentWrap({
           />
           <S.AutorProfileVerticalWrap marginRight={'3rem'}>
             <S.AutorNickname>{author?.nickname}</S.AutorNickname>
-            {author.id !== loggedInUserId ? (
+            {isLoggedIn && author.id !== loggedInUserId ? (
               <>
                 {!isFollowed[0] && (
                   <Button

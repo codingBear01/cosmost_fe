@@ -1,4 +1,7 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist();
 
 export const isReportFormOpenedAtom = atom({
   key: 'isReportFormOpenedAtom',
@@ -33,4 +36,10 @@ export const queryStringsStateAtom = atom({
 export const searchingTypeAtom = atom({
   key: 'searchingTypeAtom',
   default: 'search',
+});
+
+export const isLoggedInAtom = atom({
+  key: 'isLoggedInAtom',
+  default: false,
+  effects_UNSTABLE: [persistAtom],
 });

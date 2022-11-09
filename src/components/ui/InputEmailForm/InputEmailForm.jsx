@@ -39,7 +39,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
       address: '/address',
       certificationNumberSendingType: 'newemail',
       certificationNumberComparingType: 'newemail/reissue',
-      placeholder: '네이버 이메일을 입력해주세요.',
     },
   };
 
@@ -161,6 +160,11 @@ function InputEmailForm({ beforeEditUserInfo }) {
         timeout: 3000,
       };
 
+      console.log('이메일 변경');
+      console.log(url);
+      console.log(token);
+      console.log(data);
+
       axios
         .put(url, data, config)
         .then((response) => {
@@ -177,6 +181,9 @@ function InputEmailForm({ beforeEditUserInfo }) {
     // 그 외인 경우 인증 번호 발송
     else {
       const config = { timeout: 3000 };
+
+      console.log('회원가입');
+      console.log(url);
 
       axios
         .get(url, config)
@@ -205,6 +212,8 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
     const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
 
+    console.log(url);
+    console.log(PAGE_TYPES[pathname].certificationNumberComparingType);
     // 이메일 변경을 목적으로 보낸 경우 인증번호 검증
     if (
       PAGE_TYPES[pathname].certificationNumberComparingType ===
@@ -229,6 +238,9 @@ function InputEmailForm({ beforeEditUserInfo }) {
         },
         timeout: 3000,
       };
+
+      console.log('이메일변경');
+      console.log(token);
 
       axios
         .put(url, data, config)
@@ -331,33 +343,37 @@ function InputEmailForm({ beforeEditUserInfo }) {
     formData.append('updateAuthRequest', updateBodyBlob);
     formData.append('file', profilePictureBlob);
 
+    console.log('수정');
+    console.log(url);
+    console.log(updateBody2);
+
     axios
       .put(url, formData, config)
       .then((response) => {
         //수정된 데이터 다시 가져와서 리다이렉트 하기
         toast.success(response.data);
-        const url = `${process.env.REACT_APP_API}/auths`;
-        const config = {
-          headers: {
-            Authorization: token,
-          },
-          timeout: 1000,
-        };
-        axios
-          .get(url, config)
-          .then((resonse) => {
-            alert('이메일 변경에 성공했습니다.');
-            navigate(`/user/edit/menu`, {
-              replace: true,
-              state: resonse.data,
-            });
-          })
-          .catch((error) => {
-            new Error(error);
-            toast.error(
-              '변경된 이메일 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
-            );
-          });
+        // const url = `${process.env.REACT_APP_API}/auths`;
+        // const config = {
+        //   headers: {
+        //     Authorization: token,
+        //   },
+        //   timeout: 1000,
+        // };
+        // axios
+        //   .get(url, config)
+        //   .then((resonse) => {
+        //     alert('이메일 변경에 성공했습니다.');
+        //     navigate(`/user/edit/menu`, {
+        //       replace: true,
+        //       state: resonse.data,
+        //     });
+        //   })
+        //   .catch((error) => {
+        //     new Error(error);
+        //     toast.error(
+        //       '변경된 이메일 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
+        //     );
+        //   });
       })
       .catch((error) => {
         new Error(error);
