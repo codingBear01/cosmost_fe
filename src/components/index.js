@@ -38,6 +38,7 @@ export {
   LoadingForm,
   LoginForm,
   MainSection,
+  UserInformationForm,
   UserPageForm,
   WithdrawUserForm,
 } from './ui/';
@@ -61,5 +62,6 @@ export {
   Main,
   Messages,
   User,
+  UserInformation,
   WithdrawUser,
 } from './pages/';

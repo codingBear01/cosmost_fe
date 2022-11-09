@@ -20,12 +20,7 @@ import * as FaIcons from 'react-icons/fa';
 /* 현재 접속한 페이지 url */
 const currentUrl = window.location.href;
 
-function CourseSharingAndLikeButton({
-  courseDetail,
-  token,
-  isLoggedIn,
-  loggedInUserId,
-}) {
+function CourseSharingAndLikeButton({ courseDetail, token, loggedInUserId }) {
   const navigate = useNavigate();
   /* States */
   const [isSharingCourseModalOpened, setIsSharingCourseModalOpened] =
@@ -96,7 +91,6 @@ function CourseSharingAndLikeButton({
               courseDetail.id,
               'like',
               checkIsLoggedIn,
-              isLoggedIn,
               navigate,
               compareAuthorIdWithLoggedInUserId,
               courseDetail,
@@ -119,7 +113,6 @@ function CourseSharingAndLikeButton({
               courseDetail.id,
               'unlike',
               checkIsLoggedIn,
-              isLoggedIn,
               navigate,
               compareAuthorIdWithLoggedInUserId,
               courseDetail,

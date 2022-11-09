@@ -1,26 +1,23 @@
 /* librarie */
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
 import { useRecoilState } from 'recoil';
-import { loginStateAtom, userAtom } from '../../../../store';
+import { userAtom } from '../../../../store';
 /* components */
 import { SmallProfilePic, Icon } from '../../../';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 
 function HeaderUtilBtn() {
-  const token = localStorage.getItem('token');
-  const navigate = useNavigate();
-  const [isLoggedIn] = useRecoilState(loginStateAtom);
-
-  //사용자 정보를 나타내는 state.
+  // 사용자 정보
   const [user, setUser] = useRecoilState(userAtom);
+  const token = localStorage.getItem('token');
 
   // 사용자 정보 가져오기
   useEffect(() => {
-    if (token && isLoggedIn) {
+    if (token) {
       // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
       const url = `${process.env.REACT_APP_API}/auths`;
       const config = {
@@ -45,7 +42,7 @@ function HeaderUtilBtn() {
 
   return (
     <>
-      {token && isLoggedIn && user ? (
+      {token && user ? (
         <Link to={`/user/${user.id}`} state={user}>
           <SmallProfilePic src={user.profileImgSaveUrl} alt={'profile_pic'} />
         </Link>

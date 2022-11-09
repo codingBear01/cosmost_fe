@@ -3,10 +3,10 @@ import React from 'react';
 /* components */
 import * as S from './styled';
 
-function UtilTitle({ children }) {
+function UtilTitle({ style, children }) {
   return (
     <>
-      <S.StyledUtilTitle>{children}</S.StyledUtilTitle>
+      <S.StyledUtilTitle style={style}>{children}</S.StyledUtilTitle>
     </>
   );
 }

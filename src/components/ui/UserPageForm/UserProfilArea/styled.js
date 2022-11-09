@@ -17,7 +17,7 @@ export const ProfilePicWrap = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-
+  cursor: pointer;
   span {
     margin-top: 5px;
   }

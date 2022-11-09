@@ -1,9 +1,5 @@
 import styled from 'styled-components';
-import {
-  COLOR_LIST as color,
-  FONT_SIZE_LIST as fs,
-  GAP_LIST as gap,
-} from './../../../style/';
+import { COLOR_LIST as color, GAP_LIST as gap } from './../../../style/';
 
 export const StyledInput = styled.input`
   width: ${({ width }) => width};

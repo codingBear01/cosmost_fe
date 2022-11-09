@@ -1,22 +1,17 @@
 /* libraries */
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-/* recoil */
-import { useRecoilState } from 'recoil';
-import { loginStateAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { Button, Icon, Input, UtilForm, UtilInputWrap } from '../../';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
-import * as SiIcons from 'react-icons/si';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 
 function LoginForm() {
-  const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
   const idRef = useRef();
   const passwordRef = useRef();
 
@@ -53,7 +48,6 @@ function LoginForm() {
       .put(url, body, config)
       .then((response) => {
         localStorage.setItem('token', response.data);
-        setIsLoggedIn(true);
         navigate('/');
       })
       .catch((error) => {

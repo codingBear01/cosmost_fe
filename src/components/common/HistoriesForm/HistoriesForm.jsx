@@ -1,6 +1,5 @@
 /* libraries */
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 /* recoil */
 import { useRecoilState } from 'recoil';
@@ -8,14 +7,7 @@ import { isReportFormOpenedAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 import { HistoryListItem } from './';
-import { Button, ReportForm, UtilDiv, UtilTitle } from '../..';
-/* static data */
-import { COLOR_LIST as color } from '../../../style';
-/* icons */
-import * as BsIcons from 'react-icons/bs';
-import * as BiIcons from 'react-icons/bi';
-import * as AiIcons from 'react-icons/ai';
-import { useCallback } from 'react';
+import { ReportForm, UtilDiv, UtilTitle } from '../..';
 
 function HistoriesForm({ isReportHistoryPage }) {
   /* States */

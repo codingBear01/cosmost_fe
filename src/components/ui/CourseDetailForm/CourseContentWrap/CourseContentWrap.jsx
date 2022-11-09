@@ -41,8 +41,12 @@ function CourseContentWrap({
   const [, setSearchingType] = useRecoilState(searchingTypeAtom);
   /* Variables */
   const courseAverageRateGaugeWidth =
-    courseAverageRatePercentage && courseAverageRatePercentage.reverse();
+    courseAverageRatePercentage &&
+    courseAverageRatePercentage.map((item, i, arr) => {
+      console.log();
+    });
   const token = localStorage.getItem('token');
+  console.log(courseAverageRateGaugeWidth);
 
   /* APIs */
 
@@ -190,7 +194,7 @@ function CourseContentWrap({
             </span>
           </S.AverageRate>
           <ul>
-            {!courseAverageRateGaugeWidth && (
+            {!courseAverageRatePercentage && (
               <>
                 <S.CourseRateStarWrap>
                   <S.CourseRateStar>⭐⭐⭐⭐⭐</S.CourseRateStar>
@@ -243,8 +247,8 @@ function CourseContentWrap({
                 </S.CourseRateStarWrap>
               </>
             )}
-            {courseAverageRateGaugeWidth &&
-              courseAverageRateGaugeWidth.map((item, index) => (
+            {courseAverageRatePercentage &&
+              courseAverageRatePercentage.map((item, index, arr) => (
                 <S.CourseRateStarWrap key={index}>
                   <S.CourseRateStar>
                     {index === 0 ? (
@@ -263,11 +267,13 @@ function CourseContentWrap({
                   </S.CourseRateStar>
                   <S.CourseRateStarPercentGaugeWrap>
                     <S.CourseRateStarPercentGauge
-                      width={`${item}%`}
-                      percentage={item}
+                      width={`${arr[arr.length - 1 - index]}%`}
+                      percentage={arr[arr.length - 1 - index]}
                     ></S.CourseRateStarPercentGauge>
                   </S.CourseRateStarPercentGaugeWrap>
-                  <S.CourseRateStarPercent>{item}%</S.CourseRateStarPercent>
+                  <S.CourseRateStarPercent>
+                    {arr[arr.length - 1 - index]}%
+                  </S.CourseRateStarPercent>
                 </S.CourseRateStarWrap>
               ))}
           </ul>

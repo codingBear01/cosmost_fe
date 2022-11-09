@@ -1,6 +1,5 @@
 /* libraries */
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
@@ -39,7 +38,6 @@ function FollowListItem({ follow, isFollowing, token }) {
           width={'60px'}
           height={'60px'}
         />
-        <span>{followId}</span>
         <span>{user.nickname}</span>
       </Link>
       {token && (

@@ -89,7 +89,7 @@ export const CourseCreatedDate = styled.span`
 export const CourseOrderWrap = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
   height: 100px;
@@ -97,7 +97,7 @@ export const CourseOrderWrap = styled.div`
   border-radius: 0 0 ${br.default} ${br.default};
 `;
 
-export const CourseName = styled.span`
+export const CourseName = styled.p`
   margin: 0 1rem;
   font-size: ${fs.m};
   font-weight: 600;

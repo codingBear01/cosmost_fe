@@ -15,4 +15,5 @@ export { default as Login } from './Login';
 export { default as Main } from './Main';
 export { default as Messages } from './Messages';
 export { default as User } from './User';
+export { default as UserInformation } from './UserInformation';
 export { default as WithdrawUser } from './WithdrawUser';

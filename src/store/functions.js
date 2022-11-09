@@ -142,7 +142,7 @@ export const addNaverMapMarker = (map = null, markerInfo = null) => {
       map: map,
     });
 
-    markerInfo.eventList.map((item, index) => {
+    markerInfo.eventList.map((item) => {
       naver.maps.Event.addListener(
         registeredMarker,
         item.eventName,
@@ -173,8 +173,8 @@ export const addNaverMapMarkerInfo = (map, marker, elementString, style) => {
 };
 
 /* Validation Handlers */
-export const checkIsLoggedIn = (token, isLoggedIn, transferToLoginPage) => {
-  if (!token || !isLoggedIn) {
+export const checkIsLoggedIn = (token, transferToLoginPage) => {
+  if (!token) {
     if (
       window.confirm(
         '좋아요를 하기 전에 로그인해주세요. 로그인 창으로 이동하시겠습니까?'

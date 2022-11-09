@@ -1,9 +1,6 @@
 /* libraries */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-/* recoil */
-import { useRecoilState } from 'recoil';
 import { userAtom } from '../../../../store';
 /* components */
 import * as S from './styled';
@@ -21,7 +18,6 @@ function UserProfilArea({ token, user }) {
   const [myFollowingsCount, setMyFollowingsCount] = useState(0);
 
   /* APIs */
-
   useEffect(() => {
     if (token) {
       fetchMyFollowersCount(token, setMyFollowersCount);
@@ -31,15 +27,21 @@ function UserProfilArea({ token, user }) {
   return (
     <S.ProfileWrap>
       {/* 프로필 사진 */}
-      <S.ProfilePicWrap>
-        <ProfilePic
-          src={user.profileImgSaveUrl}
-          alt="profile_pic"
-          width={'60px'}
-          height={'60px'}
-        />
-        <span>{user.nickname}</span>
-      </S.ProfilePicWrap>
+      <Link
+        to={`/user/${user.id}/information`}
+        state={user}
+        style={{ color: `${color.white}` }}
+      >
+        <S.ProfilePicWrap>
+          <ProfilePic
+            src={user.profileImgSaveUrl}
+            alt="profile_pic"
+            width={'60px'}
+            height={'60px'}
+          />
+          <span>{user.nickname}</span>
+        </S.ProfilePicWrap>
+      </Link>
       {/* 유저 정보 */}
       <S.ProfileUtilWrap>
         <S.UserInfoWrap>
@@ -61,7 +63,7 @@ function UserProfilArea({ token, user }) {
             bgColor={color.darkBlue}
             hoveredBgColor={color.navy}
           >
-            프로필 편집
+            회원정보 변경
           </Button>
         </Link>
       </S.ProfileUtilWrap>

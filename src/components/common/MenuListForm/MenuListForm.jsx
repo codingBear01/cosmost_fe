@@ -2,9 +2,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
-/* recoil */
-import { useRecoilState } from 'recoil';
-import { loginStateAtom } from '../../../store';
 /* components */
 import * as S from './styled';
 /* static data */
@@ -22,15 +19,11 @@ function MenuListForm({ onClickOpenReportForm }) {
 
   const path = useLocation().pathname;
   const user = useLocation().state;
-  const token = localStorage.getItem('token');
   const isEditUserPage = path.includes('edit');
-
-  const [, setIsLoggedIn] = useRecoilState(loginStateAtom);
 
   /* Handlers */
   const onClickLogOut = () => {
     localStorage.removeItem('token');
-    setIsLoggedIn(false);
     navigate('/');
   };
 
@@ -38,18 +31,6 @@ function MenuListForm({ onClickOpenReportForm }) {
     return (
       // 사용자 정보 변경 메뉴
       <S.MenuList>
-        <Link to="/user/edit/email" state={user}>
-          <S.MenuItem>
-            <AiIcons.AiOutlineMail />
-            <span>이메일 변경</span>
-          </S.MenuItem>
-        </Link>
-        <Link to="/user/edit/address" state={user}>
-          <S.MenuItem>
-            <AiIcons.AiOutlineHome />
-            <span>주소 변경</span>
-          </S.MenuItem>
-        </Link>
         <Link to="/user/edit/my-information" state={user}>
           <S.MenuItem>
             <RiIcons.RiUserSettingsLine />
@@ -60,6 +41,18 @@ function MenuListForm({ onClickOpenReportForm }) {
           <S.MenuItem>
             <BsIcons.BsKey />
             <span>비밀번호 변경</span>
+          </S.MenuItem>
+        </Link>
+        <Link to="/user/edit/email" state={user}>
+          <S.MenuItem>
+            <AiIcons.AiOutlineMail />
+            <span>이메일 변경</span>
+          </S.MenuItem>
+        </Link>
+        <Link to="/user/edit/address" state={user}>
+          <S.MenuItem>
+            <AiIcons.AiOutlineHome />
+            <span>주소 변경</span>
           </S.MenuItem>
         </Link>
         <Link to="/user/withdrawal" state={user}>

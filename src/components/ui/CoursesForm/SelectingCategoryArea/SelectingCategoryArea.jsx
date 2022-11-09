@@ -1,9 +1,7 @@
 /* libraries */
 import React, { useState } from 'react';
-import axios from 'axios';
 /* components */
 import * as S from './styled';
-import { Link } from 'react-router-dom';
 /* APIs */
 import { getCategories } from '../../../../apis';
 /* CONSTANTS */

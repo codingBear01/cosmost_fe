@@ -12,5 +12,6 @@ export { InputUserForm } from './InputUserForm';
 export { LoadingForm } from './LoadingForm';
 export { LoginForm } from './LoginForm/';
 export { MainSection } from './MainSection/';
+export { UserInformationForm } from './UserInformationForm/';
 export { UserPageForm } from './UserPageForm/';
 export { WithdrawUserForm } from './WithdrawUserForm/';
