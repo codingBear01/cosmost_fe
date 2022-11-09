@@ -32,9 +32,6 @@ function FollowListItem({ follow, isFollowing, token }) {
     fetchIsFollowed(followId, setIsFollowed, token);
   }, [isFollowedChanged]);
 
-  console.log(user);
-  console.log('author', author);
-
   return (
     <S.StyledFollowListItem>
       <Link to={`/user/${followId}`}>

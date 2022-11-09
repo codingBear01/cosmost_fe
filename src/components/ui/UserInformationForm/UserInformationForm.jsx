@@ -9,7 +9,7 @@ import { COLOR_LIST as color } from '../../../style';
 
 function UserInformationForm() {
   const user = useLocation().state;
-  console.log(user);
+
   return (
     <UtilDiv>
       <UtilTitle>

@@ -40,13 +40,7 @@ function CourseContentWrap({
   const [authorsFollowersCount, setAuthorsFollowersCount] = useState(null);
   const [, setSearchingType] = useRecoilState(searchingTypeAtom);
   /* Variables */
-  const courseAverageRateGaugeWidth =
-    courseAverageRatePercentage &&
-    courseAverageRatePercentage.map((item, i, arr) => {
-      console.log();
-    });
   const token = localStorage.getItem('token');
-  console.log(courseAverageRateGaugeWidth);
 
   /* APIs */
 
@@ -79,7 +73,6 @@ function CourseContentWrap({
     fetchIsFollowed(author?.id, setIsFollowed, token);
   }, [author]);
 
-  console.log(isFollowed);
   return (
     // dataCategory에 따라 다른 컴포넌트 렌더링됨
     <S.StyledCourseContentWrap

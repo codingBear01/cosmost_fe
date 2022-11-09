@@ -64,7 +64,6 @@ function InputPasswordForm({ state, beforeEditUserInfo, responseIdKey }) {
     SetBeforePw(e.target.value);
   };
 
-  console.log(beforeEditUserInfo);
   return (
     <UtilForm width={'340px'}>
       <ToastContainer
