@@ -31,6 +31,8 @@ import {
   getCourseLikeCount,
   getCourseAuthor,
 } from '../../../apis';
+/* static data */
+import { COLOR_LIST as color } from '../../../style';
 
 function CourseDetailForm() {
   const { id } = useParams();
@@ -151,14 +153,18 @@ function CourseDetailForm() {
         });
 
         const markerInfoString = `
-            <div><h3>${item.placeName}</h3><div>${item.placeComment}</div></div>
+          <div>
+            <h3>장소 이름: ${item.placeName}</h3>
+            <div>한줄평: ${item.placeComment}</div>
+          </div>
         `;
         const markerInfoStyle = {
-          backgroundColor: '#000',
-          borderColor: '#2db400',
-          borderWidth: 5,
+          maxWidth: 150,
+          backgroundColor: `${color.navy}`,
+          borderColor: `${color.lightBlue}`,
+          borderWidth: 2,
           anchorSkew: true,
-          anchorColor: '#eee',
+          anchorColor: `${color.navy}`,
         };
         const info = addNaverMapMarkerInfo(
           map,
