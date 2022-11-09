@@ -99,23 +99,15 @@ function Course({ course, courseId }) {
         {/* 코스 순서 */}
         <S.CourseOrderWrap>
           {courseState.readPlaceDetailResponseList.map((item, index, arr) => (
-            <div
-              key={item.id}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              <S.CourseName key={item.id}>
-                {item.placeName}{' '}
-                {arr.length - 1 !== index && (
-                  <AiIcons.AiOutlineArrowRight
-                    key={item.id}
-                    style={{ fontSize: `${fs.s}` }}
-                  />
-                )}
-              </S.CourseName>
-            </div>
+            <S.CourseName key={item.id}>
+              {item.placeOrder + 1}. {item.placeName}{' '}
+              {arr.length - 1 !== index && (
+                <AiIcons.AiOutlineArrowRight
+                  key={item.id}
+                  style={{ fontSize: `${fs.s}` }}
+                />
+              )}
+            </S.CourseName>
           ))}
         </S.CourseOrderWrap>
       </S.StyledCourse>

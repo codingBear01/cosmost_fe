@@ -246,6 +246,7 @@ function CourseDetailForm() {
             height={'10rem'}
             dataCategory="courses"
             courseDetail={courseDetail}
+            flexWrap={'wrap'}
           />
           {/* 코스 설명 */}
           <S.CourseDescription>

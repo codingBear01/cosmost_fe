@@ -170,13 +170,13 @@ function CourseContentWrap({
       ) : dataCategory === 'courses' ? (
         // 코스 순서
         <>
-          {courseDetail?.placeDetailList?.map((item, index) => (
-            <div key={item.id}>
-              <S.CourseName>{item.placeName}</S.CourseName>
-              {index !== courseDetail.placeDetailList.length - 1 && (
+          {courseDetail?.placeDetailList?.map((item, index, arr) => (
+            <S.CourseName key={item.id}>
+              {item.placeOrder + 1}. {item.placeName}
+              {index !== arr.length - 1 && (
                 <AiIcons.AiOutlineArrowRight style={{ fontSize: `${fs.s}` }} />
               )}
-            </div>
+            </S.CourseName>
           ))}
         </>
       ) : dataCategory === 'averageRate' ? (
