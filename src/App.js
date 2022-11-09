@@ -74,7 +74,7 @@ function App() {
         </Route>
 
         <Route element={<WithoutHeaderAndFooter />}>
-          {!token && (
+          {!token ? (
             <>
               <Route path="login" element={<Login />} />
               <Route path="email-validation" element={<InputEmail />} />
@@ -88,8 +88,7 @@ function App() {
                 <Route path="pwd" element={<FindingUserPage />} />
               </Route>
             </>
-          )}
-          {token && (
+          ) : (
             <>
               <Route path="user">
                 <Route path=":id" element={<User />} />

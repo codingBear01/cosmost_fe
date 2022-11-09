@@ -13,8 +13,8 @@ function FollowsForm() {
   const token = localStorage.getItem('token');
 
   const author = useLocation().state;
-  const authorId = author.id;
-  const authorNickname = author.nickname;
+  const authorId = author?.id;
+  const authorNickname = author?.nickname;
   const path = useLocation().pathname;
   const isFollowing = path.includes('followings');
 

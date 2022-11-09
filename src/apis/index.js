@@ -1,5 +1,6 @@
 export {
   // Auth
+  fetchUser,
   getCourseAuthor,
   updateUserAddress,
   updateUserPassword,

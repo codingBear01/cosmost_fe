@@ -6,6 +6,7 @@ import * as S from './styled';
 import { Button, ProfilePic } from './../../../';
 /* APIs */
 import {
+  fetchUser,
   getCourseAuthor,
   handleFollow,
   fetchIsFollowed,
@@ -14,6 +15,7 @@ import {
 import { COLOR_LIST as color } from '../../../../style';
 
 function FollowListItem({ follow, isFollowing, token }) {
+  const [author, setAuthor] = useState('');
   const [user, setUser] = useState('');
   const followId = isFollowing ? follow.followingId : follow.authId;
   const [isFollowed, setIsFollowed] = useState([]);
@@ -22,25 +24,29 @@ function FollowListItem({ follow, isFollowing, token }) {
   /* APIs */
   /** 코스 리뷰 작성자 조회 */
   useEffect(() => {
-    getCourseAuthor(followId, setUser);
+    getCourseAuthor(followId, setAuthor);
+    fetchUser(token, setUser);
   }, []);
   /** 코스 리뷰 좋아요 여부 조회 */
   useEffect(() => {
     fetchIsFollowed(followId, setIsFollowed, token);
   }, [isFollowedChanged]);
 
+  console.log(user);
+  console.log('author', author);
+
   return (
     <S.StyledFollowListItem>
       <Link to={`/user/${followId}`}>
         <ProfilePic
-          src={user.profileImgSaveUrl}
-          alt={user.nickname}
+          src={author.profileImgSaveUrl}
+          alt={author.nickname}
           width={'60px'}
           height={'60px'}
         />
-        <span>{user.nickname}</span>
+        <span>{author.nickname}</span>
       </Link>
-      {token && (
+      {token && user.id !== author.id && (
         <>
           {!isFollowed[0] && (
             <Button

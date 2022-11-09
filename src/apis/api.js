@@ -6,6 +6,25 @@ import axios from 'axios';
  *  authorID : 코스 작성자 ID를 나타내는 Number
  *  setState : 가져온 값을 state 값으로 변경시켜주기 위한 Function
  */
+export const fetchUser = (token, setState) => {
+  const url = `${process.env.REACT_APP_API}/auths`;
+  const config = {
+    headers: {
+      Authorization: token,
+    },
+    timeout: 3000,
+  };
+
+  axios
+    .get(url, config)
+    .then((response) => {
+      setState(response.data);
+    })
+    .catch((error) => {
+      new Error(error);
+    });
+};
+
 export const getCourseAuthor = (id, setState) => {
   const url = `${process.env.REACT_APP_API}/view/info?id=author-id`;
   const config = {
@@ -127,6 +146,8 @@ export const updateUserPassword = (
     },
     timeout: 3000,
   };
+
+  console.log(beforeEditUserInfo);
 
   const updateBody2 = {
     loginId: beforeEditUserInfo.loginId,

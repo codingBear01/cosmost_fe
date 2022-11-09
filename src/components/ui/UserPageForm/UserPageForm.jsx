@@ -8,6 +8,8 @@ import { isReportFormOpenedAtom } from '../../../store';
 /* components */
 import { UserProfilArea } from '.';
 import { ReportForm, UtilDiv, UtilTitle, MenuListForm } from '../..';
+/* static data */
+import { COLOR_LIST as color } from '../../../style';
 
 function UserInfoForm() {
   const token = localStorage.getItem('token');
@@ -24,8 +26,6 @@ function UserInfoForm() {
     setIsReportFormOpened(!isReportFormOpened);
   };
 
-  /* APIs */
-
   /** token 없을 시 에러 페이지로 redirect */
   useEffect(() => {
     if (!token) {
@@ -36,7 +36,12 @@ function UserInfoForm() {
   return (
     location.state && (
       <UtilDiv width={'100%'} height={'100vh'}>
-        <UtilTitle>{location.state.nickname} 님</UtilTitle>
+        <UtilTitle>
+          <span style={{ color: color.lightBlue }}>
+            {location.state.nickname}
+          </span>{' '}
+          님
+        </UtilTitle>
         {/* 유저 프로필 및 유저 정보, 프로필 편집 버튼 */}
         <UserProfilArea token={token} user={location.state} />
         {/* 유저 페이지 메뉴 목록 */}
