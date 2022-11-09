@@ -1,6 +1,6 @@
 
 # cosMost - 프론트 엔드
-<img src="https://user-images.githubusercontent.com/95178119/200802709-f0a5f6fa-08f8-4709-97e4-242d54615ec2.png"  width="400" height="300">
+> ### [공유하세요 당신만의 코스를 바로 지금](https://cosmost.vercel.app/)
 
 ## Description
 > 스파로스 아카데미 1기 2차 기업연계 프로젝트
