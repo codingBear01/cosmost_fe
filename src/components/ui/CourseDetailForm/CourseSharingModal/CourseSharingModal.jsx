@@ -11,10 +11,10 @@ import * as FiIcons from 'react-icons/fi';
 import { COLOR_LIST as color } from '../../../../style';
 import { sharingByKakao } from '../../../../store';
 
-/* 현재 접속한 페이지 url */
-const currentUrl = window.location.href;
-
 function CourseSharingModal({ courseDetail, onClickCopyCurrentPageUrl }) {
+  /* 현재 접속한 페이지 url */
+  const currentUrl = window.location.href;
+  console.log(currentUrl);
   /* SNS 공유 기능에 쓰이는 url */
   const URLS = {
     line: `https://line.me/R/msg/text/${encodeURIComponent(
@@ -39,7 +39,7 @@ function CourseSharingModal({ courseDetail, onClickCopyCurrentPageUrl }) {
           <S.CourseSharingButton
             bgColor={color.yellow}
             color={color.black}
-            onClick={() => sharingByKakao(courseDetail)}
+            onClick={() => sharingByKakao(courseDetail, currentUrl)}
           >
             <RiIcons.RiKakaoTalkFill />
           </S.CourseSharingButton>

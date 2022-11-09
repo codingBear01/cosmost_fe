@@ -1,9 +1,8 @@
 /* CONSTANTS */
-const { Kakao, location } = window;
-const SHARED_URL = location.href;
+const { Kakao } = window;
 
 /** Kakao 공유하기 함수 */
-export const sharingByKakao = (data) => {
+export const sharingByKakao = (data, currentUrl) => {
   Kakao.Share.sendDefault({
     objectType: 'feed',
     content: {
@@ -11,16 +10,16 @@ export const sharingByKakao = (data) => {
       description: data.courseComment,
       imageUrl: data.placeImgList[0].placeImgUrl,
       link: {
-        webUrl: SHARED_URL,
-        mobileWebUrl: SHARED_URL,
+        webUrl: currentUrl,
+        mobileWebUrl: currentUrl,
       },
     },
     buttons: [
       {
         title: '자세히 보기',
         link: {
-          webUrl: SHARED_URL,
-          mobileWebUrl: SHARED_URL,
+          webUrl: currentUrl,
+          mobileWebUrl: currentUrl,
         },
       },
     ],
