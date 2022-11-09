@@ -154,7 +154,6 @@ function CourseRegistrationForm() {
     }),
     [registeredCourseImgState]
   );
-
   const [{ isOver1 }, drop1] = useDrop(
     () => ({
       accept: '0',
@@ -171,7 +170,6 @@ function CourseRegistrationForm() {
     }),
     [registeredCourseImgState]
   );
-
   const [{ isOver2 }, drop2] = useDrop(
     () => ({
       accept: '0',
@@ -1169,7 +1167,7 @@ function CourseRegistrationForm() {
       formData.append('file', '');
     }
 
-    if (!validateCourseRegistrationInput(sendData, imageblobs)) return;
+    // if (!validateCourseRegistrationInput(sendData, imageblobs)) return;
 
     printFormData(formData);
 
@@ -1185,7 +1183,10 @@ function CourseRegistrationForm() {
       return;
     } else {
       const url = `${process.env.REACT_APP_API}/cosmosts`;
-
+      console.log('등록');
+      console.log(sendData);
+      console.log(url);
+      console.log(config);
       axios
         .post(url, formData, config)
         .then((response) => {
