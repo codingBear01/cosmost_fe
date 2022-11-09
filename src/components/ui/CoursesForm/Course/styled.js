@@ -6,6 +6,7 @@ import {
   BORDER_RADIUS_LIST as br,
   FONT_SIZE_LIST as fs,
   BREAK_POINTS as media,
+  GAP_LIST as gap,
 } from '../../../../style';
 
 export const StyledCourse = styled.div`
@@ -89,16 +90,21 @@ export const CourseCreatedDate = styled.span`
 export const CourseOrderWrap = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   flex-wrap: wrap;
   width: 100%;
-  height: 100px;
+  height: 70px;
   padding: 1rem 2rem;
   border-radius: 0 0 ${br.default} ${br.default};
 `;
 
-export const CourseName = styled.p`
-  margin: 0 1rem;
+export const CourseName = styled.span`
+  display: flex;
+  align-items: center;
   font-size: ${fs.m};
   font-weight: 600;
+
+  svg {
+    margin: 0 ${gap.m};
+  }
 `;

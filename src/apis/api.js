@@ -34,6 +34,8 @@ export const getCourseAuthor = (id, setState) => {
     timeout: 3000,
   };
 
+  if (!id) return;
+
   axios
     .get(url, config)
     .then((response) => {
@@ -644,6 +646,8 @@ export const getSingleCourseView = (courseId, setState) => {
   const url = `${process.env.REACT_APP_API}/cosmosts/${courseId}?filter=frame`;
   const config = { timeout: 3000 };
 
+  if (!courseId) return;
+
   axios
     .get(url, config)
     .then((response) => {
@@ -791,6 +795,8 @@ export const getCourseAverageRate = (courseId, thenCallback, errorCallback) => {
   const config = {
     timeout: 3000,
   };
+
+  if (!courseId) return;
 
   axios.get(url, config).then(thenCallback).catch(errorCallback);
 };

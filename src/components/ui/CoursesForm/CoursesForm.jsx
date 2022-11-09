@@ -93,7 +93,6 @@ function CoursesForm() {
           categoryNumber,
           searchingType
         );
-
         if (!url) return;
 
         const config =

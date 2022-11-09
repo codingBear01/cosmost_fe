@@ -56,10 +56,16 @@ export const AutorNickname = styled.span`
 
 // 코스 순서
 export const CourseName = styled.span`
-  margin: 0 ${gap.l};
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
   font-size: ${fs.s};
   font-weight: 600;
   cursor: pointer;
+
+  svg {
+    margin: 0 ${gap.m};
+  }
 `;
 
 // 코스 평균 평점 및 별 개수별 퍼센테이지
