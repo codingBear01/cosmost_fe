@@ -421,7 +421,6 @@ export const signUpOrEditUser = (
           axios
             .get(url, config)
             .then((resonse) => {
-              alert('회원 정보를 수정하였습니다.');
               navigate('/user/edit/menu', {
                 replace: true,
                 state: resonse.data,
