@@ -18,7 +18,7 @@ function DisplayFindedIdForm({ responseId }) {
     <UtilDiv>
       <UtilTitle>{PAGE_TITLES[pathname]}</UtilTitle>
       <S.FindedUserBox>
-        <span>{responseId}</span>
+        <span>{responseId.id}</span>
         <Link to="/login">로그인 페이지로</Link>
       </S.FindedUserBox>
     </UtilDiv>

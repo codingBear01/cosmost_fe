@@ -56,6 +56,7 @@ export const updateUserAddress = (
   detailAddress
 ) => {
   e.preventDefault();
+
   const formData = new FormData();
   const url = `${process.env.REACT_APP_API}/auths`;
   const config = {
@@ -106,10 +107,10 @@ export const updateUserAddress = (
       };
       axios
         .get(url, config)
-        .then((resonse) => {
-          navigate(`/user/edit/menu`, {
+        .then((response) => {
+          navigate('/user/edit/menu', {
             replace: true,
-            state: resonse.data,
+            state: response.data,
           });
         })
         .catch((error) => {
@@ -136,7 +137,7 @@ export const updateUserPassword = (
   navigate,
   toast,
   pathname,
-  state
+  responseId
 ) => {
   e.preventDefault();
 
@@ -145,99 +146,92 @@ export const updateUserPassword = (
   const formData = new FormData();
   const url =
     pathname === '/find/pwd'
-      ? `${process.env.REACT_APP_API}/authorization/pwd/reissue/${state.id}/${newPassword}`
+      ? `${process.env.REACT_APP_API}/authorization/pwd/reissue/${responseId.id}/${newPassword}`
       : `${process.env.REACT_APP_API}/auths`;
   const config =
     pathname === '/find/pwd'
-      ? {
+      ? { timeout: 3000 }
+      : {
           headers: {
             Authorization: token,
           },
           timeout: 3000,
-        }
-      : { timeout: 3000 };
+        };
 
   const body = {
-    loginId: state.id,
+    loginId: responseId?.id,
     loginPwd: newPassword,
-    email: state.email,
+    email: responseId?.email,
     role: 'USER',
     status: 'ACTIVE',
     nickname: '',
   };
 
-  if (pathname === '/find/pwd') {
-    console.log('비밀번호 찾기 페이지 입니다');
-  }
+  const updateBody2 = {
+    loginId: beforeEditUserInfo?.loginId,
+    loginPwd: beforeEditUserInfo?.loginPwd,
+    oldPwd: oldPassword,
+    newPwd: newPassword,
+    email: beforeEditUserInfo?.email,
+    address: beforeEditUserInfo?.address,
+    role: beforeEditUserInfo?.role,
+    nickname: beforeEditUserInfo?.nickname,
+    sns: beforeEditUserInfo?.sns,
+    status: beforeEditUserInfo?.status,
+    ageGroup: beforeEditUserInfo?.ageGroup,
+    married: beforeEditUserInfo?.married,
+    profileImgOriginName: beforeEditUserInfo?.profileImgOriginName,
+    profileImgSaveName: beforeEditUserInfo?.profileImgSaveName,
+    profileImgSaveUrl: beforeEditUserInfo?.profileImgSaveUrl,
+    type: '비밀번호 수정',
+  };
 
-  console.log(url);
-  console.log(body);
+  const updateBodyJson = JSON.stringify(updateBody2);
+  const updateBodyBlob = new Blob([updateBodyJson], {
+    type: 'application/json',
+  });
 
-  // const updateBody2 = {
-  //   loginId: beforeEditUserInfo?.loginId,
-  //   loginPwd: beforeEditUserInfo?.loginPwd,
-  //   oldPwd: oldPassword,
-  //   newPwd: newPassword,
-  //   email: beforeEditUserInfo?.email,
-  //   address: beforeEditUserInfo?.address,
-  //   role: beforeEditUserInfo?.role,
-  //   nickname: beforeEditUserInfo?.nickname,
-  //   sns: beforeEditUserInfo?.sns,
-  //   status: beforeEditUserInfo?.status,
-  //   ageGroup: beforeEditUserInfo?.ageGroup,
-  //   married: beforeEditUserInfo?.married,
-  //   profileImgOriginName: beforeEditUserInfo?.profileImgOriginName,
-  //   profileImgSaveName: beforeEditUserInfo?.profileImgSaveName,
-  //   profileImgSaveUrl: beforeEditUserInfo?.profileImgSaveUrl,
-  //   type: '비밀번호 수정',
-  // };
+  const profilePictureBlob = new Blob(['']);
 
-  // const updateBodyJson = JSON.stringify(updateBody2);
-  // const updateBodyBlob = new Blob([updateBodyJson], {
-  //   type: 'application/json',
-  // });
+  formData.append('updateAuthRequest', updateBodyBlob);
+  formData.append('file', profilePictureBlob);
+  console.log(updateBody2);
+  axios
+    .put(url, pathname === '/find/pwd' ? body : formData, config)
+    .then((response) => {
+      //수정된 데이터 다시 가져와서 리다이렉트 하기
+      toast.success(response.data);
+      if (pathname === '/find/pwd') {
+        navigate('/login');
+      } else {
+        const url = `${process.env.REACT_APP_API}/auths`;
+        const config = {
+          headers: {
+            Authorization: token,
+          },
+          timeout: 1000,
+        };
 
-  // const profilePictureBlob = new Blob(['']);
-
-  // formData.append('updateAuthRequest', updateBodyBlob);
-  // formData.append('file', profilePictureBlob);
-
-  // axios
-  //   .put(url, pathname === '/find/pwd' ? body : formData, config)
-  //   .then((response) => {
-  //     //수정된 데이터 다시 가져와서 리다이렉트 하기
-  //     toast.success(response.data);
-  //     if (pathname === '/find/pwd') {
-  //       navigate('/login');
-  //     } else {
-  //       const url = `${process.env.REACT_APP_API}/auths`;
-  //       const config = {
-  //         headers: {
-  //           Authorization: token,
-  //         },
-  //         timeout: 1000,
-  //       };
-
-  //       axios
-  //         .get(url, config)
-  //         .then((resonse) => {
-  //           navigate(`/user/edit/menu`, {
-  //             replace: true,
-  //             state: resonse.data,
-  //           });
-  //         })
-  //         .catch((error) => {
-  //           new Error(error);
-  //           toast.error(
-  //             '변경된 비밀번호 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
-  //           );
-  //         });
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     new Error(error);
-  //     toast.error('비밀번호 변경에 실패했습니다. 관리자에게 문의하세요.');
-  //   });
+        axios
+          .get(url, config)
+          .then((resonse) => {
+            navigate(`/user/edit/menu`, {
+              replace: true,
+              state: resonse.data,
+            });
+          })
+          .catch((error) => {
+            new Error(error);
+            toast.error(
+              '변경된 비밀번호 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
+            );
+          });
+      }
+    })
+    .catch((error) => {
+      new Error(error);
+      toast.error('비밀번호 변경에 실패했습니다. 관리자에게 문의하세요.');
+    });
 };
 
 /** 입력된 아이디의 중복 여부를 확인하는 핸들러 */

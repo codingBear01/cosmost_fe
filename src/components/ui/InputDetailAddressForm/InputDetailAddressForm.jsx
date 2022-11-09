@@ -74,14 +74,6 @@ function InputDetailAddressForm({ state }) {
           onChange={onChangeDetailAddress}
         />
       </UtilInputWrap>
-      {/* 네이버 다음으로 버튼 또는 일반 다음으로 버튼*/}
-      {!isEditAddressPage && isNaverAddressPage && (
-        <NextBtn
-          to={'/naver/sign-up'}
-          state={{ ...state, detailAddress }}
-          onClick={onClickCheckInput}
-        />
-      )}
       {/* 수정 버튼 */}
       {isEditAddressPage ? (
         <Button

@@ -42,8 +42,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
     },
   };
 
-  console.log(location.state);
-  console.log(PAGE_TYPES[pathname]);
   // 토큰
   const token = localStorage.getItem('token');
 
@@ -277,7 +275,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
             PAGE_TYPES[pathname].certificationNumberComparingType ===
             'id/reissue'
           ) {
-            console.log(response);
             toast.success(`인증번호 검증이 완료되었습니다.`);
             setIsCertificationNumberValidated(true);
             setResponseId(response.data);

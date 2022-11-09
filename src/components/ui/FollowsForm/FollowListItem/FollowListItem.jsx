@@ -40,55 +40,57 @@ function FollowListItem({ follow, isFollowing, token }) {
         width={'60px'}
         height={'60px'}
       />
-      <span>{author.nickname}</span>
-      {token && user.id !== author.id && (
-        <>
-          {!isFollowed[0] && (
-            <Button
-              type="button"
-              width={'70px'}
-              height={'30px'}
-              fontSize={'12px'}
-              color={color.black}
-              bgColor={color.darkGreen}
-              hoveredBgColor={color.lightGreen}
-              onClick={() =>
-                handleFollow(
-                  'follow',
-                  followId,
-                  setIsFollowedChanged,
-                  isFollowedChanged,
-                  token
-                )
-              }
-            >
-              팔로우
-            </Button>
-          )}
-          {isFollowed[0] && (
-            <Button
-              type="button"
-              width={'70px'}
-              height={'30px'}
-              fontSize={'12px'}
-              color={color.black}
-              bgColor={color.darkRed}
-              hoveredBgColor={color.red}
-              onClick={() =>
-                handleFollow(
-                  'unfollow',
-                  followId,
-                  setIsFollowedChanged,
-                  isFollowedChanged,
-                  token
-                )
-              }
-            >
-              언팔로우
-            </Button>
-          )}
-        </>
-      )}
+      <S.followNameAndButtonWrap>
+        <span>{author.nickname}</span>
+        {token && user.id !== author.id && (
+          <>
+            {!isFollowed[0] && (
+              <Button
+                type="button"
+                width={'70px'}
+                height={'30px'}
+                fontSize={'12px'}
+                color={color.black}
+                bgColor={color.darkGreen}
+                hoveredBgColor={color.lightGreen}
+                onClick={() =>
+                  handleFollow(
+                    'follow',
+                    followId,
+                    setIsFollowedChanged,
+                    isFollowedChanged,
+                    token
+                  )
+                }
+              >
+                팔로우
+              </Button>
+            )}
+            {isFollowed[0] && (
+              <Button
+                type="button"
+                width={'70px'}
+                height={'30px'}
+                fontSize={'12px'}
+                color={color.black}
+                bgColor={color.darkRed}
+                hoveredBgColor={color.red}
+                onClick={() =>
+                  handleFollow(
+                    'unfollow',
+                    followId,
+                    setIsFollowedChanged,
+                    isFollowedChanged,
+                    token
+                  )
+                }
+              >
+                언팔로우
+              </Button>
+            )}
+          </>
+        )}
+      </S.followNameAndButtonWrap>
     </S.StyledFollowListItem>
   );
 }
