@@ -417,7 +417,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
           margin={'0 10px'}
         />
         <Button
-          type="submit"
+          type="button"
           width={'100px'}
           height={'40px'}
           color={color.white}
@@ -442,7 +442,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
           margin={'0 10px'}
         />
         <Button
-          type="submit"
+          type="button"
           width={'100px'}
           height={'40px'}
           color={color.white}
@@ -464,7 +464,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
       {/* 수정 버튼 */}
       {isEditEmailPage && (
         <Button
-          type="submit"
+          type="button"
           width={'100%'}
           height={'40px'}
           color={color.white}
