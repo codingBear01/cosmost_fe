@@ -1,15 +1,15 @@
 /* libraries */
-import React, { useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import React, { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 /* components */
-import * as S from './styled';
-import { Button, Icon, Input, UtilForm, UtilInputWrap } from '../../';
+import * as S from "./styled";
+import { Button, Icon, Input, UtilForm, UtilInputWrap } from "../../";
 /* icons */
-import * as AiIcons from 'react-icons/ai';
+import * as AiIcons from "react-icons/ai";
 /* static data */
-import { COLOR_LIST as color } from '../../../style';
+import { COLOR_LIST as color } from "../../../style";
 
 function LoginForm() {
   const idRef = useRef();
@@ -21,11 +21,11 @@ function LoginForm() {
   /* 아이디 및 패스워드 입력값을 검증하는 핸들러 */
   const checkIdAndPassword = () => {
     if (!idRef.current.value) {
-      toast.error('아이디를 입력해주세요.');
+      toast.error("아이디를 입력해주세요.");
       return false;
     }
     if (!passwordRef.current.value) {
-      toast.error('비밀번호를 입력해주세요.');
+      toast.error("비밀번호를 입력해주세요.");
       return false;
     }
     return true;
@@ -47,19 +47,19 @@ function LoginForm() {
     axios
       .put(url, body, config)
       .then((response) => {
-        localStorage.setItem('token', response.data);
-        navigate('/');
+        localStorage.setItem("token", response.data);
+        navigate("/", { state: localStorage.getItem("token") });
       })
       .catch((error) => {
         new Error(error);
-        toast.error('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');
+        toast.error("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
       });
   };
 
   return (
     <UtilForm
-      justifyContent={'center'}
-      height={'100vh'}
+      justifyContent={"center"}
+      height={"100vh"}
       onSubmit={onSubmitLogin}
     >
       <ToastContainer
@@ -83,9 +83,9 @@ function LoginForm() {
           type="text"
           name="loginId"
           placeholder="아이디"
-          width={'305px'}
-          height={'40px'}
-          margin={'0 0 0 10px'}
+          width={"305px"}
+          height={"40px"}
+          margin={"0 0 0 10px"}
         />
       </UtilInputWrap>
       <UtilInputWrap>
@@ -97,16 +97,16 @@ function LoginForm() {
           type="password"
           name="loginPwd"
           placeholder="비밀번호"
-          width={'305px'}
-          height={'40px'}
-          margin={'0 0 0 10px'}
+          width={"305px"}
+          height={"40px"}
+          margin={"0 0 0 10px"}
         />
       </UtilInputWrap>
       {/* 로그인 버튼 */}
       <Button
         type="submit"
-        width={'340px'}
-        height={'40px'}
+        width={"340px"}
+        height={"40px"}
         color={color.white}
         bgColor={color.darkBlue}
         hoveredBgColor={color.navy}
@@ -115,11 +115,11 @@ function LoginForm() {
       </Button>
       {/* 비밀번호, 아이디 찾기 */}
       <S.LoginFindWrap>
-        <S.LoginServiceLink to="/find/email-validation" state={'pwd'}>
+        <S.LoginServiceLink to="/find/email-validation" state={"pwd"}>
           비밀번호 찾기
         </S.LoginServiceLink>
-        <span style={{ color: 'white' }}>|</span>
-        <S.LoginServiceLink to="/find/email-validation" state={'id'}>
+        <span style={{ color: "white" }}>|</span>
+        <S.LoginServiceLink to="/find/email-validation" state={"id"}>
           아이디 찾기
         </S.LoginServiceLink>
       </S.LoginFindWrap>
@@ -127,9 +127,9 @@ function LoginForm() {
       <Link to="/email-validation">
         <Button
           type="button"
-          width={'340px'}
-          height={'40px'}
-          margin={'0 0 10px 0'}
+          width={"340px"}
+          height={"40px"}
+          margin={"0 0 10px 0"}
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}

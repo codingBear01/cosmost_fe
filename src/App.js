@@ -1,5 +1,5 @@
 /* libraries */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from "react";
 /* components */
 import {
   Header,
@@ -24,9 +24,10 @@ import {
   User,
   UserInformation,
   WithdrawUser,
-} from './components';
+} from "./components";
 /* router */
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet, useLocation } from "react-router-dom";
+import { GiConsoleController } from "react-icons/gi";
 
 const WithHeaderAndFooter = () => {
   return (
@@ -52,7 +53,8 @@ const WithoutHeaderAndFooter = () => {
 const { Kakao } = window;
 
 function App() {
-  const token = localStorage.getItem('token');
+  const location = useLocation();
+  const token = location.state;
 
   /* 프로젝트 실행 시 Kakao API KEY 값 초기화하는 함수 */
   useEffect(() => {
@@ -123,10 +125,10 @@ function App() {
 
         <Route
           path="withdrawal-message"
-          element={<Messages type={'withdrawal'} />}
+          element={<Messages type={"withdrawal"} />}
         />
-        <Route path="error" element={<Messages type={'error'} />} />
-        <Route path="*" element={<Messages type={'notFound'} />} />
+        <Route path="error" element={<Messages type={"error"} />} />
+        <Route path="*" element={<Messages type={"notFound"} />} />
       </Routes>
     </>
   );
