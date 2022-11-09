@@ -1,17 +1,17 @@
 /* libraries */
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { userAtom } from '../../../../store';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { userAtom } from "../../../../store";
 /* components */
-import * as S from './styled';
-import { Button, ProfilePic } from '../../../';
+import * as S from "./styled";
+import { Button, ProfilePic } from "../../../";
 /* APIs */
 import {
   fetchMyFollowersCount,
   fetchMyFollowingsCount,
-} from '../../../../apis';
+} from "../../../../apis";
 /* static data */
-import { COLOR_LIST as color } from '../../../../style';
+import { COLOR_LIST as color } from "../../../../style";
 
 function UserProfilArea({ token, user }) {
   const [myFollowersCount, setMyFollowersCount] = useState(0);
@@ -24,6 +24,7 @@ function UserProfilArea({ token, user }) {
       fetchMyFollowingsCount(token, setMyFollowingsCount);
     }
   }, []);
+  console.log("user", user);
   return (
     <S.ProfileWrap>
       {/* 프로필 사진 */}
@@ -36,8 +37,8 @@ function UserProfilArea({ token, user }) {
           <ProfilePic
             src={user.profileImgSaveUrl}
             alt="profile_pic"
-            width={'60px'}
-            height={'60px'}
+            width={"60px"}
+            height={"60px"}
           />
           <span>{user.nickname}</span>
         </S.ProfilePicWrap>
@@ -57,9 +58,9 @@ function UserProfilArea({ token, user }) {
         <Link to="/user/edit/menu" state={user}>
           <Button
             type="button"
-            width={'220px'}
-            height={'25px'}
-            font_size={'12px'}
+            width={"220px"}
+            height={"25px"}
+            font_size={"12px"}
             bgColor={color.darkBlue}
             hoveredBgColor={color.navy}
           >
