@@ -52,7 +52,7 @@ function Messages({ type }) {
         clearTimeout(decreaseSecond);
       };
     }
-  }, []);
+  }, [type]);
 
   return (
     <StyledDiv>

@@ -2,6 +2,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+/* recoil */
+import { useRecoilState } from 'recoil';
+import { isLoggedInAtom } from '../../../store';
 /* components */
 import { Button, Input, UtilTitle } from '../..';
 /* APIs */
@@ -11,6 +14,7 @@ import { COLOR_LIST as color } from '../../../style';
 
 function WithdrawUserForm({ beforeEditUserInfo }) {
   const navigate = useNavigate();
+  const [, setIsLoggedIn] = useRecoilState(isLoggedInAtom);
 
   /* States */
   const [
@@ -99,7 +103,8 @@ function WithdrawUserForm({ beforeEditUserInfo }) {
               passwordRef,
               token,
               navigate,
-              toast
+              toast,
+              setIsLoggedIn
             )
           }
           value="회원 탈퇴"

@@ -486,7 +486,8 @@ export const withdrawUser = (
   passwordRef,
   token,
   navigate,
-  toast
+  toast,
+  setIsLoggedIn
 ) => {
   e.preventDefault();
 
@@ -522,11 +523,14 @@ export const withdrawUser = (
   });
 
   formData.append('updateAuthRequest', updateBodyBlob);
-
+  console.log(url);
+  console.log(token);
+  console.log(updateBody2);
   axios
     .put(url, formData, config)
     .then((response) => {
       localStorage.removeItem('token');
+      setIsLoggedIn(false);
       navigate('/withdrawal-message');
     })
     .catch((error) => {

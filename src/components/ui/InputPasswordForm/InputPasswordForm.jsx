@@ -1,7 +1,6 @@
 /* libraries */
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 /* components */
 import * as S from './styled';
@@ -12,17 +11,15 @@ import { updateUserPassword } from '../../../apis';
 import { COLOR_LIST as color } from '../../../style';
 import { useEffect } from 'react';
 
-function InputPasswordForm({ state, beforeEditUserInfo, responseIdKey }) {
+function InputPasswordForm({ beforeEditUserInfo }) {
   const token = localStorage.getItem('token');
   const pathname = useLocation().pathname;
   const isEditPasswordPage = pathname.includes('edit');
 
   const [newPassword, setNewPassword] = useState('');
-  const [isValidatedPassword, setIsValidatedPassword] = useState(false);
   const [beforePw, SetBeforePw] = useState('');
 
   const beforePasswordConfirmation = useRef();
-  // const newPassword = useRef();
   const newPasswordConfirmation = useRef();
 
   const navigate = useNavigate();
