@@ -14,8 +14,9 @@ import { useEffect } from 'react';
 function InputPasswordForm({ beforeEditUserInfo }) {
   const token = localStorage.getItem('token');
   const pathname = useLocation().pathname;
+  const state = useLocation().state;
   const isEditPasswordPage = pathname.includes('edit');
-
+  console.log(state);
   const [newPassword, setNewPassword] = useState('');
   const [beforePw, SetBeforePw] = useState('');
 
@@ -28,6 +29,8 @@ function InputPasswordForm({ beforeEditUserInfo }) {
     const RegExpPassword = /[a-zA-Z0-9!@#$%^&*()._-]{8,16}/;
     return RegExpPassword.test(newPassword);
   };
+
+  console.log(pathname);
 
   useEffect(() => {
     checkNewPassword();
@@ -125,7 +128,9 @@ function InputPasswordForm({ beforeEditUserInfo }) {
             beforePw,
             newPassword,
             navigate,
-            toast
+            toast,
+            pathname,
+            state
           )
         }
       >
