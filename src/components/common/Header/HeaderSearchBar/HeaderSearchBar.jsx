@@ -36,7 +36,7 @@ function HeaderSearchBar({
       setIsSearchBarOpened(false);
       setSearchingType('search');
       setQueryStringsState(!queryStringsState);
-      navigate(`/courses/keyword?keyword=${searchKeyword}`);
+      navigate(`/courses/keyword?keyword=${searchKeyword.trim()}`);
     }
   };
 

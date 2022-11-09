@@ -75,7 +75,7 @@ function CoursesForm() {
       (searchingType === 'location' && type === 'keyword') ||
       (searchingType === 'theme' && type === 'keyword')
     ) {
-      url = `${process.env.REACT_APP_API}/cosmosts?keyword=${searchKeyword}&category=${searchingType}&name-id=${categoryNumber}&sort=course,desc&page=${page.current}&size=4'`;
+      url = `${process.env.REACT_APP_API}/cosmosts?keyword=${searchKeyword}&category=${searchingType}&name-id=${categoryNumber}&sort=course,desc&page=${page.current}&size=4`;
     }
 
     return url;

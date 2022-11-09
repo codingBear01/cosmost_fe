@@ -907,12 +907,15 @@ function CourseRegistrationForm() {
   /* 네이버 지도에서 검색버튼을 클릭할 경우 호출할 이벤트 핸들러*/
   const onClickNaverMapSearch = (e) => {
     e.preventDefault();
-    const query = `부산광역시 ${naverMapQuery.addressGu} ${naverMapQuery.keyword}`;
+    const query = `부산광역시 ${
+      naverMapQuery.addressGu
+    } ${naverMapQuery.keyword.trim()}`;
     NaverMapSearch(
       naverMapState.naverMapHandle,
       query,
       naverMapState.naverMapMarker
     );
+    SetNaverMapQuery({ ...naverMapQuery, keyword: '' });
   };
 
   // 등록된 장소 개수를 계산하는 변수
