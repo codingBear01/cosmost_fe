@@ -1,5 +1,6 @@
 /* libraries */
 import React, { useEffect } from 'react';
+import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 /* reocoil */
 import { useRecoilState } from 'recoil';
 import { isLoggedInAtom } from './store';
@@ -28,15 +29,19 @@ import {
   UserInformation,
   WithdrawUser,
 } from './components';
-/* router */
-import { Routes, Route, Outlet } from 'react-router-dom';
 
 const WithHeaderAndFooter = () => {
+  const path = useLocation().pathname;
+
   return (
     <>
       <Header />
       <Outlet />
-      <Footer />
+      {path === '/courses/likes' || path === '/courses/mine' ? (
+        <></>
+      ) : (
+        <Footer />
+      )}
     </>
   );
 };
