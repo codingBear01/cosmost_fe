@@ -6,7 +6,11 @@ import { Link } from 'react-router-dom';
 import * as S from './styled';
 import { Button } from '../../..';
 /* APIs */
-import { deleteMyReport, fetchAnswerAboutMyReport } from '../../../../apis';
+import {
+  deleteMyReport,
+  fetchAnswerAboutMyReport,
+  fetchSingleCourseView,
+} from '../../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../../style';
 /* icons */
@@ -25,6 +29,7 @@ const HistoryListItem = ({
   const [isDisplayed, setIsDisplayed] = useState(true);
   const [isAnswered, setIsAnswered] = useState(false);
   const [answerAboutReport, setAnswerAboutReport] = useState(null);
+  const [course, setCourse] = useState(null);
 
   const token = localStorage.getItem('token');
 
@@ -42,6 +47,8 @@ const HistoryListItem = ({
   useEffect(() => {
     if (isReportHistoryPage) {
       fetchAnswerAboutMyReport(report, setAnswerAboutReport, setIsAnswered);
+    } else {
+      fetchSingleCourseView(review?.courseId, setCourse);
     }
   }, []);
 
@@ -117,11 +124,7 @@ const HistoryListItem = ({
             {/* 리뷰 제목 */}
             <Link to={`/course-detail/${review?.courseId}`}>
               <S.HistoryTitle>
-                [
-                <span>
-                  {/* {review.title} */}
-                  리뷰를 남긴 코스 제목
-                </span>
+                [<span>{course && course.courseTitle}</span>
                 ]에 남긴 리뷰
               </S.HistoryTitle>
             </Link>

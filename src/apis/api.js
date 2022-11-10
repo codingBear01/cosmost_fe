@@ -196,7 +196,7 @@ export const updateUserPassword = (
 
   formData.append('updateAuthRequest', updateBodyBlob);
   formData.append('file', profilePictureBlob);
-  console.log(updateBody2);
+
   axios
     .put(url, pathname === '/find/pwd' ? body : formData, config)
     .then((response) => {
