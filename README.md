@@ -1,5 +1,5 @@
 
-# cosMost - 프론트 엔드
+# cosMost - 팀 NiceCream (프론트엔드)
 > ### [공유하세요 당신만의 코스를 바로 지금](https://cosmost.vercel.app/)
 
 ## Description
