@@ -295,7 +295,7 @@ function CourseRegistrationForm() {
       (item, index) =>
         (placeImgListTemp = {
           ...placeImgListTemp,
-          ['imgSrc' + index]: `url(${item.placeImgUrl})`,
+          ['imgSrc' + index]: `url(${item?.placeImgUrl})`,
         })
     );
     setRegisteredCourseImgState(placeImgListTemp);

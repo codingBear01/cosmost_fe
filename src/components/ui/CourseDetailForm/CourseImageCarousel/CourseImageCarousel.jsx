@@ -21,7 +21,7 @@ function CourseImgCarousel({ courseDetail }) {
           courseDetail.placeImgList.map((item, index) => (
             <S.CarouselImage
               key={item.id}
-              src={courseDetail.placeImgList[indices[index]].placeImgUrl}
+              src={courseDetail.placeImgList[indices[index]]?.placeImgUrl}
               alt={item.placeImgSaveName}
             />
           ))}
