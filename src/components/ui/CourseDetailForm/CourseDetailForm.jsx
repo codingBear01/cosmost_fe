@@ -155,11 +155,11 @@ function CourseDetailForm() {
         const markerInfoString = `
           <div>
             <h3>장소 이름: ${item.placeName}</h3>
-            <span style="font-size: 15px; font-weight: 600;">한줄평: ${item.placeComment}</span>
+            <span style="font-size: 12px;">한줄평: ${item.placeComment}</span>
           </div>
         `;
         const markerInfoStyle = {
-          maxWidth: 150,
+          maxWidth: 250,
           backgroundColor: `${color.navy}`,
           borderColor: `${color.lightBlue}`,
           borderWidth: 2,
