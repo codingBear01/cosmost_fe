@@ -61,3 +61,5 @@
 ## [API Definition](https://docs.google.com/spreadsheets/d/1QWuBOwt4fPZEXaZ5XQ0yQyrJvEPdpJuf/edit?rtpof=true#gid=990061567)
 
 ## 시현 영상
+
+## [Team Wiki](https://colorful-dancer-5f4.notion.site/cosMost-By-Team-NiceCream-e9dd51c66b0f4749917e041bd30087f2)
