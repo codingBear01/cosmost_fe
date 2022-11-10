@@ -34,7 +34,7 @@ export const CourseContentWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: ${({ justifyContent }) => justifyContent};
-  flex-wrap: wrap;
+  flex-wrap: ${({ flexWrap }) => flexWrap};
   width: 100%;
   padding: 1rem 2rem;
   border-bottom: 1px solid ${color.lightGrey};
@@ -48,18 +48,22 @@ export const CourseTitle = styled.span`
 export const CoursePopularityWrap = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
+  align-self: end;
 `;
 
 export const CourseRate = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  width: 6rem;
+  justify-content: center;
   height: 4rem;
-  // border: 1px solid ${color.black};
-  border-radius: ${br.default};
+  margin-left: 1rem;
   font-size: ${fs.s};
   font-weight: 600;
+
+  span {
+    margin-left: 0.5rem;
+  }
 `;
 
 export const CourseTag = styled.p`
