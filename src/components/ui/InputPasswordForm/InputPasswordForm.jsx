@@ -11,11 +11,10 @@ import { updateUserPassword } from '../../../apis';
 import { COLOR_LIST as color } from '../../../style';
 import { useEffect } from 'react';
 
-function InputPasswordForm({ beforeEditUserInfo }) {
+function InputPasswordForm({ beforeEditUserInfo, responseId }) {
   const token = localStorage.getItem('token');
   const pathname = useLocation().pathname;
   const isEditPasswordPage = pathname.includes('edit');
-
   const [newPassword, setNewPassword] = useState('');
   const [beforePw, SetBeforePw] = useState('');
 
@@ -125,7 +124,9 @@ function InputPasswordForm({ beforeEditUserInfo }) {
             beforePw,
             newPassword,
             navigate,
-            toast
+            toast,
+            pathname,
+            responseId
           )
         }
       >
