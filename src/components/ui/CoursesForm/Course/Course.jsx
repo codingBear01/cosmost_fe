@@ -103,7 +103,7 @@ function Course({ course, courseId }) {
         <S.CourseOrderWrap>
           {courseState.readPlaceDetailResponseList.map((item, index, arr) => (
             <S.CourseName key={item.id}>
-              {item.placeOrder}. {item.placeName}{' '}
+              {item.placeName}{' '}
               {arr.length - 1 !== index && (
                 <AiIcons.AiOutlineArrowRight
                   key={item.id}
