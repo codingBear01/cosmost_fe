@@ -49,7 +49,7 @@ function CourseReviewRegisterForm({ courseDetail }) {
   /** 코스 리뷰 내용 및 평점 유효성 검증 */
   const checkCourseReviewValues = () => {
     if (!reviewContentRef.current.value) {
-      toast.error('내용을 입력해주세요.');
+      toast.warn('내용을 입력해주세요.');
       return false;
     }
     if (!rateRef.current) {

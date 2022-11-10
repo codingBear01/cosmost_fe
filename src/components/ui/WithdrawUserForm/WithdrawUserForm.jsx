@@ -29,7 +29,7 @@ function WithdrawUserForm({ beforeEditUserInfo }) {
   /* Handlers */
   const checkPassword = () => {
     if (!passwordRef.current.value) {
-      toast.error('비밀번호를 입력해주세요.');
+      toast.warn('비밀번호를 입력해주세요.');
       return false;
     }
 

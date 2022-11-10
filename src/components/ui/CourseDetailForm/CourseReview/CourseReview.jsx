@@ -87,7 +87,7 @@ function CourseReview({
   /** 코스 리뷰 작성 내용 및 평점 유효성 검증 */
   const checkEditCourseReviewValues = () => {
     if (!edittedReviewContentRef.current?.value) {
-      toast.error('내용을 입력해주세요.');
+      toast.warn('내용을 입력해주세요.');
       return false;
     }
     if (!edittedReviewRateRef.current) {

@@ -37,7 +37,7 @@ function InputDetailAddressForm({ state }) {
   const onClickCheckInput = (e) => {
     if (!detailAddress) {
       e.preventDefault();
-      toast.error('상세주소를 입력해주세요.');
+      toast.warn('상세주소를 입력해주세요.');
     }
   };
 

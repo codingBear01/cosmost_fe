@@ -89,7 +89,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
       (type === 'next' && !emailRef.current.value)
     ) {
       e.preventDefault();
-      toast.error('이메일을 입력해주세요.');
+      toast.warn('이메일을 입력해주세요.');
       return false;
     }
 
@@ -98,7 +98,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
       (type === 'next' && !certificationNumberRef.current.value)
     ) {
       e.preventDefault();
-      toast.error('인증번호를 입력해주세요.');
+      toast.warn('인증번호를 입력해주세요.');
       return false;
     }
 
@@ -111,12 +111,12 @@ function InputEmailForm({ beforeEditUserInfo }) {
   const checkIsCertificationNumberButtonClicked = (e) => {
     if (!isCertificationNumberSent) {
       e.preventDefault();
-      toast.error('인증번호를 발급받아주세요.');
+      toast.warn('인증번호를 발급받아주세요.');
       return false;
     }
     if (!isCertificationNumberValidated) {
       e.preventDefault();
-      toast.error('발급받은 인증번호를 검증해주세요');
+      toast.warn('발급받은 인증번호를 검증해주세요');
       return false;
     }
     return true;
@@ -140,6 +140,10 @@ function InputEmailForm({ beforeEditUserInfo }) {
 
     // 이메일 변경해야할 때 인증 번호 발송
     if (PAGE_TYPES[pathname].certificationNumberSendingType === 'newemail') {
+      if (beforeEditUserInfo.email === emailRef.current.value) {
+        toast.warn('기존의 이메일과 다른 이메일을 입력해주세요.');
+        return;
+      }
       const token = localStorage.getItem('token');
       const data = {
         loginId: beforeEditUserInfo.loginId,
@@ -159,6 +163,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
         },
         timeout: 3000,
       };
+
       axios
         .put(url, data, config)
         .then((response) => {
@@ -184,7 +189,7 @@ function InputEmailForm({ beforeEditUserInfo }) {
         .get(url, config)
         .then((response) => {
           if (response.data === '이메일이 중복됩니다.') {
-            toast.error(response.data);
+            toast.warn(response.data);
             return;
           }
           toast.success(
@@ -316,81 +321,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
     }
   };
 
-  /* 이메일 변경 api */
-  const onClickUpdateEmail = (e) => {
-    if (!checkInput(e, 'next')) return;
-    if (!checkIsCertificationNumberButtonClicked(e)) return;
-
-    const formData = new FormData();
-    const url = `${process.env.REACT_APP_API}/auths`;
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-      timeout: 3000,
-    };
-
-    const updateBody2 = {
-      loginId: beforeEditUserInfo.loginId,
-      loginPwd: beforeEditUserInfo.loginPwd,
-      nickname: beforeEditUserInfo.nickname,
-      email: emailRef.current.value,
-      address: beforeEditUserInfo.address,
-      role: beforeEditUserInfo.role,
-      sns: beforeEditUserInfo.sns,
-      status: beforeEditUserInfo.status,
-      ageGroup: beforeEditUserInfo.ageGroup,
-      married: beforeEditUserInfo.married,
-      type: '회원정보 수정',
-      profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
-      profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
-      profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
-    };
-
-    const updateBodyJson = JSON.stringify(updateBody2);
-    const updateBodyBlob = new Blob([updateBodyJson], {
-      type: 'application/json',
-    });
-
-    const profilePictureBlob = new Blob(['']);
-
-    formData.append('updateAuthRequest', updateBodyBlob);
-    formData.append('file', profilePictureBlob);
-
-    axios
-      .put(url, formData, config)
-      .then((response) => {
-        //수정된 데이터 다시 가져와서 리다이렉트 하기
-        toast.success(response.data);
-        const url = `${process.env.REACT_APP_API}/auths`;
-        const config = {
-          headers: {
-            Authorization: token,
-          },
-          timeout: 1000,
-        };
-        axios
-          .get(url, config)
-          .then((resonse) => {
-            alert('이메일 변경에 성공했습니다.');
-            navigate(`/user/edit/menu`, {
-              replace: true,
-              state: resonse.data,
-            });
-          })
-          .catch((error) => {
-            new Error(error);
-            toast.error(
-              '변경된 이메일 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
-            );
-          });
-      })
-      .catch((error) => {
-        new Error(error);
-        toast.error('이메일 변경에 실패했습니다. 관리자에게 문의하세요.');
-      });
-  };
-
   return (
     <>
       <ToastContainer
@@ -465,20 +395,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
           }
           onClick={onClickTransferNextPage}
         />
-      )}
-      {/* 수정 버튼 */}
-      {isEditEmailPage && (
-        <Button
-          type="button"
-          width={'100%'}
-          height={'40px'}
-          color={color.white}
-          bgColor={color.darkBlue}
-          hoveredBgColor={color.navy}
-          onClick={onClickUpdateEmail}
-        >
-          수정
-        </Button>
       )}
     </>
   );
