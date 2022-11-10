@@ -172,7 +172,7 @@ function CourseContentWrap({
         <>
           {courseDetail?.placeDetailList?.map((item, index, arr) => (
             <S.CourseName key={item.id}>
-              {item.placeOrder + 1}. {item.placeName}
+              {item.placeOrder}. {item.placeName}
               {index !== arr.length - 1 && (
                 <AiIcons.AiOutlineArrowRight style={{ fontSize: `${fs.s}` }} />
               )}

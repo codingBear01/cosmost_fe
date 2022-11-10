@@ -12,7 +12,7 @@ import {
   handleLikeCourseReview,
   likedCourseReview,
   fetchCourseReviewLikeCount,
-  getCourseAuthor,
+  fetchCourseAuthor,
   updateCourseReview,
   deleteCourseReview,
 } from '../../../../apis';
@@ -115,7 +115,7 @@ function CourseReview({
 
   /** 코스 리뷰 작성자 정보 조회 */
   useEffect(() => {
-    getCourseAuthor(courseReview.reviewerId, setCourseReviewAuthor);
+    fetchCourseAuthor(courseReview.reviewerId, setCourseReviewAuthor);
   }, []);
 
   return (

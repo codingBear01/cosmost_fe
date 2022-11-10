@@ -1,5 +1,5 @@
 /* libraries */
-import axios from "axios";
+import axios from 'axios';
 
 /* Auth */
 /** 코스 작성자 정보를 가져온 후 가져온 코스 작성자 정보를 state로 업데이트 시켜주는 함수
@@ -25,7 +25,7 @@ export const fetchUser = (token, setState) => {
     });
 };
 
-export const getCourseAuthor = (id, setState) => {
+export const fetchCourseAuthor = (id, setState) => {
   const url = `${process.env.REACT_APP_API}/view/info?id=author-id`;
   const config = {
     headers: {
@@ -72,13 +72,13 @@ export const updateUserAddress = (
     loginPwd: password,
     nickname: beforeEditUserInfo.nickname,
     email: beforeEditUserInfo.email,
-    address: beforeEditUserInfo.address + " " + detailAddress,
+    address: beforeEditUserInfo.address + ' ' + detailAddress,
     role: beforeEditUserInfo.role,
     sns: beforeEditUserInfo.sns,
     status: beforeEditUserInfo.status,
     ageGroup: beforeEditUserInfo.ageGroup,
     married: beforeEditUserInfo.married,
-    type: "회원정보 수정",
+    type: '회원정보 수정',
     profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
     profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
     profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
@@ -86,13 +86,13 @@ export const updateUserAddress = (
 
   const updateBodyJson = JSON.stringify(updateBody2);
   const updateBodyBlob = new Blob([updateBodyJson], {
-    type: "application/json",
+    type: 'application/json',
   });
 
-  const profilePictureBlob = new Blob([""]);
+  const profilePictureBlob = new Blob(['']);
 
-  formData.append("updateAuthRequest", updateBodyBlob);
-  formData.append("file", profilePictureBlob);
+  formData.append('updateAuthRequest', updateBodyBlob);
+  formData.append('file', profilePictureBlob);
 
   axios
     .put(url, formData, config)
@@ -109,7 +109,7 @@ export const updateUserAddress = (
       axios
         .get(url, config)
         .then((response) => {
-          navigate("/user/edit/menu", {
+          navigate('/user/edit/menu', {
             replace: true,
             state: response.data,
           });
@@ -117,13 +117,13 @@ export const updateUserAddress = (
         .catch((error) => {
           new Error(error);
           toast.error(
-            "변경된 주소 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요"
+            '변경된 주소 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
           );
         });
     })
     .catch((error) => {
       new Error(error);
-      toast.error("주소 변경에 실패했습니다. 관리자에게 문의하세요.");
+      toast.error('주소 변경에 실패했습니다. 관리자에게 문의하세요.');
     });
 };
 
@@ -146,11 +146,11 @@ export const updateUserPassword = (
 
   const formData = new FormData();
   const url =
-    pathname === "/find/pwd"
+    pathname === '/find/pwd'
       ? `${process.env.REACT_APP_API}/authorization/pwd/reissue/${responseId.id}/${newPassword}`
       : `${process.env.REACT_APP_API}/auths`;
   const config =
-    pathname === "/find/pwd"
+    pathname === '/find/pwd'
       ? { timeout: 3000 }
       : {
           headers: {
@@ -163,9 +163,9 @@ export const updateUserPassword = (
     loginId: responseId?.id,
     loginPwd: newPassword,
     email: responseId?.email,
-    role: "USER",
-    status: "ACTIVE",
-    nickname: "",
+    role: 'USER',
+    status: 'ACTIVE',
+    nickname: '',
   };
 
   const updateBody2 = {
@@ -184,26 +184,26 @@ export const updateUserPassword = (
     profileImgOriginName: beforeEditUserInfo?.profileImgOriginName,
     profileImgSaveName: beforeEditUserInfo?.profileImgSaveName,
     profileImgSaveUrl: beforeEditUserInfo?.profileImgSaveUrl,
-    type: "비밀번호 수정",
+    type: '비밀번호 수정',
   };
 
   const updateBodyJson = JSON.stringify(updateBody2);
   const updateBodyBlob = new Blob([updateBodyJson], {
-    type: "application/json",
+    type: 'application/json',
   });
 
-  const profilePictureBlob = new Blob([""]);
+  const profilePictureBlob = new Blob(['']);
 
-  formData.append("updateAuthRequest", updateBodyBlob);
-  formData.append("file", profilePictureBlob);
+  formData.append('updateAuthRequest', updateBodyBlob);
+  formData.append('file', profilePictureBlob);
   console.log(updateBody2);
   axios
-    .put(url, pathname === "/find/pwd" ? body : formData, config)
+    .put(url, pathname === '/find/pwd' ? body : formData, config)
     .then((response) => {
       //수정된 데이터 다시 가져와서 리다이렉트 하기
       toast.success(response.data);
-      if (pathname === "/find/pwd") {
-        navigate("/login");
+      if (pathname === '/find/pwd') {
+        navigate('/login');
       } else {
         const url = `${process.env.REACT_APP_API}/auths`;
         const config = {
@@ -224,14 +224,14 @@ export const updateUserPassword = (
           .catch((error) => {
             new Error(error);
             toast.error(
-              "변경된 비밀번호 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요"
+              '변경된 비밀번호 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
             );
           });
       }
     })
     .catch((error) => {
       new Error(error);
-      toast.error("비밀번호 변경에 실패했습니다. 관리자에게 문의하세요.");
+      toast.error('비밀번호 변경에 실패했습니다. 관리자에게 문의하세요.');
     });
 };
 
@@ -243,7 +243,7 @@ export const checkIsDuplicatedId = (
   setIsDuplicatedIdChecked,
   isDuplicatedIdChecked
 ) => {
-  if (!checkIsIdOrNicknameEmpty("id")) return;
+  if (!checkIsIdOrNicknameEmpty('id')) return;
 
   const url = `${process.env.REACT_APP_API}/validation/duplicate?id=login-id`;
   const config = {
@@ -257,14 +257,14 @@ export const checkIsDuplicatedId = (
     .get(url, config)
     .then((response) => {
       if (response.status === 200) {
-        toast.success("사용 가능한 아이디입니다.");
+        toast.success('사용 가능한 아이디입니다.');
         setIsDuplicatedIdChecked(!isDuplicatedIdChecked);
       }
     })
     .catch((error) => {
       new Error(error);
       if (error.response.status === 400) {
-        toast.error("이미 존재하는 아이디입니다.");
+        toast.error('이미 존재하는 아이디입니다.');
       }
     });
 };
@@ -276,7 +276,7 @@ export const checkIsDuplicatedNickname = (
   toast,
   setIsDuplicatedNicknameChecked
 ) => {
-  if (!checkIsIdOrNicknameEmpty("nickname")) return;
+  if (!checkIsIdOrNicknameEmpty('nickname')) return;
 
   const url = `${process.env.REACT_APP_API}/validation/duplicate?id=nickname`;
   const config = {
@@ -290,14 +290,14 @@ export const checkIsDuplicatedNickname = (
     .get(url, config)
     .then((response) => {
       if (response.status === 200) {
-        toast.success("사용 가능한 닉네임입니다.");
+        toast.success('사용 가능한 닉네임입니다.');
         setIsDuplicatedNicknameChecked(true);
       }
     })
     .catch((error) => {
       new Error(error);
       if (error.response.status === 400) {
-        toast.error("이미 존재하는 닉네임입니다.");
+        toast.error('이미 존재하는 닉네임입니다.');
       }
     });
 };
@@ -345,7 +345,7 @@ export const signUpOrEditUser = (
         ageGroup: userInformation.age,
         married: userInformation.marriage,
         address: `${userInformation.address} ${userInformation.detailAddress}`,
-        sns: "YES",
+        sns: 'YES',
       };
       // 일반 회원가입용 signUpBody
     } else {
@@ -356,7 +356,7 @@ export const signUpOrEditUser = (
         email: userInformation.email,
         married: userInformation.marriage,
         nickname: userInformation.nickname,
-        sns: "NO",
+        sns: 'NO',
         address: `${userInformation.address} ${userInformation.detailAddress}`,
         ageGroup: userInformation.age,
       };
@@ -377,7 +377,7 @@ export const signUpOrEditUser = (
         status: beforeEditUserInfo.status,
         ageGroup: userInformation.age,
         married: userInformation.marriage,
-        type: "회원정보 수정",
+        type: '회원정보 수정',
       };
       //회원수정에서 프로필 이미지를 변경하지 않았을 때의 Body
       updateBody2 = {
@@ -390,17 +390,17 @@ export const signUpOrEditUser = (
 
     const config = {
       headers: {
-        Authorization: isEditUserPage ? token : "",
+        Authorization: isEditUserPage ? token : '',
       },
       timeout: 3000,
     };
     //회원수정
     if (isEditUserPage) {
       //프로필 이미지가 변경되었다면
-      if (uploadedProfilePicture.slice(0, 4) == "data") {
+      if (uploadedProfilePicture.slice(0, 4) == 'data') {
         const updateBodyJson = JSON.stringify(updateBody);
         const updateBodyBlob = new Blob([updateBodyJson], {
-          type: "application/json",
+          type: 'application/json',
         });
 
         const [profilePictureBinaryData, profilePictureMimeType] =
@@ -410,20 +410,20 @@ export const signUpOrEditUser = (
           type: profilePictureMimeType,
         });
 
-        formData.append("updateAuthRequest", updateBodyBlob);
-        formData.append("file", profilePictureBlob);
+        formData.append('updateAuthRequest', updateBodyBlob);
+        formData.append('file', profilePictureBlob);
       }
       //프로필 이미지가 변경되지 않았다면
       else {
         const updateBodyJson = JSON.stringify(updateBody2);
         const updateBodyBlob = new Blob([updateBodyJson], {
-          type: "application/json",
+          type: 'application/json',
         });
 
-        const profilePictureBlob = new Blob([""]);
+        const profilePictureBlob = new Blob(['']);
 
-        formData.append("updateAuthRequest", updateBodyBlob);
-        formData.append("file", profilePictureBlob);
+        formData.append('updateAuthRequest', updateBodyBlob);
+        formData.append('file', profilePictureBlob);
       }
 
       // 회원수정
@@ -442,7 +442,7 @@ export const signUpOrEditUser = (
           axios
             .get(url, config)
             .then((resonse) => {
-              navigate("/user/edit/menu", {
+              navigate('/user/edit/menu', {
                 replace: true,
                 state: resonse.data,
               });
@@ -450,20 +450,20 @@ export const signUpOrEditUser = (
             .catch((error) => {
               new Error(error);
               toast.error(
-                "수정된 데이터를 가져오는데 실패했습니다. 관리자에게 문의하세요"
+                '수정된 데이터를 가져오는데 실패했습니다. 관리자에게 문의하세요'
               );
             });
         })
         .catch((error) => {
           new Error(error);
-          toast.error("회원정보 변경에 실패했습니다. 관리자에게 문의하세요.");
+          toast.error('회원정보 변경에 실패했습니다. 관리자에게 문의하세요.');
         });
     }
     //회원가입
     else {
       const signUpBodyJson = JSON.stringify(signUpBody);
       const signUpBodyBlob = new Blob([signUpBodyJson], {
-        type: "application/json",
+        type: 'application/json',
       });
       const [profilePictureBinaryData, profilePictureMimeType] =
         base64ImgSrcToImgBinaryData(uploadedProfilePicture);
@@ -473,30 +473,30 @@ export const signUpOrEditUser = (
       });
 
       if (isNaverUserPage) {
-        formData.append("createOAuthRequest", signUpBodyBlob);
+        formData.append('createOAuthRequest', signUpBodyBlob);
       } else {
-        formData.append("createAuthRequest", signUpBodyBlob);
+        formData.append('createAuthRequest', signUpBodyBlob);
       }
 
-      formData.append("file", profilePictureBlob);
+      formData.append('file', profilePictureBlob);
 
       printFormData(formData);
       axios
         .post(url, formData, config)
         .then((response) => {
           if (response.data.accessToken) {
-            localStorage.setItem("token", response.data.accessToken);
+            localStorage.setItem('token', response.data.accessToken);
             navigate(`/`, { replace: true });
           } else {
             navigate(`/login`, { replace: true });
           }
         })
         .catch((error) => {
-          toast.error("회원가입에 실패했습니다. 관리자에게 문의하세요.");
+          toast.error('회원가입에 실패했습니다. 관리자에게 문의하세요.');
         });
     }
   } else {
-    toast.warn("모든 값을 입력해주세요.");
+    toast.warn('모든 값을 입력해주세요.');
   }
 };
 
@@ -529,32 +529,32 @@ export const withdrawUser = (
     nickname: beforeEditUserInfo.nickname,
     address: beforeEditUserInfo.address,
     ageGroup: beforeEditUserInfo.ageGroup,
-    status: "WITHDRAWL",
+    status: 'WITHDRAWL',
     sns: beforeEditUserInfo.sns,
     role: beforeEditUserInfo.role,
     profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
     profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
     profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
-    type: "회원 탈퇴",
+    type: '회원 탈퇴',
   };
 
   const updateBodyJson = JSON.stringify(updateBody2);
   const updateBodyBlob = new Blob([updateBodyJson], {
-    type: "application/json",
+    type: 'application/json',
   });
 
-  formData.append("updateAuthRequest", updateBodyBlob);
+  formData.append('updateAuthRequest', updateBodyBlob);
 
   axios
     .put(url, formData, config)
     .then((response) => {
-      localStorage.removeItem("token");
+      localStorage.removeItem('token');
       setIsLoggedIn(false);
-      navigate("/withdrawal-message");
+      navigate('/withdrawal-message');
     })
     .catch((error) => {
       new Error(error);
-      toast.error("회원 탈퇴에 실패했습니다. 관리자에게 문의하세요.");
+      toast.error('회원 탈퇴에 실패했습니다. 관리자에게 문의하세요.');
     });
 };
 
@@ -563,28 +563,8 @@ export const withdrawUser = (
  *  courseID : 코스 ID를 나타내는 Number
  *  setState : 업데이트해줄 함수
  */
-export const getCourseDetail = (courseId, setState) => {
-  // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/cosmosts/${courseId}`;
+export const fetchCourseDetail = (courseId, setState) => {
   const url = `${process.env.REACT_APP_API}/cosmosts/${courseId}`;
-  const config = { timeout: 3000 };
-
-  axios
-    .get(url, config)
-    .then((response) => {
-      setState(response.data);
-    })
-    .catch((error) => {
-      new Error(error);
-    });
-};
-
-/** 코스 평균 평점을 기준으로 정렬된 코스들을 조회하는 함수
- *  courseID : 코스 ID를 나타내는 Number
- *  setState : 업데이트해줄 함수
- */
-export const getCoursesSortedByAverageRate = (page, setState) => {
-  // const url = `${process.env.REACT_APP_COSMOST_IP}/v1/view/ranking?order=rate&sort=desc&page=${page}&size=4`;
-  const url = `${process.env.REACT_APP_API}/view/ranking?order=rate&sort=desc&page=${page}&size=4`;
   const config = { timeout: 3000 };
 
   axios
@@ -610,16 +590,16 @@ export const deleteCourse = (id, navigate, toast, token) => {
   axios
     .delete(url, config)
     .then((response) => {
-      navigate("/");
+      navigate('/');
     })
     .catch((error) => {
       new Error(error);
-      toast.error("코스 삭제 도중 오류가 발생했습니다. 관리자에게 문의하세요.");
+      toast.error('코스 삭제 도중 오류가 발생했습니다. 관리자에게 문의하세요.');
     });
 };
 
 /** 카테고리 조회 */
-export const getCategories = (type, URLS, setCategories) => {
+export const fetchCategories = (type, URLS, setCategories) => {
   const url = URLS[type];
   const config = { timeout: 3000 };
 
@@ -637,34 +617,11 @@ export const getCategories = (type, URLS, setCategories) => {
 };
 
 /* Comment */
-/** 해당 코스의 리뷰 정보를 가져오는 함수.
- *  courseId : 코스 ID를 나타내는 Number
- *  thenCallback : 리뷰를 가져오는데 성공했을 때 호출할 콜백
- *  errorCallback : 리뷰를 가져오는데 실패했을 때 호출할 콜백
- */
-export const getCourseReviews = (courseId, setState) => {
-  // const url = `${process.env.REACT_APP_COMMENT2_IP}/v1/comments?type=review`;
-  // const url = `${process.env.REACT_APP_API}/comments?type=review`;
-  // http://gateway.cosmost.shop/v1/comments?type=review&sort=id,desc&page=1&size=4
-  // const config = {
-  //   headers: {
-  //     Authorization: courseId,
-  //   },
-  //   timeout: 3000,
-  // };
-  // axios
-  //   .get(url, config)
-  //   .then((response) => setState(response.data))
-  //   .catch((error) => {
-  //     new Error(error);
-  //   });
-};
-
 /** 단일 코스의 조회용 데이터를 가져와 state로 업데이트하는 함수
  *  courseID : 코스 ID를 나타내는 Number
  *  setState : 업데이트해줄 함수
  */
-export const getSingleCourseView = (courseId, setState) => {
+export const fetchSingleCourseView = (courseId, setState) => {
   const url = `${process.env.REACT_APP_API}/cosmosts/${courseId}?filter=frame`;
   const config = { timeout: 3000 };
 
@@ -674,7 +631,7 @@ export const getSingleCourseView = (courseId, setState) => {
     .get(url, config)
     .then((response) => {
       let singleCourseViewData = response.data;
-      getCourseAverageRate(
+      fetchCourseAverageRate(
         courseId,
         (result) => {
           const cpaArr = result.data;
@@ -687,7 +644,7 @@ export const getSingleCourseView = (courseId, setState) => {
         (error) => {
           let cpaArr;
           switch (error.response.data) {
-            case "해당 코스의 리뷰가 존재하지 않습니다":
+            case '해당 코스의 리뷰가 존재하지 않습니다':
               cpaArr = [{ courseId: courseId, courseAvgRate: 0 }];
               break;
             default:
@@ -723,7 +680,7 @@ export const postCourseReview = (
     courseId: courseDetail.id,
     courseReviewContent: reviewContentRef.current.value,
     rate: rateRef.current,
-    type: "courseReview",
+    type: 'courseReview',
   };
   const config = {
     headers: {
@@ -735,12 +692,12 @@ export const postCourseReview = (
   axios
     .post(url, body, config)
     .then((response) => {
-      reviewContentRef.current.value = "";
+      reviewContentRef.current.value = '';
       window.location.replace(`/course-detail/${courseDetail.id}`);
     })
     .catch((error) => {
       new Error(error);
-      toast.error("오류가 발생했습니다. 관리자에게 문의하세요.");
+      toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
     });
 };
 
@@ -800,7 +757,7 @@ export const deleteCourseReview = (
     })
     .catch((error) => {
       new Error(error);
-      toast.error("코스 삭제 도중 오류가 발생했습니다. 관리자에게 문의하세요.");
+      toast.error('코스 삭제 도중 오류가 발생했습니다. 관리자에게 문의하세요.');
     });
 };
 
@@ -810,7 +767,11 @@ export const deleteCourseReview = (
  *  thenCallback : 값을 가져오는 데 성공할 시 호출할 콜백함수
  *  errorCallback : 값을 가져오는 데 실패할 시 호출할 콜백함수
  */
-export const getCourseAverageRate = (courseId, thenCallback, errorCallback) => {
+export const fetchCourseAverageRate = (
+  courseId,
+  thenCallback,
+  errorCallback
+) => {
   if (!courseId) return;
 
   const url = `${process.env.REACT_APP_API}/view?rate=average&course=${courseId}`;
@@ -827,7 +788,7 @@ export const getCourseAverageRate = (courseId, thenCallback, errorCallback) => {
  *  courseID : 코스 ID를 나타내는 Number
  *  setState : 업데이트해줄 함수
  */
-export const getCourseLikeCount = (courseId, setState) => {
+export const fetchCourseLikeCount = (courseId, setState) => {
   if (!courseId) return;
 
   const url = `${process.env.REACT_APP_API}/popularities/${courseId}?filter=count&type=cosmost`;
@@ -876,7 +837,7 @@ export const handleLikeCourseReview = (
   };
   const body = {
     courseReviewId: id,
-    type: "courseReviewThumbsup",
+    type: 'courseReviewThumbsup',
   };
   const config = {
     headers: {
@@ -885,7 +846,7 @@ export const handleLikeCourseReview = (
     timeout: 3000,
   };
 
-  if (type === "like") {
+  if (type === 'like') {
     axios
       .post(URLS[type], body, config)
       .then((response) =>
@@ -947,7 +908,7 @@ export const handleLikeCourse = (
   const url = URLS[type];
   const body = {
     courseId: id,
-    type: "course",
+    type: 'course',
   };
   const config = {
     headers: {
@@ -956,7 +917,7 @@ export const handleLikeCourse = (
     timeout: 3000,
   };
 
-  if (type === "like") {
+  if (type === 'like') {
     axios
       .post(url, body, config)
       .then((response) => setIsLikedCourseChanged(!isLikedCourseChanged))
@@ -1004,7 +965,7 @@ export const handleFollow = (
   const url = URLS[type];
   const body = {
     followingId: followId,
-    type: "follow",
+    type: 'follow',
   };
   const config = {
     headers: {
@@ -1013,7 +974,7 @@ export const handleFollow = (
     timeout: 3000,
   };
 
-  if (type === "follow") {
+  if (type === 'follow') {
     axios
       .post(url, body, config)
       .then((response) => {
@@ -1100,7 +1061,7 @@ export const fetchMyFollowingsCount = (token, setMyFollowingsCount) => {
 
 /* Board */
 /** 리뷰 작성에 쓰일 신고 카테고리를 불러오는 함수 */
-export const getReportCategories = (setReportCategories) => {
+export const fetchReportCategories = (setReportCategories) => {
   // const url = `${process.env.REACT_APP_BOARD_IP}/v1/boards`;
   const url = `${process.env.REACT_APP_API}/boards`;
   const config = { timeout: 3000 };
@@ -1152,7 +1113,7 @@ export const postReport = (
     })
     .catch((error) => {
       new Error(error);
-      toast.error("오류가 발생했습니다. 관리자에게 문의하세요.");
+      toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
     });
 };
 
@@ -1200,7 +1161,7 @@ export const updateReport = (
     })
     .catch((error) => {
       new Error(error);
-      toast.error("오류가 발생했습니다. 관리자에게 문의하세요.");
+      toast.error('오류가 발생했습니다. 관리자에게 문의하세요.');
     });
 };
 

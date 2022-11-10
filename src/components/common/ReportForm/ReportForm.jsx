@@ -5,7 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import * as S from './styled';
 import { Button, Input, UtilTitle } from '../..';
 /* APIs */
-import { getReportCategories, postReport, updateReport } from '../../../apis';
+import { fetchReportCategories, postReport, updateReport } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
 /* icons */
@@ -66,7 +66,7 @@ function ReportForm({
   /* APIs */
   /** 신고 카테고리를 가져오는 hooks */
   useEffect(() => {
-    getReportCategories(setReportCategories);
+    fetchReportCategories(setReportCategories);
   }, []);
 
   /* Hooks */

@@ -11,9 +11,9 @@ import { SmallProfilePic } from '../../..';
 import { FONT_SIZE_LIST as fs } from '../../../../style';
 /* APIs */
 import {
-  getSingleCourseView,
-  getCourseAuthor,
-  getCourseLikeCount,
+  fetchSingleCourseView,
+  fetchCourseAuthor,
+  fetchCourseLikeCount,
 } from '../../../../apis';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
@@ -28,13 +28,13 @@ function Course({ course, courseId }) {
   /* APIs */
   useEffect(() => {
     if (course) {
-      getSingleCourseView(courseId, setCourseState);
-      getCourseLikeCount(courseId, setCourseLikeCount);
+      fetchSingleCourseView(courseId, setCourseState);
+      fetchCourseLikeCount(courseId, setCourseLikeCount);
     }
   }, []);
   useEffect(() => {
     if (courseState) {
-      getCourseAuthor(courseState.authorId, setCourseAuthor);
+      fetchCourseAuthor(courseState.authorId, setCourseAuthor);
     }
   }, [courseState]);
 
@@ -100,7 +100,7 @@ function Course({ course, courseId }) {
         <S.CourseOrderWrap>
           {courseState.readPlaceDetailResponseList.map((item, index, arr) => (
             <S.CourseName key={item.id}>
-              {item.placeOrder + 1}. {item.placeName}{' '}
+              {item.placeOrder}. {item.placeName}{' '}
               {arr.length - 1 !== index && (
                 <AiIcons.AiOutlineArrowRight
                   key={item.id}

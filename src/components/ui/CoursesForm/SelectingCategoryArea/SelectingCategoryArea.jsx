@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 /* components */
 import * as S from './styled';
 /* APIs */
-import { getCategories } from '../../../../apis';
+import { fetchCategories } from '../../../../apis';
 /* CONSTANTS */
 const URLS = {
   location: `${process.env.REACT_APP_API}/cosmosts?filter=all&category=location`,
@@ -47,7 +47,7 @@ function SelectingCategoryArea({ setCategoryId, setSearchingType }) {
 
     setCategoryId(0);
     setSearchingType(isClicked);
-    getCategories(isClicked, URLS, setCategories);
+    fetchCategories(isClicked, URLS, setCategories);
   };
 
   const onClickSetClikedCategoryId = (id, type) => {

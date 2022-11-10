@@ -26,10 +26,10 @@ import {
 import { ToTopBtn, UtilDiv } from '../..';
 /* APIs */
 import {
-  getCourseAverageRate,
-  getCourseDetail,
-  getCourseLikeCount,
-  getCourseAuthor,
+  fetchCourseAverageRate,
+  fetchCourseDetail,
+  fetchCourseLikeCount,
+  fetchCourseAuthor,
 } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
@@ -109,7 +109,7 @@ function CourseDetailForm() {
     }
   }, []);
   useEffect(() => {
-    getCourseDetail(id, setCourseDetail);
+    fetchCourseDetail(id, setCourseDetail);
     fetchCourseReviews();
   }, []);
 
@@ -155,11 +155,11 @@ function CourseDetailForm() {
         const markerInfoString = `
           <div>
             <h3>장소 이름: ${item.placeName}</h3>
-            <span style="font-size: 15px; font-weight: 600;">한줄평: ${item.placeComment}</span>
+            <span style="font-size: 12px;">한줄평: ${item.placeComment}</span>
           </div>
         `;
         const markerInfoStyle = {
-          maxWidth: 150,
+          maxWidth: 250,
           backgroundColor: `${color.navy}`,
           borderColor: `${color.lightBlue}`,
           borderWidth: 2,
@@ -183,8 +183,8 @@ function CourseDetailForm() {
         };
       });
 
-      getCourseAuthor(courseDetail?.authorId, setAuthor);
-      getCourseAverageRate(
+      fetchCourseAuthor(courseDetail?.authorId, setAuthor);
+      fetchCourseAverageRate(
         id,
         (result) => {
           setCourseAverageRate(result.data);
@@ -193,7 +193,7 @@ function CourseDetailForm() {
           new Error(error);
         }
       );
-      getCourseLikeCount(id, setCourseLikeCount);
+      fetchCourseLikeCount(id, setCourseLikeCount);
     }
   }, [courseDetail]);
 
