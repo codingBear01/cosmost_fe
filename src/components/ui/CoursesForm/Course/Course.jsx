@@ -52,8 +52,8 @@ function Course({ course, courseId }) {
         <S.CourseContentWrap justifyContent={'space-between'}>
           <S.CourseTitle>
             {courseState.courseTitle.length > 17
-              ? courseState.courseTitle
-              : `${courseState.courseTitle.substring(0, 17)}...`}
+              ? `${courseState.courseTitle.substring(0, 17)}...`
+              : courseState.courseTitle}
           </S.CourseTitle>
           <S.CoursePopularityWrap>
             <S.CourseRate>
