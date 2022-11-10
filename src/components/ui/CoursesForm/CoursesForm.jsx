@@ -181,10 +181,6 @@ function CoursesForm() {
     courses,
   ]);
 
-  console.log('undefined', !courses[0]?.courseId);
-  console.log('isMine', params.type === 'mine');
-  console.log('is both', !courses[0]?.courseId && params.type === 'mine');
-
   return (
     <>
       {/* 정렬 기준 모달 */}
@@ -256,10 +252,10 @@ function CoursesForm() {
                 courseId={course?.courseId ? course.courseId : course.id}
               />
             ))}
-          {courses[0]?.courseId ? (
+          {courses[0]?.id ? (
             <></>
-          ) : (!courses[0]?.courseId && params.type === 'likes') ||
-            (!courses[0]?.courseId && params.type === 'mine') ? (
+          ) : (!courses[0]?.id && params.type === 'likes') ||
+            (!courses[0]?.id && params.type === 'mine') ? (
             <div
               style={{
                 display: 'flex',
