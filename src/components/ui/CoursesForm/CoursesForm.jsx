@@ -238,8 +238,8 @@ function CoursesForm() {
         )}
         {/* 코스 검색 결괏값 */}
         <S.SearchedCourseContainer>
-          {(params.type === 'keyword' && !courses[0]?.courseId) ||
-          (params.type === 'hashtag' && !courses[0]?.courseId) ? (
+          {(params.type === 'keyword' && !courses[0]?.id) ||
+          (params.type === 'hashtag' && !courses[0]?.id) ? (
             <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
           ) : (
             <></>
