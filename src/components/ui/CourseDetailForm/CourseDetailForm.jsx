@@ -154,7 +154,7 @@ function CourseDetailForm() {
 
         const markerInfoString = `
           <div>
-            <h3>장소 이름: ${item.placeName}</h3>
+            <span style="font-size: 15px;, font-weight: 600;">장소 이름: ${item.placeName}</span>
             <span style="font-size: 12px;">한줄평: ${item.placeComment}</span>
           </div>
         `;
