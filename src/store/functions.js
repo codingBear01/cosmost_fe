@@ -6,9 +6,9 @@ export const sharingByKakao = (data, currentUrl) => {
   Kakao.Share.sendDefault({
     objectType: 'feed',
     content: {
-      title: data.courseTitle,
-      description: data.courseComment,
-      imageUrl: data.placeImgList[0].placeImgUrl,
+      title: data?.courseTitle,
+      description: data?.courseComment,
+      imageUrl: data.placeImgList[0]?.placeImgUrl,
       link: {
         webUrl: currentUrl,
         mobileWebUrl: currentUrl,
