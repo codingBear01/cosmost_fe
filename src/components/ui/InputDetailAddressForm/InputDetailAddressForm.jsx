@@ -1,14 +1,15 @@
 /* libraries */
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 /* components */
 import {
   Button,
-  Input,
   NextBtn,
   UtilForm,
+  Input,
   UtilInputWrap,
   UtilTitle,
 } from '../..';
@@ -26,11 +27,17 @@ function InputDetailAddressForm({ state }) {
   const navigate = useNavigate();
 
   const [detailAddress, setDetailAddress] = useState('');
+  const [password, setPassword] = useState('');
 
   /* Handlers */
   /* 상세주소 입력시 호출될 핸들러. state를 전달한다.*/
   const onChangeDetailAddress = (e) => {
     setDetailAddress(e.target.value);
+  };
+
+  // 패스워드 입력시 호출될 핸들러. state를 전달한다.
+  const onChangePassword = (e) => {
+    setPassword(e.target.value);
   };
 
   /* 다음 버튼 클릭시 호출할 핸들러. 상세주소 유효성 검사 후 다음 창으로 넘어간다.*/
@@ -74,6 +81,16 @@ function InputDetailAddressForm({ state }) {
           onChange={onChangeDetailAddress}
         />
       </UtilInputWrap>
+      <UtilInputWrap>
+        <Input
+          type="password"
+          value={password}
+          placeholder="패스워드"
+          width={'340px'}
+          height={'40px'}
+          onChange={onChangePassword}
+        />
+      </UtilInputWrap>
       {/* 수정 버튼 */}
       {isEditAddressPage ? (
         <Button
@@ -84,7 +101,15 @@ function InputDetailAddressForm({ state }) {
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
           onClick={(e) => {
-            updateUserAddress(e, token, state, navigate, toast, detailAddress);
+            updateUserAddress(
+              e,
+              token,
+              state,
+              navigate,
+              toast,
+              detailAddress,
+              password
+            );
           }}
         >
           수정
