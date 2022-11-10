@@ -258,11 +258,11 @@ function InputUserForm({ state, beforeEditUserInfo }) {
   /* 아이디 및 닉네임의 중복확인 버튼 클릭 여부를 확인하는 핸들러 */
   const checkIsDuplicationButtonClicked = () => {
     if (!isDuplicatedIdChecked) {
-      toast.error('아이디 중복 여부를 확인해주세요.');
+      toast.warn('아이디 중복 여부를 확인해주세요.');
       return false;
     }
     if (!isDuplicatedNicknameChecked) {
-      toast.error('닉네임 중복 여부를 확인해주세요.');
+      toast.warn('닉네임 중복 여부를 확인해주세요.');
       return false;
     }
     return true;

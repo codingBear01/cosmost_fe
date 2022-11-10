@@ -26,11 +26,11 @@ function LoginForm() {
   /* 아이디 및 패스워드 입력값을 검증하는 핸들러 */
   const checkIdAndPassword = () => {
     if (!idRef.current.value) {
-      toast.error('아이디를 입력해주세요.');
+      toast.warn('아이디를 입력해주세요.');
       return false;
     }
     if (!passwordRef.current.value) {
-      toast.error('비밀번호를 입력해주세요.');
+      toast.warn('비밀번호를 입력해주세요.');
       return false;
     }
     return true;

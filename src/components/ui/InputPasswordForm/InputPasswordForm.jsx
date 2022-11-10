@@ -39,15 +39,15 @@ function InputPasswordForm({ beforeEditUserInfo, responseId }) {
       !newPassword ||
       !newPasswordConfirmation.current.value
     ) {
-      toast.error('비밀번호를 입력해주세요.');
+      toast.warn('비밀번호를 입력해주세요.');
       return false;
     }
     if (newPassword !== newPasswordConfirmation.current.value) {
-      toast.error('새 비밀번호와 새 비밀번호 확인은 동일해야 합니다.');
+      toast.warn('새 비밀번호와 새 비밀번호 확인은 동일해야 합니다.');
       return false;
     }
     if (checkNewPassword() === false) {
-      toast.error(
+      toast.warn(
         '비밀번호는 8자 이상 16자 이하, 영대소문자, 숫자, 특수문자만 입력가능합니다.'
       );
       return false;

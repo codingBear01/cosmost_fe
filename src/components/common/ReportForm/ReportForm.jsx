@@ -40,15 +40,15 @@ function ReportForm({
 
   const checkReportInput = () => {
     if (reportCategory.current.value === 'default') {
-      toast.error('카테고리를 선택해주세요.');
+      toast.warn('카테고리를 선택해주세요.');
       return false;
     }
     if (!reportTitle) {
-      toast.error('제목을 입력해주세요.');
+      toast.warn('제목을 입력해주세요.');
       return false;
     }
     if (!reportContent) {
-      toast.error('내용을 입력해주세요.');
+      toast.warn('내용을 입력해주세요.');
       return false;
     }
     return true;
