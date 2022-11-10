@@ -153,8 +153,8 @@ function CourseDetailForm() {
         });
 
         const markerInfoString = `
-          <div style="display: flex; align-items: center; flex-direction: column;">
-            <span style="font-size: 15px;, font-weight: 600;">장소 이름: ${item.placeName}</span>
+          <div style="display: flex; align-items: center; justify-content: flex-start; flex-direction: column;">
+            <span style="font-size: 15px;, font-weight: 600; margin-bottom: 10px;">장소 이름: ${item.placeName}</span>
             <span style="font-size: 12px;">한줄평: ${item.placeComment}</span>
           </div>
         `;
