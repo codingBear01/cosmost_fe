@@ -51,15 +51,17 @@ function Course({ course, courseId }) {
         {/* 코스 제목, 평점 */}
         <S.CourseContentWrap justifyContent={'space-between'}>
           <S.CourseTitle>
-            {courseState.courseTitle.substring(0, 20)}
-            {courseState.courseTitle.length > 20 && '...'}
+            {courseState.courseTitle.substring(0, 17)}
+            {courseState.courseTitle.length > 17 && '...'}
           </S.CourseTitle>
           <S.CoursePopularityWrap>
             <S.CourseRate>
               <FaIcons.FaRegThumbsUp />
-              {courseLikeCount && courseLikeCount}
+              <span>{courseLikeCount && courseLikeCount}</span>
             </S.CourseRate>
-            <S.CourseRate>⭐ {courseState.courseAvgRate}</S.CourseRate>
+            <S.CourseRate>
+              ⭐<span>{courseState.courseAvgRate}</span>
+            </S.CourseRate>
           </S.CoursePopularityWrap>
         </S.CourseContentWrap>
         {/* 코스 카테고리 */}
@@ -72,7 +74,7 @@ function Course({ course, courseId }) {
           </S.CourseTag>
         </S.CourseContentWrap>
         {/* 코스 해시태그 */}
-        <S.CourseContentWrap>
+        <S.CourseContentWrap flexWrap={'wrap'}>
           {courseState.hashtagList.map((hashTag) => (
             <Link
               key={hashTag.id}
