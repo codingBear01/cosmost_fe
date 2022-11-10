@@ -99,9 +99,9 @@ function DaumAddressApiModal({ state }) {
       <S.GettingCurrentLocationButtonWrap>
         <BiIcons.BiCurrentLocation />
         <Button
-          width="15rem"
           height="5rem"
-          fontSize="1.5rem"
+          margin={'0 0 0 10px'}
+          fontSize="14px"
           color={color.white}
           onClick={onClickCurrentLocation}
         >
