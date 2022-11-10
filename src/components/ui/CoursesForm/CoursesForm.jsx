@@ -181,6 +181,10 @@ function CoursesForm() {
     courses,
   ]);
 
+  console.log('undefined', !courses[0]?.courseId);
+  console.log('isMine', params.type === 'mine');
+  console.log('is both', !courses[0]?.courseId && params.type === 'mine');
+
   return (
     <>
       {/* 정렬 기준 모달 */}
@@ -238,8 +242,8 @@ function CoursesForm() {
         )}
         {/* 코스 검색 결괏값 */}
         <S.SearchedCourseContainer>
-          {(params.type === 'keyword' && !courses[0]?.courseTitle) ||
-          (params.type === 'hashtag' && !courses[0]?.courseTitle) ? (
+          {(params.type === 'keyword' && !courses[0]?.courseId) ||
+          (params.type === 'hashtag' && !courses[0]?.courseId) ? (
             <h1 style={{ margin: '0 auto' }}>검색 결과가 존재하지 않습니다.</h1>
           ) : (
             <></>
@@ -272,7 +276,7 @@ function CoursesForm() {
                     해주세요.
                   </>
                 )}
-                {!courses[0]?.courseTitle && params.type === 'likes' && (
+                {params.type === 'likes' && (
                   <>
                     아직 좋아요 한 코스가 없습니다. 코스의
                     <span style={{ color: color.lightBlue }}> 좋아요</span>를
