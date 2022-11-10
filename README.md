@@ -19,7 +19,7 @@ tools~
 
 ## Distributing Roles
 |Part|Name & Repo|Roles|
-|:---:|:---:|:---:|
+|:---:|:---|:---:|
 |BE|김승후 [@shockim3710](https://github.com/shockim3710)|팀장 및 백엔드 총괄, 코스 CRUD API, 게이트웨이 설정, AWS S3 이미지 업로드 설정|
 |BE|홍찬영 [@ChanYoungHong](https://github.com/ChanYoungHong)|팔로우, 좋아요, 신고 CRUD, 신고 답변, 코스 리뷰 CRUD, 코스 및 코스 리뷰 평점 API|
 |BE|권재현 [@K-J-HYEON](https://github.com/K-J-HYEON)|Auth API, elastiCache 및 Amazon Linux2 Redis 활용 이메일 인증 기능, JWT & Spring Security 활용 사용자 인증 기능|
@@ -30,10 +30,12 @@ tools~
 #### [BE Repo.](https://github.com/orgs/CosMost-BE/repositories)
 #### [FE Repo.](https://github.com/codingBear01/cosmost_fe)
 
+## Arcitectures
+
 ## ER Diagram
 
 ## Requirements Specification
 
 ## API Definition
 
-## 구현 영상
+## 시현 영상
