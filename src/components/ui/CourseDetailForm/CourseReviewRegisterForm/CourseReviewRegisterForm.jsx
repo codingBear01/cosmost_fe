@@ -19,12 +19,9 @@ import * as AiIcons from 'react-icons/ai';
 const REVIEW_RATE_INDEXES = [0, 1, 2, 3, 4];
 
 function CourseReviewRegisterForm({ courseDetail }) {
-  const navigate = useNavigate();
-
   const token = localStorage.getItem('token');
 
   /* 리뷰 등록용 states 및 ref */
-  const [user] = useRecoilState(userAtom);
   const [isYellowStar, setIsYellowStar] = useState([
     true,
     false,

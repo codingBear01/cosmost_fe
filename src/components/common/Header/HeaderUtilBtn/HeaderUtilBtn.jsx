@@ -19,7 +19,6 @@ function HeaderUtilBtn() {
   // 사용자 정보 가져오기
   useEffect(() => {
     if (token) {
-      // const url = `${process.env.REACT_APP_AUTH_IP}/v1/auths`;
       const url = `${process.env.REACT_APP_API}/auths`;
       const config = {
         headers: {
@@ -43,9 +42,9 @@ function HeaderUtilBtn() {
 
   return (
     <>
-      {token && user ? (
-        <Link to={`/user/${user.id}`} state={user}>
-          <SmallProfilePic src={user.profileImgSaveUrl} alt={'profile_pic'} />
+      {isLoggedIn && user ? (
+        <Link to={`/user/${user?.id}`} state={user}>
+          <SmallProfilePic src={user?.profileImgSaveUrl} alt={'profile_pic'} />
         </Link>
       ) : (
         <Link to="/login" onClick={() => setIsLoggedIn(false)}>

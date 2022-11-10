@@ -4,6 +4,11 @@ import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 /* components */
 import { Button, Icon, Input, NextBtn, UtilInputWrap, UtilTitle } from '../..';
+/* APIs */
+import {
+  sendCertificationNumber,
+  compareCertificationNumber,
+} from '../../../apis';
 /* icons */
 import * as AiIcons from 'react-icons/ai';
 import * as BsIcons from 'react-icons/bs';
@@ -128,199 +133,6 @@ function InputEmailForm({ beforeEditUserInfo }) {
     if (!checkIsCertificationNumberButtonClicked(e)) return;
   };
 
-  /* APIs */
-  /** 인증번호 발송 api */
-  const onClickSendCertificationNumber = (e) => {
-    e.preventDefault();
-
-    if (!checkInput(e, 'email')) return;
-    if (!validateEmailByRegExp(e)) return;
-
-    const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberSendingType}/confirm/${emailRef.current.value}`;
-
-    // 이메일 변경해야할 때 인증 번호 발송
-    if (PAGE_TYPES[pathname].certificationNumberSendingType === 'newemail') {
-      if (beforeEditUserInfo.email === emailRef.current.value) {
-        toast.warn('기존의 이메일과 다른 이메일을 입력해주세요.');
-        return;
-      }
-      const token = localStorage.getItem('token');
-      const data = {
-        loginId: beforeEditUserInfo.loginId,
-        loginPwd: beforeEditUserInfo.loginPwd,
-        married: beforeEditUserInfo.married,
-        nickname: beforeEditUserInfo.nickname,
-        sns: beforeEditUserInfo.sns,
-        address: beforeEditUserInfo.address,
-        ageGroup: beforeEditUserInfo.ageGroup,
-        profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
-        profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
-        profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
-      };
-      const config = {
-        headers: {
-          Authorization: token,
-        },
-        timeout: 3000,
-      };
-
-      axios
-        .put(url, data, config)
-        .then((response) => {
-          if (response.data === '입력하신 이메일은 등록되지 않은 메일입니다.') {
-            toast.error(response.data);
-            return;
-          }
-          toast.success(
-            `${emailRef.current.value}로 인증번호를 발송했습니다. 이메일을 확인해주세요.`
-          );
-          setIsCertificationNumberSent(true);
-        })
-        .catch((error) => {
-          new Error(error);
-          toast.error('인증번호 발송에 실패했습니다.');
-        });
-    }
-    // 그 외인 경우 인증 번호 발송
-    else {
-      const config = { timeout: 3000 };
-
-      axios
-        .get(url, config)
-        .then((response) => {
-          if (response.data === '이메일이 중복됩니다.') {
-            toast.warn(response.data);
-            return;
-          }
-          toast.success(
-            `${emailRef.current.value}로 인증번호를 발송했습니다. 이메일을 확인해주세요.`
-          );
-          setIsCertificationNumberSent(true);
-        })
-        .catch((error) => {
-          new Error(error);
-          toast.error('인증번호 발송에 실패했습니다.');
-        });
-    }
-  };
-
-  /** 사용자가 입력한 인증번호가 진짜 인증번호인지 검증하는 핸들러 */
-  const onClickCompareCertificationNumber = (e) => {
-    e.preventDefault();
-
-    if (!checkInput(e, 'number')) return;
-
-    const url = `${process.env.REACT_APP_API}/authorization/${PAGE_TYPES[pathname].certificationNumberComparingType}/${certificationNumberRef.current.value}/${emailRef.current.value}`;
-
-    // 이메일 변경을 목적으로 보낸 경우 인증번호 검증
-    if (
-      PAGE_TYPES[pathname].certificationNumberComparingType ===
-      'newemail/reissue'
-    ) {
-      const token = localStorage.getItem('token');
-      const data = {
-        loginId: beforeEditUserInfo.loginId,
-        loginPwd: beforeEditUserInfo.loginPwd,
-        married: beforeEditUserInfo.married,
-        nickname: beforeEditUserInfo.nickname,
-        sns: beforeEditUserInfo.sns,
-        address: beforeEditUserInfo.address,
-        ageGroup: beforeEditUserInfo.ageGroup,
-        profileImgOriginName: beforeEditUserInfo.profileImgOriginName,
-        profileImgSaveName: beforeEditUserInfo.profileImgSaveName,
-        profileImgSaveUrl: beforeEditUserInfo.profileImgSaveUrl,
-        role: beforeEditUserInfo.role,
-        status: beforeEditUserInfo.status,
-      };
-      const config = {
-        headers: {
-          Authorization: token,
-        },
-        timeout: 3000,
-      };
-
-      axios
-        .put(url, data, config)
-        .then((response) => {
-          const url = `${process.env.REACT_APP_API}/auths`;
-          const config = {
-            headers: {
-              Authorization: token,
-            },
-            timeout: 1000,
-          };
-          axios
-            .get(url, config)
-            .then((resonse) => {
-              navigate(`/user/edit/menu`, {
-                replace: true,
-                state: resonse.data,
-              });
-            })
-            .catch((error) => {
-              new Error(error);
-              toast.error(
-                '변경된 이메일 정보를 가져오는데 실패했습니다. 관리자에게 문의하세요'
-              );
-            });
-        })
-        .catch((error) => {
-          new Error(error);
-          toast.error('인증번호 검증에 실패했습니다.');
-        });
-    }
-    // 그 외를 목적으로 보낸 경우 인증번호 검증
-    else {
-      const config = { timeout: 3000 };
-      axios
-        .get(url, config)
-        .then((response) => {
-          //아이디 찾기에서 아이디 찾기에 성공한 경우
-          if (
-            PAGE_TYPES[pathname].certificationNumberComparingType ===
-            'id/reissue'
-          ) {
-            toast.success(`인증번호 검증이 완료되었습니다.`);
-            setIsCertificationNumberValidated(true);
-            setResponseId(response.data);
-            return;
-          }
-
-          //패스워드 찾기에서 아이디 찾기에 성공한 경우
-          if (
-            PAGE_TYPES[pathname].certificationNumberComparingType ===
-            'pwd/reissue'
-          ) {
-            toast.success(`인증번호 검증이 완료되었습니다.`);
-            setIsCertificationNumberValidated(true);
-            setResponseId(response.data);
-            return;
-          }
-
-          switch (response.data) {
-            case true:
-              toast.success(`인증번호 검증이 완료되었습니다.`);
-              setIsCertificationNumberValidated(true);
-              break;
-            case false:
-              toast.error(
-                `유효하지 않은 인증번호입니다. 인증번호를 다시 확인해주세요`
-              );
-              break;
-            default:
-              toast.error(`예상치 않은 에러입니다. 관리자에게 문의하세요`);
-              break;
-          }
-        })
-        .catch((error) => {
-          new Error(error);
-          toast.error(
-            '인증번호 검증을 할 수 없는 상태입니다. 관리자에게 문의하세요.'
-          );
-        });
-    }
-  };
-
   return (
     <>
       <ToastContainer
@@ -356,7 +168,20 @@ function InputEmailForm({ beforeEditUserInfo }) {
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
-          onClick={onClickSendCertificationNumber}
+          onClick={(e) =>
+            sendCertificationNumber(
+              e,
+              checkInput,
+              validateEmailByRegExp,
+              PAGE_TYPES,
+              pathname,
+              emailRef,
+              beforeEditUserInfo,
+              toast,
+              token,
+              setIsCertificationNumberSent
+            )
+          }
         >
           인증번호 발급
         </Button>
@@ -381,7 +206,21 @@ function InputEmailForm({ beforeEditUserInfo }) {
           color={color.white}
           bgColor={color.darkBlue}
           hoveredBgColor={color.navy}
-          onClick={onClickCompareCertificationNumber}
+          onClick={(e) =>
+            compareCertificationNumber(
+              e,
+              checkInput,
+              PAGE_TYPES,
+              pathname,
+              certificationNumberRef,
+              emailRef,
+              beforeEditUserInfo,
+              navigate,
+              toast,
+              setIsCertificationNumberValidated,
+              setResponseId
+            )
+          }
         >
           인증번호 확인
         </Button>

@@ -39,7 +39,6 @@ function UserInfoForm() {
   };
 
   /* APIs */
-
   const getUserInfo = () => {
     const url = `${process.env.REACT_APP_API}/auths`;
     const config = {

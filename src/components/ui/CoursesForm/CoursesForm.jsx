@@ -83,7 +83,6 @@ function CoursesForm() {
 
   /* APIs */
   /** params에 따라 다른 코스를 가져오는 api */
-
   const getCourses = useCallback(
     async (type, searchKeyword, categoryNumber, searchingType) => {
       try {
