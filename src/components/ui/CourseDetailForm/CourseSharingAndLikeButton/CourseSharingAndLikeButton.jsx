@@ -17,11 +17,12 @@ import {
 import * as BiIcons from 'react-icons/bi';
 import * as FaIcons from 'react-icons/fa';
 
-/* 현재 접속한 페이지 url */
-const currentUrl = window.location.href;
-
 function CourseSharingAndLikeButton({ courseDetail, token, loggedInUserId }) {
   const navigate = useNavigate();
+
+  /* 현재 접속한 페이지 url */
+  const currentUrl = window.location.href;
+
   /* States */
   const [isSharingCourseModalOpened, setIsSharingCourseModalOpened] =
     useState(false);
