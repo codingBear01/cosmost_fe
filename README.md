@@ -50,7 +50,7 @@
 ## [Event Storming](https://miro.com/app/board/uXjVPFaLcAM=/)
 ![event_storming](https://user-images.githubusercontent.com/95178119/201017801-4484a489-5517-47cb-86c4-f1abea51d4c2.jpg)
 
-## ER Diagram
+## [ER Diagram](https://www.erdcloud.com/d/aqxBCJLZKuoT5f75K)
 ![erd](https://user-images.githubusercontent.com/95178119/201016522-dcaf6ba2-d66d-4d54-b566-68c885b90d2c.png)
 
 ## [Requirements Specification](https://applebanana.atlassian.net/wiki/spaces/~6029c153c5a0430067bd79ce/pages/edit-v2/11370497?draftShareId=d8554bdb-9740-4c97-95ad-378816943069)
