@@ -81,7 +81,7 @@ export const CourseCategorySelect = styled.select`
   border-bottom: 1px solid ${color.white};
   outline: none;
   background: transparent;
-  font-size: ${fs.m};
+  font-size: 12px;
   font-weight: 600;
   color: ${color.white};
   cursor: pointer;
@@ -183,7 +183,7 @@ export const InputHashTagWrap = styled.form`
 
 export const CourseDetailInfoText = styled.span`
   margin-left: ${gap.l};
-  font-size: ${fs.m};
+  font-size: 14px;
   cursor: pointer;
 `;
 
@@ -210,7 +210,7 @@ export const CourseDescription = styled.textarea`
   border: 1px solid ${color.white};
   border-radius: ${br.default};
   background: transparent;
-  font-size: ${fs.m};
+  font-size: 12px;
   color: ${color.white};
 `;
 

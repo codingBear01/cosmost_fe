@@ -15,14 +15,20 @@ function UtilPageContainer({ children }) {
 
   const [user] = useRecoilState(userAtom);
 
+  const transferPage = (path) => {
+    if (path === '/user/edit/menu') {
+      navigate(`/user/${user?.id}`);
+    } else if (path === `/user/${user?.id}`) {
+      navigate('/');
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
     <>
       <S.UtilPageContainerHeader>
-        <AiIcons.AiOutlineArrowLeft
-          onClick={() =>
-            navigate(path === '/user/edit/menu' ? `/user/${user?.id}` : -1)
-          }
-        />
+        <AiIcons.AiOutlineArrowLeft onClick={() => transferPage(path)} />
       </S.UtilPageContainerHeader>
       <S.StyledUtilPageContainer>{children}</S.StyledUtilPageContainer>
     </>

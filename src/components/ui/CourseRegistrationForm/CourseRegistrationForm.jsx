@@ -1546,7 +1546,6 @@ function CourseRegistrationForm() {
               maxLength={15}
               height={'3rem'}
               margin={'0 2rem 0 0'}
-              fontSize={fs.m}
               value={hashTagAdd.inputHashTag}
               onChange={onChangeHashTag}
             />
@@ -1588,7 +1587,6 @@ function CourseRegistrationForm() {
           width={'45rem'}
           height={'5rem'}
           margin={'2rem 0 0 0'}
-          fontSize={fs.m}
         />
         {/* 코스 설명 영역 */}
         <S.CourseDescription
