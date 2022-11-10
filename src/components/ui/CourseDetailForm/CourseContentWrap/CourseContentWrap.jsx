@@ -10,7 +10,11 @@ import * as S from './styled';
 import { CourseContent } from '..';
 import { Button, ProfilePic } from '../../..';
 /* APIs */
-import { handleFollow, fetchIsFollowed } from '../../../../apis';
+import {
+  handleFollow,
+  fetchIsFollowed,
+  fetchAuthorsFollowersCount,
+} from '../../../../apis';
 /* icons */
 import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';
@@ -45,35 +49,12 @@ function CourseContentWrap({
   const token = localStorage.getItem('token');
 
   /* APIs */
-
   useEffect(() => {
     if (author) {
-      fetchAuthorsFollowersCount();
+      fetchAuthorsFollowersCount(author, setAuthorsFollowersCount);
       fetchIsFollowed(author?.id, setIsFollowed, token);
     }
-  }, [isFollowedChanged]);
-
-  /** 코스 작성자 팔로워 숫자 조회 */
-  const fetchAuthorsFollowersCount = () => {
-    const url = `${process.env.REACT_APP_API}/popularities?filter=cosmosts&type=follower&sort=id,desc&page=0&size=4`;
-    const config = {
-      headers: {
-        Authorization: author?.id,
-      },
-      timeout: 3000,
-    };
-
-    axios
-      .get(url, config)
-      .then((response) => {
-        setAuthorsFollowersCount(response.data[0]?.otherUserFollowerCnt);
-      })
-      .catch((error) => new Error(error));
-  };
-  useEffect(() => {
-    fetchAuthorsFollowersCount();
-    fetchIsFollowed(author?.id, setIsFollowed, token);
-  }, [author]);
+  }, [isFollowedChanged, author]);
 
   return (
     // dataCategory에 따라 다른 컴포넌트 렌더링됨

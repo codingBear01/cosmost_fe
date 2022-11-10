@@ -8,6 +8,8 @@ export {
   checkIsDuplicatedNickname,
   signUpOrEditUser,
   withdrawUser,
+  sendCertificationNumber,
+  compareCertificationNumber,
   // Cosmost
   fetchCourseDetail,
   deleteCourse,
@@ -29,6 +31,7 @@ export {
   fetchIsFollowed,
   fetchMyFollowersCount,
   fetchMyFollowingsCount,
+  fetchAuthorsFollowersCount,
   // Board
   fetchReportCategories,
   postReport,
