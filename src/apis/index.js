@@ -1,7 +1,7 @@
 export {
   // Auth
   fetchUser,
-  getCourseAuthor,
+  fetchCourseAuthor,
   updateUserAddress,
   updateUserPassword,
   checkIsDuplicatedId,
@@ -9,19 +9,17 @@ export {
   signUpOrEditUser,
   withdrawUser,
   // Cosmost
-  getCourseDetail,
+  fetchCourseDetail,
   deleteCourse,
-  getCategories,
+  fetchCategories,
   // Comment
-  getSingleCourseView,
-  getCourseReviews,
+  fetchSingleCourseView,
   postCourseReview,
   updateCourseReview,
   deleteCourseReview,
   // Popularity
-  getCourseAverageRate,
-  getCoursesSortedByAverageRate,
-  getCourseLikeCount,
+  fetchCourseAverageRate,
+  fetchCourseLikeCount,
   handleLikeCourseReview,
   likedCourseReview,
   handleLikeCourse,
@@ -32,7 +30,7 @@ export {
   fetchMyFollowersCount,
   fetchMyFollowingsCount,
   // Board
-  getReportCategories,
+  fetchReportCategories,
   postReport,
   updateReport,
   deleteMyReport,

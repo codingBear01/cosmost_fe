@@ -1,13 +1,12 @@
 /* libraries */
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 /* components */
 import * as S from './styled';
 import { Button, ProfilePic } from './../../../';
 /* APIs */
 import {
   fetchUser,
-  getCourseAuthor,
+  fetchCourseAuthor,
   handleFollow,
   fetchIsFollowed,
 } from '../../../../apis';
@@ -24,7 +23,7 @@ function FollowListItem({ follow, isFollowing, token }) {
   /* APIs */
   /** 코스 리뷰 작성자 조회 */
   useEffect(() => {
-    getCourseAuthor(followId, setAuthor);
+    fetchCourseAuthor(followId, setAuthor);
     fetchUser(token, setUser);
   }, []);
   /** 코스 리뷰 좋아요 여부 조회 */

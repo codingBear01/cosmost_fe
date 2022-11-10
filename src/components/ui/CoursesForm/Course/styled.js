@@ -90,17 +90,17 @@ export const CourseCreatedDate = styled.span`
 export const CourseOrderWrap = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
-  height: 70px;
-  padding: 1rem 2rem;
+  padding: 2rem 2rem 3rem;
   border-radius: 0 0 ${br.default} ${br.default};
 `;
 
 export const CourseName = styled.span`
   display: flex;
   align-items: center;
+  margin-top: 1rem;
   font-size: ${fs.m};
   font-weight: 600;
 

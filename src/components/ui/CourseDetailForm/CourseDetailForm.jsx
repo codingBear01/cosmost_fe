@@ -26,10 +26,10 @@ import {
 import { ToTopBtn, UtilDiv } from '../..';
 /* APIs */
 import {
-  getCourseAverageRate,
-  getCourseDetail,
-  getCourseLikeCount,
-  getCourseAuthor,
+  fetchCourseAverageRate,
+  fetchCourseDetail,
+  fetchCourseLikeCount,
+  fetchCourseAuthor,
 } from '../../../apis';
 /* static data */
 import { COLOR_LIST as color } from '../../../style';
@@ -109,7 +109,7 @@ function CourseDetailForm() {
     }
   }, []);
   useEffect(() => {
-    getCourseDetail(id, setCourseDetail);
+    fetchCourseDetail(id, setCourseDetail);
     fetchCourseReviews();
   }, []);
 
@@ -183,8 +183,8 @@ function CourseDetailForm() {
         };
       });
 
-      getCourseAuthor(courseDetail?.authorId, setAuthor);
-      getCourseAverageRate(
+      fetchCourseAuthor(courseDetail?.authorId, setAuthor);
+      fetchCourseAverageRate(
         id,
         (result) => {
           setCourseAverageRate(result.data);
@@ -193,7 +193,7 @@ function CourseDetailForm() {
           new Error(error);
         }
       );
-      getCourseLikeCount(id, setCourseLikeCount);
+      fetchCourseLikeCount(id, setCourseLikeCount);
     }
   }, [courseDetail]);
 
