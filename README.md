@@ -13,12 +13,15 @@
 <img src="https://img.shields.io/badge/CSS-1572b6?&style=for-the-badge&logo=css3&logoColor=white"/></a>
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?&style=for-the-badge&logo=JavaScript&logoColor=white"/></a>
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"></a>
-<img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white"> </a>
+<img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white"></a>
 <img src="https://img.shields.io/badge/Recoil-61DAFB?style=for-the-badge&logo=Recoil&logoColor=white">
 
+
+
 ### ⚒ Tools
-<img src="https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?&style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white"/> </a>
-<img src="https://img.shields.io/badge/Git-F05032?&style=for-the-badge&logo=Git&logoColor=white"/> </a>
+<img src="https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?&style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Git-F05032?&style=for-the-badge&logo=Git&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Insomnia-4000BF?&style=for-the-badge&logo=Insomnia&logoColor=white"/></a>
 
 ## System Spec
 
@@ -33,12 +36,12 @@
 
 ## Distributing Roles
 |Part|Name & Repo|Roles|
-|:---:|:---|:---:|
-|BE|김승후 [@shockim3710](https://github.com/shockim3710)|팀장 및 백엔드 총괄, 코스 CRUD API, 게이트웨이 설정, AWS S3 이미지 업로드 설정|
-|BE|홍찬영 [@ChanYoungHong](https://github.com/ChanYoungHong)|팔로우, 좋아요, 신고 CRUD, 신고 답변, 코스 리뷰 CRUD, 코스 및 코스 리뷰 평점 API|
-|BE|권재현 [@K-J-HYEON](https://github.com/K-J-HYEON)|Auth API, elastiCache 및 Amazon Linux2 Redis 활용 이메일 인증 기능, JWT & Spring Security 활용 사용자 인증 기능|
-|FE|강명모 [@codingBear01](https://github.com/codingBear01)|UI/UX 기획 및 디자인 전담, 퍼블리싱, 팔로우, 좋아요, 신고, 코스 리뷰, 평점, 회원 관련 API 및 UI|
-|FE|최영수 [@InvincibleGaren](https://github.com/InvincibleGaren)|퍼블리싱, 코스, 회원, 네이버 지도 관련 API 및 기능|
+|:---:|:---|:---|
+|BE|김승후 </br>[@shockim3710](https://github.com/shockim3710)| - 팀장 및 백엔드 총괄 </br> - Cosmost 서비스 API 설계 </br> - 메인 및 검색페이지 API 설계 </br> - 게이트웨이 설정 </br> - AWS S3 이미지 업로드 설정 </br> - 발표 및 PPT 제작 </br> - 서비스 설계 및 문서 작업 </br>|
+|BE|홍찬영 </br>[@ChanYoungHong](https://github.com/ChanYoungHong)|- Comment 서비스 API 설계 </br> - Popularity 서비스 API 설계 </br> - Board 서비스 API 설계 </br> - 크롤링으로 더미데이터 생성 </br> - 서비스 설계 및 문서 작업 </br>|
+|BE|권재현 </br>[@K-J-HYEON](https://github.com/K-J-HYEON)|- Auth 서비스 API 설계 </br> - elastiCache 및 Amazon Linux2 Redis 활용 이메일 인증 </br> - JWT & Spring Security 활용 사용자 인증 기능 </br> - 서비스 설계 및 문서 작업 </br>|
+|FE|강명모 </br>[@codingBear01](https://github.com/codingBear01)|- UI/UX 기획 및 디자인 </br> - 퍼블리싱 </br> - Auth, Comment, Board, Popularity API 및 UI </br> - React Component 구조 설계 </br> - 서비스 설계|
+|FE|최영수 </br>[@InvincibleGaren](https://github.com/InvincibleGaren)|- 퍼블리싱 </br>  - Auth, Cosmost API </br> - 이미지 업로드 및 수정 기능 </br> - 네이버 지도 OPEN API </br> - 서비스 설계 </br>|
 
 ## 🗃 Repos.
 #### [BE Repo.](https://github.com/orgs/CosMost-BE/repositories)
