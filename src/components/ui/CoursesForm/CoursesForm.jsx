@@ -1,6 +1,6 @@
 /* libraries */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 /* recoil */
 import { useRecoilState } from 'recoil';
@@ -252,6 +252,55 @@ function CoursesForm() {
                 courseId={course?.courseId ? course.courseId : course.id}
               />
             ))}
+          {courses[0]?.courseId ? (
+            <></>
+          ) : (!courses[0]?.courseId && params.type === 'likes') ||
+            (!courses[0]?.courseId && params.type === 'mine') ? (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column',
+                margin: '0 auto',
+              }}
+            >
+              <h1>
+                {params.type === 'mine' && (
+                  <>
+                    아직 작성한 코스가 없습니다. 코스를
+                    <span style={{ color: color.lightBlue }}> 등록</span>
+                    해주세요.
+                  </>
+                )}
+                {!courses[0]?.courseTitle && params.type === 'likes' && (
+                  <>
+                    아직 좋아요 한 코스가 없습니다. 코스의
+                    <span style={{ color: color.lightBlue }}> 좋아요</span>를
+                    눌러주세요.
+                  </>
+                )}
+              </h1>
+              <Link
+                to={
+                  params.type === 'mine'
+                    ? '/course-registration'
+                    : '/courses/all'
+                }
+                style={{
+                  color: color.white,
+                  fontSize: '14px',
+                }}
+              >
+                <span style={{ fontFamily: 'inherit' }}>
+                  {params.type === 'mine'
+                    ? '코스 등록하러 가기'
+                    : '모든 코스 보러 가기'}
+                </span>
+              </Link>
+            </div>
+          ) : (
+            <></>
+          )}
         </S.SearchedCourseContainer>
         <div ref={observedTarget}></div>
         <ToTopBtn />
