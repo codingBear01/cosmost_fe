@@ -45,7 +45,7 @@
 ## Distributing Roles
 |Part|Name & Repo|Roles|
 |:---:|:---|:---|
-|BE|김승후 </br>[@shockim3710](https://github.com/shockim3710)| - 팀장 및 백엔드 총괄 </br> - [Cosmost 서비스](https://github.com/CosMost-BE/cosmost-cosmost) API 설계 </br> - 메인 및 검색페이지 API 설계 </br> - [게이트웨이](https://github.com/CosMost-BE/cosmost-gateway) 설정 </br> - AWS S3 이미지 업로드 설정 </br> - 발표 및 PPT 제작 </br> - 서비스 설계 및 문서 작업 </br>|
+|BE|김승후 </br>[@shockim3710](https://github.com/shockim3710)| - 팀장 및 백엔드 총괄 </br> - [Cosmost 서비스](https://github.com/CosMost-BE/cosmost-cosmost) API 설계 </br> - 메인 및 검색페이지 API 설계 </br> - [게이트웨이](https://github.com/CosMost-BE/cosmost-gateway) 설정 </br> - AWS S3 이미지 업로드 설정 </br> - 서비스 설계 및 문서 작업 </br>|
 |BE|홍찬영 </br>[@ChanYoungHong](https://github.com/ChanYoungHong)|- [Comment 서비스](https://github.com/CosMost-BE/cosmost-comment) API 설계 </br> - [Popularity 서비스](https://github.com/CosMost-BE/cosmost-popularity) API 설계 </br> - [Board 서비스](https://github.com/CosMost-BE/cosmost-board) API 설계 </br> - 크롤링으로 더미데이터 생성 </br> - 서비스 설계 및 문서 작업 </br>|
 |BE|권재현 </br>[@K-J-HYEON](https://github.com/K-J-HYEON)|- [Auth 서비스](https://github.com/CosMost-BE/cosmost-auth) API 설계 </br> - elastiCache 및 Amazon Linux2 Redis 활용 이메일 인증 </br> - JWT & Spring Security 활용 사용자 인증 기능 </br> - 서비스 설계 및 문서 작업 </br>|
 |FE|강명모 </br>[@codingBear01](https://github.com/codingBear01)|- UI/UX 기획 및 디자인 </br> - 퍼블리싱 </br> - Auth, Comment, Board, Popularity API 및 UI </br> - React Component 구조 설계 </br> - 서비스 설계|
@@ -68,6 +68,6 @@
 
 ## [API Definition](https://docs.google.com/spreadsheets/d/1QWuBOwt4fPZEXaZ5XQ0yQyrJvEPdpJuf/edit?rtpof=true#gid=990061567)
 
-## 시현 영상
+## [시연 영상]()
 
 ## [Team Wiki](https://colorful-dancer-5f4.notion.site/cosMost-By-Team-NiceCream-e9dd51c66b0f4749917e041bd30087f2)
