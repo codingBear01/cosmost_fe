@@ -2,6 +2,8 @@
 # cosMost - 팀 NiceCream (프론트엔드)
 > ### [공유하세요 당신만의 코스를 바로 지금](https://cosmost.vercel.app/)
 
+> 부산 로컬인들이 추천하는 부산 여행 코스 공유 커뮤니티
+
 ## Description
 > 스파로스 아카데미 1기 2차 기업연계 프로젝트
 
@@ -31,7 +33,7 @@
 <img src="https://img.shields.io/badge/Slack-4A154B?&style=for-the-badge&logo=Slack&logoColor=white"/> </a>
 
 
-## System Spec
+## 시스템 사양
 
 | * | Specification |
 |:------:| :- |
@@ -42,7 +44,7 @@
 | IDE | Intellij IDEA </br>Visual Studio Code |
 | 형상관리 | GIT |
 
-## Distributing Roles
+## 팀원 및 역할 분담
 |Part|Name & Repo|Roles|
 |:---:|:---|:---|
 |BE|김승후 </br>[@shockim3710](https://github.com/shockim3710)| - 팀장 및 백엔드 총괄 </br> - [Cosmost 서비스](https://github.com/CosMost-BE/cosmost-cosmost) API 설계 </br> - 메인 및 검색페이지 API 설계 </br> - [게이트웨이](https://github.com/CosMost-BE/cosmost-gateway) 설정 </br> - AWS S3 이미지 업로드 설정 </br> - 서비스 설계 및 문서 작업 </br>|
@@ -55,19 +57,19 @@
 #### [BE Repo.](https://github.com/orgs/CosMost-BE/repositories)
 #### [FE Repo.](https://github.com/codingBear01/cosmost_fe)
 
-## System Arcitecture
+## 시스템 아키텍쳐
 ![system_arcitecture](https://user-images.githubusercontent.com/95178119/201016512-614c23e3-c52c-4b1d-bb53-51a052d6c91c.png)
 
-## [Event Storming](https://miro.com/app/board/uXjVPFaLcAM=/)
+## [이벤트 스토밍](https://miro.com/app/board/uXjVPFaLcAM=/)
 ![event_storming](https://user-images.githubusercontent.com/95178119/201017801-4484a489-5517-47cb-86c4-f1abea51d4c2.jpg)
 
 ## [ER Diagram](https://www.erdcloud.com/d/aqxBCJLZKuoT5f75K)
 ![erd](https://user-images.githubusercontent.com/95178119/201016522-dcaf6ba2-d66d-4d54-b566-68c885b90d2c.png)
 
-## [Requirements Specification](https://applebanana.atlassian.net/wiki/spaces/~6029c153c5a0430067bd79ce/pages/edit-v2/11370497?draftShareId=d8554bdb-9740-4c97-95ad-378816943069)
+## [요구사항 명세서](https://applebanana.atlassian.net/wiki/spaces/~6029c153c5a0430067bd79ce/pages/edit-v2/11370497?draftShareId=d8554bdb-9740-4c97-95ad-378816943069)
 
-## [API Definition](https://docs.google.com/spreadsheets/d/1QWuBOwt4fPZEXaZ5XQ0yQyrJvEPdpJuf/edit?rtpof=true#gid=990061567)
+## [API 정의서](https://docs.google.com/spreadsheets/d/1QWuBOwt4fPZEXaZ5XQ0yQyrJvEPdpJuf/edit?rtpof=true#gid=990061567)
 
-## [시연 영상]()
+## [시연 영상](https://youtu.be/j8gaNW2aRhg)
 
 ## [Team Wiki](https://colorful-dancer-5f4.notion.site/cosMost-By-Team-NiceCream-e9dd51c66b0f4749917e041bd30087f2)
