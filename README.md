@@ -60,6 +60,9 @@
 ## 시스템 아키텍쳐
 ![system_arcitecture](https://user-images.githubusercontent.com/95178119/201016512-614c23e3-c52c-4b1d-bb53-51a052d6c91c.png)
 
+## 화면정의서
+![화면 정의서](https://www.figma.com/file/Pvetf4Dwbc1nUDxWdcNYUB/NiceCream?node-id=229%3A2)
+
 ## [이벤트 스토밍](https://miro.com/app/board/uXjVPFaLcAM=/)
 ![event_storming](https://user-images.githubusercontent.com/95178119/201017801-4484a489-5517-47cb-86c4-f1abea51d4c2.jpg)
 
