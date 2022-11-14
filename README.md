@@ -72,6 +72,7 @@
 
 ## [API 정의서](https://docs.google.com/spreadsheets/d/1QWuBOwt4fPZEXaZ5XQ0yQyrJvEPdpJuf/edit?rtpof=true#gid=990061567)
 
-## [시연 영상](https://youtu.be/j8gaNW2aRhg)
+## 시연 영상
+<img width="80%" src= "https://user-images.githubusercontent.com/77037051/201515396-72cd59b9-59bc-4104-bbb3-3fb10d7fbcf8.mp4"/>
 
 ## [Team Wiki](https://colorful-dancer-5f4.notion.site/cosMost-By-Team-NiceCream-e9dd51c66b0f4749917e041bd30087f2)
